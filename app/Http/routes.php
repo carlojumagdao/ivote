@@ -143,7 +143,7 @@ Route::group(['middleware' => 'auth'], function(){
 
 // Member Form //
 
-<<<<<<< HEAD
+
 // Authentication //
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
@@ -156,7 +156,7 @@ Route::post('auth/register', 'Auth\AuthController@postRegister');
 // Registration //
 
 
-=======
+
 // Member //
 Route::get('/member', array(
 	'uses' => 'formController@index',
@@ -257,4 +257,4 @@ Route::post('/position/add', array(
 	'as' => 'position.add'
 ));
 // Position //
->>>>>>> d525eaf717a45f3b19eacd639b08c6a04fb34a33
+
