@@ -26,10 +26,11 @@ class gensetController extends Controller
         return view('Settings.general', ['strElecName' => $strElecName,'strElecDesc' => $strElecDesc,'datStart' => $datStart,'datEnd' => $datEnd,'blSurvey' => $blSurvey,'blParty' => $blParty]);
     }
     public function save(Request $request){
+                
     	$rules = array(
 			'txtElectionTitle' => 'required',
 			'txtElectionDesc' => 'required',
-            // 'txtSchedule' => 'required', Manipulate the string of the field.
+            'txtSchedule' => 'required',
 		);
 		$messages = [
 		    'required' => 'The :attribute field is required.',
@@ -45,11 +46,19 @@ class gensetController extends Controller
             return Redirect::back()->withErrors($validator);
         }
         try{
+            $date = $request->input('txtSchedule');
+            $pieces = explode(" - ", $date);
+            $startdate = explode("/", $pieces[0]);
+            $finalStartdate = "$startdate[2]-$startdate[0]-$startdate[1]";
+            $enddate = explode("/", $pieces[1]);
+            $finalEnddate = "$enddate[2]-$enddate[0]-$enddate[1]";
+            
+
             $GenSet = GenSet::find(1);
             $GenSet->strSetElecName = $request->input('txtElectionTitle');
             $GenSet->strSetElecDesc = $request->input('txtElectionDesc');
-            // $GenSet->datSetStart = $request->input('txtSchedule');
-            // $GenSet->datSetEnd = $request->input('txtSchedule');
+            $GenSet->datSetStart = $finalStartdate;
+            $GenSet->datSetEnd = $finalEnddate;
             $GenSet->blSetSurvey = $request->input('txtSurveyStatus');
             $GenSet->blSetParty = $request->input('txtPartyStatus');
             $GenSet->save();

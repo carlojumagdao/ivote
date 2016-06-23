@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Position AS Position;
 use App\PositionDetail AS PositionDetail;
 use App\posFormEncoder AS posFormEncoder;
+use App\editPosFormEncoder AS editPosFormEncoder;
 use App\SmartCounter AS SmartCounter;
 use Validator;
 use DB;
@@ -41,6 +42,113 @@ class positionController extends Controller
 
         return view('Positions.addPosition', ['posForm' => $posForm, 'code' => $code]);
     }
+
+    public function update(Request $request){
+    	$rules = array(
+            'txtPositionId' => 'required',
+            'txtPositionName' => 'required',
+            'txtVoteLimit' => 'required|integer|between:1,100',
+        );
+        $messages = [
+            'required' => 'The :attribute field is required.',
+            'between' => 'The :attribute field must be between :min - :max.',
+        ];
+        $niceNames = array(
+            'txtPositionId' => 'Position ID',
+            'txtPositionName' => 'Position Name',
+            'txtVoteLimit' => 'Vote Limit',
+        );
+        $validator = Validator::make($request->all(),$rules,$messages);
+        $validator->setAttributeNames($niceNames); 
+        if ($validator->fails()) {
+            return Redirect::back()->withErrors($validator);
+        }
+        try{
+            DB::beginTransaction();    
+            $Position = Position::find($request->input('txtPositionId'));
+            $Position->strPosName = $request->input('txtPositionName');
+            $Position->strPosColor = $request->input('txtPositionColor');
+            $Position->intPosVoteLimit = $request->input('txtVoteLimit');
+            $Position->save();
+
+            DB::table('tblPositionDetail')->where('strPosDePosId', '=', $request->input('txtPositionId'))->delete();
+            if($request->delReference){
+	    		//
+	    	} else{
+	    		foreach ($_POST as $key => $value) {
+
+	                if($key == "btnSubmit" || $key == "txtPositionId" || $key == "txtPositionName" || $key == "txtVoteLimit" || $key == "txtPositionColor"){
+	                    
+	                    //nothing will happen...
+
+	                } else {
+	                    // if the field is checkbox, it will extract the array value
+	                    if(is_array($value)){
+	                        foreach ($value as $checked) {
+	                            $PositionDetail = new PositionDetail();
+	                            $PositionDetail->strPosDePosId = $request->input('txtPositionId');
+	                            $PositionDetail->strPosDeFieldName = $key;
+	                            $PositionDetail->strPosDeFieldData = $checked;
+	                            $PositionDetail->save();
+	                        }
+	                    }else{
+	                        $PositionDetail = new PositionDetail();
+	                        $PositionDetail->strPosDePosId = $request->input('txtPositionId');
+	                        $PositionDetail->strPosDeFieldName = $key;
+	                        $PositionDetail->strPosDeFieldData = $value;
+	                        $PositionDetail->save();
+	                    }
+	                }
+	            }
+	    	}
+            
+            DB::commit();
+        }catch (\Illuminate\Database\QueryException $e){
+            DB::rollBack();
+            $errMess = $e->getMessage();
+            return Redirect::back()->withErrors($errMess);
+        }
+        //redirect
+        $request->session()->flash('message', 'Successfully updated.');    
+        return Redirect::back();
+    }
+
+    public function edit($id){
+    	$arrFieldName= array (' ');
+		$arrFieldData= array (' ');
+    	$MemberForm = DB::table('tblMemberForm')->get();
+        foreach ($MemberForm as $value) {
+            $form = $value->strMemForm;
+        }
+    	$Position = DB::table('tblPosition')
+                    ->where('strPositionId', '=', $id)
+                    ->where('blPosDelete', '=', 0)
+                    ->get();
+        foreach ($Position as $value) {
+        	$strPositionId = $value->strPositionId;
+	    	$strPosName = $value->strPosName;
+	    	$strPosColor = $value->strPosColor;
+	    	$intVoteLimit = $value->intPosVoteLimit;
+	    }
+
+	    $data = DB::table('tblPositionDetail')
+            ->join('tblDynamicField', 'tblPositionDetail.strPosDeFieldName', '=', 'tblDynamicField.strDynFieldName')
+            ->select('tblPositionDetail.*')
+            ->where('tblDynamicField.blDynStatus', '=', 1)
+            ->where('tblPositionDetail.strPosDePosId', '=', $id)
+            ->get();
+
+        $intFieldCounter = 0;
+        foreach ($data as $value) {
+            $arrFieldName[$intFieldCounter] = $value->strPosDeFieldName;
+            $arrFieldData[$intFieldCounter] = $value->strPosDeFieldData;
+            $intFieldCounter++;
+        }
+        $editLoader = new editPosFormEncoder($form,'update',$arrFieldName,$arrFieldData);
+        $editForm = $editLoader->render_form();
+        return view('Positions.editPosition', ['editForm' => $editForm,'strPositionId' => $strPositionId, 'strPosName' => $strPosName, 'strPosColor' => $strPosColor,'intVoteLimit' => $intVoteLimit]);
+    }
+
     public function add(Request $request){
     	$rules = array(
             'txtPositionId' => 'required',

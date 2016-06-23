@@ -44,7 +44,7 @@
                     'method' => 'post',
                     'id' => 'form-add-setting',
                     'action' => 'gensetController@save',
-                    'class' => 'col s12',
+                    'class' => 'col s12', 
                 ) ) !!}
                     <div class="form-group col-md-12 ">
                     {!! Form::label( 'ElectionTitle', 'Election Title:' ) !!}
@@ -83,9 +83,16 @@
                     <i class="fa fa-minus"></i></button>
                 </div>
             </div>
+<!-- to convert to an end-user readable date -->
+            <?php 
+                $convertDateStart = date('F j, Y (D)', strtotime($datStart));
+                $convertDateEnd = date('F j, Y (D)', strtotime($datEnd));
+                ?>
+<!--  -->
             <div class="box-body">
                 <div class="form-group">
-                    <label>Date Range</label>
+                    <label>Date Range:</label>
+                    <label>Active from {{$convertDateStart}} until {{$convertDateEnd}}</label>
                     <div class="input-group">
                         <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>

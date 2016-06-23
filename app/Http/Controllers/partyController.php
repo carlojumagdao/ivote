@@ -5,11 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Party AS Party;
 use Validator;
+use Input;
 use DB;
 use Redirect;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 class partyController extends Controller
 {
     public function index(){
@@ -27,6 +30,7 @@ class partyController extends Controller
 			'txtPartyName' => 'required',
 			'txtPartyLeader' => 'required',
 			'txtPartyColor' => 'required',
+            'image' => 'required|mimes:jpeg,jpg,png,bmp|max:10000',
 		);
 		$messages = [
 		    'required' => 'The :attribute field is required.',
@@ -42,10 +46,22 @@ class partyController extends Controller
             return Redirect::back()->withErrors($validator);
         }
         try{
+            
+            $destinationPath =  'assets/images/'; // upload path
+            $extension = $request->file('image')->getClientOriginalExtension(); // getting image extension
+            $date = date("Ymdhis");
+            $filename = $date.'-'.rand(111111,999999).'.'.$extension;
+            
             $Party = new Party();
             $Party->strPartyName = $request->input('txtPartyName');
             $Party->strPartyLeader = $request->input('txtPartyLeader');
             $Party->strPartyColor = $request->input('txtPartyColor');
+            
+            if ($request->file('image')->isValid()) {
+                $request->file('image')->move($destinationPath, $filename);
+                $Party->txtPartyPic = $filename;
+            }
+           
             $Party->save();
         }catch (\Illuminate\Database\QueryException $e){
             $errMess = $e->getMessage();
@@ -59,7 +75,7 @@ class partyController extends Controller
     	$rules = array(
 			'txtPartyName' => 'required',
 			'txtPartyLeader' => 'required',
-			'txtPartyColor' => 'required',
+			'txtPartyColor' => 'required'
 		);
 		$messages = [
 		    'required' => 'The :attribute field is required.',
@@ -75,10 +91,21 @@ class partyController extends Controller
             return Redirect::back()->withErrors($validator);
         }
         try{
+            $destinationPath =  'assets/images/'; // upload path
+            $extension = $request->file('photo')->getClientOriginalExtension(); // getting image extension
+            $date = date("Ymdhis");
+            $filename = $date.'-'.rand(111111,999999).'.'.$extension;
+            
             $Party = Party::find($request->input('txtPartyId'));
             $Party->strPartyName = $request->input('txtPartyName');
             $Party->strPartyLeader = $request->input('txtPartyLeader');
             $Party->strPartyColor = $request->input('txtPartyColor');
+            
+            if ($request->file('photo')->isValid()) {
+                $request->file('photo')->move($destinationPath, $filename);
+                $Party->txtPartyPic = $filename;
+            }
+            
             $Party->save();
         }catch (\Illuminate\Database\QueryException $e){
             $errMess = $e->getMessage();
