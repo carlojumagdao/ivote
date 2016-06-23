@@ -15,6 +15,12 @@ Route::get('/', function () {
     return view('master');
 });
 
+// Dashboard //
+Route::get('/dashboard', array(
+	'uses' => 'dashboardController@index',
+	'as' => 'dashboard.index'
+));
+
 // Member Form //
 Route::get('/memberform', function () {
     return view('Members.form');
