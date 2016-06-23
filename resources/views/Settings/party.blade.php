@@ -90,8 +90,34 @@
                     'method' => 'post',
                     'id' => 'form-add-setting',
                     'action' => 'partyController@add',
+                    'enctype' => 'multipart/form-data',
                     'class' => 'col s12',
+                    'files' => true
                 ) ) !!}
+                <center>
+                <div class="col s4">
+                    <div class="card-panel2 tooltipped" data-position="top" data-delay="50" data-tooltip="logo picture">
+                        <img id="cand-pic" src="../assets/images/Avatar.jpg" width="180px" /> 
+                    </div>
+                </div>
+                </center>
+                <div class="form-group col-md-12 ">
+                    
+                    <span class="btn btn-default btn-file">
+                  
+                    {!! Form::label( 'file', 'File Path:' ) !!}
+                    {!! Form::file
+                        ('file', array(
+                        'id' => 'file',
+                        'name' => 'image',
+                        'class' => 'form-control btn btn-success btn-xs',
+                        'style' => 'display:none',
+                        'onchange' => '$("#upload-file-info").html($(this).val());readURL(this)',
+                        'required' => true,)) 
+                    !!}
+                    </span>
+                    <span class='label label-info' id="upload-file-info"></span>
+                </div>
                 <div class="form-group col-md-12 ">
                     {!! Form::label( 'PartyName', 'Party Name:' ) !!}
                     {!! Form::text
@@ -139,6 +165,7 @@
     </div>
     <!-- Modal | Add -->
 
+    <!-- Modal | Edit -->
     <!-- Modal | Edit -->
     <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
@@ -220,13 +247,27 @@
         $('[data-toggle="tooltip"]').tooltip(); 
     });
 </script>
+<script> 
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#cand-pic')
+                    .attr('src', e.target.result)
+                    .width(150)
+                    .height(150);
+                };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
 <script>
     $(document).on("click",".editParty", function(){
         var id = $(this).parent().parent().find('.id').text();
         var partyname = $(this).parent().parent().find('.name').text();
         var partyleader = $(this).parent().parent().find('.leader').text();
         var partycolor = $(this).parent().parent().find('.color').text();
-        document.getElementById('ptid').value = id;
+        document.getElementById('ptid').value = id; 
         document.getElementById('ptname').value = partyname;
         document.getElementById('ptleader').value = partyleader;
         document.getElementById('ptcolor').value = partycolor;
