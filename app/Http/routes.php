@@ -132,28 +132,20 @@ Route::group(['middleware' => 'auth'], function(){
 		'uses' => 'positionController@create',
 		'as' => 'position.create'
 	));
+	Route::get('/position/edit/{id}', array(
+		'uses' => 'positionController@edit',
+		'as' => 'position.edit'
+	));
 	Route::post('/position/add', array(
 		'uses' => 'positionController@add',
 		'as' => 'position.add'
-	));// Party Affiliation //
-Route::get('/settings/party', array(
-	'uses' => 'partyController@index',
-	'as' => 'party.index'
-));
-Route::post('/settings/party/add', array(
-	'uses' => 'partyController@add',
-	'as' => 'party.add'
-));
-Route::post('/settings/party/update', array(
-	'uses' => 'partyController@update',
-	'as' => 'party.update'
-));
-Route::post('/settings/party/delete', array(
-	'uses' => 'partyController@delete',
-	'as' => 'party.delete'
-));
-// Party Affiliation //
+	));
+	Route::post('/position/update', array(
+		'uses' => 'positionController@update',
+		'as' => 'position.update'
+	));
 	// Position //
+
 
 });
 
@@ -173,32 +165,3 @@ Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
 // Registration //
 
-
-
-
-
-<<<<<<< HEAD
-// Position //
-Route::get('/position', array(
-	'uses' => 'positionController@index',
-	'as' => 'position.index'
-));
-Route::get('/position/create', array(
-	'uses' => 'positionController@create',
-	'as' => 'position.create'
-));
-Route::get('/position/edit/{id}', array(
-	'uses' => 'positionController@edit',
-	'as' => 'position.edit'
-));
-Route::post('/position/add', array(
-	'uses' => 'positionController@add',
-	'as' => 'position.add'
-));
-Route::post('/position/update', array(
-	'uses' => 'positionController@update',
-	'as' => 'position.update'
-));
-// Position //
-=======
->>>>>>> origin/master
