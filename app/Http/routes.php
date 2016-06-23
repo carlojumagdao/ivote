@@ -54,6 +54,10 @@ Route::post('member/delete', array(
 	'uses' => 'formController@delete',
 	'as' => 'member.delete'
 ));
+Route::post('member/email', array(
+    'uses' => 'MailController@send',
+    'as' => 'member.email'
+));
 // Member //
 
 // General Setting //
