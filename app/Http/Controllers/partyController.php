@@ -92,28 +92,29 @@ class partyController extends Controller
         }
         try{
             $destinationPath =  'assets/images/'; // upload path
-            $extension = $request->file('photo')->getClientOriginalExtension(); // getting image extension
+            $extension = $request->file('image')->getClientOriginalExtension(); // getting image extension
             $date = date("Ymdhis");
             $filename = $date.'-'.rand(111111,999999).'.'.$extension;
-            
+        
             $Party = Party::find($request->input('txtPartyId'));
             $Party->strPartyName = $request->input('txtPartyName');
             $Party->strPartyLeader = $request->input('txtPartyLeader');
             $Party->strPartyColor = $request->input('txtPartyColor');
             
-            if ($request->file('photo')->isValid()) {
-                $request->file('photo')->move($destinationPath, $filename);
+            if ($request->file('image')->isValid()) {
+                $request->file('image')->move($destinationPath, $filename);
                 $Party->txtPartyPic = $filename;
             }
             
             $Party->save();
         }catch (\Illuminate\Database\QueryException $e){
             $errMess = $e->getMessage();
-            return Redirect::back()->withErrors($errMess);
+            return Redirect::back();
         }
         //redirect
         $request->session()->flash('message', 'Successfully updated.');    
-        return Redirect::back();
+        $Parties = DB::table('tblParty')->get();
+        return view('Settings.party', ['Party' => $Parties, 'intCounter'=>0]);
     }
     public function delete(Request $request){
     	$id = $request->input("id");
@@ -128,5 +129,13 @@ class partyController extends Controller
         //redirect
         $request->session()->flash('message', 'Successfully deleted.');  
         return Redirect::back();
+    }
+    
+    public function editpage(Request $request){
+        $id = $request->input('id');
+        $party = DB::table('tblparty')->where('intPartyId', $id)->get();
+        
+        return view('Settings.partyEdit', ['party' => $party]);
+        
     }
 }

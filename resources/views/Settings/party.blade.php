@@ -64,7 +64,7 @@
                             <td><button class="btn bg-purple btn-xs">Uneditable</button></td>    
                         @else
                             <td>
-                                <button class="btn btn-warning btn-sm editParty" data-toggle="modal" title="Edit" data-target="#edit"><i class="glyphicon glyphicon-edit"></i></button>
+                                <button class="btn btn-warning btn-sm editParty" data-toggle="modal" title="Edit"><i class="glyphicon glyphicon-edit"></i></button>
                                 <button class="btn btn-danger btn-sm delParty" data-toggle="tooltip" title="Delete"><i class="glyphicon glyphicon-trash"></i></button>
                             </td>
                         @endif
@@ -97,7 +97,7 @@
                 <center>
                 <div class="col s4">
                     <div class="card-panel2 tooltipped" data-position="top" data-delay="50" data-tooltip="logo picture">
-                        <img id="cand-pic" src="../assets/images/Avatar.jpg" width="180px" /> 
+                        <img id="cand-pic" src="../assets/images/Avatar.jpg" width="180px" style="background-size: contain" /> 
                     </div>
                 </div>
                 </center>
@@ -186,7 +186,7 @@
                     'id' => 'ptid',
                     'name' => 'txtPartyId',
                     'required' => true,)) 
-                !!}  
+                !!} 
                 <div class="form-group col-md-12 ">
                     {!! Form::label( 'PartyName', 'Party Name:' ) !!}
                     {!! Form::text
@@ -240,6 +240,13 @@
         </form>
     </div>
     <!-- Delete Form -->
+    <!-- Edit Form -->
+    <div class="hide">
+        <form method="POST" action="{{ URL::to('/settings/party/edit') }}" id="editform">
+            <input type="hidden" name="id" id="editparty">
+        </form>
+    </div>
+    <!-- Edit Form -->
 @stop 
 @section('script')
 <script>
@@ -249,6 +256,7 @@
 </script>
 <script> 
     function readURL(input) {
+        alert("add");
         if (input.files && input.files[0]) {
             var reader = new FileReader();
                 reader.onload = function (e) {
@@ -256,24 +264,13 @@
                     .attr('src', e.target.result)
                     .width(150)
                     .height(150);
+                    
                 };
             reader.readAsDataURL(input.files[0]);
         }
     }
 </script>
 <script>
-    $(document).on("click",".editParty", function(){
-        var id = $(this).parent().parent().find('.id').text();
-        var partyname = $(this).parent().parent().find('.name').text();
-        var partyleader = $(this).parent().parent().find('.leader').text();
-        var partycolor = $(this).parent().parent().find('.color').text();
-        document.getElementById('ptid').value = id; 
-        document.getElementById('ptname').value = partyname;
-        document.getElementById('ptleader').value = partyleader;
-        document.getElementById('ptcolor').value = partycolor;
-
-    });
-
     $(document).on("click", ".delParty", function(){
         var x = confirm("Are you sure you want to delete this record?");
         if (x){
@@ -283,6 +280,12 @@
         }
         else
             return false;
+    });
+    $(document).on("click", ".editParty", function(){
+            var id = $(this).parent().parent().find('.id').text();
+            document.getElementById('editparty').value = id;
+            document.getElementById('editform').submit();
+        
     });
 </script>
 <script src="{{ URL::asset('assets/plugins/select2/select2.full.min.js') }}"></script>
