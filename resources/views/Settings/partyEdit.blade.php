@@ -21,7 +21,7 @@
             <div class="alert alert-danger alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                 <h4><i class="icon fa fa-ban"></i> Something went wrong!</h4>
-                {!! implode('', $errors->all(
+                {!! implode($part->strPartyName, $errors->all(
                     '<li>:message</li>'
                 )) !!}
             </div>
@@ -41,50 +41,85 @@
             </div>
             <div class="box-body table-responsive no-padding">
                 @foreach ($party as $part)
-                <form action="{{ URL::to('/settings/party/update') }}" method="post" enctype="multipart/form-data" class="col s12">
-                    <input type="hidden" id="ptid" name="txtPartyId" value="{{$part->intPartyId}}" required >
-                    <center>
-                        <div class="col s12">
-                            <div class="card-panel2 tooltipped" data-position="top" data-delay="50" data-tooltip="logo picture">
-                                <img id="cand-pic" src="../../assets/images/{{$part->txtPartyPic}}" width="180px" style="background-size: contain" /> 
-                            </div>
-                        </div>
-                    </center>
-                    <div class="form-group col-md-12 ">
-                        <span class="btn btn-default btn-file">
-                            <label for="file">File Path:</label>
-                            <input type="file" id="file" name="image" class="form-control btn btn-success btn-xs" style="display:none" onchange='$("#upload-file-info").html($(this).val());readURL(this)' required>
-                        </span>
-                        <span class='label label-info' id="upload-file-info">
-                        </span>
-                    </div>
-                    <div class="form-group col-md-12 ">
-                        <label for="PartyName">Party Name:</label>
-                        <input type="text" placeholder="Type Party Name Here" id = 'PartyName' name = 'txtPartyName'
-                        class='form-control' value="{{$part->strPartyName}}" required>
-                    </div>
-                    <div class="form-group col-md-12 ">
-                        <label for="PartyLeader">Party Leader:</label>
-                        <input type="text" placeholder="Type Party Leader Here" id = 'PartyLeader' name = 'txtPartyLeader'
-                        class='form-control' value="{{$part->strPartyLeader}}" required>
-                    </div>
-                    <div class="form-group col-md-12 ">
-                        
-                        <label for="PartyColor">Party Color:</label>
-                        <div class="input-group my-colorpicker2">
-                            <input type="text" placeholder="Type Party Color Here" id = 'PartyLeader' name = 'txtPartyColor'
-                                   class='form-control' value="{{$part->strPartyColor}}">
-                            <div class="input-group-addon">
-                                <i></i>
-                            </div>
+                 {!! Form::open( array(
+                    'method' => 'post',
+                    'id' => 'form-edit-setting',
+                    'action' => 'partyController@update',
+                    'enctype' => 'multipart/form-data',
+                    'class' => 'col s12',
+                    'files' => true
+                ) ) !!}
+                {!! Form::hidden
+                    ('PartyId', $part->intPartyId, array(
+                    'id' => 'ptid',
+                    'name' => 'txtPartyId',
+                    'required' => true,)) 
+                !!} 
+                <center>
+                    <div class="col s12">
+                        <div class="card-panel2 tooltipped" data-position="top" data-delay="50" data-tooltip="logo picture">
+                            <img id="cand-pic" src="../assets/images/{{$part->txtPartyPic}}" width="180px" style="background-size: contain" /> 
                         </div>
                     </div>
-                    <input type="submit" class="btn btn-primary right" name="btnSubmit" value="Submit">
-                </form>
+                </center>
+                <div class="form-group col-md-12 ">
+                    
+                    <span class="btn btn-default btn-file">
+                  
+                    {!! Form::label( 'file', 'File Path:' ) !!}
+                    {!! Form::file
+                        ('file', array(
+                        'id' => 'file',
+                        'name' => 'image',
+                        'class' => 'form-control btn btn-success btn-xs',
+                        'style' => 'display:none',
+                        'onchange' => '$("#upload-file-info").html($(this).val());readURL(this)',
+                        )) 
+                    !!}
+                    </span>
+                    <span class='label label-info' id="upload-file-info"></span>
+                </div>
+                <div class="form-group col-md-12 ">
+                    {!! Form::label( 'PartyName', 'Party Name:' ) !!}
+                    {!! Form::text
+                        ('PartyName', $part->strPartyName , array(
+                        'id' => 'ptname',
+                        'placeholder' => "Type the party name here",
+                        'name' => 'txtPartyName',
+                        'class' => 'form-control',
+                        'required' => true,)) 
+                    !!}  
+                </div>
+                <div class="form-group col-md-12 ">
+                    {!! Form::label( 'PartyLeader', 'Party Leader:' ) !!}
+                    {!! Form::text
+                        ('PartyLeader', $part->strPartyLeader , array(
+                        'id' => 'ptleader',
+                        'placeholder' => "Type the party leader here",
+                        'name' => 'txtPartyLeader',
+                        'class' => 'form-control',)) 
+                    !!}  
+                </div>
+                <div class="form-group col-md-12 ">
+                    {!! Form::label( 'PartyColor', 'Party Color:' ) !!}
+                    <div class="input-group my-colorpicker2">
+                        {!! Form::text
+                            ('PartyColor', $part->strPartyColor, array(
+                            'id' => 'ptcolor',
+                            'placeholder' => "Pick color of this party.",
+                            'name' => 'txtPartyColor',
+                            'class' => 'form-control',)) 
+                        !!}  
+                        <div class="input-group-addon">
+                            <i></i>
+                        </div>
+                    </div>
+                </div>
                 @endforeach
             </div>
             <div class="box-footer">
-                footer
+                <input type="submit" class="btn btn-primary" name="btnSubmit" value="Submit">
+                {!! Form::close() !!}
             </div>
         </div>
     </div> 

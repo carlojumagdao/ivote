@@ -165,8 +165,6 @@
     </div>
     <!-- Modal | Add -->
 
-    <!-- Modal | Edit -->
-    <!-- Modal | Edit -->
     <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -175,54 +173,7 @@
                     <h4 class="modal-title" id="myModalLabel">Edit Party</h4>
                 </div>
             <div class="modal-body">
-                {!! Form::open( array(
-                    'method' => 'post',
-                    'id' => 'form-add-setting',
-                    'action' => 'partyController@update',
-                    'class' => 'col s12',
-                ) ) !!}
-                {!! Form::hidden
-                    ('PartyId', '', array(
-                    'id' => 'ptid',
-                    'name' => 'txtPartyId',
-                    'required' => true,)) 
-                !!} 
-                <div class="form-group col-md-12 ">
-                    {!! Form::label( 'PartyName', 'Party Name:' ) !!}
-                    {!! Form::text
-                        ('PartyName', '', array(
-                        'id' => 'ptname',
-                        'placeholder' => "Type the party name here",
-                        'name' => 'txtPartyName',
-                        'class' => 'form-control',
-                        'required' => true,)) 
-                    !!}  
-                </div>
-                <div class="form-group col-md-12 ">
-                    {!! Form::label( 'PartyLeader', 'Party Leader:' ) !!}
-                    {!! Form::text
-                        ('PartyLeader', '', array(
-                        'id' => 'ptleader',
-                        'placeholder' => "Type the party leader here",
-                        'name' => 'txtPartyLeader',
-                        'class' => 'form-control',)) 
-                    !!}  
-                </div>
-                <div class="form-group col-md-12 ">
-                    {!! Form::label( 'PartyColor', 'Party Color:' ) !!}
-                    <div class="input-group my-colorpicker2">
-                        {!! Form::text
-                            ('PartyColor', '', array(
-                            'id' => 'ptcolor',
-                            'placeholder' => "Pick color of this party.",
-                            'name' => 'txtPartyColor',
-                            'class' => 'form-control',)) 
-                        !!}  
-                        <div class="input-group-addon">
-                            <i></i>
-                        </div>
-                    </div>
-                </div>
+                -
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -242,7 +193,7 @@
     <!-- Delete Form -->
     <!-- Edit Form -->
     <div class="hide">
-        <form method="POST" action="{{ URL::to('/settings/party/edit') }}" id="editform">
+        <form method="POST" action="{{ URL::to('/settings/party/') }}" id="editform">
             <input type="hidden" name="id" id="editparty">
         </form>
     </div>

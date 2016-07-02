@@ -91,30 +91,36 @@ class partyController extends Controller
             return Redirect::back()->withErrors($validator);
         }
         try{
-            $destinationPath =  'assets/images/'; // upload path
-            $extension = $request->file('image')->getClientOriginalExtension(); // getting image extension
-            $date = date("Ymdhis");
-            $filename = $date.'-'.rand(111111,999999).'.'.$extension;
-        
             $Party = Party::find($request->input('txtPartyId'));
             $Party->strPartyName = $request->input('txtPartyName');
             $Party->strPartyLeader = $request->input('txtPartyLeader');
             $Party->strPartyColor = $request->input('txtPartyColor');
             
-            if ($request->file('image')->isValid()) {
-                $request->file('image')->move($destinationPath, $filename);
-                $Party->txtPartyPic = $filename;
+            if ($request->hasFile('image')){
+
+                $destinationPath =  'assets/images/'; // upload path
+                $extension = $request->file('image')->getClientOriginalExtension(); // getting image extension
+                $date = date("Ymdhis");
+                $filename = $date.'-'.rand(111111,999999).'.'.$extension;
+
+                
+                if ($request->file('image')->isValid()) {
+                    $request->file('image')->move($destinationPath, $filename);
+                    $Party->txtPartyPic = $filename;
+                        
+                }
+                
             }
-            
+            $request->session()->flash('message', "Successfully Updated"); 
             $Party->save();
         }catch (\Illuminate\Database\QueryException $e){
             $errMess = $e->getMessage();
             return Redirect::back();
         }
         //redirect
-        $request->session()->flash('message', 'Successfully updated.');    
+       
         $Parties = DB::table('tblParty')->get();
-        return view('Settings.party', ['Party' => $Parties, 'intCounter'=>0]);
+        return Redirect::back();
     }
     public function delete(Request $request){
     	$id = $request->input("id");

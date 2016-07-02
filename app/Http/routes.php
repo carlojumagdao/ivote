@@ -96,7 +96,7 @@ Route::get('/settings/party', array(
 	'uses' => 'partyController@index',
 	'as' => 'party.index'
 ));
-Route::post('/settings/party/edit', array(
+Route::post('/settings/party/', array(
 	'uses' => 'partyController@editpage',
 	'as' => 'party.edit'
 ));
@@ -104,7 +104,7 @@ Route::post('/settings/party/add', array(
 	'uses' => 'partyController@add',
 	'as' => 'party.add'
 ));
-Route::post('/settings/party/update', array(
+Route::post('/settings/party/edit', array(
 	'uses' => 'partyController@update',
 	'as' => 'party.update'
 ));
