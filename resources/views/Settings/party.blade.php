@@ -97,7 +97,7 @@
                 <center>
                 <div class="col s4">
                     <div class="card-panel2 tooltipped" data-position="top" data-delay="50" data-tooltip="logo picture">
-                        <img id="cand-pic" src="../assets/images/Avatar.jpg" width="180px" style="background-size: contain" /> 
+                        <img id="cand-pic" src="../assets/images/ivote.jpg" width="180px" style="background-size: contain" /> 
                     </div>
                 </div>
                 </center>

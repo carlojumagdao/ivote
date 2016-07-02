@@ -55,10 +55,11 @@
                     'name' => 'txtPartyId',
                     'required' => true,)) 
                 !!} 
+                
                 <center>
                     <div class="col s12">
                         <div class="card-panel2 tooltipped" data-position="top" data-delay="50" data-tooltip="logo picture">
-                            <img id="cand-pic" src="../assets/images/{{$part->txtPartyPic}}" width="180px" style="background-size: contain" /> 
+                            <img id="cand-pic" src="../assets/images/@if ($part->txtPartyPic == NULL)ivote.jpg @else{{$part->txtPartyPic}} @endif" width="180px" style="background-size: contain" /> 
                         </div>
                     </div>
                 </center>
