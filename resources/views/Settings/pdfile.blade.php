@@ -13,7 +13,7 @@
 				@foreach($result as $row)
 					<tr>
 						<td>{{$row->strHeader}}</td>
-						<td>{{$row->txtSetLogo}}</td>
+						<td><img src="assets/images/{{$row->txtSetLogo}}" style="max-width: 200px"></td>
 						
 					</tr>
 				@endforeach

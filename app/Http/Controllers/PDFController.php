@@ -14,7 +14,7 @@ class PDFController extends Controller
     public function getPDF(){
     	$queryResult = GenSet::all();
     	
-    	$pdf=PDF::loadview('settings.pdfile',array('result'=>$queryResult));
+    	$pdf=PDF::loadview('Settings.pdfile',array('result'=>$queryResult));
     	return $pdf->stream('pdfile.pdf');
     	
     }
