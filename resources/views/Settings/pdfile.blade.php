@@ -7,7 +7,7 @@
 </head>
 <body>
 	<table>
-			<thead> Testing Pdf</thead>
+			<thead></thead>
 
 			<tbody>
 				@foreach($result as $row)
