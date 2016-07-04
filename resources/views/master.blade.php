@@ -155,7 +155,7 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="{{ URL::to('/settings/general') }}"><i class="fa fa-circle-o"></i> General</a></li>
-            <li><a href="../layout/fixed.html"><i class="fa fa-circle-o"></i> UI Element</a></li>
+            <li><a href="{{ URL::to('/settings/UI') }}"><i class="fa fa-circle-o"></i> UI Element</a></li>
             <li><a href="{{ URL::to('/settings/security') }}"><i class="fa fa-circle-o"></i> Security Questions</a></li>
             <li><a href="{{ URL::to('/settings/party') }}"><i class="fa fa-circle-o"></i> Party Affiliation</a></li>
           </ul>

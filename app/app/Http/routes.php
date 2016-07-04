@@ -129,27 +129,23 @@ Route::group(['middleware' => 'auth'], function(){
 
 
 	// Party Affiliation //
-    Route::get('/settings/party', array(
-        'uses' => 'partyController@index',
-        'as' => 'party.index'
-    ));
-    Route::post('/settings/party/', array(
-        'uses' => 'partyController@editpage',
-        'as' => 'party.edit'
-    ));
-    Route::post('/settings/party/add', array(
-        'uses' => 'partyController@add',
-        'as' => 'party.add'
-    ));
-    Route::post('/settings/party/edit', array(
-        'uses' => 'partyController@update',
-        'as' => 'party.update'
-    ));
-    Route::post('/settings/party/delete', array(
-        'uses' => 'partyController@delete',
-        'as' => 'party.delete'
-    ));
-    // Party Affiliation //
+	Route::get('/settings/party', array(
+		'uses' => 'partyController@index',
+		'as' => 'party.index'
+	));
+	Route::post('/settings/party/add', array(
+		'uses' => 'partyController@add',
+		'as' => 'party.add'
+	));
+	Route::post('/settings/party/update', array(
+		'uses' => 'partyController@update',
+		'as' => 'party.update'
+	));
+	Route::post('/settings/party/delete', array(
+		'uses' => 'partyController@delete',
+		'as' => 'party.delete'
+	));
+	// Party Affiliation //
 
 
 	// Position //
@@ -174,46 +170,9 @@ Route::group(['middleware' => 'auth'], function(){
 		'as' => 'position.update'
 	));
 	// Position //
-    
-    // Candidates //
-    Route::get('/candidates', array(
-		'uses' => 'candidateController@index',
-		'as' => 'candidate.index'
-	));
-    Route::get('/candidates/add', array(
-		'uses' => 'candidateController@add',
-		'as' => 'candidate.add'
-	));
-    Route::post('/candidates/add', array(
-		'uses' => 'candidateController@newCandidate',
-		'as' => 'candidate.newCandidate'
-	));
-    Route::post('/candidates/delete', array(
-		'uses' => 'candidateController@delete',
-		'as' => 'candidate.delete'
-	));
-    Route::post('/candidates/', array(
-		'uses' => 'candidateController@editpage',
-		'as' => 'candidate.edit'
-	));
-    Route::post('/candidates/edit', array(
-		'uses' => 'candidateController@update',
-		'as' => 'candidate.update'
-	));
-    
-    // Candidates //
+
 
 });
-
-// Candidate Page//
-
-    Route::get('/candidates/page', array(
-		'uses' => 'candidateController@page',
-		'as' => 'candidate.page'
-	));
-
-// Candidate Page//
-
 
 
 
