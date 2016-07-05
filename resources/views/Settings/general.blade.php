@@ -43,7 +43,7 @@
                     <center> <h4>Logo Picture</h4> 
                     <div class="col s4">
                         <div class="card-panel2 tooltipped" data-position="top" data-delay="50" data-tooltip="logo picture">
-                            <img id="cand-pic1" src="../assets/images/logo.png" width="180px" /> 
+                            <img id="cand-pic1" src="../assets/images/@if ($LogoPic == NULL)ivote.jpg @else{{$LogoPic}} @endif" width="180px" style="background-size: contain" width="180px" /> 
                         </div>
                     </div>
                     </center>
@@ -70,11 +70,11 @@
                         <span class='label label-info' id="upload-file-info"></span>
                     </div>
                     <div class="form-group col-md-12 ">
-                        {!! Form::label( 'Header', 'Header:' ) !!}
+                        {!! Form::label( 'Header', 'Organization Name:' ) !!}
                         {!! Form::text
                             ('Header', $strHeaders, array(
                             'id' => 'Header',
-                            'placeholder' => "Type the party header here",
+                            'placeholder' => "This will be use for your reports",
                             'name' => 'txtHeader',
                             'class' => 'form-control',
                             'required' => true,)) 

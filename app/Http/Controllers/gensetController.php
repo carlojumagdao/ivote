@@ -23,9 +23,10 @@ class gensetController extends Controller
     		$blSurvey = $value->blSetSurvey;
     		$blParty = $value->blSetParty;
             $strHeaders = $value->strHeader;
+            $LogoPic = $value->txtSetLogo;
             /*$strSetLogo = $value->txtSetLogo;*/
     	}
-        return view('Settings.general', ['strElecName' => $strElecName,'strElecDesc' => $strElecDesc,'datStart' => $datStart,'datEnd' => $datEnd,'blSurvey' => $blSurvey,'blParty' => $blParty, 'strHeaders' => $strHeaders]);
+        return view('Settings.general', ['strElecName' => $strElecName,'strElecDesc' => $strElecDesc,'datStart' => $datStart,'datEnd' => $datEnd,'blSurvey' => $blSurvey,'blParty' => $blParty, 'strHeaders' => $strHeaders , 'LogoPic'=>$LogoPic]);
     }
     public function save(Request $request){
                 
