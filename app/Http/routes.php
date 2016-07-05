@@ -260,10 +260,10 @@ Route::group(['middleware' => 'auth'], function(){
 
 // Candidate Page//
 
-    Route::get('/candidates/page', array(
-		'uses' => 'candidateController@page',
-		'as' => 'candidate.page'
-	));
+Route::get('/candidates/page', array(
+	'uses' => 'candidateController@page',
+	'as' => 'candidate.page'
+));
 
 // Candidate Page//
 
@@ -284,3 +284,9 @@ Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
 // Registration //
 
+//Log In User//
+Route::get('/LogInUser', array(
+	'uses' => 'LogInUserController@LogInUser',
+	'as' => 'LogInUser'
+));
+//Log In User//
