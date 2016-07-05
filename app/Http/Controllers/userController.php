@@ -7,6 +7,7 @@ use App\DynamicField AS DynamicField;
 use App\User AS User;
 use Validator;
 use DB;
+use Hash;
 use Redirect;
 use File;
 use App\Http\Requests;
@@ -97,36 +98,54 @@ class userController extends Controller
         $User->blDelete = 1;
         $User->save();
         
-        //redirect
         $request->session()->flash('message', 'Successfully deleted.');  
         return Redirect::back();
     }
 
     public function update(Request $request){
         $rules = array(
-            'password' => 'required',
+            'oldpassword' => 'required',
+            'newpassword' => 'required',
+            'confirmpassword' => 'required'
         );
         $messages = [
             'required' => 'The :attribute field is required.',
         ];
+        $niceNames = array(
+            'oldpassword' => 'Old Password',
+            'newpassword' => 'New Password',
+            'confirmpassword' => 'Confirm Password',
+        );
         $validator = Validator::make($request->all(),$rules,$messages);
         $validator->setAttributeNames($niceNames); 
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator);
         }
         try{
-            $User = User::find($request->input('id'));
-            $User->password = $request->input(Hash::make('password'));
-            
+            if ($request->hasFile('image')){
+
+                $destinationPath =  'assets/images/'; // upload path
+                $extension = $request->file('image')->getClientOriginalExtension(); // getting image extension
+                $date = date("Ymdhis");
+                $filename = $date.'-'.rand(111111,999999).'.'.$extension;
+
+                
+                if ($request->file('image')->isValid()) {
+                    $request->file('image')->move($destinationPath, $filename);
+                    $imgPath = $filename;                     
+                }
+            }
+            $userId = session('id');
+            $user = DB::table('users')
+                    ->where('id', $userId)
+                    ->update(['txtPath' => $imgPath,'password' => bcrypt($request['confirmpassword'])]);
             $request->session()->flash('message', "Successfully Updated"); 
-            $User->save();
+            
         }catch (\Illuminate\Database\QueryException $e){
             $errMess = $e->getMessage();
             return Redirect::back();
         }
-        //redirect
-       
-        $User = DB::table('users')->get();
         return Redirect::back();
     }
+
 }

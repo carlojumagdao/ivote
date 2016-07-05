@@ -11,6 +11,12 @@
     @section('title-page')
         {{"Edit User"}}
     @stop  
+
+<?php 
+  $userName = session('name');
+  $userEmail = session('email');
+  $imgPath = session('picname');
+?>
     <!--start container-->
     <div class="col-md-12">
         @if ($errors->any())
@@ -31,7 +37,7 @@
         @endif
     </div>
 
-    <div class="col-md-12">
+    <div class="col-md-8">
         <div class="box">
             <div class="box-header with-border">
                 <h3 class="box-title">User Form</h3>
@@ -48,7 +54,7 @@
                 <center>
                     <div class="col s12">
                         <div class="card-panel2 tooltipped" data-position="top" data-delay="50" data-tooltip="logo picture">
-                            <img id="user-pic" src="../assets/images/ivote.jpg" width="180px" style="background-size: contain" /> 
+                            <img id="user-pic" src="{{ URL::asset('assets/images/'.$imgPath.'') }}" width="180px" style="background-size: contain" /> 
                         </div>
                     </div>
                 </center>
@@ -67,39 +73,37 @@
                     </span>
                     <span class='label label-info' id="upload-file-info"></span>
                 </div>
-                <div class="box-body">
-                    <div class="form-group col-md-12 ">
-                        {!! Form::label( 'Name', 'Name:' ) !!}
-                        {!! Form::text
-                            ('Name', '', array(
-                            'id' => 'Name',
-                            'placeholder' => "Full Name",
-                            'name' => 'name',
-                            'class' => 'form-control',
-                            'required' => true,)) 
-                        !!}  
-                    </div>
-                    <div class="form-group col-md-12 ">
-                        {!! Form::label( 'Email', 'Email:' ) !!}
-                        {!! Form::email
-                            ('Email', '', array(
-                            'id' => 'Email',
-                            'placeholder' => "Email",
-                            'name' => 'email',
-                            'class' => 'form-control',
-                            'required' => true,)) 
-                        !!}  
-                    </div>
-                    <div class="form-group col-md-12 ">
-                        {!! Form::label( 'password', 'Password:' ) !!}
+                <div class="form-group col-md-16 ">
+                        {!! Form::label( 'oldpassword', 'Old Password:' ) !!}
                         {!! Form::password
-                            ('password', '', array(
-                            'id' => 'password',
+                            ('oldpassword', '', array(
+                            'id' => 'oldpassword',
                             'maxlength' => 50,
                             'name' => 'password',
                             'required' => true,)) 
                         !!}
-                    </div>
+                </div>
+                <div class="form-group col-md-16 ">
+                        {!! Form::label( 'newpassword', 'New Password:' ) !!}
+                        {!! Form::password
+                            ('newpassword', '', array(
+                            'id' => 'newpassword',
+                            'maxlength' => 50,
+                            'name' => 'password',
+                            'required' => true,)) 
+                        !!}
+                </div>
+                <div class="form-group col-md-16 ">
+                        {!! Form::label( 'confirmpassword', 'Confirm Password:' ) !!}
+                        {!! Form::password
+                            ('confirmpassword', '', array(
+                            'id' => 'confirmpassword',
+                            'maxlength' => 50,
+                            'name' => 'password',
+                            'required' => true,)) 
+                        !!}
+                </div>
+
                         <input type="submit" class="btn btn-primary" name="btnSubmit" value="Update Profile">
                         {!! Form::close() !!}
                 </div>
