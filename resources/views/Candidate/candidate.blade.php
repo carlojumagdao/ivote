@@ -3,6 +3,8 @@
     {{"Candidates"}}
 @stop   
 @section('style')
+    <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/datatables/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/datatables/datatables-responsive/css/dataTables.responsive.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('assets/plugins/colorpicker/bootstrap-colorpicker.min.css') }}">
     <style>
         .colorpicker {
@@ -39,31 +41,48 @@
             <div class="box-header with-border">
                 <h3 class="box-title">Display all candidates</h3>
             </div>
-            <div class="box-body table-responsive no-padding">
-                <table class="table table-hover">
-                <tr>
-                    <th>#</th>
-                    <th>Candidate Name</th>
-                    <th>Position</th>
-                    <th>Party</th>
-                    <th>Action</th>
-                </tr>
-                @foreach($candidates as $candidate)
-                    <tr>
-                        <td class="hide id">{{$candidate->strCandId}}</td>
-                        <td>{{++$intCounter}}</td>
-                        <td class="name">{{$candidate->strMemFname}} {{$candidate->strMemLname}}</td>
-                        <td class="leader">{{$candidate->strPosName}}</td>
-                        <td class="color">{{$candidate->strPartyName}}</td>
-                        <!-- if else to make the independent party not editable/deletable -->
+            <div class="box-body dataTable_wrapper">
+                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>ID</th>
+                            <th>Candidate Name</th>
+                            <th>Position</th>
+                            <th>Party</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($candidates as $candidate)
+                        <tr>
+                            
+                            <td>{{++$intCounter}}</td>
+                            <td class="id">{{$candidate->strCandId}}</td>
+                            <td class="name">{{$candidate->strMemFname}} {{$candidate->strMemLname}}</td>
+                            <td class="leader">{{$candidate->strPosName}}</td>
+                            <td class="color">{{$candidate->strPartyName}}</td>
+                            <!-- if else to make the independent party not editable/deletable -->
                        
                             <td>
                                 <button class="btn btn-warning btn-sm editCandidate" data-toggle="modal" title="Edit"><i class="glyphicon glyphicon-edit"></i></button>
                                 <button class="btn btn-danger btn-sm delCandidate" data-toggle="tooltip" title="Delete"><i class="glyphicon glyphicon-trash"></i></button>
                             </td>
                        
-                    </tr>
-                @endforeach
+                        </tr>
+                        @endforeach
+                    
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>#</th>
+                            <th>ID</th>
+                            <th>Candidate Name</th>
+                            <th>Position</th>
+                            <th>Party</th>
+                            <th>Action</th>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
             <div class="box-footer">
@@ -87,6 +106,15 @@
     <!-- Edit Form -->
 @stop 
 @section('script')
+<script src="{{ URL::asset('assets/datatables/datatables/media/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ URL::asset('assets/datatables/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js') }}"></script>
+<script>
+    $(document).ready(function() {
+        $('#dataTables-example').DataTable({
+                responsive: true
+        });
+    });
+</script>
 <script>
     $(document).ready(function(){
         $('[data-toggle="tooltip"]').tooltip(); 
