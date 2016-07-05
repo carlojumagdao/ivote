@@ -142,7 +142,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-5">
         <div class="box">
             <div class="box-header with-border">
                 <h3 class="box-title"><span class="glyphicon glyphicon-calendar"></span> Start Date</h3>
