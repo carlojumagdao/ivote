@@ -22,8 +22,10 @@ class gensetController extends Controller
     		$datEnd = $value->datSetEnd;
     		$blSurvey = $value->blSetSurvey;
     		$blParty = $value->blSetParty;
+            $strHeaders = $value->strHeader;
+            /*$strSetLogo = $value->txtSetLogo;*/
     	}
-        return view('Settings.general', ['strElecName' => $strElecName,'strElecDesc' => $strElecDesc,'datStart' => $datStart,'datEnd' => $datEnd,'blSurvey' => $blSurvey,'blParty' => $blParty]);
+        return view('Settings.general', ['strElecName' => $strElecName,'strElecDesc' => $strElecDesc,'datStart' => $datStart,'datEnd' => $datEnd,'blSurvey' => $blSurvey,'blParty' => $blParty, 'strHeaders' => $strHeaders]);
     }
     public function save(Request $request){
                 
@@ -31,6 +33,8 @@ class gensetController extends Controller
 			'txtElectionTitle' => 'required',
 			'txtElectionDesc' => 'required',
             'txtSchedule' => 'required',
+            'txtHeader' => 'required',
+            'logo' => 'mimes:jpeg,jpg,png,bmp|max:10000',
 		);
 		$messages = [
 		    'required' => 'The :attribute field is required.',
@@ -39,6 +43,7 @@ class gensetController extends Controller
 		    'txtElectionTitle' => 'Election Title',
 			'txtElectionDesc' => 'Election Description',
             'txtSchedule' => 'Schedule',
+            'txtHeader' => 'Header'
 		);
         $validator = Validator::make($request->all(),$rules,$messages);
         $validator->setAttributeNames($niceNames); 
@@ -53,6 +58,12 @@ class gensetController extends Controller
             $enddate = explode("/", $pieces[1]);
             $finalEnddate = "$enddate[2]-$enddate[0]-$enddate[1]";
             
+            $destinationPath =  'assets/images/'; // upload path
+            $extension = $request->file('logo')->getClientOriginalExtension(); // getting image extension
+            $date = date("Ymdhis");
+            $filename = $date.'-'.rand(111111,999999).'.'.$extension;
+            
+            
 
             $GenSet = GenSet::find(1);
             $GenSet->strSetElecName = $request->input('txtElectionTitle');
@@ -61,6 +72,12 @@ class gensetController extends Controller
             $GenSet->datSetEnd = $finalEnddate;
             $GenSet->blSetSurvey = $request->input('txtSurveyStatus');
             $GenSet->blSetParty = $request->input('txtPartyStatus');
+            $GenSet->strHeader = $request->input('txtHeader');
+              if ($request->file('logo')->isValid()) {
+                $request->file('logo')->move($destinationPath, $filename);
+                $GenSet->txtSetLogo = $filename;
+
+            }
             $GenSet->save();
         }catch (\Illuminate\Database\QueryException $e){
             $errMess = $e->getMessage();

@@ -40,12 +40,46 @@
                 </div>
             </div>
             <div class="box-body">
-                {!! Form::open( array(
-                    'method' => 'post',
-                    'id' => 'form-add-setting',
-                    'action' => 'gensetController@save',
-                    'class' => 'col s12', 
-                ) ) !!}
+                    <center> <h4>Logo Picture</h4> 
+                    <div class="col s4">
+                        <div class="card-panel2 tooltipped" data-position="top" data-delay="50" data-tooltip="logo picture">
+                            <img id="cand-pic1" src="../assets/images/logo.png" width="180px" /> 
+                        </div>
+                    </div>
+                    </center>
+                    <div class="form-group col-md-12 ">
+                         <span class="btn btn-default btn-file">
+                         {!! Form::open( array(
+                            'method' => 'post',
+                            'id' => 'form-add-setting',
+                            'action' => 'gensetController@save',
+                            'enctype' => 'multipart/form-data',
+                            'class' => 'col s12', 
+                         ) ) !!}
+                        {!! Form::label( 'file', 'File Path:' ) !!}
+                        {!! Form::file
+                            ('file',array(
+                            'id' => 'file',
+                            'name' => 'logo',
+                            'class' => 'form-control btn btn-success btn-xs',
+                            'style' => 'display:none',
+                            'onchange' => '$("#upload-file-info").html($(this).val());readURL(this)',
+                            'required' => true,)) 
+                        !!}
+                        </span>
+                        <span class='label label-info' id="upload-file-info"></span>
+                    </div>
+                    <div class="form-group col-md-12 ">
+                        {!! Form::label( 'Header', 'Header:' ) !!}
+                        {!! Form::text
+                            ('Header', $strHeaders, array(
+                            'id' => 'Header',
+                            'placeholder' => "Type the party header here",
+                            'name' => 'txtHeader',
+                            'class' => 'form-control',
+                            'required' => true,)) 
+                        !!}  
+                    </div>
                     <div class="form-group col-md-12 ">
                     {!! Form::label( 'ElectionTitle', 'Election Title:' ) !!}
                         {!! Form::text
@@ -256,6 +290,25 @@
             $( "#party" ).val(0);
         }
     });
+</script>
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip(); 
+    });
+</script>
+<script> 
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#cand-pic1')
+                    .attr('src', e.target.result)
+                    .width(150)
+                    .height(150);
+                };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
 </script>
 
 @stop

@@ -12,7 +12,8 @@ use DB;
 class MailController extends Controller
 {
     public function send(Request $request){
-        
+
+    
         $id = $request->input('id');
         $results= DB::select('SELECT CONCAT(strMemFname," ",strMemLname) AS Name, strMemPasscode , md5(strMemPasscode) AS Passcode, strMemEmail FROM tblMember WHERE strMemberId = ?',[$id] );
         foreach($results as $result) {
@@ -27,5 +28,8 @@ class MailController extends Controller
                 }
                 $message->to("$email")->subject('iVote++ Passcode!');
         });
+
+        
+
     }
 }

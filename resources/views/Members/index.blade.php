@@ -196,7 +196,7 @@
                             @endif    
                             <td>
                                 <a href="member/edit/{{$value->strMemberId}}" class="btn btn-warning btn-sm edit" title="Edit"><i class="glyphicon glyphicon-edit"></i></a>
-                                <a class="btn btn-primary btn-sm send" data-toggle="tooltip" title="Send Passcode"><i class="glyphicon glyphicon-send"></i></a>
+                                <a class="btn btn-primary btn-sm send sendMember" data-toggle="tooltip" title="Send Passcode"><i class="glyphicon glyphicon-send"></i></a>
                                 <button class="btn btn-danger btn-sm delMember" data-toggle="tooltip" title="Delete"><i class="glyphicon glyphicon-trash"></i></button>
                             </td>
                         </tr>
@@ -224,6 +224,15 @@
             <input type="hidden" name="id" id="delmem">
         </form>
     </div>
+
+
+    <div class="hide">
+        <form method="POST" action="{{ URL::to('/member/send') }}" id="sendform">
+            <input type="hidden" name="id" id="sendmem">
+        </form>
+    </div>
+
+
     <div class="loading hide">Loading&#8230;</div>
 @stop 
 @section('script')
@@ -246,6 +255,17 @@
         else
             return false;
     });
+
+
+
+    $(document).on("click", ".sendMember", function(){
+       
+            var id = $(this).parent().parent().find('.id').text();
+            document.getElementById('sendmem').value = id;
+            document.getElementById('sendform').submit();
+       
+    });
+
 </script>
 <script>
     $(document).ready(function() {

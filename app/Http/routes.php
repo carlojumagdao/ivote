@@ -65,9 +65,14 @@ Route::group(['middleware' => 'auth'], function(){
 		'uses' => 'formController@delete',
 		'as' => 'member.delete'
 	));
+
 	Route::post('member/email', array(
     'uses' => 'MailController@send',
     'as' => 'member.email'
+	));
+	Route::post('member/send', array(
+		'uses' => 'formController@send',
+		'as' => 'member.send'
 	));
 	// Member //
 
@@ -84,6 +89,23 @@ Route::group(['middleware' => 'auth'], function(){
 		'as' => 'genset.save'
 	));
 	// General Setting //
+    
+    // UI Setting //
+    Route::get('/settings/UI', function(){
+		return view('Settings.UI');
+    });
+    Route::post('/settings/UI/add', array(
+		'uses' => 'UIController@add',
+		'as' => 'UI.add'
+	));
+	
+	Route::get('/getPDF',
+		'PDFController@getPDF');
+	/*Route::get('/settings/pdfile',function(){
+		'uses' => 'PDFController@PDFunct',
+		'as' => 'settings.pdfile'
+	});*/
+    // UI Setting //
 
 
 	// Security Questions //
@@ -173,8 +195,37 @@ Route::group(['middleware' => 'auth'], function(){
 	// Survey //
 
 
-	//user//
+	
 
+    // Candidates //
+    Route::get('/candidates', array(
+		'uses' => 'candidateController@index',
+		'as' => 'candidate.index'
+	));
+    Route::get('/candidates/add', array(
+		'uses' => 'candidateController@add',
+		'as' => 'candidate.add'
+	));
+    Route::post('/candidates/add', array(
+		'uses' => 'candidateController@newCandidate',
+		'as' => 'candidate.newCandidate'
+	));
+    Route::post('/candidates/delete', array(
+		'uses' => 'candidateController@delete',
+		'as' => 'candidate.delete'
+	));
+    Route::post('/candidates/', array(
+		'uses' => 'candidateController@editpage',
+		'as' => 'candidate.edit'
+	));
+    Route::post('/candidates/edit', array(
+		'uses' => 'candidateController@update',
+		'as' => 'candidate.update'
+	));
+    
+    // Candidates //
+
+    //user//
 	Route::get('/user', array(
 		'uses' => 'userController@index',
 		'as' => 'user.index'
@@ -198,6 +249,16 @@ Route::group(['middleware' => 'auth'], function(){
 	
 	//user//
 });
+
+// Candidate Page//
+
+    Route::get('/candidates/page', array(
+		'uses' => 'candidateController@page',
+		'as' => 'candidate.page'
+	));
+
+// Candidate Page//
+
 
 
 

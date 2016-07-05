@@ -37,6 +37,21 @@ class formController extends Controller
         $request->session()->flash('message', 'Successfully deleted.');  
         return Redirect::back();
     } 
+
+    public function send(Request $request){
+        $id = $request->input("id");
+                  
+            $Member = Member::find($id);
+            $Member->blMemCodeSendStat = 1;
+            $Member->save();
+        
+        //redirect
+        
+        return Redirect::back();
+    } 
+
+
+
     public function edit($id){
         $arrFieldName= array (' ');
         $arrFieldData= array (' ');
@@ -263,6 +278,8 @@ class formController extends Controller
         $request->session()->flash('message', 'Successfully added.');    
         return Redirect::back();
     }
+
+ 
     public function update(Request $request){
         $rules = array(
             'member_id' => 'required',
@@ -328,6 +345,7 @@ class formController extends Controller
         //redirect
         $request->session()->flash('message', 'Successfully updated.');    
         return Redirect::back();
+    
     }
     public function fnGenerateCode($length = 6) {
         return substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);
