@@ -1,3 +1,9 @@
+<?php 
+  $userName = session('name');
+  $userEmail = session('email');
+  $imgPath = session('picname');
+?>
+        
 <!DOCTYPE html>
 <html>
 <head>
@@ -44,26 +50,25 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="{{ URL::asset('assets/images/Avatar.jpg') }}" class="user-image" alt="User Image">
-              <span class="hidden-xs">Carlo Jumagdao</span>
+              <img src="{{ URL::asset('assets/images/'.$imgPath.'') }}" class="user-image" alt="User Image">
+              <span class="hidden-xs"><?php echo $userName; ?></span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="{{ URL::asset('assets/images/Avatar.jpg') }}" class="img-circle" alt="User Image">
+                <img src="{{ URL::asset('assets/images/'.$imgPath.'') }}" class="img-circle" alt="User Image">
 
                 <p>
-                  Carlo Jumagdao - Web Developer
-                  <small>Member since Nov. 2012</small>
+                  <?php echo $userName; ?>
                 </p>
               </li>
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
+                  <a href="{{ URL::to('/user/profile') }}" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="{{ URL::to('/auth/logout') }}" class="btn btn-default btn-flat">Sign out</a>
                 </div>
               </li>
             </ul>
@@ -82,10 +87,10 @@
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="{{ URL::asset('assets/images/Avatar.jpg') }}" class="img-circle" alt="User Image">
+          <img src="{{ URL::asset('assets/images/'.$imgPath.'') }}" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>Carlo Jumagdao</p>
+          <p><?php echo $userName; ?></p>
           <a href="#">Administrator</a>
         </div>
       </div>
@@ -166,8 +171,8 @@
             <span>Users</span> <i class="fa fa-angle-left pull-right"></i>
           </a>
           <ul class="treeview-menu">
-            <li><a href="../layout/boxed.html"><i class="fa fa-circle-o"></i> All Users</a></li>
-            <li><a href="../layout/fixed.html"><i class="fa fa-circle-o"></i> Add New</a></li>
+            <li><a href="{{ URL::to('/user') }}"><i class="fa fa-circle-o"></i> All Users</a></li>
+            <li><a href="{{ URL::to('/user/create') }}"><i class="fa fa-circle-o"></i> Add New</a></li>
           </ul>
         </li>
         <li class="header">RESULTS</li>

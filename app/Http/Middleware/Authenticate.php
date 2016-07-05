@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
+use Auth;
 
 class Authenticate
 {
@@ -41,7 +42,11 @@ class Authenticate
                 return redirect()->guest('auth/login');
             }
         }
-
+        if (Auth::user()->blDelete){
+            return redirect()->guest('auth/logout');
+        }
+        session(['name' => Auth::user()->name, 'email' => Auth::user()->email, 'picname' => Auth::user()->txtPath,
+            'id' => Auth::user()->id, 'admin' => Auth::user()->blAdmin]);
         return $next($request);
     }
 }
