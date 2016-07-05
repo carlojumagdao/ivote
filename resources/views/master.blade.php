@@ -144,8 +144,8 @@
             <span>Survey</span> <i class="fa fa-angle-left pull-right"></i>
           </a>
           <ul class="treeview-menu">
-            <li><a href="../layout/boxed.html"><i class="fa fa-circle-o"></i> All Surveys</a></li>
-            <li><a href="../layout/fixed.html"><i class="fa fa-circle-o"></i> Add New</a></li>
+            <li><a href="{{ URL::to('/survey') }}"><i class="fa fa-circle-o"></i> Manage Survey</a></li>
+            <li><a target="_blank" href="{{ URL::to('/survey/view') }}"><i class="fa fa-circle-o"></i> Preview</a></li>
           </ul>
         </li>
         <li class="treeview">

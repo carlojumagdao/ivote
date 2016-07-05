@@ -153,7 +153,50 @@ Route::group(['middleware' => 'auth'], function(){
 	));
 	// Position //
 
+	// Survey //
+	Route::get('/survey', array(
+		'uses' => 'surveyController@index',
+		'as' => 'survey.index'
+	));
+	Route::post('survey/save', array(
+		'uses' => 'surveyController@save',
+		'as' => 'survey.save'
+	));
+	Route::get('survey/render', array(
+		'uses' => 'surveyController@render',
+		'as' => 'survey.render'
+	));
+	Route::get('survey/view', array(
+		'uses' => 'surveyController@view',
+		'as' => 'survey.view'
+	));
+	// Survey //
 
+
+	//user//
+
+	Route::get('/user', array(
+		'uses' => 'userController@index',
+		'as' => 'user.index'
+	));
+	Route::get('user/create', array(
+		'uses' => 'userController@create',
+		'as' => 'user.create'	
+	));
+	Route::post('user/add', array(
+		'uses' => 'userController@add',
+		'as' => 'user.add'
+	));
+	Route::post('user/delete', array(
+		'uses' => 'userController@delete',
+		'as' => 'user.delete'
+	));
+	Route::get('user/profile', array(
+		'uses' => 'userController@profile',
+		'as' => 'user.profile'
+	));
+	
+	//user//
 });
 
 

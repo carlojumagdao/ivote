@@ -1,7 +1,5 @@
 <?php
 
-namespace App;
-
 class formLoader {
 
 	var $form_data;
@@ -32,8 +30,5 @@ class formLoader {
 	}
 	public function form_title(){
 		return $this->form_data->title;
-	}
-	public function form_description(){
-		return $this->form_data->description;
 	}
 }
