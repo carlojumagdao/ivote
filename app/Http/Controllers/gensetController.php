@@ -56,7 +56,7 @@ class gensetController extends Controller
             $pieces = explode(" - ", $date);
             $startdate = explode("/", $pieces[0]);
             $finalStartdate = "$startdate[2]-$startdate[0]-$startdate[1]";
-            $enddate = explode("/", $pieces[0]);
+            $enddate = explode("/", $pieces[1]);
             $finalEnddate = "$enddate[2]-$enddate[0]-$enddate[1]";
             
             
