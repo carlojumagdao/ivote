@@ -57,51 +57,14 @@
                       <b>Email</b> <a class="pull-right"><?php echo $userEmail; ?></a>
                     </li>
                 </ul>
-                <button class="btn btn-primary btn-block modal-title" data-toggle="modal" data-target="#add"><b>Edit Profile</b></button>
+                
+                <a href="{{ URL::to('/user/edit') }}" class="btn btn-primary ">Edit Profile</a>
             </div>
             <div class="box-footer">
                 Footer
             </div>
         </div>
     </div> 
-        <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Edit Profile</h4>
-                </div>
-            <div class="modal-body">
-                <div class="form-group col-md-12 ">
-                        {!! Form::label( 'Email', 'Email:' ) !!}
-                        {!! Form::email
-                            ('Email', '', array(
-                            'id' => 'Email',
-                            'placeholder' => "Email",
-                            'name' => 'email',
-                            'class' => 'form-control',
-                            'required' => true,)) 
-                        !!}  
-                </div>
-                <div class="form-group col-md-16 ">
-                        {!! Form::label( 'password', 'Password:' ) !!}
-                        {!! Form::password
-                            ('password', '', array(
-                            'id' => 'password',
-                            'maxlength' => 50,
-                            'name' => 'password',
-                            'required' => true,)) 
-                        !!}
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <input type="submit" class="btn btn-primary" name="btnSubmit" value="Submit">
-                {!! Form::close() !!}
-            </div>
-            </div>
-        </div>
-    </div>
     
 @stop 
 @section('script')

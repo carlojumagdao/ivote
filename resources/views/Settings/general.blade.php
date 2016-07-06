@@ -119,24 +119,54 @@
             </div>
 <!-- to convert to an end-user readable date -->
             <?php 
-                $convertDateStart = date('F j, Y (D)', strtotime($datStart));
-                $convertDateEnd = date('F j, Y (D)', strtotime($datEnd));
+                $convertDateStart = date('l F j, Y', strtotime($datStart));
+                $convertDateEnd = date('l F j, Y', strtotime($datEnd));
+                $pieces = explode("-", $datStart);
+                $startDate =  "$pieces[1]/$pieces[2]/$pieces[0]";
+                $piece2 = explode("-",$datEnd);
+                $endDate = "$piece2[1]/$piece2[2]/$piece2[0]";
+
+                // %datStart = YYYY-MM-DD
+                $dateretrieve = "$startDate-$endDate";
                 ?>
-<!--  -->
             <div class="box-body">
                 <div class="form-group">
                     <label>Date Range:</label>
-                    <label>Active from {{$convertDateStart}} until {{$convertDateEnd}}</label>
                     <div class="input-group">
                         <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                         </div>
-                        <input type="text" name="txtSchedule" class="form-control pull-right" id="reservation">
+                        <input type="text" name="txtSchedule" class="form-control pull-right" id="reservation" value={{$dateretrieve}}>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="col-md-5">
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title"><span class="glyphicon glyphicon-calendar"></span> Start Date</h3>
+            </div>        
+            <div class="box-body">
+                <div class="form-group">
+                    <label>{{$convertDateStart}}</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-5">
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title"><span class="glyphicon glyphicon-calendar"></span> End Date</h3>
+            </div>        
+            <div class="box-body">
+                <div class="form-group">
+                    <label>{{$convertDateEnd}}</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="col-md-5">
         <div class="box">
             <div class="box-header with-border">

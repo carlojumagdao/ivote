@@ -246,16 +246,24 @@ Route::group(['middleware' => 'auth'], function(){
 		'uses' => 'userController@profile',
 		'as' => 'user.profile'
 	));
+	Route::post('user/update', array(
+		'uses' => 'userController@update',
+		'as' => 'user.update'
+	));	
+	Route::get('user/edit', array(
+		'uses' => 'userController@edit',
+		'as' => 'user.edit'
+	));
 	
 	//user//
 });
 
 // Candidate Page//
 
-    Route::get('/candidates/page', array(
-		'uses' => 'candidateController@page',
-		'as' => 'candidate.page'
-	));
+Route::get('/candidates/page', array(
+	'uses' => 'candidateController@page',
+	'as' => 'candidate.page'
+));
 
 // Candidate Page//
 
@@ -276,6 +284,7 @@ Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
 // Registration //
 
+//Voting route
 Route::get('vote', array(
 		'uses' => 'votingController@page',
 		'as' => 'voting.page'
@@ -284,3 +293,11 @@ Route::post('vote', array(
 		'uses' => 'votingController@cast',
 		'as' => 'voting.cast'
 	));
+//Voting Route
+//Log In User//
+Route::get('/LogInUser', array(
+	'uses' => 'LogInUserController@LogInUser',
+	'as' => 'LogInUser'
+));
+//Log In User//
+>>>>>>> origin/master
