@@ -68,7 +68,7 @@
                 </center>
                 <div class="form-group col-md-8 ">
                     <span class="btn btn-default btn-file">
-                    {!! Form::label( 'file', 'Change Photo:' ) !!}
+                    {!! Form::label( 'file', 'Change Photo' ) !!}
                     {!! Form::file
                         ('file', array(
                         'id' => 'file',

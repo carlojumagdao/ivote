@@ -96,10 +96,8 @@
                         <input id = "password" name = "password" type="password" class="form-control" placeholder="Must be at least 6 characters.">
                     </div>
                     <div class="form-group col-md-12 ">
-                        <label for="password">Confrim Password:</label>
+                        <label for="password">Confirm Password:</label>
                         <input id = "confirmpassword" name = "confirmpassword" type="password" class="form-control" placeholder="Re-enter Password.">
-                        <label for="pwd">Password:</label>
-                        <input type="password" class="form-control" name="password" required="true" id="pwd">
                     </div>
                     <div class="form-group col-md-12 ">
                         <input type="submit" class="btn btn-primary" name="btnSubmit" value="Submit">
