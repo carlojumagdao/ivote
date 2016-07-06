@@ -7,11 +7,15 @@ use App\DynamicField AS DynamicField;
 use App\User AS User;
 use Validator;
 use DB;
+use Hash;
 use Redirect;
 use File;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Session;
+use Input;
+use Auth;
+use Crypt;
 
 class userController extends Controller
 {
@@ -45,6 +49,7 @@ class userController extends Controller
             'email' => 'required|unique:users',
             'password' => 'required',
             'image' => 'required|mimes:jpeg,jpg,png,bmp|max:10000',
+            'confirmpassword' => 'required|same:password',
         );
         $messages = [
             'required' => 'The :attribute field is required.',
@@ -55,6 +60,7 @@ class userController extends Controller
             'email' => 'Email',
             'password' => 'Password',
             'image' => 'Image',
+            'confirmpassword' => 'Confirm Password'
         );
         $validator = Validator::make($request->all(),$rules,$messages);
         $validator->setAttributeNames($niceNames); 
@@ -97,36 +103,63 @@ class userController extends Controller
         $User->blDelete = 1;
         $User->save();
         
-        //redirect
         $request->session()->flash('message', 'Successfully deleted.');  
         return Redirect::back();
     }
 
     public function update(Request $request){
-        $rules = array(
-            'password' => 'required',
+        $userPass = Auth::user()->password;
+        $oldpass = Hash::make(Input::get('oldpassword'));
+        $validator = Validator::make(Input::all(),
+            array(
+                'oldpassword' => 'required',
+                'newpassword' => 'required|min:6',
+                'confirmpassword' => 'required|same:newpassword',
+            )
         );
-        $messages = [
-            'required' => 'The :attribute field is required.',
-        ];
-        $validator = Validator::make($request->all(),$rules,$messages);
+        $niceNames = array(
+            'oldpassword' => 'Password',
+            'newpassword' => 'New Password',
+            'confirmpassword' => 'Confirm Password',
+        );
         $validator->setAttributeNames($niceNames); 
-        if ($validator->fails()) {
+        if($validator->fails()) {
             return Redirect::back()->withErrors($validator);
-        }
+            } 
         try{
-            $User = User::find($request->input('id'));
-            $User->password = $request->input(Hash::make('password'));
-            
-            $request->session()->flash('message', "Successfully Updated"); 
-            $User->save();
+            $userId = session('id'); 
+            $imgPath = session('picname');
+            $oldpassword = Input::get('oldpassword');
+            $newpassword = Input::get('newpassword');
+
+            if ($request->hasFile('image')){
+                $destinationPath =  'assets/images/'; // upload path
+                $extension = $request->file('image')->getClientOriginalExtension(); // getting image extension
+                $date = date("Ymdhis");
+                $filename = $date.'-'.rand(111111,999999).'.'.$extension;
+                      
+                if ($request->file('image')->isValid()) {
+                    $request->file('image')->move($destinationPath, $filename);
+                    $imgPath = $filename;                     
+                }
+            }
+            else{
+                $imgPath = $imgPath;
+            }
+            if (Hash::check($oldpassword, $userPass)){
+                $user = DB::table('users')
+                        ->where('id', $userId)
+                        ->update(['txtPath' => $imgPath,'password' => bcrypt($request['newpassword'])]);
+                $request->session()->flash('message', "Profile Successfully Updated");   
+            }else{
+                $request->session()->flash('error', "Incorrect Password!");
+                //return Redirect::back();
+            }      
+               
         }catch (\Illuminate\Database\QueryException $e){
             $errMess = $e->getMessage();
-            return Redirect::back();
         }
-        //redirect
-       
-        $User = DB::table('users')->get();
         return Redirect::back();
     }
+
 }

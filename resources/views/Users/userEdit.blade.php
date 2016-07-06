@@ -9,8 +9,14 @@
 @section('content')
 <!-- START CONTENT -->
     @section('title-page')
-        {{"Edit User"}}
+        {{"Profile"}}
     @stop  
+
+<?php 
+  $userName = session('name');
+  $userEmail = session('email');
+  $imgPath = session('picname');
+?>
     <!--start container-->
     <div class="col-md-12">
         @if ($errors->any())
@@ -29,12 +35,19 @@
                 {{ Session::get('message') }}
             </div>
         @endif
+        @if (Session::has('error'))
+            <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-ban"></i> Something went wrong!</h4>
+                {{ Session::get('error') }}
+            </div>
+        @endif
     </div>
 
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">User Form</h3>
+                <h3 class="box-title">Edit Profile</h3>
             </div>
             <div class="box-body table-responsive no-padding">
                 {!! Form::open( array(
@@ -48,13 +61,13 @@
                 <center>
                     <div class="col s12">
                         <div class="card-panel2 tooltipped" data-position="top" data-delay="50" data-tooltip="logo picture">
-                            <img id="user-pic" src="../assets/images/ivote.jpg" width="180px" style="background-size: contain" /> 
+                            <img id="user-pic" src="{{ URL::asset('assets/images/'.$imgPath.'') }}" width="180px" style="background-size: contain" /> 
                         </div>
                     </div>
                 </center>
-                <div class="form-group col-md-12 ">
+                <div class="form-group col-md-8 ">
                     <span class="btn btn-default btn-file">
-                    {!! Form::label( 'file', 'File Path:' ) !!}
+                    {!! Form::label( 'file', 'Change Photo:' ) !!}
                     {!! Form::file
                         ('file', array(
                         'id' => 'file',
@@ -67,40 +80,21 @@
                     </span>
                     <span class='label label-info' id="upload-file-info"></span>
                 </div>
-                <div class="box-body">
-                    <div class="form-group col-md-12 ">
-                        {!! Form::label( 'Name', 'Name:' ) !!}
-                        {!! Form::text
-                            ('Name', '', array(
-                            'id' => 'Name',
-                            'placeholder' => "Full Name",
-                            'name' => 'name',
-                            'class' => 'form-control',
-                            'required' => true,)) 
-                        !!}  
-                    </div>
-                    <div class="form-group col-md-12 ">
-                        {!! Form::label( 'Email', 'Email:' ) !!}
-                        {!! Form::email
-                            ('Email', '', array(
-                            'id' => 'Email',
-                            'placeholder' => "Email",
-                            'name' => 'email',
-                            'class' => 'form-control',
-                            'required' => true,)) 
-                        !!}  
-                    </div>
-                    <div class="form-group col-md-12 ">
-                        {!! Form::label( 'password', 'Password:' ) !!}
-                        {!! Form::password
-                            ('password', '', array(
-                            'id' => 'password',
-                            'maxlength' => 50,
-                            'name' => 'password',
-                            'required' => true,)) 
-                        !!}
-                    </div>
-                        <input type="submit" class="btn btn-primary" name="btnSubmit" value="Update Profile">
+                <div class="form-group col-md-8 ">
+                    <label for="oldpassword">Current Password:</label>
+                    <input id = "oldpassword" name = "oldpassword" type="password" class="form-control" placeholder="Current Password">
+                </div>
+                <div class="form-group col-md-8 ">
+                    <label for="newpassword">New Password:</label>
+                    <input id = "newpassword" name = "newpassword" type="password" class="form-control" placeholder="Must be atleast 6 characters">
+                </div>
+                <div class="form-group col-md-8 ">
+                    <label for="confirmpassword">Confirm Password:</label>
+                    <input id = "confirmpassword" name = "confirmpassword"type="password" class="form-control" placeholder="Retype new password">
+                </div>
+                <div class="form-group col-md-8 ">
+                    <input type="submit" class="btn btn-primary" name="btnSubmit" value="Update Profile">
+                </div>
                         {!! Form::close() !!}
                 </div>
             <div class="box-footer">

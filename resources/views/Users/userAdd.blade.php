@@ -91,14 +91,12 @@
                         !!}  
                     </div>
                     <div class="form-group col-md-12 ">
-                        {!! Form::label( 'password', 'Password:' ) !!}
-                        {!! Form::password
-                            ('password', '', array(
-                            'id' => 'password',
-                            'maxlength' => 50,
-                            'name' => 'password',
-                            'required' => true,)) 
-                        !!}
+                        <label for="password">Password:</label>
+                        <input id = "password" name = "password" type="password" class="form-control" placeholder="Must be at least 6 characters.">
+                    </div>
+                    <div class="form-group col-md-12 ">
+                        <label for="password">Confrim Password:</label>
+                        <input id = "confirmpassword" name = "confirmpassword" type="password" class="form-control" placeholder="Re-enter Password.">
                     </div>
                         <input type="submit" class="btn btn-primary" name="btnSubmit" value="Submit">
                         {!! Form::close() !!}
