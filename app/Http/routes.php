@@ -300,4 +300,3 @@ Route::get('/LogInUser', array(
 	'as' => 'LogInUser'
 ));
 //Log In User//
->>>>>>> origin/master
