@@ -284,6 +284,16 @@ Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
 // Registration //
 
+//Voting route
+Route::get('vote', array(
+		'uses' => 'votingController@page',
+		'as' => 'voting.page'
+	));
+Route::post('vote', array(
+		'uses' => 'votingController@cast',
+		'as' => 'voting.cast'
+	));
+//Voting Route
 //Log In User//
 Route::get('/LogInUser', array(
 	'uses' => 'LogInUserController@LogInUser',
@@ -291,9 +301,11 @@ Route::get('/LogInUser', array(
 ));
 //Log In User//
 
+
 //Countdown//
 Route::get('/Countdown', array(
 	'uses' => 'CountdownController@Count',
 	'as' => 'Countdown'
 ));
 //Countdown//
+

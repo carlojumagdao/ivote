@@ -23,23 +23,34 @@ class candidateController extends Controller
      */
     public function index()
     {
-        $candidates = DB::table('tblcandidate')
+        $PartyStatus = DB::table('tblSetting')->where('blSetParty', '=', 1)->get();
+             $candidates = DB::table('tblcandidate')
             ->join('tblmember', 'tblcandidate.strCandMemId', '=', 'tblmember.strMemberId')
             ->join('tblposition', 'tblcandidate.strCandPosId', '=', 'tblposition.strPositionId')
             ->join('tblparty', 'tblcandidate.intCandParId', '=', 'tblparty.intPartyId')
             ->where('blCandDelete', 0)
             ->select('tblcandidate.*', 'tblmember.strMemFname', 'tblmember.strMemLname', 'tblposition.strPosName', 'tblparty.strPartyName')->get();
-        return view('Candidate.candidate', ['candidates' => $candidates, 'intCounter'=>0]);
+            return view('Candidate.candidate', ['candidates' => $candidates, 'intCounter'=>0, 'party' => $PartyStatus]);
        
+        
 
     }
 
     public function add()
     {
-        $Members = DB::table('tblmember')->select('strMemberId', 'strMemFname', 'strMemLname', 'strMemMname')->get();
-        $Positions = DB::table('tblposition')->select('strPositionId', 'strPosName')->get();
-        $Parties = DB::table('tblparty')->select('intPartyId', 'strPartyName')->get();
-        return view('Candidate.add', ['Members' => $Members, 'Positions' => $Positions, 'Parties'=> $Parties]);
+        $PartyStatus = DB::table('tblSetting')->where('blSetParty', '=', 1)->get();
+        if($PartyStatus){
+            $Members = DB::table('tblmember')->select('strMemberId', 'strMemFname', 'strMemLname', 'strMemMname')->get();
+            $Positions = DB::table('tblposition')->select('strPositionId', 'strPosName')->get();
+            $Parties = DB::table('tblparty')->select('intPartyId', 'strPartyName')->get();
+            return view('Candidate.add', ['Members' => $Members, 'Positions' => $Positions, 'Parties'=> $Parties]);
+        }
+        else{
+            
+            $Members = DB::table('tblmember')->select('strMemberId', 'strMemFname', 'strMemLname', 'strMemMname')->get();
+            $Positions = DB::table('tblposition')->select('strPositionId', 'strPosName')->get();
+            return view('Candidate.addlessparty', ['Members' => $Members, 'Positions' => $Positions]);
+        }
     }
     
     public function newCandidate(Request $request)
@@ -47,8 +58,7 @@ class candidateController extends Controller
        $rules = array(
 			'member' => 'required',
 			'position' => 'required',
-			'party' => 'required',
-            'image' => 'required|mimes:jpeg,jpg,png,bmp|max:10000',
+            'image' => 'required|mimes:jpeg,jpg,png,bmp|max:50000',
 		);
 		$messages = [
 		    'required' => 'The :attribute field is required.',
@@ -56,7 +66,6 @@ class candidateController extends Controller
 		$niceNames = array(
 		    'member' => 'Candidate Name',
 		    'position' => 'Position',
-		    'party' => 'Party Affiliation',
 		);
         $validator = Validator::make($request->all(),$rules,$messages);
         $validator->setAttributeNames($niceNames); 
@@ -81,8 +90,8 @@ class candidateController extends Controller
             $Candidate->strCandId = $counter->smartcounter($latest);
             $Candidate->strCandMemId = $request->input('member');
             $Candidate->strCandPosId = $request->input('position');
-            $Candidate->intCandParId = $request->input('party');
-            
+            if ($request->has('party'))$Candidate->intCandParId = $request->input('party');
+            else $Candidate->intCandParId = 1;
             if ($request->file('image')->isValid()) {
                 $request->file('image')->move($destinationPath, $filename);
                 $Candidate->txtCandPic = $filename;
@@ -116,22 +125,31 @@ class candidateController extends Controller
     }
     
     public function editpage(Request $request){
+        $PartyStatus = DB::table('tblSetting')->where('blSetParty', '=', 1)->get();
         $id = $request->input('id');
         $Candidate = Candidate::find($id);
         
+        if($PartyStatus){
+            $Members = DB::table('tblmember')->select('strMemberId', 'strMemFname', 'strMemLname', 'strMemMname')->get();
+            $Positions = DB::table('tblposition')->select('strPositionId', 'strPosName')->get();
+            $Parties = DB::table('tblparty')->select('intPartyId', 'strPartyName')->get();
+            return view('Candidate.edit', ['Members' => $Members, 'Positions' => $Positions, 'Parties'=> $Parties, 'Candidate'=>$Candidate]);
+        }
+        else{
+            $Members = DB::table('tblmember')->select('strMemberId', 'strMemFname', 'strMemLname', 'strMemMname')->get();
+            $Positions = DB::table('tblposition')->select('strPositionId', 'strPosName')->get();
+            $Parties = DB::table('tblparty')->select('intPartyId', 'strPartyName')->get();
+            return view('Candidate.editlessparty', ['Members' => $Members, 'Positions' => $Positions, 'Candidate'=>$Candidate]);
+        }
         
-        $Members = DB::table('tblmember')->select('strMemberId', 'strMemFname', 'strMemLname', 'strMemMname')->get();
-        $Positions = DB::table('tblposition')->select('strPositionId', 'strPosName')->get();
-        $Parties = DB::table('tblparty')->select('intPartyId', 'strPartyName')->get();
-        return view('Candidate.edit', ['Members' => $Members, 'Positions' => $Positions, 'Parties'=> $Parties, 'Candidate'=>$Candidate]);
+       
     }
     
     public function update(Request $request){
         $rules = array(
 			'member' => 'required',
 			'position' => 'required',
-			'party' => 'required',
-            'image' => 'mimes:jpeg,jpg,png,bmp|max:10000',
+            'image' => 'mimes:jpeg,jpg,png,bmp|max:50000',
 		);
 		$messages = [
 		    'required' => 'The :attribute field is required.',
@@ -151,7 +169,8 @@ class candidateController extends Controller
             $Candidate = Candidate::find($id);
             $Candidate->strCandMemId = $request->input('member');
             $Candidate->strCandPosId = $request->input('position');
-            $Candidate->intCandParId = $request->input('party');
+            if ($request->has('party'))$Candidate->intCandParId = $request->input('party');
+            else $Candidate->intCandParId = 1;
             
             if ($request->hasFile('image')){
 
@@ -180,7 +199,7 @@ class candidateController extends Controller
     }
     
     public function page(){
-        $party = DB::table('tblsetting')->select('blSetParty')->get();
+        $party = DB::table('tblSetting')->where('blSetParty', '=', 1)->get();
         
         if($party){
             
@@ -200,6 +219,17 @@ class candidateController extends Controller
             return view('Candidate.page', ['partylist'=>$partylist, 'positions'=>$positions, 'candidates'=>$candidates, 'election' => $election]);
             
             
+        }
+        
+        else {
+            $positions = DB::table('tblposition')->get();
+            $candidates = DB::table('tblcandidate')
+                            ->join('tblmember', 'tblcandidate.strCandMemId', '=', 'tblmember.strMemberId')
+                            ->where('blCandDelete', '=', 0)
+                            ->select('tblcandidate.*', 'tblmember.strMemFname', 'tblmember.strMemLname')
+                            ->get();
+            $election = DB::table('tblsetting')->get();
+            return view('Candidate.pagelessparty', [ 'positions'=>$positions, 'candidates'=>$candidates, 'election' => $election]);
         }
         
     

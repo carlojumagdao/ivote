@@ -49,7 +49,7 @@
                             <th>ID</th>
                             <th>Candidate Name</th>
                             <th>Position</th>
-                            <th>Party</th>
+                            @if($party)<th>Party</th>@endif
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -61,7 +61,7 @@
                             <td class="id">{{$candidate->strCandId}}</td>
                             <td class="name">{{$candidate->strMemFname}} {{$candidate->strMemLname}}</td>
                             <td class="leader">{{$candidate->strPosName}}</td>
-                            <td class="color">{{$candidate->strPartyName}}</td>
+                            @if($party)<td class="color">{{$candidate->strPartyName or 'disabled'}}</td>@endif
                             <!-- if else to make the independent party not editable/deletable -->
                        
                             <td>
@@ -79,7 +79,7 @@
                             <th>ID</th>
                             <th>Candidate Name</th>
                             <th>Position</th>
-                            <th>Party</th>
+                            @if($party)<th>Party</th>@endif
                             <th>Action</th>
                         </tr>
                     </tfoot>

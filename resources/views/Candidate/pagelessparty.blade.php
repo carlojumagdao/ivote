@@ -43,17 +43,15 @@
             <h3 class="box-title">Candidates</h3>
         </div>
         <div class="box-body" style="padding: 40px">
-        @foreach($partylist as $party)
-            <div class="row panel" style="border-left: 4px solid {{$party->strPartyColor}}; background-color:#eee">
-                 <div class="col-md-12">
-                     <h3>{{$party->strPartyName}}</h3>
+            
             @foreach($positions as $position)
-                   
+                   <div class="row panel" style="border-left: 4px solid #2c879; background-color:#eee">
+                 <div class="col-md-12">
+                     <h3>{{$position->strPosName}}</h3>
                 
                 @foreach($candidates as $candidate)
                      
                     @if($candidate->strCandPosId == $position->strPositionId )
-                    @if($candidate->intCandParId == $party->intCandParId)
                      <div class="col-md-2">
                          <div class="thumbnail">
                              <div class="panel tooltipped" data-position="top" data-delay="50" data-tooltip="logo picture">
@@ -61,17 +59,14 @@
                              </div>
                              <div class="caption">
                                  <h4>{{$candidate->strMemFname}} {{$candidate->strMemLname}}</h4>
-                                 <h5> {{$position->strPosName}}</h5>
                              </div>
                          </div>
                     </div>
                     @endif
-                    @endif
-                @endforeach
-            @endforeach
+                @endforeach           
                 </div>
             </div>
-        @endforeach
+            @endforeach
         </div>
         
     </div>
