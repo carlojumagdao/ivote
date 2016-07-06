@@ -31,7 +31,7 @@
         @endif
     </div>
 
-    <div class="col-md-12">
+    <div class="col-md-8">
         <div class="box">
             <div class="box-header with-border">
                 <h3 class="box-title">User Form</h3>
@@ -47,6 +47,7 @@
                 ) ) !!}
                 <center>
                     <div class="col s12">
+                        <br>
                         <div class="card-panel2 tooltipped" data-position="top" data-delay="50" data-tooltip="logo picture">
                             <img id="user-pic" src="../assets/images/ivote.jpg" width="180px" style="background-size: contain;" /> 
                         </div>
@@ -84,7 +85,7 @@
                         {!! Form::email
                             ('Email', '', array(
                             'id' => 'Email',
-                            'placeholder' => "Email",
+                            'placeholder' => "Email address",
                             'name' => 'email',
                             'class' => 'form-control',
                             'required' => true,)) 
@@ -97,8 +98,12 @@
                     <div class="form-group col-md-12 ">
                         <label for="password">Confrim Password:</label>
                         <input id = "confirmpassword" name = "confirmpassword" type="password" class="form-control" placeholder="Re-enter Password.">
+                        <label for="pwd">Password:</label>
+                        <input type="password" class="form-control" name="password" required="true" id="pwd">
                     </div>
+                    <div class="form-group col-md-12 ">
                         <input type="submit" class="btn btn-primary" name="btnSubmit" value="Submit">
+                    </div>
                         {!! Form::close() !!}
                 </div>
             <div class="box-footer">

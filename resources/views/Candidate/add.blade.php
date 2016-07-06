@@ -4,6 +4,7 @@
 @stop   
 @section('style')
     <link rel="stylesheet" href="{{ URL::asset('assets/plugins/colorpicker/bootstrap-colorpicker.min.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('assets/plugins/select2/select2.min.css') }}">
     <style>
         .colorpicker {
             z-index: 9999 !important;
@@ -34,7 +35,7 @@
             </div>
         @endif
     </div>
-    <div class="col-md-12">
+    <div class="col-md-8">
         <div class="box">
             <div class="box-header with-border">
                 <h3 class="box-title">Add New Candidate</h3>
@@ -50,6 +51,7 @@
                 ) ) !!}
                 <center>
                 <div class="col s4">
+                    <br>
                     <div class="card-panel2 tooltipped" data-position="top" data-delay="50" data-tooltip="logo picture">
                         <img id="cand-pic" src="../assets/images/Avatar.jpg" style="max-width:180px; background-size: contain" /> 
                     </div>
@@ -77,7 +79,7 @@
                      {!! Form::label( 'member', 'Candidate Name:' ) !!}
                      </div>
                      <div class="col-md-10">
-                     <select name="member" class="form-control" required>
+                     <select name="member" class="form-control select2" required>
                          <option></option>
                          @foreach($Members as $Member)
                          <option value='{{$Member->strMemberId}}'>{{$Member->strMemFname}} {{$Member->strMemLname}}</option>
@@ -90,7 +92,7 @@
                      {!! Form::label( 'position', 'Position:' ) !!}
                     </div>
                     <div class="col-md-10">
-                     <select name="position" class="form-control" required>
+                     <select name="position" class="form-control select2" required>
                          <option></option>
                          @foreach($Positions as $Position)
                          <option value='{{$Position->strPositionId}}'>{{$Position->strPosName}}</option>
@@ -103,18 +105,20 @@
                      {!! Form::label( 'party', 'Party Affiliation:' ) !!}
                     </div>
                     <div class="col-md-10">
-                     <select name="party" class="form-control" required>
+                     <select name="party" class="form-control select2" required>
                          @foreach($Parties as $Party)
                          <option value='{{$Party->intPartyId}}'>{{$Party->strPartyName}}</option>
                          @endforeach
                      </select>
                     </div>
                 </div>
-                
+                <div class="form-group col-md-12 ">
+                    <input type="submit" class="btn btn-primary" name="btnSubmit" value="Submit">
+                </div>
+                {!! Form::close() !!}
             </div>
             <div class="box-footer">
-                <input type="submit" class="btn btn-primary" name="btnSubmit" value="Submit">
-                {!! Form::close() !!}
+                footer text
             </div>
         </div>
     </div> 
@@ -160,6 +164,7 @@
 <script src="{{ URL::asset('assets/plugins/select2/select2.full.min.js') }}"></script>
 <script src="{{ URL::asset('assets/plugins/colorpicker/bootstrap-colorpicker.min.js') }}"></script>
 <script>
+    $(".select2").select2();
     //Colorpicker
     $(".my-colorpicker1").colorpicker();
     //color picker with addon

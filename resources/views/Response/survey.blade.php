@@ -54,9 +54,6 @@
         h4{
             font-size: 28px;
         }
-        button{
-            visibility: hidden;
-        }
   </style>
 </head>
 <body class="hold-transition login-page">

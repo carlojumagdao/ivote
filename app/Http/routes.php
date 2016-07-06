@@ -273,16 +273,16 @@ Route::get('/candidates/page', array(
 // Member Form //
 
 
-// Authentication //
+// Authentication Admin //
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
 Route::get('auth/logout', 'Auth\AuthController@getLogout');
-// Authentication //
+// Authentication Admin//
 
-// Registration //
+// Registration Admin//
 Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
-// Registration //
+// Registration Admin//
 
 //Voting route
 Route::get('vote', array(
@@ -295,8 +295,8 @@ Route::post('vote', array(
 	));
 //Voting Route
 //Log In User//
-Route::get('/LogInUser', array(
-	'uses' => 'LogInUserController@LogInUser',
+Route::get('/', array(
+	'uses' => 'responseController@LogInUser',
 	'as' => 'LogInUser'
 ));
 //Log In User//
@@ -309,3 +309,17 @@ Route::get('/Countdown', array(
 ));
 //Countdown//
 
+Route::group(['middleware' => 'userlog'], function(){
+
+	Route::post('/survey/answer', array(
+		'uses' => 'responseController@survey',
+		'as' => 'surveyanswer'
+	));
+
+});
+
+Route::post('/survey/add', array(
+	'uses' => 'responseController@postsurvey',
+	'as' => 'survey.postsurvey'
+));
+//Log In User//

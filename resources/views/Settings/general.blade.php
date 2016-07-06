@@ -5,6 +5,11 @@
 @section('style')
 <link rel="stylesheet" href="{{ URL::asset('assets/plugins/daterangepicker/daterangepicker-bs3.css') }}">
 <link rel="stylesheet" href="{{ URL::asset('assets/switch-css/bootstrap-switch.min.css') }}">
+<style>
+    h3{
+        margin: -10px;
+    }
+</style>
 @stop
 @section('content')
 <!-- START CONTENT -->
@@ -55,13 +60,14 @@
                             'action' => 'gensetController@save',
                             'enctype' => 'multipart/form-data',
                             'class' => 'col s12', 
+                            'novalidate' => 'novalidate'
                          ) ) !!}
                         {!! Form::label( 'file', 'File Path:' ) !!}
                         {!! Form::file
                             ('file',array(
                             'id' => 'file',
                             'name' => 'logo',
-                            'class' => 'form-control btn btn-success btn-xs',
+                            'class' => 'form-control',
                             'style' => 'display:none',
                             'onchange' => '$("#upload-file-info").html($(this).val());readURL(this)',
                             'required' => true,)) 
@@ -117,7 +123,7 @@
                     <i class="fa fa-minus"></i></button>
                 </div>
             </div>
-<!-- to convert to an end-user readable date -->
+            <!-- to convert to an end-user readable date -->
             <?php 
                 $convertDateStart = date('l F j, Y', strtotime($datStart));
                 $convertDateEnd = date('l F j, Y', strtotime($datEnd));
@@ -130,6 +136,8 @@
                 $dateretrieve = "$startDate-$endDate";
                 ?>
             <div class="box-body">
+            Start date: <i>{{$convertDateStart}}</i><br>
+            End date : <i>{{$convertDateEnd}}</i>
                 <div class="form-group">
                     <label>Date Range:</label>
                     <div class="input-group">
@@ -142,31 +150,6 @@
             </div>
         </div>
     </div>
-    <div class="col-md-5">
-        <div class="box">
-            <div class="box-header with-border">
-                <h3 class="box-title"><span class="glyphicon glyphicon-calendar"></span> Start Date</h3>
-            </div>        
-            <div class="box-body">
-                <div class="form-group">
-                    <label>{{$convertDateStart}}</label>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-5">
-        <div class="box">
-            <div class="box-header with-border">
-                <h3 class="box-title"><span class="glyphicon glyphicon-calendar"></span> End Date</h3>
-            </div>        
-            <div class="box-body">
-                <div class="form-group">
-                    <label>{{$convertDateEnd}}</label>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="col-md-5">
         <div class="box">
             <div class="box-header with-border">

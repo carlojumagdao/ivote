@@ -15,7 +15,13 @@ use App\Http\Controllers\Controller;
 class surveyController extends Controller
 {
    	public function index(){
-   		return view('Survey.index');
+        $SurveyStatus = DB::table('tblSetting')->where('blSetSurvey', '=', 1)->get();
+        if($SurveyStatus){
+            return view('Survey.index');
+        } else{
+            return view('page-disabled');
+        }
+   		
    	}
    	public function save(Request $request){
         $formData = $request->input('formData');
@@ -114,14 +120,25 @@ class surveyController extends Controller
         }
     }
     public function view(){
-        $formData = DB::table('tblSurveyForm')->select('strSurveyForm','strSurveyFormTitle','strSurveyFormDesc')->get();
-        foreach ($formData as $form) {
-            $data = $form->strSurveyForm;
-            $formTitle = $form->strSurveyFormTitle;
-            $formDesc = $form->strSurveyFormDesc;
+        $SurveyStatus = DB::table('tblSetting')->where('blSetSurvey', '=', 1)->get();
+        if($SurveyStatus){
+            $formData = DB::table('tblSurveyForm')->select('strSurveyForm','strSurveyFormTitle','strSurveyFormDesc')->get();
+            $formDesign = DB::table('tblSetting')->select('strHeader','txtSetLogo')->get();
+            foreach ($formDesign as $design) {
+                $header = $design->strHeader;
+                $logo = $design->txtSetLogo;
+            }
+            foreach ($formData as $form) {
+                $data = $form->strSurveyForm;
+                $formTitle = $form->strSurveyFormTitle;
+                $formDesc = $form->strSurveyFormDesc;
+            }
+            $loader = new formEncoder($data, ' ');
+            $form = $loader->render_form("001"); // 001 is just to have a value
+            return view('Survey.view', ['form' => $form,'formTitle' => $formTitle,'formDesc' =>$formDesc, 'header'=>$header, 'logo'=>$logo]);
+        } else{
+            return view('page-disabled');
         }
-        $loader = new formEncoder($data, ' ');
-        $form = $loader->render_form("001"); // 001 is just to have a value
-        return view('Survey.view', ['form' => $form,'formTitle' => $formTitle,'formDesc' =>$formDesc]);
+        
     }
 }

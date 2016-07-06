@@ -59,6 +59,7 @@
                     'files' => true
                 ) ) !!}
                 <center>
+                <br>
                     <div class="col s12">
                         <div class="card-panel2 tooltipped" data-position="top" data-delay="50" data-tooltip="logo picture">
                             <img id="user-pic" src="{{ URL::asset('assets/images/'.$imgPath.'') }}" width="180px" style="background-size: contain" /> 

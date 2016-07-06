@@ -50,8 +50,8 @@ class gensetController extends Controller
         $validator->setAttributeNames($niceNames); 
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator);
-        }
-        try{
+        } 
+        else{
             $date = $request->input('txtSchedule');
             $pieces = explode(" - ", $date);
             $startdate = explode("/", $pieces[0]);
@@ -59,30 +59,44 @@ class gensetController extends Controller
             $enddate = explode("/", $pieces[1]);
             $finalEnddate = "$enddate[2]-$enddate[0]-$enddate[1]";
             
-            $destinationPath =  'assets/images/'; // upload path
-            $extension = $request->file('logo')->getClientOriginalExtension(); // getting image extension
-            $date = date("Ymdhis");
-            $filename = $date.'-'.rand(111111,999999).'.'.$extension;
             
-            
-
-            $GenSet = GenSet::find(1);
-            $GenSet->strSetElecName = $request->input('txtElectionTitle');
-            $GenSet->strSetElecDesc = $request->input('txtElectionDesc');
-            $GenSet->datSetStart = $finalStartdate;
-            $GenSet->datSetEnd = $finalEnddate;
-            $GenSet->blSetSurvey = $request->input('txtSurveyStatus');
-            $GenSet->blSetParty = $request->input('txtPartyStatus');
-            $GenSet->strHeader = $request->input('txtHeader');
-              if ($request->file('logo')->isValid()) {
+            if($request->file('logo') == null){
+                try{
+                    $GenSet = GenSet::find(1);
+                    $GenSet->strSetElecName = $request->input('txtElectionTitle');
+                    $GenSet->strSetElecDesc = $request->input('txtElectionDesc');
+                    $GenSet->datSetStart = $finalStartdate;
+                    $GenSet->datSetEnd = $finalEnddate;
+                    $GenSet->blSetSurvey = $request->input('txtSurveyStatus');
+                    $GenSet->blSetParty = $request->input('txtPartyStatus');
+                    $GenSet->strHeader = $request->input('txtHeader');
+                    $GenSet->save();
+                }catch (\Illuminate\Database\QueryException $e){
+                    $errMess = $e->getMessage();
+                    return Redirect::back()->withErrors($errMess);
+                }
+            }
+        
+            else if ($request->file('logo')->isValid()) {
+                $destinationPath =  'assets/images/'; // upload path
+                $extension = $request->file('logo')->getClientOriginalExtension(); // getting image extension
+                $date = date("Ymdhis");
+                $filename = $date.'-'.rand(111111,999999).'.'.$extension;
+                $GenSet = GenSet::find(1);
                 $request->file('logo')->move($destinationPath, $filename);
                 $GenSet->txtSetLogo = $filename;
-
+                $GenSet->strSetElecName = $request->input('txtElectionTitle');
+                $GenSet->strSetElecDesc = $request->input('txtElectionDesc');
+                $GenSet->datSetStart = $finalStartdate;
+                $GenSet->datSetEnd = $finalEnddate;
+                $GenSet->blSetSurvey = $request->input('txtSurveyStatus');
+                $GenSet->blSetParty = $request->input('txtPartyStatus');
+                $GenSet->strHeader = $request->input('txtHeader');
+                $GenSet->save();
             }
-            $GenSet->save();
-        }catch (\Illuminate\Database\QueryException $e){
-            $errMess = $e->getMessage();
-            return Redirect::back()->withErrors($errMess);
+            else{
+                return Redirect::back()->withErrors("uploaded file is not valid");
+            }
         }
         //redirect
         $request->session()->flash('message', 'Successfully updated.');    

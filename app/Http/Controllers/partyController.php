@@ -21,9 +21,8 @@ class partyController extends Controller
     		$Party = DB::table('tblParty')->where('blPartyDelete', '=', 0)->get();
         	return view('Settings.party', ['Party' => $Party, 'intCounter'=>0]);
     	} else{
-    		return view('Settings.partydisabled');
+    		return view('page-disabled');
     	}
-    	
     }
     public function add(Request $request){
     	$rules = array(

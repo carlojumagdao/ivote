@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>iVote++ Login Page</title>
+  <title>iVote++ | Admin Login Page</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -15,14 +15,32 @@
   <link rel="stylesheet" href="{{ URL::asset('assets/dist/css/AdminLTE.min.css') }}">
   <link rel="stylesheet" href="{{ URL::asset('assets/dist/css/skins/_all-skins.min.css') }}">
 
+<style>
+    body{
+      background-image: url("{{ URL::asset('assets/images/bglogin.png') }}");
+    }
+    .login-box-body{
+      background-color: rgba(49, 45, 45, 0.28);
+      color:black;
+    }
+    h1{
+      font-weight: bold;
+      font-size: 49px;
+      -webkit-text-stroke-width: .5px;
+      -webkit-text-stroke-color: yellow;
+      -webkit-font-smoothing: antialiased;
+    }
+</style>
 
 </head>
-<body class="hold-transition login-page">
+<body>
 <div class="login-box">
-  
   <div class="login-box-body">
-    <p class="login-box-msg">Login to start session.</p>
-
+    <center>
+      <h1>iVote++</h1>
+      <h4>Election Content Management and Exit Poll Survey System</h4>
+    </center>
+    <br>
     <form action="/auth/login" method="post">
       {!! csrf_field() !!}
             <div class="col-md-12">
@@ -51,12 +69,12 @@
                 <input type="password" name="password" class="form-control" placeholder="Password">
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
             </div>
-
+            <br>
             <div class="row">
               <div class="col-xs-8">
                 <div class="checkbox icheck">
-                  <label>
-                    <input type="checkbox" name="remember"> Remember Me</a>
+                  <label style="color:white">
+                    <input type="checkbox" class="flat-red" name="remember">&nbsp;&nbsp;Remember Me</a>
                   </label>
                 </div>
             </div>
@@ -68,7 +86,7 @@
             </div>
     </form>
 
-    <a href="#">I forgot my password</a><br>
+    <!-- <a href="#" style="color:white;">forgot password?</a><br> -->
   </div>
   <!-- /.form-box -->
 </div>
@@ -82,13 +100,21 @@
 <!-- iCheck -->
 <script src="{{ URL::asset('assets/plugins/iCheck/icheck.min.js')}}"></script>
 <script>
-  $(function () {
-    $('input').iCheck({
-      checkboxClass: 'icheckbox_square-blue',
-      radioClass: 'iradio_square-blue',
-      increaseArea: '20%' // optional
+  //iCheck for checkbox and radio inputs
+    $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+      checkboxClass: 'icheckbox_minimal-blue',
+      radioClass: 'iradio_minimal-blue'
     });
-  });
+    //Red color scheme for iCheck
+    $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
+      checkboxClass: 'icheckbox_minimal-red',
+      radioClass: 'iradio_minimal-red'
+    });
+    //Flat red color scheme for iCheck
+    $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+      checkboxClass: 'icheckbox_flat-green',
+      radioClass: 'iradio_flat-green'
+    });
 </script>
 </body>
 </html>
