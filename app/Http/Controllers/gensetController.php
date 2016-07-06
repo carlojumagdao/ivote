@@ -53,12 +53,11 @@ class gensetController extends Controller
         } 
         else{
             $date = $request->input('txtSchedule');
-            $pieces = explode(" - ", $date);
+            $pieces = explode("-", $date);
             $startdate = explode("/", $pieces[0]);
             $finalStartdate = "$startdate[2]-$startdate[0]-$startdate[1]";
             $enddate = explode("/", $pieces[1]);
             $finalEnddate = "$enddate[2]-$enddate[0]-$enddate[1]";
-            
             
             if($request->file('logo') == null){
                 try{

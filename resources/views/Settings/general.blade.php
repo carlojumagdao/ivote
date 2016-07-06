@@ -132,8 +132,8 @@
                 $piece2 = explode("-",$datEnd);
                 $endDate = "$piece2[1]/$piece2[2]/$piece2[0]";
 
-                // %datStart = YYYY-MM-DD
-                $dateretrieve = "$startDate-$endDate";
+                // %datStart = YYYY-MM-DD   
+                $dateretrieve = $startDate.'-'.$endDate;
                 ?>
             <div class="box-body">
             Start date: <i>{{$convertDateStart}}</i><br>
@@ -144,7 +144,7 @@
                         <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                         </div>
-                        <input type="text" name="txtSchedule" class="form-control pull-right" id="reservation" value={{$dateretrieve}}>
+                        <input type="text" name="txtSchedule" class="form-control pull-right" id="reservation" value=<?=$dateretrieve?> >
                     </div>
                 </div>
             </div>
@@ -248,7 +248,7 @@
           endDate: moment()
         },
         function (start, end) {
-          $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+          $('#daterange-btn span').html(start.format('MMMM D, YYYY')+'-'+end.format('MMMM D, YYYY'));
         }
     );
 
