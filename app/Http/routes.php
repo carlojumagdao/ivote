@@ -276,3 +276,11 @@ Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
 // Registration //
 
+Route::get('vote', array(
+		'uses' => 'votingController@page',
+		'as' => 'voting.page'
+	));
+Route::post('vote', array(
+		'uses' => 'votingController@cast',
+		'as' => 'voting.cast'
+	));
