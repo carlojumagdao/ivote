@@ -294,6 +294,7 @@ Route::post('vote', array(
 		'as' => 'voting.cast'
 	));
 //Voting Route
+
 //Log In User//
 Route::get('/', array(
 	'uses' => 'responseController@LogInUser',

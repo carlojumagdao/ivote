@@ -1,12 +1,7 @@
-<?php echo
-header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-header("Cache-Control: post-check=0, pre-check=0", false);
-header("Pragma: no-cache");
-header('Content-Type: text/html');?>
+
 <!DOCTYPE html>
 <html>
 <head>
-<<<<<<< Updated upstream
 	<title></title>
 </head>
 
@@ -82,8 +77,6 @@ header('Content-Type: text/html');?>
 	position: relative;
 	z-index: 2;
 }
-	
-=======
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>iVote++ | User Login Page</title>
@@ -116,13 +109,10 @@ header('Content-Type: text/html');?>
     input[type="text"]{
     	color: black;
     } 
->>>>>>> Stashed changes
 </style>
 
 </head>
 <body>
-<<<<<<< Updated upstream
-
   <div class="wrapper">
 	<div class="container">
 		
@@ -175,9 +165,6 @@ header('Content-Type: text/html');?>
 		
 		
 	 </div>
-	
-	
-=======
 <div class="login-box">
   <div class="login-box-body">
     <center>
