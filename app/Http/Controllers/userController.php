@@ -13,6 +13,9 @@ use File;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Session;
+use Input;
+use Auth;
+use Crypt;
 
 class userController extends Controller
 {
@@ -46,6 +49,7 @@ class userController extends Controller
             'email' => 'required|unique:users',
             'password' => 'required',
             'image' => 'required|mimes:jpeg,jpg,png,bmp|max:10000',
+            'confirmpassword' => 'required|same:password',
         );
         $messages = [
             'required' => 'The :attribute field is required.',
@@ -56,6 +60,7 @@ class userController extends Controller
             'email' => 'Email',
             'password' => 'Password',
             'image' => 'Image',
+            'confirmpassword' => 'Confirm Password'
         );
         $validator = Validator::make($request->all(),$rules,$messages);
         $validator->setAttributeNames($niceNames); 
@@ -103,47 +108,56 @@ class userController extends Controller
     }
 
     public function update(Request $request){
-        $rules = array(
-            'oldpassword' => 'required',
-            'newpassword' => 'required',
-            'confirmpassword' => 'required'
+        $userPass = Auth::user()->password;
+        $oldpass = Hash::make(Input::get('oldpassword'));
+        $validator = Validator::make(Input::all(),
+            array(
+                'oldpassword' => 'required',
+                'newpassword' => 'required|min:6',
+                'confirmpassword' => 'required|same:newpassword',
+            )
         );
-        $messages = [
-            'required' => 'The :attribute field is required.',
-        ];
         $niceNames = array(
-            'oldpassword' => 'Old Password',
+            'oldpassword' => 'Password',
             'newpassword' => 'New Password',
             'confirmpassword' => 'Confirm Password',
         );
-        $validator = Validator::make($request->all(),$rules,$messages);
         $validator->setAttributeNames($niceNames); 
-        if ($validator->fails()) {
+        if($validator->fails()) {
             return Redirect::back()->withErrors($validator);
-        }
+            } 
         try{
-            if ($request->hasFile('image')){
+            $userId = session('id'); 
+            $imgPath = session('picname');
+            $oldpassword = Input::get('oldpassword');
+            $newpassword = Input::get('newpassword');
 
+            if ($request->hasFile('image')){
                 $destinationPath =  'assets/images/'; // upload path
                 $extension = $request->file('image')->getClientOriginalExtension(); // getting image extension
                 $date = date("Ymdhis");
                 $filename = $date.'-'.rand(111111,999999).'.'.$extension;
-
-                
+                      
                 if ($request->file('image')->isValid()) {
                     $request->file('image')->move($destinationPath, $filename);
                     $imgPath = $filename;                     
                 }
             }
-            $userId = session('id');
-            $user = DB::table('users')
-                    ->where('id', $userId)
-                    ->update(['txtPath' => $imgPath,'password' => bcrypt($request['confirmpassword'])]);
-            $request->session()->flash('message', "Successfully Updated"); 
-            
+            else{
+                $imgPath = $imgPath;
+            }
+            if (Hash::check($oldpassword, $userPass)){
+                $user = DB::table('users')
+                        ->where('id', $userId)
+                        ->update(['txtPath' => $imgPath,'password' => bcrypt($request['newpassword'])]);
+                $request->session()->flash('message', "Profile Successfully Updated");   
+            }else{
+                $request->session()->flash('error', "Incorrect Password!");
+                //return Redirect::back();
+            }      
+               
         }catch (\Illuminate\Database\QueryException $e){
             $errMess = $e->getMessage();
-            return Redirect::back();
         }
         return Redirect::back();
     }

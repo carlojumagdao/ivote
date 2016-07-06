@@ -46,7 +46,7 @@ class Authenticate
             return redirect()->guest('auth/logout');
         }
         session(['name' => Auth::user()->name, 'email' => Auth::user()->email, 'picname' => Auth::user()->txtPath,
-            'id' => Auth::user()->id, 'admin' => Auth::user()->blAdmin]);
+            'id' => Auth::user()->id, 'admin' => Auth::user()->blAdmin, 'password' => Auth::user()->password]);
         return $next($request);
     }
 }
