@@ -17,11 +17,15 @@
 	    background-image: url(assets/images/bglogin.png);
 	    background-color: 	#2F4F4F;
 }
+	.form.control:focus{
+		border-color: #2F4F4F;
+	}
 
 	h1	{
 		padding-top: 5px;
 		margin-left: 30px;
 		color: #f5c012;
+		font-family: helvetica;
 	}
 	p 	{
 		margin-left: 30px;
@@ -58,15 +62,15 @@
 		margin: 0 auto 10px auto;
 		display: block;
 		text-align: center;
-		font-size: 18px;
+		
 		
 		color: white;
 		
 		transition-duration: 0.25s;
-		font-weight: 300;
+		
 		
 		&:hover{
-			background-color: fade(white, 40%);
+			background-color: white;
 		}
 		
 		&:focus{
@@ -75,6 +79,11 @@
 			
 			color: @prim;
 	}
+	form{
+	padding: 20px 0;
+	position: relative;
+	z-index: 2;
+}
 	
 </style>
 
@@ -90,7 +99,7 @@
 		<br>
 	  </div>
 	  <div class="col-md-6">
-		  <div class="panel panel-default" style="margin-top:110px;">
+		  <div class="panel panel-default" style="margin-top:110px;background-color:rgba(49, 45, 45, 0.28);border-color:rgba(49, 45, 45, 0.28);">
 	 		<div class="panel-body" style="background-color:transparent;">
 	 			<h1>Welcome</h1>
 	 			<p>Please enter your credentials to vote.</p>
@@ -98,13 +107,13 @@
 					  <div class="form-group">
 					      <label class="control-label col-sm-3" for="" style="padding-right:16px;">Passcode:</label>
 					    <div class="col-sm-9">
-					      <input  class="form-control" id="" placeholder="Enter passcode">
+					      <input  class="form-control" id="" placeholder="Enter passcode" style="background-color:rgba(49, 45, 45, 0.28);outline-color:white;">
 					  	</div>
 			  		  </div>
 			  		  <div class="form-group" >
 			  			  <label for="sel1" class="col-sm-3" style="padding-left:4px;">Security Question:</label>
-				          <div class="col-sm-9">
-							  <select class="form-control" id="sel1">
+				          <div class="col-sm-9" >
+							  <select class="form-control" id="sel1" style="background-color:rgba(49, 45, 45, 0.28);outline-color:white;">
 							    <option>1</option>
 							    <option>2</option>
 							    <option>3</option>
@@ -115,7 +124,7 @@
 			          <div class="form-group">
 			    		  <label class="control-label col-sm-3" for="" style="padding-right:16px;">Answer:</label>
 			          	<div class="col-sm-9"> 
-			      		  <input class="form-control" id="" placeholder="Enter the answer to your security question">
+			      		  <input class="form-control" id="" placeholder="Enter the answer to your security question" style="background-color:rgba(49, 45, 45, 0.28);outline-color:white;color:white;">
 			            </div>
 			          </div>
 					  <div class="form-group" style="padding-top:20px;"> 

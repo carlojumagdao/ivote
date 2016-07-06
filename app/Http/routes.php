@@ -290,3 +290,10 @@ Route::get('/LogInUser', array(
 	'as' => 'LogInUser'
 ));
 //Log In User//
+
+//Countdown//
+Route::get('/Countdown', array(
+	'uses' => 'CountdownController@Count',
+	'as' => 'Countdown'
+));
+//Countdown//
