@@ -30,11 +30,7 @@
   <link rel="stylesheet" href="{{ URL::asset('assets/dist/css/skins/_all-skins.min.css') }}">
 
 </head>
-<<<<<<< HEAD
-<body class="hold-transition skin-blue-light sidebar-mini">
-=======
 <body class="hold-transition {{$skin}} sidebar-mini">
->>>>>>> origin/master
 <!-- Site wrapper -->
 <div class="wrapper">
 
