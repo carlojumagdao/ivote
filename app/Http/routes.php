@@ -94,9 +94,9 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/settings/UI', function(){
 		return view('Settings.UI');
     });
-    Route::post('/settings/UI/add', array(
-		'uses' => 'UIController@add',
-		'as' => 'UI.add'
+    Route::post('/settings/UI/skin', array(
+		'uses' => 'UIController@skin',
+		'as' => 'UI.skin'
 	));
 	
 	Route::get('/getPDF',
