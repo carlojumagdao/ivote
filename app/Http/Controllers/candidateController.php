@@ -74,14 +74,15 @@ class candidateController extends Controller
         }
         
         try{
-            
+            $limit = 0;
+            $countPos = 0;
             $position = $request->input('position');
             if ($request->has('party')) $party = $request->input('party');
             if ($request->has('party')) $partyName = DB::table('tblparty')
                                             ->where('intPartyId', "=", $party)
                                             ->select('strPartyName')
                                             ->get();
-            if ($request->has('party') && $position != 1) $limit = DB::table('tblposition')->where('strPositionId', '=', $position)->select('intPosVoteLimit', 'strPositionId', 'strPosName')->get();
+            if ($request->has('party') && $party != 1) $limit = DB::table('tblposition')->where('strPositionId', '=', $position)->select('intPosVoteLimit', 'strPositionId', 'strPosName')->get();
             
                 
             if ($request->has('party')  && $party != 1) $countPos = DB::table('tblcandidate')
@@ -90,10 +91,11 @@ class candidateController extends Controller
                                                         ->select('strCandPosId')
                                                         ->count();
             
-            
+            if($request->has('party') && $party != 1){
             if($limit[0]->intPosVoteLimit == $countPos && $party != 1){
                 $errMess = "Candidate limit of " . $limit[0]->strPosName . " in Party " . $partyName[0]->strPartyName . " has EXCEEDED";    
                 return Redirect::back()->withErrors($errMess);
+            }
             }
             
             $destinationPath =  'assets/images/'; // upload path
@@ -124,9 +126,9 @@ class candidateController extends Controller
             $errMess = $e->getMessage();
             return Redirect::back()->withErrors($errMess);
         }
-        //redirect
-        //$request->session()->flash('message', 'Successfully added.');    
-        //return Redirect::back();
+        
+        $request->session()->flash('message', 'Successfully added.');    
+        return Redirect::back();
     }
     
     public function delete(Request $request){
