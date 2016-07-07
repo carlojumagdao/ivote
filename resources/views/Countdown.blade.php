@@ -268,6 +268,21 @@
 	<div class=" col-sm-offset-2 col-md-9" style="padding-left:50px;">
 		<a class="btn " href="{{ URL::to('/candidates/page')}}" style="font-size: 18px;background-color:#498eeb;color:white;" >Click here for Campaign Page</a>
 	</div>
+    <div class="row">
+        <div class="col-md-3">
+            <img src="assets/images/ivote4.png" style="max-height: 90px">
+        </div>
+        <div class="col-md-3">
+            <center>
+            <p style="font-size: 12px; padding-top: 30px;color: white"> Copyright © 2015-2016 iVote++<br>All rights reserved.</p>
+            <center>
+        </div>
+        <div class="col-md-3">
+            <img src="assets/images/{{$set->txtSetLogo}}" style="max-height: 90px; padding-left: 100px">
+        </div>
+    </div>
+        
+    
 	</div>
 
 	</div>
@@ -304,7 +319,7 @@
 <script src="{{ URL::asset('assets/flipclockjs/flipclock.min.js')}}"></script>
 <script type="text/javascript">
 
-var clock = $('.clock').FlipClock(3600 * 24 * {{$day}}, {
+var clock = $('.clock').FlipClock({{$day}}, {
 		clockFace: 'DailyCounter',
 		countdown: true
 	}); 

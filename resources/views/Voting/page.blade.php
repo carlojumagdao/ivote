@@ -76,12 +76,14 @@
         </div>
         <div class="box-body boxbody" style="padding: 40px;">
             @foreach($partylist as $party)
+            @if($party->strPartyName != 'Independent')
             <div class="radio">
                 <label>
                     <input type="radio" value="{{$party->intCandParId}}" name="party" class="vote_{{$party->intCandParId}}" onclick="revert(); auto_{{$party->intCandParId}}()">
                     {{$party->strPartyName}}
                 </label>
             </div>
+            @endif
              @endforeach
         </div>
     </div>
