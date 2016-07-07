@@ -53,7 +53,8 @@
                 <div class="col s4">
                     <br>
                     <div class="card-panel2 tooltipped" data-position="top" data-delay="50" data-tooltip="logo picture">
-                        <img id="cand-pic" src="../assets/images/Avatar.jpg" style="max-width:180px; background-size: contain" /> 
+                        <img id="cand-pic" src="../assets/images/Avatar.jpg" style="max-width:180px; background-size: contain" />
+                        <center><h4>(2x2 picture only)</h2> </center>
                     </div>
                 </div>
                 </center>
