@@ -16,9 +16,9 @@ class dashboardController extends Controller
      */
     public function index()
     {
-       $TotalPosition = DB::table('tblposition')->count();
-       $TotalCandidate = DB::table('tblcandidate')->count();
-       $TotalVoter = DB::table('tblmember')->count();
+       $TotalPosition = DB::table('tblposition')->where('blPosDelete', '=', 0)->count();
+       $TotalCandidate = DB::table('tblcandidate')->where('blCandDelete', '=', 0)->count();
+       $TotalVoter = DB::table('tblmember')->where('blMemDelete', '=', 0)->count();
        return view ('Dashboard.index', ['TotalPosition' => $TotalPosition, 'TotalCandidate' => $TotalCandidate, 'TotalVoter' => $TotalVoter]);
 
     }
