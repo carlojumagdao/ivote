@@ -207,7 +207,6 @@
 </script>
 <script> 
     function readURL(input) {
-        alert("add");
         if (input.files && input.files[0]) {
             var reader = new FileReader();
                 reader.onload = function (e) {
