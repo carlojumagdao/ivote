@@ -34,6 +34,127 @@
             </div>
         @endif
     </div>
+    
+    <div class="col-md-5">
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">ADMIN UI Skin Themes</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fa fa-minus"></i></button>
+                </div>
+            </div>
+            <div class="box-body">
+                <form action="{{ URL::to('/settings/UI/skin') }}" method="POST" role="form" >
+                    <div class="row">
+                        <div class="col-md-4">
+                            <input type="radio" name="theme" value="skin-blue"> &nbsp&nbsp blue dark
+                        </div>
+                        <div class="col-md-1">
+                            <i class="fa fa-eye btn btn-primary btn-xs"></i>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <input type="radio" name="theme" value="skin-blue-light">&nbsp&nbsp blue light
+                        </div>
+                        <div class="col-md-1">
+                            <i class="fa fa-eye btn btn-primary btn-xs"></i>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <input type="radio" name="theme" value="skin-yellow">&nbsp&nbsp yellow dark
+                        </div>
+                        <div class="col-md-1">
+                            <i class="fa fa-eye btn btn-warning btn-xs"></i>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <input type="radio" name="theme" value="skin-yellow-light">&nbsp&nbsp yellow light
+                        </div>
+                        <div class="col-md-1">
+                            <i class="fa fa-eye btn btn-warning btn-xs"></i>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <input type="radio" name="theme" value="skin-green">&nbsp&nbsp green dark
+                        </div>
+                        <div class="col-md-1">
+                            <i class="fa fa-eye btn btn-success btn-xs"></i>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <input type="radio" name="theme" value="skin-green-light">&nbsp&nbsp green light
+                        </div>
+                        <div class="col-md-1">
+                            <i class="fa fa-eye btn btn-success btn-xs"></i>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <input type="radio" name="theme" value="skin-purple">&nbsp&nbsp purple dark
+                        </div>
+                        <div class="col-md-1">
+                            <i class="fa fa-eye btn bg-purple btn-xs"></i>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <input type="radio" name="theme" value="skin-purple-light">&nbsp&nbsp purple light
+                        </div>
+                        <div class="col-md-1">
+                            <i class="fa fa-eye btn bg-purple btn-xs"></i>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <input type="radio" name="theme" value="skin-red">&nbsp&nbsp red dark
+                        </div>
+                        <div class="col-md-1">
+                            <i class="fa fa-eye btn btn-danger btn-xs"></i>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <input type="radio" name="theme" value="skin-red-light">&nbsp&nbsp red light
+                        </div>
+                        <div class="col-md-1">
+                            <i class="fa fa-eye btn btn-danger btn-xs"></i>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <input type="radio" name="theme" value="skin-black">&nbsp&nbsp black dark
+                        </div>
+                        <div class="col-md-1">
+                            <i class="fa fa-eye btn bg-black btn-xs"></i>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <input type="radio" name="theme" value="skin-black-light">&nbsp&nbsp black light
+                        </div>
+                        <div class="col-md-1">
+                            <i class="fa fa-eye btn bg-black btn-xs"></i>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="form-group col-md-12 ">
+                        <input type="submit" class="btn btn-primary" name="btnSubmit" value="Submit">
+                    </div> 
+                    
+                </form>
+            </div>
+            <div class="box-footer">
+                Footer
+            </div>
+        </div>
+    </div>
                 
                 
 @stop 

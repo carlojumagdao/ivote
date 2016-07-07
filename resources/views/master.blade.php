@@ -1,7 +1,15 @@
 <?php 
+
+  use App\ui AS ui;
+
   $userName = session('name');
   $userEmail = session('email');
   $imgPath = session('picname');
+
+    $ui = ui::find(1);
+    if($ui) $skin = $ui->strUISkin;
+    else $skin = 'skin-blue';
+    
 ?>
         
 <!DOCTYPE html>
@@ -22,7 +30,11 @@
   <link rel="stylesheet" href="{{ URL::asset('assets/dist/css/skins/_all-skins.min.css') }}">
 
 </head>
+<<<<<<< HEAD
 <body class="hold-transition skin-blue-light sidebar-mini">
+=======
+<body class="hold-transition {{$skin}} sidebar-mini">
+>>>>>>> origin/master
 <!-- Site wrapper -->
 <div class="wrapper">
 

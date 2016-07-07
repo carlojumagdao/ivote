@@ -25,7 +25,7 @@ class UIController extends Controller
     	}
     	
     }*/
-    public function add(Request $request){
+    /*public function add(Request $request){
     	$rules = array(
 			'txtHeader' => 'required',
             'logo' => 'mimes:jpeg,jpg,png,bmp|max:10000',
@@ -64,6 +64,23 @@ class UIController extends Controller
         //redirect
         $request->session()->flash('message', 'Successfully added.');    
         return Redirect::back();
+    }*/
+    
+    public function skin(Request $request){
+        $ui = ui::find(1);
+        
+        if($ui){
+            $ui->strUISkin = $request->input('theme');
+        }
+        else{
+            $ui = new ui();
+            $ui->strUISkin = $request->input('theme');
+        }
+        
+        $ui->save();
+        $request->session()->flash('message', 'Successfully Changed.');    
+        return Redirect::back();
+        
     }
     
     
