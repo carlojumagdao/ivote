@@ -107,7 +107,7 @@ class userController extends Controller
         return Redirect::back();
     }
 
-    public function update(Request $request){
+        public function updatePassword(Request $request){
         $userPass = Auth::user()->password;
         $oldpass = Hash::make(Input::get('oldpassword'));
         $validator = Validator::make(Input::all(),
@@ -128,10 +128,40 @@ class userController extends Controller
             } 
         try{
             $userId = session('id'); 
-            $imgPath = session('picname');
             $oldpassword = Input::get('oldpassword');
             $newpassword = Input::get('newpassword');
 
+            if (Hash::check($oldpassword, $userPass)){
+                $user = DB::table('users')
+                        ->where('id', $userId)
+                        ->update(['password' => bcrypt($request['newpassword'])]);
+                $request->session()->flash('message', "Password Successfully Updated");   
+            }else{
+                $request->session()->flash('error', "Incorrect Password!");
+            }      
+               
+        }catch (\Illuminate\Database\QueryException $e){
+            $errMess = $e->getMessage();
+        }
+        return Redirect::back();
+    }
+    
+    public function updateProfile(Request $request){
+        $validator = Validator::make(Input::all(),
+            array(
+                'image' => 'required'
+            )
+        );
+        $niceNames = array(
+            'image' => 'Image',
+        );
+        $validator->setAttributeNames($niceNames); 
+        if($validator->fails()) {
+            return Redirect::back()->withErrors($validator);
+            } 
+        try{
+            $userId = session('id'); 
+            $imgPath = session('picname');
             if ($request->hasFile('image')){
                 $destinationPath =  'assets/images/'; // upload path
                 $extension = $request->file('image')->getClientOriginalExtension(); // getting image extension
@@ -146,15 +176,10 @@ class userController extends Controller
             else{
                 $imgPath = $imgPath;
             }
-            if (Hash::check($oldpassword, $userPass)){
-                $user = DB::table('users')
-                        ->where('id', $userId)
-                        ->update(['txtPath' => $imgPath,'password' => bcrypt($request['newpassword'])]);
-                $request->session()->flash('message', "Profile Successfully Updated");   
-            }else{
-                $request->session()->flash('error', "Incorrect Password!");
-                //return Redirect::back();
-            }      
+            $user = DB::table('users')
+                    ->where('id', $userId)
+                    ->update(['txtPath' => $imgPath]);
+            $request->session()->flash('message', "Profile Successfully Updated");   
                
         }catch (\Illuminate\Database\QueryException $e){
             $errMess = $e->getMessage();

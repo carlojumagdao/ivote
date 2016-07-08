@@ -246,6 +246,14 @@ Route::group(['middleware' => 'auth'], function(){
 		'uses' => 'userController@profile',
 		'as' => 'user.profile'
 	));
+	Route::post('user/updatePassword', array(
+		'uses' => 'userController@updatePassword',
+		'as' => 'user.updatePassword'
+	));	
+	Route::post('user/updateProfile', array(
+		'uses' => 'userController@updateProfile',
+		'as' => 'user.updateProfile'
+	));		
 	Route::post('user/update', array(
 		'uses' => 'userController@update',
 		'as' => 'user.update'
