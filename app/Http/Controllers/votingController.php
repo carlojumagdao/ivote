@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use DB;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Redirect;
 
 class votingController extends Controller
 {
@@ -53,6 +54,7 @@ class votingController extends Controller
     
     public function cast()
     {
+       return Redirect::route('survey.view');
     }
 
 }

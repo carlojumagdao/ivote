@@ -1,10 +1,62 @@
+<?php 
+
+  use App\ui AS ui;
+
+    $ui = ui::find(1);
+    if($ui) $skin = $ui->strUISkin;
+    else $skin = 'skin-blue';
+    $bgcolor = 'lightgrey';
+    $headercolor = 'white';
+    $theme = "white";
+    $themeSub = "white";
+    $boxTheme = "white";
+    $pieces = explode("-", $skin);
+
+    switch($pieces[1]){
+        case 'blue':
+            $bgcolor = "#3c8dbc";
+            break;
+        case 'yellow':
+            $bgcolor = "#f39c12";
+            break;
+        case 'green':
+            $bgcolor = "#00a65a";
+            break;
+        case 'purple':
+            $bgcolor = "#605ca8";
+            break;
+        case 'red':
+            $bgcolor = "#dd4b39";
+            break;
+        case 'black':
+            $bgcolor = "black";
+            break;
+        
+    }
+
+    if(sizeof($pieces) == 3){
+        $color = '#242424';
+        $headercolor = 'white';
+        $theme = 'white';
+        $themeSub = '#ecf0f5';
+        
+    }
+    else{
+        $color = 'white';
+        $theme = '#242424';
+        $themeSub = '#3c3f41';
+        $boxTheme = '#626262';
+    }
+    
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="csrf_token" content="{{ csrf_token() }}" />
     <title>@yield('title', 'iVote++ | Home')</title>
     @yield('style')
@@ -17,44 +69,54 @@
     <style>
         .body{
             padding:0;
-        }
-        .header{
-            background-color: lightgray;
+            background-color: {{$theme}};
         }
         .paddify{
             padding: 20px;
         }
         .resizepic{
-            max-height: 180px;
+            max-width: 140px;
+        }
+        
+        .resizepic2{
+            max-width: 100px;
         }
         .header2{
-            background-color: #eee;
-            border-bottom: 2px solid lightgray;
+            background-color: {{$bgcolor}};
+            border-bottom: 2px solid {{$bgcolor}};
+            color: {{$headercolor}}
         }
         .boxhead{
             
-            color: white;
+            color: {{$headercolor}};
             
         }
         
         .boxbody{
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            background-color: {{$themeSub}};
+            color: {{$color}}
+        }
+        
+        .boxtheme{
+            border-bottom: 0px;
+            border-right: 0px ;
+            border-top: 0px;
+            background-color: {{$boxTheme}};
+            color: {{$color}};
         }
     </style>
 </head>
 <body class="body">
     @foreach($election as $set)
     <div class="row header2">
-        <div class="col-md-2 col-md-offset-1">
+        <div class="col-md-2 col-xs-4 col-md-offset-2">
             <img src="assets/images/{{$set->txtSetLogo}}" class="paddify resizepic">
         </div>
-        <div class="col-md-3">
-            <h2>{{$set->strSetElecName}}</h2>
-            <h3>{{$set->strHeader}}</h3>
-            <h4>Powered by: iVOTE++</h4>
-        </div>
-        <div class="col-md-2 col-md-offset-3">
-            <img src="assets/images/systemlogo.png" class="paddify resizepic">
+        <div class="col-md-3 col-xs-8">
+            <h3>{{$set->strSetElecName}}</h3>
+            <h4>{{$set->strHeader}}</h4>
+            <h5>Powered by: iVOTE++</h5>
         </div>
     </div>
     
@@ -113,10 +175,10 @@
                 
                     
                         
-                <div class="col-md-2">
-                    <div class="thumbnail" style="border-left: 3px solid {{$candidate->strPartyColor}};">
-                        <div class="panel tooltipped" data-position="top" data-delay="50" data-tooltip="logo picture">
-                            <img id="cand-pic" src="../assets/images/{{$candidate->txtCandPic}}" style="background-size: contain; max-width:130px" /> 
+                <div class="col-md-2 col-xs-8">
+                    <div class="thumbnail boxtheme" style="border-left: 3px solid {{$candidate->strPartyColor}}; ">
+                        <div class="tooltipped" data-position="top" data-delay="50" data-tooltip="logo picture">
+                            <img id="cand-pic" src="../assets/images/{{$candidate->txtCandPic}}" style="background-size: contain; max-width:130px; border: 0px;" /> 
                         </div>
                         <div class="checkbox">
                             <label>
@@ -135,13 +197,23 @@
             @endforeach
         </div>
         <div class="row">
-            <div class="col-md-2 col-md-offset-10">
+            <div class="col-md-2 col-md-offset-10 col-xs-4 col-xs-offset-4 col-sm-4">
                 <input type="submit" class="btn btn-primary" name="btnSubmit" value="CAST MY VOTES!">
             </div>
             
         </div>
          {!! Form::close() !!}
     </div>
+    <br>
+    <footer class="row header2">
+        <div class="col-md-12">
+            <div class="pull-right hidden-xs">
+                <b>Version</b> 1.2.1
+            </div>
+            <strong>Copyright &copy; 2015-2016 <a href="http://ivote++.com" class="btn btn-xs btn-primary">iVote++</a>.</strong> All rights
+            reserved.
+        </div>  
+    </footer>
     <!-- jQuery 2.2.0 -->
 <script src="{{ URL::asset('assets/jquery/jquery.min.js') }}"></script>
 <script src="{{ URL::asset('assets/jquery/jquery-ui.min.js') }}"></script>
