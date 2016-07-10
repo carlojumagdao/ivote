@@ -72,7 +72,7 @@
             background-color: {{$theme}};
         }
         .paddify{
-            padding: 20px;
+            padding: 10px;
         }
         .resizepic{
             max-width: 140px;
@@ -111,7 +111,7 @@
     @foreach($election as $set)
     <div class="row header2">
         <div class="col-md-2 col-xs-4 col-md-offset-2">
-            <img src="assets/images/{{$set->txtSetLogo}}" class="paddify resizepic">
+            <img src="assets/images/{{$set->txtSetLogo}}" class="paddify img-responsive">
         </div>
         <div class="col-md-3 col-xs-8">
             <h3>{{$set->strSetElecName}}</h3>
@@ -175,10 +175,11 @@
                 
                     
                         
-                <div class="col-md-2 col-xs-8">
-                    <div class="thumbnail boxtheme" style="border-left: 3px solid {{$candidate->strPartyColor}}; ">
+                <div class="col-md-2 col-xs-12">
+                    <div class="thumbnail boxtheme" style="border-left: 5px solid {{$candidate->strPartyColor}}; ">
+                        <center>
                         <div class="tooltipped" data-position="top" data-delay="50" data-tooltip="logo picture">
-                            <img id="cand-pic" src="../assets/images/{{$candidate->txtCandPic}}" style="background-size: contain; max-width:130px; border: 0px;" /> 
+                            <img id="cand-pic" src="../assets/images/{{$candidate->txtCandPic}}" style="background-size: contain;  border: 0px;" class="img-responsive"/> 
                         </div>
                         <div class="checkbox">
                             <label>
@@ -187,6 +188,7 @@
                             </label>
                             <p style="font-size: 10px;">{{$candidate->strPartyName}}</p>
                         </div>
+                        </center>
                     </div>
                 </div>
                            

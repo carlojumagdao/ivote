@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use App\GenSet AS GenSet;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Redirect;
@@ -17,6 +18,13 @@ class votingController extends Controller
      */
     public function page()
     {
+        $GenSet = GenSet::find(1);
+    	$start = date_create($GenSet->datSetStart);
+        $nowNoTime = date_create(date("Y-m-d"));
+        $now = date_create(date("Y-m-d H:i:s"));
+        
+        //if(date_diff($nowNoTime, $start)->d > 0) return Redirect::route('Countdown');
+        
         $party = DB::table('tblSetting')->where('blSetParty', '=', 1)->get();
         
         if($party){

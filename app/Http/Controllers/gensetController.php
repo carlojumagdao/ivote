@@ -23,10 +23,11 @@ class gensetController extends Controller
     		$blSurvey = $value->blSetSurvey;
     		$blParty = $value->blSetParty;
             $strHeaders = $value->strHeader;
+            $strAddress = $value->strSetAddress;
             $LogoPic = $value->txtSetLogo;
             /*$strSetLogo = $value->txtSetLogo;*/
     	}
-        return view('Settings.general', ['strElecName' => $strElecName,'strElecDesc' => $strElecDesc,'datStart' => $datStart,'datEnd' => $datEnd,'blSurvey' => $blSurvey,'blParty' => $blParty, 'strHeaders' => $strHeaders , 'LogoPic'=>$LogoPic]);
+        return view('Settings.general', ['strElecName' => $strElecName,'strElecDesc' => $strElecDesc,'datStart' => $datStart,'datEnd' => $datEnd,'blSurvey' => $blSurvey,'blParty' => $blParty, 'strHeaders' => $strHeaders , 'LogoPic'=>$LogoPic, 'strSetAddress' => $strAddress]);
     }
     public function save(Request $request){
                 
@@ -68,6 +69,7 @@ class gensetController extends Controller
                     $GenSet->datSetEnd = $finalEnddate;
                     $GenSet->blSetSurvey = $request->input('txtSurveyStatus');
                     $GenSet->blSetParty = $request->input('txtPartyStatus');
+                    $GenSet->strSetAddress = $request->input('txtAddress');
                     $GenSet->strHeader = $request->input('txtHeader');
                     $GenSet->save();
                 }catch (\Illuminate\Database\QueryException $e){
@@ -90,6 +92,7 @@ class gensetController extends Controller
                 $GenSet->datSetEnd = $finalEnddate;
                 $GenSet->blSetSurvey = $request->input('txtSurveyStatus');
                 $GenSet->blSetParty = $request->input('txtPartyStatus');
+                $GenSet->strSetAddress = $request->input('txtAddress');
                 $GenSet->strHeader = $request->input('txtHeader');
                 $GenSet->save();
             }

@@ -16,9 +16,10 @@ class PDFController extends Controller
     	foreach($queryResult as $result) {
             $Head = $result->strHeader;
             $Picture = $result->txtSetLogo;
+            $Address = $result->strSetAddress;
         }
     	
-    	$pdf=PDF::loadview('Settings.pdfile',array('strHeader'=>$Head, 'txtSetLogo'=>$Picture));
+    	$pdf=PDF::loadview('Settings.pdfile',array('strHeader'=>$Head, 'txtSetLogo'=>$Picture, 'strAddress'=>$Address));
     	return $pdf->stream('pdfile.pdf');
     	
     }

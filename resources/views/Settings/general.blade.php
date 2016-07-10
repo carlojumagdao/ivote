@@ -87,6 +87,17 @@
                         !!}  
                     </div>
                     <div class="form-group col-md-12 ">
+                        {!! Form::label( 'Address', "Organization's Address:" ) !!}
+                        {!! Form::text
+                            ('Address', $strSetAddress, array(
+                            'id' => 'Address',
+                            'placeholder' => "This will be use for your reports",
+                            'name' => 'txtAddress',
+                            'class' => 'form-control',
+                            'required' => true,)) 
+                        !!}  
+                    </div>
+                    <div class="form-group col-md-12 ">
                     {!! Form::label( 'ElectionTitle', 'Election Title:' ) !!}
                         {!! Form::text
                             ('ElectionTitle', $strElecName, array(
