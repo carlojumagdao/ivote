@@ -117,7 +117,7 @@
                     <div class="col-md-10">
                      <select name="party" class="form-control" required>
                          @foreach($Parties as $Party)
-                          @if($Member->strMemberId == $Candidate->strCandMemId)
+                          @if($Party->intPartyId == $Candidate->intCandParId)
                          <option value='{{$Party->intPartyId}}' selected>{{$Party->strPartyName}}</option>
                          @else
                          <option value='{{$Party->intPartyId}}'>{{$Party->strPartyName}}</option>
