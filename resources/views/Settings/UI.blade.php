@@ -128,7 +128,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-4">
-                            <input type="radio" name="theme" value="skin-black">&nbsp&nbsp black dark
+                            <input type="radio" name="theme" value="skin-black">&nbsp&nbsp white dark
                         </div>
                         <div class="col-md-1">
                             <i class="fa fa-eye btn bg-black btn-xs"></i>
@@ -136,7 +136,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-4">
-                            <input type="radio" name="theme" value="skin-black-light">&nbsp&nbsp black light
+                            <input type="radio" name="theme" value="skin-black-light">&nbsp&nbsp white light
                         </div>
                         <div class="col-md-1">
                             <i class="fa fa-eye btn bg-black btn-xs"></i>

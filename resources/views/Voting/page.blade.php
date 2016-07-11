@@ -12,6 +12,20 @@
     $boxTheme = "white";
     $pieces = explode("-", $skin);
 
+    if(sizeof($pieces) == 3){
+        $color = '#242424';
+        $headercolor = 'white';
+        $theme = 'white';
+        $themeSub = '#ecf0f5';
+        
+    }
+    else{
+        $color = 'white';
+        $theme = '#242424';
+        $themeSub = '#3c3f41';
+        $boxTheme = '#626262';
+    }
+
     switch($pieces[1]){
         case 'blue':
             $bgcolor = "#3c8dbc";
@@ -29,23 +43,10 @@
             $bgcolor = "#dd4b39";
             break;
         case 'black':
-            $bgcolor = "black";
+            $bgcolor = "#eee";
+            $headercolor = '#242424';
             break;
         
-    }
-
-    if(sizeof($pieces) == 3){
-        $color = '#242424';
-        $headercolor = 'white';
-        $theme = 'white';
-        $themeSub = '#ecf0f5';
-        
-    }
-    else{
-        $color = 'white';
-        $theme = '#242424';
-        $themeSub = '#3c3f41';
-        $boxTheme = '#626262';
     }
     
 ?>
@@ -95,8 +96,9 @@
         .boxbody{
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
             background-color: {{$themeSub}};
-            color: {{$color}}
+            color: {{$color}};
         }
+        
         
         .boxtheme{
             border-bottom: 0px;

@@ -26,7 +26,7 @@
 </style>
     
     <table width="100%">
-        <tr>
+        <tr height="10%">
             <td width="15%"><img class="img-left" src="assets/images/{{$txtSetLogo}}" style="max-width: 90px;"></td>
             <td width="70%">
                 <br>

@@ -61,7 +61,7 @@
         @endif
     </div>
     <br><br>
-         <form action='{{ URL::asset("survey/answer") }}' method="post">
+         <form action='{{ URL::to("/") }}' method="post">
       		{!! csrf_field() !!}
             <div class="form-group has-feedback">
                 <input style="font-size:25px; text-align:center;" type="text" name="txtPasscode" class="form-control custom" placeholder="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6-digit Passcode" autocomplete="off" maxlength="6">

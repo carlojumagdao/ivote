@@ -292,21 +292,15 @@ Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
 // Registration Admin//
 
-//Voting route
-Route::get('vote', array(
-		'uses' => 'votingController@page',
-		'as' => 'voting.page'
-	));
-Route::post('vote', array(
-		'uses' => 'votingController@cast',
-		'as' => 'voting.cast'
-	));
-//Voting Route
-
 //Log In User//
 Route::get('/', array(
 	'uses' => 'responseController@LogInUser',
 	'as' => 'LogInUser'
+));
+
+Route::post('/', array(
+	'uses' => 'responseController@Validation',
+	'as' => 'Validate'
 ));
 //Log In User//
 
@@ -324,6 +318,17 @@ Route::group(['middleware' => 'userlog'], function(){
 		'uses' => 'responseController@survey',
 		'as' => 'surveyanswer'
 	));
+    // Voting route
+    Route::get('vote', array(
+		'uses' => 'votingController@page',
+		'as' => 'voting.page'
+	));
+    Route::post('vote', array(
+		'uses' => 'votingController@cast',
+		'as' => 'voting.cast'
+	));
+    //Voting Route
+    
 
 });
 
