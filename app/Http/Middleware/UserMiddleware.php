@@ -30,7 +30,6 @@ class UserMiddleware
             
         }
         else{
-            echo "else";
             $SecQues = $request->input('secques');
             $Answer = $request->input('txtAnswer');
             $member = DB::select('select CONCAT(strMemFname," ",strMemLname) as FullName, strMemberId, intMemSecQuesId, strMemSecQuesAnswer from tblMember where strMemPasscode = ?', [$request->input('txtPasscode')]);
