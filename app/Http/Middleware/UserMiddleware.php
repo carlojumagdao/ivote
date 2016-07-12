@@ -22,7 +22,7 @@ class UserMiddleware
             $memid = session('memid');
             $voted = DB::table('tblvoteheader')->where('strVHMemId', '=', $memid)->select('strVHCode')->get();
             if($voted){
-                 //return Redirect::route('voting:page');
+                 
             }
             else{
                 return $next($request);

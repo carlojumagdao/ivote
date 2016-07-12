@@ -12,6 +12,20 @@
     $boxTheme = "white";
     $pieces = explode("-", $skin);
 
+    if(sizeof($pieces) == 3){
+        $color = '#242424';
+        $headercolor = 'white';
+        $theme = 'white';
+        $themeSub = '#ecf0f5';
+        
+    }
+    else{
+        $color = 'white';
+        $theme = '#242424';
+        $themeSub = '#3c3f41';
+        $boxTheme = '#626262';
+    }
+
     switch($pieces[1]){
         case 'blue':
             $bgcolor = "#3c8dbc";
@@ -29,24 +43,23 @@
             $bgcolor = "#dd4b39";
             break;
         case 'black':
-            $bgcolor = "black";
+            $bgcolor = "#eee";
+            $headercolor = '#242424';
             break;
         
     }
 
-    if(sizeof($pieces) == 3){
-        $color = '#242424';
-        $headercolor = 'white';
-        $theme = 'white';
-        $themeSub = '#ecf0f5';
-        
+    
+    if(Session::has('memid')){
+        $memberID = session('memid');
+        $memberName = session('memfullname');
     }
+
     else{
-        $color = 'white';
-        $theme = '#242424';
-        $themeSub = '#3c3f41';
-        $boxTheme = '#626262';
+        $memberID = "None";
+        $memberName = "None";
     }
+
     
 ?>
 <!DOCTYPE html>
@@ -124,7 +137,7 @@
             <h4>SELECT YOUR CANDIDATE</h4>
         </div>
         <div class="col-md-2 col-md-offset-4" >
-            <h5>Member: name of voter</h5>
+            <h5>Member: <big style="font-weight:bold">{{$memberName}}</big> </h5>
         </div>
             
     </div>
@@ -161,7 +174,7 @@
                         </div>
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" value="{{$candidate->strCandPosId}}" name="vote[]" class="pos_{{$position->strPositionId}}" onclick=" return maxCast_{{$position->strPositionId}}()">
+                                <input type="checkbox" value="{{$candidate->strCandId}}" name="vote[]" class="pos_{{$position->strPositionId}}" onclick=" return maxCast_{{$position->strPositionId}}()">
                                      {{$candidate->strMemFname}} {{$candidate->strMemLname}}
                             </label>
                         </div>
