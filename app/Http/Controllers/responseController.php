@@ -35,14 +35,7 @@ class responseController extends Controller
     	else return view('LogInUser', ['header'=>$header, 'logo'=>$logo,'SecQues'=>$SecQues]);
     }
     public function Validation(Request $request){
-    	$GenSet = GenSet::find(1);
-    	$start = date_create($GenSet->datSetStart);
-        $nowNoTime = date_create(date("Y-m-d"));
-        $now = date_create(date("Y-m-d H:i:s"));
-        
-        //if(date_diff($nowNoTime, $start)->d > 0) return Redirect::route('Countdown');
-        
-        $party = DB::table('tblSetting')->where('blSetParty', '=', 1)->get();
+       $party = DB::table('tblSetting')->where('blSetParty', '=', 1)->get();
         
         if($party){
             $partylist = DB::table('tblcandidate')
@@ -60,8 +53,19 @@ class responseController extends Controller
                             ->get();
             $election = DB::table('tblsetting')->get();
             return view('Voting.page', ['partylist'=>$partylist, 'positions'=>$positions, 'candidates'=>$candidates, 'election' => $election]);
+            
+            
+        }
         
-        
+        else {
+            $positions = DB::table('tblposition')->get();
+            $candidates = DB::table('tblcandidate')
+                            ->join('tblmember', 'tblcandidate.strCandMemId', '=', 'tblmember.strMemberId')
+                            ->where('blCandDelete', '=', 0)
+                            ->select('tblcandidate.*', 'tblmember.strMemFname', 'tblmember.strMemLname')
+                            ->get();
+            $election = DB::table('tblsetting')->get();
+            return view('Voting.pagelessparty', [ 'positions'=>$positions, 'candidates'=>$candidates, 'election' => $election]);
         }
     }
     public function survey(){

@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use App\GenSet AS GenSet;
+use App\VoteHeader AS VoteHeader;
+use App\VoteDetail AS VoteDetail;
+use App\SmartCounter AS SmartCounter;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Redirect;
@@ -62,7 +65,44 @@ class votingController extends Controller
     
     public function cast()
     {
-       return Redirect::route('survey.view');
+      
+        try{
+            DB::beginTransaction();  
+            
+            $VoteHeader = new VoteHeader();
+            
+            $ids = DB::table('tblvoteheader')->select('strVHCode')->get();
+            $latest = 'VOTE-00000';
+            foreach($ids as $id){
+                $latest = $id->strVHCode;
+            }
+            
+            $counter = new SmartCounter();
+            $VoteHeader->strVHCode = $counter->smartcounter($latest);
+            $VoteHeader->strVHMemId = session('memid');
+            $id = $VoteHeader->strVHCode;
+            $VoteHeader->save();
+            
+            $VHID = VoteHeader::find($id);
+            $VDID = $VHID->strVHCode;
+            
+            
+            foreach ($_POST['vote'] as $candID) {
+                $VoteDetail = new VoteDetail();
+                $VoteDetail->strVDVHCode = $VDID;
+                $VoteDetail->strVDCandId = $candID;
+                $VoteDetail->save();
+                
+            }
+            DB::commit();
+            echo "Success | Redirect to thank you page.";
+        }catch (\Illuminate\Database\QueryException $e){
+            DB::rollBack();
+            $errMess = $e->getMessage();
+            return Redirect::back()->withErrors($errMess);
+        }
+        
+
     }
 
 }

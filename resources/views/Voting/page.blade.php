@@ -48,6 +48,18 @@
             break;
         
     }
+
+    if(Session::has('memid')){
+        $memberID = session('memid');
+        $memberName = session('memfullname');
+    }
+
+    else{
+        $memberID = "None";
+        $memberName = "None";
+    }
+
+    
     
 ?>
 
@@ -127,7 +139,7 @@
             <h4>SELECT YOUR CANDIDATE</h4>
         </div>
         <div class="col-md-2 col-md-offset-4" >
-            <h5>Member: name of voter</h5>
+            <h5>Member: <big style="font-weight:bold">{{$memberName}}</big> </h5>
         </div>
             
     </div>
@@ -185,7 +197,7 @@
                         </div>
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" value="{{$candidate->strCandPosId}}" name="vote[]"  class="pos_{{$position->strPositionId}} v_{{$candidate->intCandParId}}" onclick=" return maxCast_{{$position->strPositionId}}()" onchange="return maxCast_{{$position->strPositionId}}()">
+                                <input type="checkbox" value="{{$candidate->strCandId}}" name="vote[]"  class="pos_{{$position->strPositionId}} v_{{$candidate->intCandParId}}" onclick=" return maxCast_{{$position->strPositionId}}()" onchange="return maxCast_{{$position->strPositionId}}()">
                                      {{$candidate->strMemFname}} {{$candidate->strMemLname}}
                             </label>
                             <p style="font-size: 10px;">{{$candidate->strPartyName}}</p>
