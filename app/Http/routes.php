@@ -313,7 +313,7 @@ Route::group(['middleware' => 'userlog'], function(){
     
     Route::post('/', array(
         'uses' => 'responseController@Validation',
-	   'as' => 'Validate'
+	   'as' => 'Validation'
     ));
 
 	Route::post('/survey/answer', array(

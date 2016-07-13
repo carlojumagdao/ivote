@@ -22,14 +22,24 @@ class UserMiddleware
             $memid = session('memid');
             $voted = DB::table('tblvoteheader')->where('strVHMemId', '=', $memid)->select('strVHCode')->get();
             if($voted){
-                 
+                 echo "voted";
             }
             else{
+                /*$member = DB::select('select CONCAT(strMemFname," ",strMemLname) as FullName, strMemberId, intMemSecQuesId, strMemSecQuesAnswer from tblMember where strMemPasscode = ?', [$request->input('txtPasscode')]);
+                if($member){
+                foreach ($member as $value) {
+                    $retSecQues = $value->intMemSecQuesId;
+                    $retAnswer = $value->strMemSecQuesAnswer;
+                    $retMemId = $value->strMemberId;
+                    $retFullName = $value->FullName;
+                }
+                session(['memid' => $retMemId, 'memfullname' => $retFullName]);*/
                 return $next($request);
             }
             
         }
         else{
+            
             $SecQues = $request->input('secques');
             $Answer = $request->input('txtAnswer');
             $member = DB::select('select CONCAT(strMemFname," ",strMemLname) as FullName, strMemberId, intMemSecQuesId, strMemSecQuesAnswer from tblMember where strMemPasscode = ?', [$request->input('txtPasscode')]);
@@ -49,7 +59,7 @@ class UserMiddleware
                 session(['memid' => $retMemId, 'memfullname' => $retFullName]);
                 return $next($request);
             }else{
-                $errMess = "Authentication Failed";
+                $errMess = "Authentication Failed1";
                 return Redirect::back()->withErrors($errMess);
             }
         }

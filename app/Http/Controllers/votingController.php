@@ -11,6 +11,7 @@ use App\SmartCounter AS SmartCounter;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Redirect;
+use Session;
 
 class votingController extends Controller
 {
@@ -65,6 +66,7 @@ class votingController extends Controller
     
     public function cast()
     {
+        echo "cast()";
       
         try{
             DB::beginTransaction();  
@@ -101,6 +103,8 @@ class votingController extends Controller
             $errMess = $e->getMessage();
             return Redirect::back()->withErrors($errMess);
         }
+        
+        Session::forget('memid');
         
 
     }

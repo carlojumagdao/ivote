@@ -53,16 +53,24 @@
                 </div>
             </div>
         </div>
+        <div class="col-lg-3 col-xs-6">
+            <div class="panel" style="border-left:8px solid #605ca8;color:#605ca8;">
+                <div class="panel-body">  
+                    <div class="info-box-number text-center" style="font-size:70px">{{$TotalVoted}}</div>
+                    <div class="info-box-text text-center" style="font-size:130%">Voted</div>
+                </div>
+            </div>
+        </div>
         <div class="col-md-3">
             <div class="panel panel-default">
                 <div class="panel-heading"><i class="glyphicon glyphicon-calendar"></i> Start Date</div>
-                <div class="panel-body">September 26, 2016</div>    
+                <div class="panel-body">{{$start}}</div>    
             </div>  
         </div>
         <div class="col-md-3">
             <div class="panel panel-default">
                 <div class="panel-heading"><i class="glyphicon glyphicon-calendar"></i> End Date</div>
-                <div class="panel-body">September 27, 2016</div>  
+                <div class="panel-body">{{$end}}</div>  
             </div>  
         </div>
     </div> 

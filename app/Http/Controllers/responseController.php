@@ -12,11 +12,12 @@ use App\GenSet AS GenSet;
 use Redirect;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Session;
 
 class responseController extends Controller
 {
 	public function LogInUser(){
-        
+        if(Session::has('memid')) Session::forget('memid');
     	$formDesign = DB::table('tblSetting')->select('strHeader','txtSetLogo')->get();
         foreach ($formDesign as $design) {
             $header = $design->strHeader;
@@ -35,38 +36,7 @@ class responseController extends Controller
     	else return view('LogInUser', ['header'=>$header, 'logo'=>$logo,'SecQues'=>$SecQues]);
     }
     public function Validation(Request $request){
-       $party = DB::table('tblSetting')->where('blSetParty', '=', 1)->get();
-        
-        if($party){
-            $partylist = DB::table('tblcandidate')
-                            ->distinct()
-                            ->join('tblparty', 'tblcandidate.intCandParId', '=', 'tblparty.intPartyId')
-                            ->where('blCandDelete', '=', 0)
-                            ->select('tblcandidate.intCandParId','tblparty.strPartyName', 'tblparty.strPartyColor')
-                            ->get();
-            $positions = DB::table('tblposition')->get();
-            $candidates = DB::table('tblcandidate')
-                            ->join('tblmember', 'tblcandidate.strCandMemId', '=', 'tblmember.strMemberId')
-                            ->join('tblparty', 'tblcandidate.intCandParId', '=', 'tblparty.intPartyId')
-                            ->where('blCandDelete', '=', 0)
-                            ->select('tblcandidate.*', 'tblmember.strMemFname', 'tblmember.strMemLname', 'tblparty.strPartyName', 'tblparty.strPartyColor')
-                            ->get();
-            $election = DB::table('tblsetting')->get();
-            return view('Voting.page', ['partylist'=>$partylist, 'positions'=>$positions, 'candidates'=>$candidates, 'election' => $election]);
-            
-            
-        }
-        
-        else {
-            $positions = DB::table('tblposition')->get();
-            $candidates = DB::table('tblcandidate')
-                            ->join('tblmember', 'tblcandidate.strCandMemId', '=', 'tblmember.strMemberId')
-                            ->where('blCandDelete', '=', 0)
-                            ->select('tblcandidate.*', 'tblmember.strMemFname', 'tblmember.strMemLname')
-                            ->get();
-            $election = DB::table('tblsetting')->get();
-            return view('Voting.pagelessparty', [ 'positions'=>$positions, 'candidates'=>$candidates, 'election' => $election]);
-        }
+       return Redirect::route('voting.page');
     }
     public function survey(){
     	$SurveyStatus = DB::table('tblSetting')->where('blSetSurvey', '=', 1)->get();

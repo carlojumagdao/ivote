@@ -28,7 +28,6 @@
     <link rel="stylesheet" href="{{ URL::asset('assets/plugins/iCheck/all.css') }}">
   <link rel="stylesheet" href="{{ URL::asset('assets/dist/css/AdminLTE.min.css') }}">
   <link rel="stylesheet" href="{{ URL::asset('assets/dist/css/skins/_all-skins.min.css') }}">
-
 </head>
 <body class="hold-transition {{$skin}} sidebar-mini">
 <!-- Site wrapper -->
