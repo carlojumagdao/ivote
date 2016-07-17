@@ -65,22 +65,16 @@
          <form action='{{ URL::to("/survey/view") }}' method="post">
       		{!! csrf_field() !!}
             <div class="form-group has-feedback">
-                <label style="font-size: 14px; font-weight: bold">You Have Successfully Voted! Thanks for your Participation</label>
-                <p>Vote Reference:{{$votereference}}</p>
-                <h4>You are encourage to take the survey for the improvement of this System</h4>
+                <center>
+                <label style="font-size: 14px; font-weight: bold">You Have Successfully Voted!<br> Thanks for your Participation on our Survey</label>
+                <h2>Vote Reference:<br>{{$votereference}}</h2>
+                <center>
                 
             </div>
             <div class="form-group has-feedback">
                 <input type="hidden" name="memid" class="form-control" value="{{$memid}}" autocomplete="off">
             </div>
             <br><br>
-            <div class="row">
-               <div class="col-md-6 col-md-offset-3">
-               		<center>
-                  		<button style="font-size:20px;" type="submit" class="btn btn-primary btn-block btn-flat">Start Survey</button>
-                  	</center>	
-                </div>
-            </div>
     </form>
   </div>
   <!-- /.form-box -->

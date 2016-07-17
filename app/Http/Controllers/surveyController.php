@@ -11,6 +11,9 @@ use Redirect;
 use File;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\SurveyHeader AS SurveyHeader;
+use App\SurveyDetail AS SurveyDetail;
+use Session;
 
 class surveyController extends Controller
 {
@@ -140,5 +143,80 @@ class surveyController extends Controller
             return view('page-disabled');
         }
         
+    }
+    
+    public function survey(){
+        $SurveyStatus = DB::table('tblSetting')->where('blSetSurvey', '=', 1)->get();
+        if($SurveyStatus){
+            $formData = DB::table('tblSurveyForm')->select('strSurveyForm','strSurveyFormTitle','strSurveyFormDesc')->get();
+            $formDesign = DB::table('tblSetting')->select('strHeader','txtSetLogo')->get();
+            foreach ($formDesign as $design) {
+                $header = $design->strHeader;
+                $logo = $design->txtSetLogo;
+            }
+            foreach ($formData as $form) {
+                $data = $form->strSurveyForm;
+                $formTitle = $form->strSurveyFormTitle;
+                $formDesc = $form->strSurveyFormDesc;
+            }
+            $loader = new formEncoder($data, 'answer');
+            $form = $loader->render_form("001"); // 001 is just to have a value
+            return view('Survey.survey', ['form' => $form,'formTitle' => $formTitle,'formDesc' =>$formDesc, 'header'=>$header, 'logo'=>$logo]);
+        } else{
+            return view('page-disabled');
+        }
+    }
+    
+    public function answer(Request $request){
+        $memid = session('memid');
+        try{
+            DB::beginTransaction(); 
+            
+            $SurveyHeader = new SurveyHeader();
+            $SurveyHeader->strSHMemCode = $memid;
+            $SurveyHeader->save();
+            
+            $SH = SurveyHeader::where('strSHMemCode', "=", $memid)->first();
+            //var_dump($SH);
+            //var_dump($_POST);
+            $SHID = $SH->intSHId;
+            
+                
+            foreach ($_POST as $key => $value) {
+                // if the field is checkbox, it will extract the array value
+                $question = DB::table('tblsurveyquestion')->where('strSQQuestion', "=", $key)->get();
+                $id =  $question[0]->intSQId;
+                var_dump($key);
+                if(is_array($value)){
+                    foreach ($value as $checked) {
+                        $SurveyDetail = new SurveyDetail();
+                        $SurveyDetail->intSDSHId = $SHID;
+                        $SurveyDetail->intSDSQId = $id;
+                        $SurveyDetail->strSDAnswer= $checked;
+                        $SurveyDetail->save();
+                    }
+                }else{
+                    $SurveyDetail = new SurveyDetail();
+                    $SurveyDetail->intSDSHId = $SHID;
+                    $SurveyDetail->intSDSQId = $id;
+                    $SurveyDetail->strSDAnswer= $value;
+                    $SurveyDetail->save();
+                }
+                
+            }
+            DB::commit();
+        
+        }catch (\Illuminate\Database\QueryException $e){
+            DB::rollBack();
+            $errMess = $e->getMessage();
+            echo $errMess;
+        }
+        //redirect
+        $votereference = session('votereference');
+        
+        if(Session::has('memid')) Session::forget('memid');
+        if(Session::has('votereference')) Session::forget('memid');
+    
+        return Redirect::route('thanks', ['votereference'=>$votereference, 'memid'=>$memid]);
     }
 }

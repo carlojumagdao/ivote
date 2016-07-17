@@ -5,6 +5,8 @@ use DB;
 use Closure;
 use Redirect;
 use Session;
+use App\SurveyHeader AS SurveyHeader;
+
 
 class UserMiddleware
 {
@@ -22,7 +24,12 @@ class UserMiddleware
             $memid = session('memid');
             $voted = DB::table('tblvoteheader')->where('strVHMemId', '=', $memid)->select('strVHCode')->get();
             if($voted){
-                 echo "voted";
+                $SH = SurveyHeader::where('strSHMemCode', "=", $memid)->first();
+                if($SH){
+                    echo "voted and surveyed";
+                }
+                
+                else return $next($request);
             }
             else{
                 /*$member = DB::select('select CONCAT(strMemFname," ",strMemLname) as FullName, strMemberId, intMemSecQuesId, strMemSecQuesAnswer from tblMember where strMemPasscode = ?', [$request->input('txtPasscode')]);
@@ -60,7 +67,12 @@ class UserMiddleware
                 session(['memid' => $retMemId, 'memfullname' => $retFullName]);
                 $voted = DB::table('tblvoteheader')->where('strVHMemId', '=', $retMemId)->select('strVHCode')->get();
                 if($voted){
-                    echo "voted";
+                    $SH = SurveyHeader::where('strSHMemCode', "=", $retMemId)->first();
+                    if($SH){
+                        echo "voted and surveyed";
+                    }
+                    
+                    else return Redirect::route('survey.answerSurvey');
                 }
                 else return $next($request);
             }else{

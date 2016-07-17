@@ -93,7 +93,10 @@ class votingController extends Controller
             if(Session::has('memid')) $memid = session('memid');
             if(Session::has('memid')) Session::forget('memid');
             
-            return redirect()->route("survey.answerSurvey", ['votereference'=>$VDID, 'memid'=>$memid]);
+            Session::put('memid', $memid);
+            Session::put('votereference', $VDID);
+            
+            return redirect()->route("survey.answerSurvey");
         }catch (\Illuminate\Database\QueryException $e){
             DB::rollBack();
             $errMess = $e->getMessage();

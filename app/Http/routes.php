@@ -316,11 +316,17 @@ Route::group(['middleware' => 'userlog'], function(){
 	   'as' => 'Validation'
     ));
 
-	Route::post('/survey/answer', array(
-		'uses' => 'responseController@survey',
-		'as' => 'surveyanswer'
+	Route::post('survey/answer', array(
+		'uses' => 'surveyController@answer',
+		'as' => 'survey.answer'
 	));
+    
     // Voting route
+    Route::get('/vote', array(
+		'uses' => 'votingController@page',
+		'as' => 'voting.page'
+	));
+    
     Route::post('/vote', array(
 		'uses' => 'votingController@cast',
 		'as' => 'voting.cast'
@@ -341,14 +347,11 @@ Route::get('/thanks', array(
 	'as' => 'thanks'
 ));
 
-    Route::get('/vote', array(
-		'uses' => 'votingController@page',
-		'as' => 'voting.page'
-	));
-
-	Route::get('survey/answersurvey', array(
-		'uses' => 'surveyController@view',
+Route::get('survey/answersurvey', array(
+		'uses' => 'surveyController@survey',
 		'as' => 'survey.answerSurvey'
 	));
+
+
 //Log In User//
 
