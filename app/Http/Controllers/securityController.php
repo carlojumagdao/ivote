@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+
+
 use Illuminate\Http\Request;
 use App\Security AS Security;
 use Validator;
@@ -9,6 +11,8 @@ use DB;
 use Redirect;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Member AS Member;
+
 
 class securityController extends Controller
 {
@@ -85,7 +89,7 @@ class securityController extends Controller
         return Redirect::back();
     }
     
-    public function createPage(){
+    public function createPage($id){
         $formDesign = DB::table('tblSetting')->select('strHeader','txtSetLogo')->get();
         foreach ($formDesign as $design) {
             $header = $design->strHeader;
@@ -95,6 +99,89 @@ class securityController extends Controller
         			->select('intSecQuesId','strSecQuestion')
         			->where('blSecQuesDelete', '=', 0)
         			->get();
-        return view('secquestion', ['header'=>$header, 'logo'=>$logo,'SecQues'=>$SecQues]);
+        return view('secquestion', ['header'=>$header, 'logo'=>$logo,'SecQues'=>$SecQues, 'id'=>$id]);
+    }
+    
+    public function setSecurity(Request $request, $id){
+        $rules = array(
+            'txtPasscode' => 'required',
+			'secques' => 'required',
+            'txtAnswer' => 'required',
+		);
+		$messages = [
+		    'required' => 'The :attribute field is required.',
+		];
+		$niceNames = array(
+		    'txtPasscode' => 'Passcode',
+			'secques' => 'Security Question',
+            'txtAnswer' => 'Answer',
+		);
+        $validator = Validator::make($request->all(),$rules,$messages);
+        $validator->setAttributeNames($niceNames); 
+        
+        try{
+            
+            $SecQues = $request->input('secques');
+            $Answer = $request->input('txtAnswer');
+            $passcode = $request->input('txtPasscode');
+            
+            $member = DB::select('select CONCAT(strMemFname," ",strMemLname) as FullName from tblMember where strMemPasscode = ?', [$passcode]);
+            if($member){
+                $siteKey = "6LdjQSATAAAAAKsAL4HXzNBosK2T3UfvoQUCCaxc";
+                $secret = "6LdjQSATAAAAAKo7ekylaCRsGttV6DhzIr1MgihE";
+                // reCAPTCHA supported 40+ languages listed here: https://developers.google.com/recaptcha/docs/language
+                $lang = "en";
+
+                // The response from reCAPTCHA
+                $resp = null;
+                // The error code from reCAPTCHA, if any
+                $error = null;
+
+                $recaptcha = new \ReCaptcha\ReCaptcha($secret);
+
+                // Was there a reCAPTCHA response?  
+                if(isset($_POST["g-recaptcha-response"])){
+                    if ($_POST["g-recaptcha-response"]) {
+                        $resp = $recaptcha->verify(
+                            $_POST["g-recaptcha-response"],
+                            $_SERVER["REMOTE_ADDR"]
+                        );  
+                    }
+                }
+                
+                if ($resp->isSuccess()) {
+                    
+                    if(md5($passcode) == $id){
+                        $Member = Member::where("strMemPasscode", '=', $passcode)->first();
+                        $Member->intMemSecQuesId = $SecQues;
+                        $Member->strMemSecQuesAnswer = $Answer;
+                        $Member->save();
+                    }
+                    
+                    else{
+                        $errMess = "Don't Use other's Passcode";
+                        return Redirect::back()->withErrors($errMess); 
+                    }
+                        
+
+                }
+                        
+                else {
+                    $errMess = "Robot Detected!";
+                    return Redirect::back()->withErrors($errMess); 
+                }
+            } else{
+                $errMess = "Authentication Failed";
+                return Redirect::back()->withErrors($errMess);
+            }
+            
+        }catch (\Illuminate\Database\QueryException $e){
+            $errMess = $e->getMessage();
+            return Redirect::back()->withErrors($errMess);
+        }
+        
+        $request->session()->flash('message', 'Security Question Successfully Set.');    
+        return Redirect::back();
+    
     }
 }

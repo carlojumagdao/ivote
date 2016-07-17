@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="{{ URL::asset('assets/plugins/iCheck/all.css') }}">
   <link rel="stylesheet" href="{{ URL::asset('assets/dist/css/AdminLTE.min.css') }}">
   <link rel="stylesheet" href="{{ URL::asset('assets/dist/css/skins/_all-skins.min.css') }}">
-    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <script src='https://www.google.com/recaptcha/api.js?hl='></script>
 
 <style>
     body{
@@ -59,9 +59,16 @@
                 )) !!}
             </div>
         @endif
+        @if (Session::has('message'))
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-check"></i> Success!</h4>
+            {{ Session::get('message') }}
+        </div>
+        @endif
     </div>
     <br><br>
-         <form action='{{ URL::to("/") }}' method="post">
+         <form action='{{ URL::to("/security/question/$id") }}' method="post">
       		{!! csrf_field() !!}
              <div class="form-group has-feedback">
                 <input style="font-size:25px; text-align:center;" type="text" name="txtPasscode" class="form-control custom" placeholder="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6-digit Passcode" autocomplete="off" maxlength="6">

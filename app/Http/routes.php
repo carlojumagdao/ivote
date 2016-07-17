@@ -352,10 +352,14 @@ Route::get('survey/answersurvey', array(
 		'as' => 'survey.answerSurvey'
 	));
 
-Route::get('/securityCreatePage', array(
+Route::get('/security/question/{id}', array(
 		'uses' => 'securityController@createPage',
 		'as' => 'security.createPage'
 	));
 
+Route::post('/security/question/{id}', array(
+		'uses' => 'securityController@setSecurity',
+		'as' => 'security.setSecurity'
+	));
 //Log In User//
 
