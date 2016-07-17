@@ -9,6 +9,7 @@ use App\SurveyHeader AS SurveyHeader;
 use App\SurveyDetail AS SurveyDetail;
 use DB;
 use App\GenSet AS GenSet;
+use App\VoteHeader;
 use Redirect;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -17,7 +18,8 @@ use Session;
 class responseController extends Controller
 {
 	public function LogInUser(){
-        if(Session::has('memid')) Session::forget('memid');
+        Session::forget('memid');
+        Session::forget('mefullname');
     	$formDesign = DB::table('tblSetting')->select('strHeader','txtSetLogo')->get();
         foreach ($formDesign as $design) {
             $header = $design->strHeader;
@@ -29,14 +31,16 @@ class responseController extends Controller
         			->get();
         $GenSet = GenSet::find(1);
     	$start = date_create($GenSet->datSetStart);
+        $end = date_create($GenSet->datSetEnd);
         $nowNoTime = date_create(date("Y-m-d"));
         $now = date_create(date("Y-m-d H:i:s"));
         
-        if(date_diff($nowNoTime, $start)->d > 0) return Redirect::route('Countdown');
+        if($nowNoTime < $start) return Redirect::route('Countdown');
+        else if($nowNoTime > $end) echo "end page";
     	else return view('LogInUser', ['header'=>$header, 'logo'=>$logo,'SecQues'=>$SecQues]);
     }
     public function Validation(Request $request){
-       return Redirect::route('voting.page');
+       return redirect()->route('voting.page');
     }
     public function survey(){
     	$SurveyStatus = DB::table('tblSetting')->where('blSetSurvey', '=', 1)->get();
@@ -98,4 +102,18 @@ class responseController extends Controller
             return Redirect::back()->withErrors($errMess);
         }
     }
+    
+    public function thanks(){
+        $formDesign = DB::table('tblSetting')->select('strHeader','txtSetLogo')->get();
+        foreach ($formDesign as $design) {
+            $header = $design->strHeader;
+            $logo = $design->txtSetLogo;
+        }
+        
+        return view('thanks', ['header'=>$header, 'logo'=>$logo, 'votereference' => $_GET['votereference'], 'memid' =>$_GET['memid']]);
+        
+        
+        
+    }
+    
 }

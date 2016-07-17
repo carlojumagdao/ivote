@@ -48,7 +48,8 @@
             break;
         
     }
-
+    
+    
     if(Session::has('memid')){
         $memberID = session('memid');
         $memberName = session('memfullname');
@@ -59,8 +60,6 @@
         $memberName = "None";
     }
 
-    
-    
 ?>
 
 <!DOCTYPE html>

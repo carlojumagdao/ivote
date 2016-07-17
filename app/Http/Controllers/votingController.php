@@ -22,12 +22,6 @@ class votingController extends Controller
      */
     public function page()
     {
-        $GenSet = GenSet::find(1);
-    	$start = date_create($GenSet->datSetStart);
-        $nowNoTime = date_create(date("Y-m-d"));
-        $now = date_create(date("Y-m-d H:i:s"));
-        
-        //if(date_diff($nowNoTime, $start)->d > 0) return Redirect::route('Countdown');
         
         $party = DB::table('tblSetting')->where('blSetParty', '=', 1)->get();
         
@@ -66,8 +60,6 @@ class votingController extends Controller
     
     public function cast()
     {
-        echo "cast()";
-      
         try{
             DB::beginTransaction();  
             
@@ -97,14 +89,18 @@ class votingController extends Controller
                 
             }
             DB::commit();
-            echo "Success | Redirect to thank you page.";
+            
+            if(Session::has('memid')) $memid = session('memid');
+            if(Session::has('memid')) Session::forget('memid');
+            
+            return redirect()->route("survey.answerSurvey", ['votereference'=>$VDID, 'memid'=>$memid]);
         }catch (\Illuminate\Database\QueryException $e){
             DB::rollBack();
             $errMess = $e->getMessage();
             return Redirect::back()->withErrors($errMess);
         }
         
-        Session::forget('memid');
+        
         
 
     }

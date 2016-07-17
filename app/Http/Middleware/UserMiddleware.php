@@ -34,6 +34,7 @@ class UserMiddleware
                     $retFullName = $value->FullName;
                 }
                 session(['memid' => $retMemId, 'memfullname' => $retFullName]);*/
+               
                 return $next($request);
             }
             
@@ -57,7 +58,11 @@ class UserMiddleware
             }
             if(($SecQues == $retSecQues) && ($Answer == $retAnswer)){
                 session(['memid' => $retMemId, 'memfullname' => $retFullName]);
-                return $next($request);
+                $voted = DB::table('tblvoteheader')->where('strVHMemId', '=', $retMemId)->select('strVHCode')->get();
+                if($voted){
+                    echo "voted";
+                }
+                else return $next($request);
             }else{
                 $errMess = "Authentication Failed1";
                 return Redirect::back()->withErrors($errMess);
