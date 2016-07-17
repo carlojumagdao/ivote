@@ -84,4 +84,17 @@ class securityController extends Controller
         $request->session()->flash('message', 'Successfully deleted.');  
         return Redirect::back();
     }
+    
+    public function createPage(){
+        $formDesign = DB::table('tblSetting')->select('strHeader','txtSetLogo')->get();
+        foreach ($formDesign as $design) {
+            $header = $design->strHeader;
+            $logo = $design->txtSetLogo;
+        }
+        $SecQues = DB::table('tblSecurityQuestion')
+        			->select('intSecQuesId','strSecQuestion')
+        			->where('blSecQuesDelete', '=', 0)
+        			->get();
+        return view('secquestion', ['header'=>$header, 'logo'=>$logo,'SecQues'=>$SecQues]);
+    }
 }
