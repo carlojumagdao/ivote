@@ -61,13 +61,13 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3 col-xs-6">
             <div class="panel panel-default">
                 <div class="panel-heading"><i class="glyphicon glyphicon-calendar"></i> Start Date</div>
                 <div class="panel-body">{{$start}}</div>    
             </div>  
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3 col-xs-6">
             <div class="panel panel-default">
                 <div class="panel-heading"><i class="glyphicon glyphicon-calendar"></i> End Date</div>
                 <div class="panel-body">{{$end}}</div>  

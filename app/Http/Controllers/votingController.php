@@ -45,17 +45,25 @@ class votingController extends Controller
                                 ->select('strPosDeFieldName','strPosDeFieldData')
                                 ->where('strPosDePosId', '=', $pos->strPositionId)
                                 ->get();
+                $numdet = DB::table('tblpositiondetail')
+                                ->select('strPosDeFieldName')
+                                ->where('strPosDePosId', '=', $pos->strPositionId)
+                                ->distinct()
+                                ->count();
+                
                 if($posdetail){
                     $count = 0;
                     foreach($posdetail as $posdet){
+                        $counter = 0;
                         foreach($memdetail as $memdet){
                             if($posdet->strPosDeFieldName == $memdet->strMemDeFieldName){
-                                if($posdet->strPosDeFieldData == $memdet->strMemDeFieldData) $count++;
+                                if($posdet->strPosDeFieldData == $memdet->strMemDeFieldData) $counter++;
                             }
                         }
+                        if($counter != 0) $count++;
                     }
                     
-                    if($count != 0){
+                    if($count == $numdet){
                         $only[$index] = $pos;
                         $index++;
                     } 
@@ -100,17 +108,25 @@ class votingController extends Controller
                                 ->select('strPosDeFieldName','strPosDeFieldData')
                                 ->where('strPosDePosId', '=', $pos->strPositionId)
                                 ->get();
+                $numdet = DB::table('tblpositiondetail')
+                                ->select('strPosDeFieldName')
+                                ->where('strPosDePosId', '=', $pos->strPositionId)
+                                ->distinct()
+                                ->count();
+                
                 if($posdetail){
                     $count = 0;
                     foreach($posdetail as $posdet){
+                        $counter = 0;
                         foreach($memdetail as $memdet){
                             if($posdet->strPosDeFieldName == $memdet->strMemDeFieldName){
-                                if($posdet->strPosDeFieldData == $memdet->strMemDeFieldData) $count++;
+                                if($posdet->strPosDeFieldData == $memdet->strMemDeFieldData) $counter++;
                             }
                         }
+                        if($counter != 0) $count++;
                     }
                     
-                    if($count != 0){
+                    if($count == $numdet){
                         $only[$index] = $pos;
                         $index++;
                     } 
