@@ -32,7 +32,42 @@ class votingController extends Controller
                             ->where('blCandDelete', '=', 0)
                             ->select('tblcandidate.intCandParId','tblparty.strPartyName', 'tblparty.strPartyColor')
                             ->get();
+            $memdetail = DB::table('tblmemberdetail')
+                            ->select('strMemDeFieldName', 'strMemDeFieldData')
+                            ->where('strMemDeMemId', '=', session('memid'))
+                            ->get();
+            $only = "";
+            $index = 0;
             $positions = DB::table('tblposition')->get();
+            
+            foreach($positions as $pos){
+                $posdetail = DB::table('tblpositiondetail')
+                                ->select('strPosDeFieldName','strPosDeFieldData')
+                                ->where('strPosDePosId', '=', $pos->strPositionId)
+                                ->get();
+                if($posdetail){
+                    $count = 0;
+                    foreach($posdetail as $posdet){
+                        foreach($memdetail as $memdet){
+                            if($posdet->strPosDeFieldName == $memdet->strMemDeFieldName){
+                                if($posdet->strPosDeFieldData == $memdet->strMemDeFieldData) $count++;
+                            }
+                        }
+                    }
+                    
+                    if($count != 0){
+                        $only[$index] = $pos;
+                        $index++;
+                    } 
+                    
+                }
+                
+                else{
+                    $only[$index] = $pos;
+                    $index++;
+                }
+                
+            }
             $candidates = DB::table('tblcandidate')
                             ->join('tblmember', 'tblcandidate.strCandMemId', '=', 'tblmember.strMemberId')
                             ->join('tblparty', 'tblcandidate.intCandParId', '=', 'tblparty.intPartyId')
@@ -40,7 +75,7 @@ class votingController extends Controller
                             ->select('tblcandidate.*', 'tblmember.strMemFname', 'tblmember.strMemLname', 'tblparty.strPartyName', 'tblparty.strPartyColor')
                             ->get();
             $election = DB::table('tblsetting')->get();
-            return view('Voting.page', ['partylist'=>$partylist, 'positions'=>$positions, 'candidates'=>$candidates, 'election' => $election]);
+            return view('Voting.page', ['partylist'=>$partylist, 'positions'=>$only, 'candidates'=>$candidates, 'election' => $election]);
             
             
         }
@@ -52,8 +87,45 @@ class votingController extends Controller
                             ->where('blCandDelete', '=', 0)
                             ->select('tblcandidate.*', 'tblmember.strMemFname', 'tblmember.strMemLname')
                             ->get();
+            $memdetail = DB::table('tblmemberdetail')
+                            ->select('strMemDeFieldName', 'strMemDeFieldData')
+                            ->where('strMemDeMemId', '=', session('memid'))
+                            ->get();
+            $only = "";
+            $index = 0;
+            $positions = DB::table('tblposition')->get();
+            
+            foreach($positions as $pos){
+                $posdetail = DB::table('tblpositiondetail')
+                                ->select('strPosDeFieldName','strPosDeFieldData')
+                                ->where('strPosDePosId', '=', $pos->strPositionId)
+                                ->get();
+                if($posdetail){
+                    $count = 0;
+                    foreach($posdetail as $posdet){
+                        foreach($memdetail as $memdet){
+                            if($posdet->strPosDeFieldName == $memdet->strMemDeFieldName){
+                                if($posdet->strPosDeFieldData == $memdet->strMemDeFieldData) $count++;
+                            }
+                        }
+                    }
+                    
+                    if($count != 0){
+                        $only[$index] = $pos;
+                        $index++;
+                    } 
+                    
+                }
+                
+                else{
+                    $only[$index] = $pos;
+                    $index++;
+                }
+                
+            }
+            
             $election = DB::table('tblsetting')->get();
-            return view('Voting.pagelessparty', [ 'positions'=>$positions, 'candidates'=>$candidates, 'election' => $election]);
+            return view('Voting.pagelessparty', [ 'positions'=>$only, 'candidates'=>$candidates, 'election' => $election]);
         }
         
     }
