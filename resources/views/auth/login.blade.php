@@ -18,6 +18,7 @@
 <style>
     body{
       background-image: url("{{ URL::asset('assets/images/7.jpg') }}");
+        background-size: cover;
     }
     .form-control{
       background-color: rgba(232, 232, 232, 0.28);

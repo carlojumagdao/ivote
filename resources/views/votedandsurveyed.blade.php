@@ -21,7 +21,7 @@
 <style>
     body{
       background-image: url("{{ URL::asset('assets/images/7.jpg') }}");
-      
+      background-size: cover;
       background-attachment: inherit;
       background-repeat: no-repeat;
       
