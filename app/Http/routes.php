@@ -285,12 +285,17 @@ Route::group(['middleware' => 'auth'], function(){
 	));
 	
 	//user//
+    //Queries//
+    
     Route::get('/queries', array(
 		'uses' => 'queriesController@index',
 		'as' => 'queries.index'
 	));
-    //Queries//
     
+    Route::post('/queries', array(
+		'uses' => 'queriesController@query',
+		'as' => 'queries.query'
+	));
     
     
     //Queries//
