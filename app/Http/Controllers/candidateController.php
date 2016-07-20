@@ -40,14 +40,14 @@ class candidateController extends Controller
     {
         $PartyStatus = DB::table('tblSetting')->where('blSetParty', '=', 1)->get();
         if($PartyStatus){
-            $Members = DB::table('tblmember')->select('strMemberId', 'strMemFname', 'strMemLname', 'strMemMname')->get();
+            $Members = DB::table('tblmember')->select('strMemberId', 'strMemFname', 'strMemLname', 'strMemMname')->where('blMemDelete', '=', 0)->get();
             $Positions = DB::table('tblposition')->select('strPositionId', 'strPosName')->get();
             $Parties = DB::table('tblparty')->select('intPartyId', 'strPartyName')->get();
             return view('Candidate.add', ['Members' => $Members, 'Positions' => $Positions, 'Parties'=> $Parties]);
         }
         else{
             
-            $Members = DB::table('tblmember')->select('strMemberId', 'strMemFname', 'strMemLname', 'strMemMname')->get();
+            $Members = DB::table('tblmember')->select('strMemberId', 'strMemFname', 'strMemLname', 'strMemMname')->where('blMemDelete', '=', 0)->get();
             $Positions = DB::table('tblposition')->select('strPositionId', 'strPosName')->get();
             return view('Candidate.addlessparty', ['Members' => $Members, 'Positions' => $Positions]);
         }

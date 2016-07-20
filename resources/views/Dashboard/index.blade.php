@@ -31,34 +31,42 @@
     <div class="col-md-12">
         <div class="col-lg-3 col-xs-6">
             <div class="panel" style="border-left:8px solid #2c8798;color:#2c8798;">
-                <div class="panel-body">
-                    <div class="info-box-number text-center" style="font-size:70px;">{{$TotalPosition}}</div>
-                    <div class="info-box-text text-center" style="font-size:130%">Position</div>
-                </div>
+                <a href="{{ URL::to('dashboard/position') }}">
+                    <div class="panel-body">
+                        <div class="info-box-number text-center" style="font-size:70px;" > {{$TotalPosition}}</div>
+                        <div class="info-box-text text-center" style="font-size:130%">Position</div>
+                    </div>
+                </a>
             </div>
         </div>
         <div class="col-lg-3 col-xs-6">
             <div class="panel" style="border-left:8px solid #006400;color:#006400;">
-                <div class="panel-body"> 
-                    <div class="info-box-number text-center" style="font-size:70px">{{$TotalCandidate}}</div>
-                    <div class="info-box-text text-center" style="font-size:130%">Candidate</div>
-                </div>
+                <a href="{{ URL::to('dashboard/candidate') }}">
+                    <div class="panel-body"> 
+                        <div class="info-box-number text-center" style="font-size:70px">{{$TotalCandidate}}</div>
+                        <div class="info-box-text text-center" style="font-size:130%">Candidate</div>
+                    </div>
+                </a>
             </div>
         </div>
         <div class="col-lg-3 col-xs-6">
             <div class="panel" style="border-left:8px solid #b22222;color:#b22222;">
-                <div class="panel-body">  
-                    <div class="info-box-number text-center" style="font-size:70px">{{$TotalVoter}}</div>
-                    <div class="info-box-text text-center" style="font-size:130%">Voter</div>
-                </div>
+                <a href="{{ URL::to('dashboard/voter') }}">
+                    <div class="panel-body">  
+                        <div class="info-box-number text-center" style="font-size:70px">{{$TotalVoter}}</div>
+                        <div class="info-box-text text-center" style="font-size:130%">Voter</div>
+                    </div>
+                </a>
             </div>
         </div>
         <div class="col-lg-3 col-xs-6">
             <div class="panel" style="border-left:8px solid #605ca8;color:#605ca8;">
-                <div class="panel-body">  
-                    <div class="info-box-number text-center" style="font-size:70px">{{$TotalVoted}}</div>
-                    <div class="info-box-text text-center" style="font-size:130%">Voted</div>
-                </div>
+                <a href="{{ URL::to('dashboard/voted') }}">
+                    <div class="panel-body">  
+                        <div class="info-box-number text-center" style="font-size:70px">{{$TotalVoted}}</div>
+                        <div class="info-box-text text-center" style="font-size:130%">Voted</div>
+                    </div>
+                </a>
             </div>
         </div>
         <div class="col-md-3 col-xs-6">

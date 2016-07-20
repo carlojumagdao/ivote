@@ -20,11 +20,28 @@ Route::get('/admin', function () {
 
 
 Route::group(['middleware' => 'auth'], function(){
-	
+	// Dashboard //	
 	Route::get('/dashboard', array(
 		'uses' => 'dashboardController@index',
 		'as' => 'dashboard.index'
 	));
+	Route::get('/dashboard/position', array(
+		'uses' => 'dashboardController@displayPosition',
+		'as' => 'dashboard.position'
+	));
+	Route::get('/dashboard/candidate', array(
+		'uses' => 'dashboardController@displayCandidate',
+		'as' => 'dashboard.candidate'
+	));
+	Route::get('/dashboard/voter', array(
+		'uses' => 'dashboardController@displayVoter',
+		'as' => 'dashboard.voter'
+	));
+	Route::get('/dashboard/voted', array(
+		'uses' => 'dashboardController@displayVoted',
+		'as' => 'dashboard.voted'
+	));
+	// Dashboard //
 
 	Route::get('/memberform', function () {
 	    return view('Members.form');
@@ -342,7 +359,10 @@ Route::group(['middleware' => 'userlog'], function(){
 	));
     //Voting Route
     
-
+    Route::get('/query',array(
+    	'uses' => 'queryController@index',
+    	'as' => 'query.index'
+    ));
 });
 
 Route::post('/survey/add', array(
