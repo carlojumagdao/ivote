@@ -30,6 +30,24 @@ class userController extends Controller
         
         return view('Users.userProfile', ['user' => $user]);
     } 
+    public function view($id){
+        $users = DB::table('users')->where('id', $id)->get();
+        foreach ($users as $user) {
+            $name = $user->name;
+            $img = $user->txtPath;
+            $email = $user->email;
+        }
+        return view('Users.userView', ['users' => $users,'name'=>$name,'img'=>$img,'email'=>$email]);
+    } 
+    public function editUser($id){
+        $users = DB::table('users')->where('id', $id)->get();
+        foreach ($users as $user) {
+            $name = $user->name;
+            $img = $user->txtPath;
+            $email = $user->email;
+        }
+        return view('Users.EditUser', ['users' => $users,'name'=>$name,'img'=>$img,'email'=>$email,'id'=>$id]);
+    } 
     public function edit(Request $request){
         $id = $request->input('id');
         $user = DB::table('users')->where('id', $id)->get();
@@ -186,5 +204,52 @@ class userController extends Controller
         }
         return Redirect::back();
     }
+    public function updateUser(Request $request){
+        $validator = Validator::make(Input::all(),
+            array(
+                'image' =>'required',
+                'name' => 'required',
+                'email' => 'required'
+            )
+        );
+        $niceNames = array(
+            'image' => 'Image',
+            'name' => 'Name',
+            'email' => 'Email',
+        );
+        $validator->setAttributeNames($niceNames); 
+        if($validator->fails()) {
+            return Redirect::back()->withErrors($validator);
+            } 
+        try{
+            $id = $request->input('id');
+            $imgPath = session('picname');
+            if ($request->hasFile('image')){
+                $destinationPath =  'assets/images/'; // upload path
+                $extension = $request->file('image')->getClientOriginalExtension(); // getting image extension
+                $date = date("Ymdhis");
+                $filename = $date.'-'.rand(111111,999999).'.'.$extension;
+                      
+                if ($request->file('image')->isValid()) {
+                    $request->file('image')->move($destinationPath, $filename);
+                    $imgPath = $filename;                     
+                }
+            }
+            else{
+                $imgPath = $request->input('image');
+            }
+            $email = $request->input('email');
+            $name = $request->input('name');
+            $user = DB::table('users')
+                    ->where('id', $id)
+                    ->update(['txtPath' => $imgPath, 'email' =>$email,'name' =>$name]);
+            $request->session()->flash('message', "User Successfully Updated");   
+               
+        }catch (\Illuminate\Database\QueryException $e){
+            $errMess = $e->getMessage();
+        }
+        return Redirect::back();
+    }
+
 
 }

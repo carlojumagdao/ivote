@@ -283,6 +283,18 @@ Route::group(['middleware' => 'auth'], function(){
 		'uses' => 'userController@edit',
 		'as' => 'user.edit'
 	));
+	Route::get('/user/view/{id}', array(
+		'uses' => 'userController@view',
+		'as' => 'user.view'
+	));
+	Route::get('/user/editUser/{id}', array(
+		'uses' => 'userController@editUser',
+		'as' => 'user.editUser'
+	));
+	Route::post('user/updateUser', array(
+		'uses' => 'userController@updateUser',
+		'as' => 'user.updateUser'
+	));
 	
 	//user//
     //Queries//

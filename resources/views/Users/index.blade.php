@@ -178,6 +178,8 @@
                             <td class="name">{{$value->name}}</td>
                             <td class="email">{{$value->email}}</td> 
                             <td>
+                                <a href="user/view/{{$value->id}}" class="btn btn-primary btn-sm view" data-toggle="tooltip" title="View"><i class="fa fa-eye"></i></a>
+                                <a href="user/editUser/{{$value->id}}" class="btn btn-warning btn-sm edit" data-toggle="tooltip" title="Edit"><i class="glyphicon glyphicon-edit"></i></a>
                                 <button class="btn btn-danger btn-sm delUser" data-toggle="tooltip" title="Delete"><i class="glyphicon glyphicon-trash"></i></button>
                             </td>
                         </tr>
