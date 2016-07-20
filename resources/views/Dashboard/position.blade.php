@@ -37,16 +37,15 @@
                 </center>
                 <div id="content">
                     <div class="col-md-6" >
-                        <center>
-                            <ul class="list-group list-group-unbordered">
-                                <h3 class="list-group-item-heading with-border">Position</h3>
-                                @foreach($Positions as $value)
-                                    <li class="list-group-item">
-                                        <b>{{$value->strPosName}}</b> 
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </center>
+                        <ul class="list-group list-group-unbordered">
+                            <h3 class="list-group-item-heading with-border">Position <a class="pull-right">Vote Limit</a></h3>
+                            @foreach($Positions as $value)
+                                <li class="list-group-item">
+                                    <b>{{$value->strPosName}}</b>
+                                    <a class="pull-right">{{$value->intPosVoteLimit}}</a>
+                                </li>
+                            @endforeach
+                        </ul>
                     </div>
                 </div>
             </div>

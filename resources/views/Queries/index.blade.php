@@ -1,6 +1,6 @@
 @extends('master')
 @section('title')
-    {{"UI Element Settings"}}
+    {{"Queries"}}
 @stop   
 @section('style')
     <link rel="stylesheet" href="{{ URL::asset('assets/plugins/colorpicker/bootstrap-colorpicker.min.css') }}">

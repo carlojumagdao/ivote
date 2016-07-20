@@ -19,7 +19,7 @@ class dashboardController extends Controller
     {
         $TotalPosition = DB::table('tblposition')->where('blPosDelete', '=', 0)->count();
         $TotalCandidate = DB::table('tblcandidate')->where('blCandDelete', '=', 0)->count();
-        $TotalVoter = DB::table('tblmember')->where('blMemDelete', '=', 0)->count();
+        $TotalVoter = DB::table('tblmember')->where('blMemDelete', '=', 0)->where('blMemCodeSendStat', '=', 1)->count();
         $TotalVoted = DB::table('tblvoteheader')->count();
         
         $Date = GenSet::find(1);
@@ -88,7 +88,7 @@ class dashboardController extends Controller
     public function displayVoter()
     {
 
-        $Members = DB::table('tblMember')->where('blMemDelete', '=', 0)->get();
+        $Members = DB::table('tblMember')->where('blMemDelete', '=', 0)->where('blMemCodeSendStat', '=', 1)->get();
         $formDesign = DB::table('tblSetting')->select('strHeader','txtSetLogo','strSetElecName','strSetAddress')->get();
         foreach ($formDesign as $design) {
             $org = $design->strHeader;
