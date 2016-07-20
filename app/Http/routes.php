@@ -311,6 +311,13 @@ Route::group(['middleware' => 'auth'], function(){
     
     
     //Queries//
+    
+    //Reports//
+    Route::get('/tallyvotes', array(
+		'uses' => 'reportController@tallyvotes',
+		'as' => 'report.tallyvotes'
+	));
+    //Reports//
 });
 
 // Candidate Page//

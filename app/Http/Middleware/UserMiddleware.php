@@ -26,7 +26,7 @@ class UserMiddleware
             if($voted){
                 $SH = SurveyHeader::where('strSHMemCode', "=", $memid)->first();
                 if($SH){
-                    echo "voted and surveyed";
+                    return view('votedandsurveyed');
                 }
                 
                 else return $next($request);
@@ -69,7 +69,7 @@ class UserMiddleware
                 if($voted){
                     $SH = SurveyHeader::where('strSHMemCode', "=", $retMemId)->first();
                     if($SH){
-                        echo "voted and surveyed";
+                        return view('votedandsurveyed');
                     }
                     
                     else return Redirect::route('survey.answerSurvey');

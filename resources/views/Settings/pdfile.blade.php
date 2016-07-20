@@ -8,6 +8,9 @@
 <body>
 
 <style type="text/css">
+    body{
+        font-family: helvetica;
+    }
 	.img-left {
 
 		float: left;
@@ -23,6 +26,14 @@
 		margin-left: 200px;
 	}
     
+    .td {
+         border-bottom: 1px solid #ddd;
+    }
+    tr:nth-child(even) {background-color: #f2f2f2}
+    th {
+    background-color: #4CAF50;
+    color: white;
+    }
 </style>
     
     <table width="100%">
@@ -40,6 +51,27 @@
             </td>
         </tr>
     </table>
+    
+    <table width="100%">
+        <tr>
+            <th class="td" width="10%"></th>
+            <th class="td">Last Name</th>
+            <th class="td">Vote Count</th>
+            <th class="td">Percentage</th>
+        </tr>
+         @foreach($tally as $cand)
+        <tr>
+            <td class="td"><img src="assets/images/{{$cand->txtCandPic}}" height="100px" width="100px"></td>
+            <td class="td">{{$cand->strMemLName}}, {{$cand->strMemFName}}</td>
+            <td class="td">{{$cand->votes}}</td>
+            <td class="td">{{($cand->votes / $count )* 100}}%</td>
+            
+        </tr>
+        @endforeach
+    </table>
+    <br>
+    <br>
+    <h3>Total Voters: {{$count}}</h3>
 	 
 	
     

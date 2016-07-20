@@ -188,10 +188,17 @@
             <i class="fa fa-question"></i> <span>Queries</span>
           </a>
         </li>
-        <li>
-          <a href="../widgets.html">
-            <i class="fa fa-bar-chart-o"></i> <span>Reports</span>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-bar-chart-o"></i>
+            <span>Reports</span> <i class="fa fa-angle-left pull-right"></i>
           </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ URL::to('/tallyvotes') }}"><i class="fa fa-circle-o"></i> Tally of Votes</a></li>
+            <li><a href="{{ URL::to('') }}"><i class="fa fa-circle-o"></i> Tally of Survey</a></li>
+            <li><a href="{{ URL::to('') }}"><i class="fa fa-circle-o"></i> Winner </a></li>
+            <li><a href="{{ URL::to('') }}"><i class="fa fa-circle-o"></i> Vote Distribution</a></li>
+          </ul>
         </li>
         <li>
           <a href="../widgets.html">
