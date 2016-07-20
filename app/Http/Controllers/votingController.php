@@ -38,7 +38,9 @@ class votingController extends Controller
                             ->get();
             $only = "";
             $index = 0;
-            $positions = DB::table('tblposition')->get();
+            $positions = DB::table('tblposition')
+                            ->where('blPosDelete', '=', '0')
+                            ->get();
             
             foreach($positions as $pos){
                 $posdetail = DB::table('tblpositiondetail')
@@ -101,7 +103,9 @@ class votingController extends Controller
                             ->get();
             $only = "";
             $index = 0;
-            $positions = DB::table('tblposition')->get();
+            $positions = DB::table('tblposition')
+                            ->where('blPosDelete', '=', '0')
+                            ->get();
             
             foreach($positions as $pos){
                 $posdetail = DB::table('tblpositiondetail')

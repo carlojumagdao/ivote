@@ -184,6 +184,11 @@
         </li>
         <li class="header">RESULTS</li>
         <li>
+          <a href="{{ URL::to('/queries') }}">
+            <i class="fa fa-question-circle"></i> <span>Queries</span>
+          </a>
+        </li>
+        <li>
           <a href="../widgets.html">
             <i class="fa fa-bar-chart-o"></i> <span>Reports</span>
           </a>

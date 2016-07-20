@@ -264,6 +264,15 @@ Route::group(['middleware' => 'auth'], function(){
 	));
 	
 	//user//
+    Route::get('/queries', array(
+		'uses' => 'queriesController@index',
+		'as' => 'queries.index'
+	));
+    //Queries//
+    
+    
+    
+    //Queries//
 });
 
 // Candidate Page//
