@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\DynamicField AS DynamicField;
 use App\formLoader AS formLoader;
 use App\formEncoder AS formEncoder;
+use App\viewFormEncoder AS viewFormEncoder;
 use App\editFormEncoder AS editFormEncoder;
 use App\Member AS Member;
 use App\MemberDetail AS MemberDetail;
@@ -22,6 +23,50 @@ class formController extends Controller
     public function index(){
         $Members = DB::table('tblMember')->where('blMemDelete', '=', 0)->get();
         return view('Members.index', ['Members' => $Members, 'intCounter'=>0]);
+    } 
+    public function view($id){
+        $arrFieldName= array (' ');
+        $arrFieldData= array (' ');
+        $Members = DB::table('tblMember')
+                    ->where('strMemberId', '=', $id)
+                    ->where('blMemDelete', '=', 0)
+                    ->get();
+        foreach ($Members as $value) {
+            $strMemFname = $value->strMemFname;
+            $strMemMname = $value->strMemMname;
+            $strMemLname = $value->strMemLname;
+            $strMemEmail = $value->strMemEmail;
+            $intMemSecId = $value->intMemSecQuesId;
+            $strMemSecAnswer = $value->strMemSecQuesAnswer;
+            $strMemPasscode = $value->strMemPasscode;
+        }
+        $Question = DB::table('tblSecurityQuestion')
+                    ->where('intSecQuesId', '=', $intMemSecId)
+                    ->where('blSecQuesDelete', '=', 0)
+                    ->get();
+        $strQuestion = "Not Set";
+        foreach ($Question as $value) {
+            $strQuestion = $value->strSecQuestion;
+        }
+        $data = DB::table('tblMemberDetail')
+            ->join('tblDynamicField', 'tblMemberDetail.strMemDeFieldName', '=', 'tblDynamicField.strDynFieldName')
+            ->select('tblMemberDetail.*')
+            ->where('tblDynamicField.blDynStatus', '=', 1)
+            ->where('tblMemberDetail.strMemDeMemId', '=', $id)
+            ->get();
+        $intFieldCounter = 0;
+        foreach ($data as $value) {
+            $arrFieldName[$intFieldCounter] = $value->strMemDeFieldName;
+            $arrFieldData[$intFieldCounter] = $value->strMemDeFieldData;
+            $intFieldCounter++;
+        }
+        $MemberForm = DB::table('tblMemberForm')->get();
+        foreach ($MemberForm as $value) {
+            $form = $value->strMemForm;
+        }
+        $edirLoader = new viewFormEncoder($form,'update',$id,$strMemFname,$strMemMname,$strMemLname,$strMemEmail,$arrFieldName,$arrFieldData);
+        $viewForm = $edirLoader->render_form();
+        return view('Members.viewMember', ['viewForm' => $viewForm,'strQuestion' => $strQuestion, 'strMemSecAnswer' => $strMemSecAnswer, 'strMemPasscode' => $strMemPasscode]);
     } 
     public function delete(Request $request){
         $id = $request->input("id");

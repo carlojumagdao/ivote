@@ -62,6 +62,10 @@ Route::group(['middleware' => 'auth'], function(){
 		'uses' => 'formController@index',
 		'as' => 'member.index'
 	));
+	Route::get('/member/view/{id}', array(
+		'uses' => 'formController@view',
+		'as' => 'member.view'
+	));
 	Route::get('member/create', array(
 		'uses' => 'formController@create',
 		'as' => 'member.create'

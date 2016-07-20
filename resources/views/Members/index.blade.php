@@ -195,7 +195,7 @@
                                 <td class="passcode">No</td>  
                             @endif    
                             <td>
-                                <a href="member/edit/{{$value->strMemberId}}" class="btn btn-warning btn-sm edit" title="Edit"><i class="glyphicon glyphicon-edit"></i></a>
+                                <a href="member/edit/{{$value->strMemberId}}" class="btn btn-warning btn-sm edit" data-toggle="tooltip" title="Edit"><i class="glyphicon glyphicon-edit"></i></a>
                                 <a class="btn btn-primary btn-sm send sendMember" data-toggle="tooltip" title="Send Passcode"><i class="glyphicon glyphicon-send"></i></a>
                                 <button class="btn btn-danger btn-sm delMember" data-toggle="tooltip" title="Delete"><i class="glyphicon glyphicon-trash"></i></button>
                             </td>
