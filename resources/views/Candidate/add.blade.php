@@ -35,7 +35,7 @@
             </div>
         @endif
     </div>
-    <div class="col-md-8">
+    <div class="col-md-12">
         <div class="box">
             <div class="box-header with-border">
                 <h3 class="box-title">Add New Candidate</h3>
@@ -54,7 +54,7 @@
                     <br>
                     <div class="card-panel2 tooltipped" data-position="top" data-delay="50" data-tooltip="logo picture">
                         <img id="cand-pic" src="../assets/images/Avatar.jpg" style="max-width:180px; background-size: contain" />
-                        <center><h4>(2x2 picture only)</h2> </center>
+                        <center><h4>(2x2 picture only)</h2></center>
                     </div>
                 </div>
                 </center>
@@ -112,6 +112,36 @@
                          @endforeach
                      </select>
                     </div>
+                </div>
+                <div class="form-group col-md-12 ">
+                    <div class="col-md-2">
+                   {!! Form::label( 'educback', 'Candidate Education Background:' ) !!}
+                    </div>
+                    <div class="col-md-10">
+                        {!! Form::text
+                            ('educback', $strCandEducBackg, array(
+                            'id' => 'educback',
+                            'placeholder' => "This will be use for the campaign page",
+                            'name' => 'txtEducback',
+                            'class' => 'form-control',
+                            'required' => true,)) 
+                        !!}  
+                    </div> 
+                </div>
+                <div class="form-group col-md-12 ">
+                    <div class="col-md-2">
+                    {!! Form::label( 'info', 'Candidate Information:' ) !!}
+                    </div>
+                    <div class="col-md-10">
+                        {!! Form::text
+                            ('info', $strCandInfor, array(
+                            'id' => 'info',
+                            'placeholder' => "This will be use for the campaign page",
+                            'name' => 'txtinfo',
+                            'class' => 'form-control',
+                            'required' => true,)) 
+                        !!}
+                    </div>  
                 </div>
                 <div class="form-group col-md-12 ">
                     <input type="submit" class="btn btn-primary" name="btnSubmit" value="Submit">
