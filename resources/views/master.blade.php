@@ -63,7 +63,7 @@
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="{{ URL::asset('assets/images/'.$imgPath.'') }}" class="img-circle" alt="User Image">
+                <img src="{{ URL::asset('assets/images/'.$imgPath.'') }}" class="img-circle" alt="User Image" height="60" width="60">
 
                 <p>
                   <?php echo $userName; ?>
@@ -94,7 +94,7 @@
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="{{ URL::asset('assets/images/'.$imgPath.'') }}" class="img-circle" alt="User Image">
+          <img src="{{ URL::asset('assets/images/'.$imgPath.'') }}" img class="img-circle" height="65" width="65" id="user-pic" >
         </div>
         <div class="pull-left info">
           <p><?php echo $userName; ?></p>
@@ -183,6 +183,11 @@
           </ul>
         </li>
         <li class="header">RESULTS</li>
+        <li>
+          <a href="{{ URL::to('/query') }}">
+            <i class="fa fa-question"></i> <span>Queries</span>
+          </a>
+        </li>
         <li>
           <a href="../widgets.html">
             <i class="fa fa-bar-chart-o"></i> <span>Reports</span>
