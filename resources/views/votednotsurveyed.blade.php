@@ -23,6 +23,7 @@
       background-image: url("{{ URL::asset('assets/images/7.jpg') }}");
       
       background-attachment: inherit;
+      background-repeat: no-repeat;
       
       
     }
