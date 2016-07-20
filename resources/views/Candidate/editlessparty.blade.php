@@ -110,6 +110,36 @@
                      </select>
                     </div>
                 </div>
+                <div class="form-group col-md-12 ">
+                    <div class="col-md-2">
+                   {!! Form::label( 'educback', 'Candidate Education Background:' ) !!}
+                    </div>
+                    <div class="col-md-10">
+                        {!! Form::text
+                            ('educback', $Candidate->strCandEducBack, array(
+                            'id' => 'educback',
+                            'placeholder' => "This will be use for the campaign page",
+                            'name' => 'txtEducback',
+                            'class' => 'form-control',
+                            'required' => true,)) 
+                        !!}  
+                    </div> 
+                </div>
+                <div class="form-group col-md-12 ">
+                    <div class="col-md-2">
+                    {!! Form::label( 'info', 'Candidate Information:' ) !!}
+                    </div>
+                    <div class="col-md-10">
+                        {!! Form::text
+                            ('info', $Candidate->strCandInfo, array(
+                            'id' => 'info',
+                            'placeholder' => "This will be use for the campaign page",
+                            'name' => 'txtinfo',
+                            'class' => 'form-control',
+                            'required' => true,)) 
+                        !!}
+                    </div>  
+                </div>
                 
             </div>
             <div class="box-footer">

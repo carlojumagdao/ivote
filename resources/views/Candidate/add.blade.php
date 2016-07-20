@@ -119,7 +119,7 @@
                     </div>
                     <div class="col-md-10">
                         {!! Form::text
-                            ('educback', $strCandEducBackg, array(
+                            ('educback','' , array(
                             'id' => 'educback',
                             'placeholder' => "This will be use for the campaign page",
                             'name' => 'txtEducback',
@@ -134,7 +134,7 @@
                     </div>
                     <div class="col-md-10">
                         {!! Form::text
-                            ('info', $strCandInfor, array(
+                            ('info','' , array(
                             'id' => 'info',
                             'placeholder' => "This will be use for the campaign page",
                             'name' => 'txtinfo',

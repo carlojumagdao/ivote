@@ -51,43 +51,25 @@ class candidateController extends Controller
             $Members = DB::table('tblmember')->select('strMemberId', 'strMemFname', 'strMemLname', 'strMemMname')->where('blMemDelete', '=', 0)->get();
             $Positions = DB::table('tblposition')->select('strPositionId', 'strPosName')->get();
             $Parties = DB::table('tblparty')->select('intPartyId', 'strPartyName')->get();
-            $Cand = DB::table('tblcandidate')->select('*')->get();
-                foreach ($Cand as $value) 
-                {
-                    $strCandEducBackg = $value->strCandEducBack;
-                    $strCandInfor = $value->strCandInfo;
-                }
-            return view('Candidate.add', ['Members' => $Members, 'Positions' => $Positions, 'Parties'=> $Parties, 'strCandEducBackg' => 
-                $strCandEducBackg , 
-                  'strCandInfor' => 
-                $strCandInfor]);
+            return view('Candidate.add', ['Members' => $Members, 'Positions' => $Positions, 'Parties'=> $Parties]);
         }
         else{
             
             $Members = DB::table('tblmember')->select('strMemberId', 'strMemFname', 'strMemLname', 'strMemMname')->where('blMemDelete', '=', 0)->get();
             $Positions = DB::table('tblposition')->select('strPositionId', 'strPosName')->get();
-            $Cand = DB::table('tblcandidate')->select('*')->get();
-                foreach ($Cand as $value) 
-                {
-                    $strCandEducBackg = $value->strCandEducBack;
-                    $strCandInfor = $value->strCandInfo;
-                }
-            return view('Candidate.addlessparty', ['Members' => $Members, 'Positions' => $Positions , 
-                'strCandEducBackg' => 
-                $strCandEducBackg , 
-                  'strCandInfor' => 
-                $strCandInfor]);
+            return view('Candidate.addlessparty', ['Members' => $Members, 'Positions' => $Positions]);
         }
     }
     
     public function newCandidate(Request $request)
     {
+        var_dump($_POST);
        $rules = array(
 			'member' => 'required',
 			'position' => 'required',
+            'txtEducback' => 'required',
+            'txtinfo' => 'required',
             'image' => 'required|mimes:jpeg,jpg,png,bmp|max:50000',
-            'educback' => 'required',
-            'info' => 'required'
 		);
 		$messages = [
 		    'required' => 'The :attribute field is required.',
@@ -95,6 +77,8 @@ class candidateController extends Controller
 		$niceNames = array(
 		    'member' => 'Candidate Name',
 		    'position' => 'Position',
+            'educback' => 'Educational Background',
+            'info' => 'Information',
 		);
         $validator = Validator::make($request->all(),$rules,$messages);
         $validator->setAttributeNames($niceNames); 
@@ -226,6 +210,8 @@ class candidateController extends Controller
             $Candidate = Candidate::find($id);
             $Candidate->strCandMemId = $request->input('member');
             $Candidate->strCandPosId = $request->input('position');
+            $Candidate->strCandEducBack = $request->input('txtEducback');
+            $Candidate->strCandInfo = $request->input('txtinfo');
             if ($request->has('party'))$Candidate->intCandParId = $request->input('party');
             else $Candidate->intCandParId = 1;
             
