@@ -17,10 +17,15 @@
 
 <style>
     body{
-      background-image: url("{{ URL::asset('assets/images/bglogin.png') }}");
+      background-image: url("{{ URL::asset('assets/images/7.jpg') }}");
+    }
+    .form-control{
+      background-color: rgba(232, 232, 232, 0.28);
+      border-color: gray;
+      color: SteelBlue;
     }
     .login-box-body{
-      background-color: rgba(49, 45, 45, 0.28);
+      background-color: rgba(240, 240, 240, 0.71);
       color:black;
     }
     h1{
@@ -30,6 +35,10 @@
       -webkit-text-stroke-color: yellow;
       -webkit-font-smoothing: antialiased;
     }
+    .custom {height: 50px}
+    input[type="text"]{
+      color: SteelBlue ;
+    } 
 </style>
 
 </head>
@@ -37,7 +46,7 @@
 <div class="login-box">
   <div class="login-box-body">
     <center>
-      <h1>iVote++</h1>
+      <img src="assets/images/i.png" style="width:100%;">
       <h4>Election Content Management and Exit Poll Survey System</h4>
     </center>
     <br>
@@ -72,9 +81,9 @@
             <br>
             <div class="row">
               <div class="col-xs-8">
-                <div class="checkbox icheck">
-                  <label style="color:white">
-                    <input type="checkbox" class="flat-red" name="remember">&nbsp;&nbsp;Remember Me</a>
+                <div class="checkbox icheck" >
+                  <label style="color:gray">
+                    <input type="checkbox" class="flat-red" name="remember" >&nbsp;&nbsp;Remember Me</a>
                   </label>
                 </div>
             </div>
@@ -89,6 +98,8 @@
     <!-- <a href="#" style="color:white;">forgot password?</a><br> -->
   </div>
   <!-- /.form-box -->
+<br> 
+<center><p style="color:white;font-size:16px;">Powered by iVote++</p></center>
 </div>
 <!-- /.login-box -->
 

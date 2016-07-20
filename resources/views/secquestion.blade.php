@@ -21,11 +21,22 @@
 
 <style>
     body{
-      background-image: url("{{ URL::asset('assets/images/bglogin.png') }}");
+      background-image: url("{{ URL::asset('assets/images/7.jpg') }}");
+      
+      background-attachment: inherit;
+      
+      
     }
+    .form-control{
+      background-color: rgba(232, 232, 232, 0.28);
+      border-color: gray;
+      
+    }
+    
+    
     .login-box-body{
-      background-color:rgba(232, 232, 232, 0.28);
-      color:black;
+      background-color:rgba(248, 248, 248, 0.71);
+      color: black;
     }
     h1{
       font-weight: bold;
@@ -36,7 +47,7 @@
     }
     .custom {height: 50px}
     input[type="text"]{
-    	color: black;
+    	color: SteelBlue ;
     } 
 </style>
 
@@ -104,8 +115,9 @@
     </form>
   </div>
   <!-- /.form-box -->
-<br>  
-<center><p style="color:white;">Powered by iVote++</p></center>
+<br> 
+<br>
+<center><p style="color:white;font-size:16px;">Powered by iVote++</p></center>
 </div>
 <!-- /.login-box -->
 <!-- jQuery 2.2.0 -->

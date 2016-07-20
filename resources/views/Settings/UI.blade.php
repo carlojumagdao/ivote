@@ -48,7 +48,7 @@
                 <form action="{{ URL::to('/settings/UI/skin') }}" method="POST" role="form" >
                     <div class="row">
                         <div class="col-md-4">
-                            <input type="radio" name="theme" value="skin-blue" checked> &nbsp&nbsp blue dark
+                            <input type="radio" name="theme" value="skin-blue" checked>&nbsp&nbsp blue dark
                         </div>
                         <div class="col-md-1">
                             <i class="fa fa-eye btn btn-primary btn-xs"></i>

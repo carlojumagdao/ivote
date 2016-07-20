@@ -21,7 +21,12 @@
 
 <style>
     body{
-      background-image: url("{{ URL::asset('assets/images/bglogin.png') }}");
+      background-image: url("{{ URL::asset('assets/images/7.jpg') }}");
+    }
+    .form-control{
+      background-color: rgba(232, 232, 232, 0.28);
+      border-color: gray;
+      
     }
     .login-box-body{
       background-color:rgba(232, 232, 232, 0.28);

@@ -30,7 +30,15 @@ class candidateController extends Controller
             ->join('tblparty', 'tblcandidate.intCandParId', '=', 'tblparty.intPartyId')
             ->where('blCandDelete', 0)
             ->select('tblcandidate.*', 'tblmember.strMemFname', 'tblmember.strMemLname', 'tblposition.strPosName', 'tblparty.strPartyName')->get();
-            return view('Candidate.candidate', ['candidates' => $candidates, 'intCounter'=>0, 'party' => $PartyStatus]);
+            foreach ($candidates as $value) 
+                {
+                    $strCandEducBackg = $value->strCandEducBack;
+                    $strCandInfor = $value->strCandInfo;
+                }
+            return view('Candidate.candidate', ['candidates' => $candidates, 'intCounter'=>0, 'party' => $PartyStatus, 'strCandEducBackg' => 
+                $strCandEducBackg , 
+                  'strCandInfor' => 
+                $strCandInfor]);
        
         
 
@@ -43,13 +51,32 @@ class candidateController extends Controller
             $Members = DB::table('tblmember')->select('strMemberId', 'strMemFname', 'strMemLname', 'strMemMname')->where('blMemDelete', '=', 0)->get();
             $Positions = DB::table('tblposition')->select('strPositionId', 'strPosName')->get();
             $Parties = DB::table('tblparty')->select('intPartyId', 'strPartyName')->get();
-            return view('Candidate.add', ['Members' => $Members, 'Positions' => $Positions, 'Parties'=> $Parties]);
+            $Cand = DB::table('tblcandidate')->select('*')->get();
+                foreach ($Cand as $value) 
+                {
+                    $strCandEducBackg = $value->strCandEducBack;
+                    $strCandInfor = $value->strCandInfo;
+                }
+            return view('Candidate.add', ['Members' => $Members, 'Positions' => $Positions, 'Parties'=> $Parties, 'strCandEducBackg' => 
+                $strCandEducBackg , 
+                  'strCandInfor' => 
+                $strCandInfor]);
         }
         else{
             
             $Members = DB::table('tblmember')->select('strMemberId', 'strMemFname', 'strMemLname', 'strMemMname')->where('blMemDelete', '=', 0)->get();
             $Positions = DB::table('tblposition')->select('strPositionId', 'strPosName')->get();
-            return view('Candidate.addlessparty', ['Members' => $Members, 'Positions' => $Positions]);
+            $Cand = DB::table('tblcandidate')->select('*')->get();
+                foreach ($Cand as $value) 
+                {
+                    $strCandEducBackg = $value->strCandEducBack;
+                    $strCandInfor = $value->strCandInfo;
+                }
+            return view('Candidate.addlessparty', ['Members' => $Members, 'Positions' => $Positions , 
+                'strCandEducBackg' => 
+                $strCandEducBackg , 
+                  'strCandInfor' => 
+                $strCandInfor]);
         }
     }
     
@@ -59,6 +86,8 @@ class candidateController extends Controller
 			'member' => 'required',
 			'position' => 'required',
             'image' => 'required|mimes:jpeg,jpg,png,bmp|max:50000',
+            'educback' => 'required',
+            'info' => 'required'
 		);
 		$messages = [
 		    'required' => 'The :attribute field is required.',
@@ -114,12 +143,16 @@ class candidateController extends Controller
             $Candidate->strCandId = $counter->smartcounter($latest);
             $Candidate->strCandMemId = $request->input('member');
             $Candidate->strCandPosId = $request->input('position');
+            $Candidate->strCandEducBack = $request->input('txtEducback');
+            $Candidate->strCandInfo = $request->input('txtinfo');
             if ($request->has('party'))$Candidate->intCandParId = $request->input('party');
             else $Candidate->intCandParId = 1;
             if ($request->file('image')->isValid()) {
                 $request->file('image')->move($destinationPath, $filename);
                 $Candidate->txtCandPic = $filename;
             }
+
+
            
             $Candidate->save();
         }catch (\Illuminate\Database\QueryException $e){

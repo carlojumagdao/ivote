@@ -129,7 +129,7 @@
                 
             </div>
             <div class="box-footer">
-                <input type="submit" class="btn btn-primary" name="btnSubmit" value="Submit">
+                <input type="submit" class="btn btn-primary" name="btnSubmit" value="Save">
                 {!! Form::close() !!}
             </div>
         </div>

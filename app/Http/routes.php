@@ -399,5 +399,11 @@ Route::post('/security/question/{id}', array(
 		'uses' => 'securityController@setSecurity',
 		'as' => 'security.setSecurity'
 	));
+Route::get('/votedandsurveyed', function () {
+       return view('votedandsurveyed');
+});
+Route::get('/votednotsurveyed', function () {
+       return view('votednotsurveyed');
+});
 //Log In User//
 
