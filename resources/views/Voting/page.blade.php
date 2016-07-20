@@ -144,24 +144,24 @@
     </div>
     @endforeach
     <br>
-    <div class="row"> 
-    <div class="col-md-10 col-md-offset-1">
-        <div class="box-header boxhead" style="background-color: cornflowerblue ">
-            <h3 class="box-title">Vote Straight???</h3>
-        </div>
-        <div class="box-body boxbody" style="padding: 40px;">
-            @foreach($partylist as $party)
-            @if($party->strPartyName != 'Independent')
-            <div class="radio">
-                <label>
-                    <input type="radio" value="{{$party->intCandParId}}" name="party" class="vote_{{$party->intCandParId}}" onclick="revert(); auto_{{$party->intCandParId}}()">
-                    {{$party->strPartyName}}
-                </label>
+    <br>
+    <div class="col-md-12">
+        @if ($errors->any())
+            <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-ban"></i> Something went wrong!</h4>
+                {!! implode('', $errors->all(
+                    '<li>:message</li>'
+                )) !!}
             </div>
-            @endif
-             @endforeach
-        </div>
-    </div>
+        @endif
+        @if (Session::has('message'))
+            <div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-check"></i> Success!</h4>
+                {{ Session::get('message') }}
+            </div>
+        @endif
     </div>
     <br>
     <div class="row">
@@ -173,13 +173,30 @@
                     'class' => 'col s12',
                     'files' => true
                 ) ) !!}
-                    
-                
+        <div class="col-md-10 col-md-offset-1">
+        <div class="box-header boxhead" style="background-color: cornflowerblue ">
+            <h3 class="box-title">Vote Straight???</h3>
+        </div>
+        <div class="box-body boxbody" style="padding: 40px;">
+            @foreach($partylist as $party)
+            @if($party->strPartyName != 'Independent')
+            <div class="radio">
+                <label>
+                    <input type="radio" value="{{$party->intCandParId}}" name="par" class="vote_{{$party->intCandParId}}" onclick="revert(); auto_{{$party->intCandParId}}()" value='{{$party->strPartyName}}'>
+                    {{$party->strPartyName}}
+                </label>
+            </div>
+            @endif
+             @endforeach
+        </div>
+            <br>
+        </div>    
         <div class="col-md-10 col-md-offset-1">
             
             @foreach($positions as $position)
             <div class="box-header boxhead" style="background-color: @if($position->strPosColor == NULL) cornflowerblue @else {{$position->strPosColor}} @endif ">
                 <h3 class="box-title">{{$position->strPosName}} | <span style="font-size: 12px">vote limit: {{$position->intPosVoteLimit}}</span></h3>
+                <input type="hidden" name='position[]' value='{{$position->strPositionId}}'>
             </div>
             <div class="box-body boxbody" style="padding: 40px;">
                     @foreach($candidates as $candidate)
@@ -271,7 +288,10 @@ function maxCast_{{$position->strPositionId}}(){
 		var position = "{{$position->strPosName}}";
 		
 		var checkedBox = $(".pos_{{$position->strPositionId}}:checked").size();
-		
+		var radio = document.getElementsByName('par');
+        for(var x=0; x<radio.length; x++){
+            if(radio[x].checked == true) radio[x].checked=false; 
+        }
 		if(checkedBox > maxcheck){
 		
 			alert('You can only vote ' + maxcheck + ' from the ' + position + ' position.');document.voteform; return false;

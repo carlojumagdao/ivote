@@ -12,6 +12,8 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Redirect;
 use Session;
+use App\Candidate AS Candidate;
+
 
 class votingController extends Controller
 {
@@ -157,12 +159,37 @@ class votingController extends Controller
             
             $VoteHeader = new VoteHeader();
             
+            $GenSet = GenSet::find(1);
+            
+            
             $ids = DB::table('tblvoteheader')->select('strVHCode')->get();
             $latest = 'VOTE-00000';
             foreach($ids as $id){
                 $latest = $id->strVHCode;
             }
+            $mem = Candidate::where('strCandMemId', '=', session('memid'))->first();
+            if($mem) $VoteHeader->blcandidate = 1;
             
+            $under = sizeOf($_POST['vote']);
+            $str8 = 0;
+            $ind = 0;
+            $party = '';
+            $count = 1;
+            $check = 0;
+            if($GenSet->blSetParty == 1){
+                if(isset($_POST['par'])){
+                    $VoteHeader->blvotestraight = 1;
+                    $VoteHeader->strVHParty = $_POST['par'];
+                }
+            }
+            $limit = 0;
+            foreach($_POST['position'] as $pos){
+                $voteL = DB::table('tblposition')->select('intPosVoteLimit')->where('strPositionId', '=', $pos)->get();
+                $limit = $limit + $voteL[0]->intPosVoteLimit;
+            }
+            
+            if($under != $limit) $VoteHeader->blundervote = 1;
+        
             $counter = new SmartCounter();
             $VoteHeader->strVHCode = $counter->smartcounter($latest);
             $VoteHeader->strVHMemId = session('memid');
@@ -171,6 +198,7 @@ class votingController extends Controller
             
             $VHID = VoteHeader::find($id);
             $VDID = $VHID->strVHCode;
+            
             
             
             foreach ($_POST['vote'] as $candID) {
