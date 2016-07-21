@@ -25,22 +25,6 @@ Route::group(['middleware' => 'auth'], function(){
 		'uses' => 'dashboardController@index',
 		'as' => 'dashboard.index'
 	));
-	Route::get('/dashboard/position', array(
-		'uses' => 'dashboardController@displayPosition',
-		'as' => 'dashboard.position'
-	));
-	Route::get('/dashboard/candidate', array(
-		'uses' => 'dashboardController@displayCandidate',
-		'as' => 'dashboard.candidate'
-	));
-	Route::get('/dashboard/voter', array(
-		'uses' => 'dashboardController@displayVoter',
-		'as' => 'dashboard.voter'
-	));
-	Route::get('/dashboard/voted', array(
-		'uses' => 'dashboardController@displayVoted',
-		'as' => 'dashboard.voted'
-	));
 	// Dashboard //
 
 	Route::get('/memberform', function () {

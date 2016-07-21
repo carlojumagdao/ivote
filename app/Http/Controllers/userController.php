@@ -167,7 +167,6 @@ class userController extends Controller
     public function updateProfile(Request $request){
         $validator = Validator::make(Input::all(),
             array(
-                'image' => 'required'
             )
         );
         $niceNames = array(
@@ -179,24 +178,20 @@ class userController extends Controller
             } 
         try{
             $userId = session('id'); 
-            $imgPath = session('picname');
+            $User = User::find($userId);
+            
             if ($request->hasFile('image')){
+
                 $destinationPath =  'assets/images/'; // upload path
                 $extension = $request->file('image')->getClientOriginalExtension(); // getting image extension
                 $date = date("Ymdhis");
                 $filename = $date.'-'.rand(111111,999999).'.'.$extension;
-                      
-                if ($request->file('image')->isValid()) {
+                    if ($request->file('image')->isValid()) {
                     $request->file('image')->move($destinationPath, $filename);
-                    $imgPath = $filename;                     
+                    $User->txtPath = $filename;
                 }
-            }
-            else{
-                $imgPath = $imgPath;
-            }
-            $user = DB::table('users')
-                    ->where('id', $userId)
-                    ->update(['txtPath' => $imgPath]);
+            }          
+            $User->save();
             $request->session()->flash('message', "Profile Successfully Updated");   
                
         }catch (\Illuminate\Database\QueryException $e){
@@ -207,9 +202,9 @@ class userController extends Controller
     public function updateUser(Request $request){
         $validator = Validator::make(Input::all(),
             array(
-                'image' =>'required',
                 'name' => 'required',
-                'email' => 'required'
+                'email' => 'required',
+                'image' => 'mimes:jpeg,jpg,png,bmp|max:50000'
             )
         );
         $niceNames = array(
@@ -223,26 +218,22 @@ class userController extends Controller
             } 
         try{
             $id = $request->input('id');
-            $imgPath = session('picname');
+            $User = User::find($id);
+            $User->name = $request->input('name');
+            $User->email = $request->input('email');
+            
             if ($request->hasFile('image')){
+
                 $destinationPath =  'assets/images/'; // upload path
                 $extension = $request->file('image')->getClientOriginalExtension(); // getting image extension
                 $date = date("Ymdhis");
                 $filename = $date.'-'.rand(111111,999999).'.'.$extension;
-                      
-                if ($request->file('image')->isValid()) {
+                    if ($request->file('image')->isValid()) {
                     $request->file('image')->move($destinationPath, $filename);
-                    $imgPath = $filename;                     
+                    $User->txtPath = $filename;
                 }
-            }
-            else{
-                $imgPath = $request->input('image');
-            }
-            $email = $request->input('email');
-            $name = $request->input('name');
-            $user = DB::table('users')
-                    ->where('id', $id)
-                    ->update(['txtPath' => $imgPath, 'email' =>$email,'name' =>$name]);
+            }          
+            $User->save();
             $request->session()->flash('message', "User Successfully Updated");   
                
         }catch (\Illuminate\Database\QueryException $e){
