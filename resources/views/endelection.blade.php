@@ -40,10 +40,10 @@
 <body>
   <div class="wrapper">
     <center>
-    <p style="font-size:70px;color:white;margin-top:130px;font-family:Helvetica;text-shadow: 2px 2px 8px rgba(5, 5, 5, 0.62);">You already voted and answered the survey.</p>
+    <p style="font-size:75px;color:white;margin-top:220px;font-family:Helvetica;text-shadow: 2px 2px 8px rgba(5, 5, 5, 0.62);">The Election is already closed. </p>
     </center>
     <center>
-    <p style="font-size:65px;color:#1d96f3 ;font-family:Helvetica ;">Thank you for participating.</p>
+    <p style="font-size:60px;color:#1d96f3 ;font-family:Helvetica ;">Thank you for participating.</p>
     </center>
 
   </div>
