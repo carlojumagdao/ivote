@@ -29,10 +29,11 @@ class gensetController extends Controller
             $LogoPic = $value->txtSetLogo;
             /*$strSetLogo = $value->txtSetLogo;*/
     	}
-        return view('Settings.general', ['strElecName' => $strElecName,'strElecDesc' => $strElecDesc,'datStart' => $datStart,'datEnd' => $datEnd, 'blSurvey' => $blSurvey,'blParty' => $blParty, 'strHeaders' => $strHeaders , 'LogoPic'=>$LogoPic, 'strSetAddress' => $strAddress]);
+         return view('Settings.general', ['strElecName' => $strElecName,'strElecDesc' => $strElecDesc,'datStart' => $datStart,'datEnd' => $datEnd, 'blSurvey' => $blSurvey,'blParty' => $blParty, 'strHeaders' => $strHeaders , 'LogoPic'=>$LogoPic, 'strSetAddress' => $strAddress]);
     }
     public function save(Request $request){
-        var_dump($_POST);  
+
+        // var_dump($_POST);  
     	$rules = array(
 			'txtElectionTitle' => 'required',
 			'txtElectionDesc' => 'required',
@@ -130,6 +131,7 @@ class gensetController extends Controller
             $finalEndDateTime = "$finalEnddate $finaltimeEnd";
             $finalEndDateTime = date_create($finalEndDateTime);
             var_dump($finalEndDateTime);
+
             //format of date for Data insertion YYYY-MM-DD
             if($request->file('logo') == null){
                 try{
@@ -171,7 +173,7 @@ class gensetController extends Controller
                 return Redirect::back()->withErrors("uploaded file is not valid");
             }
         }
-         //redirect
+         // redirect
         $request->session()->flash('message', 'Successfully updated.');    
         return Redirect::back();
     }

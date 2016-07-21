@@ -135,31 +135,36 @@
                     <i class="fa fa-minus"></i></button>
                 </div>
             </div>
-            <!-- to convert to an end-user readable date -->
-            <?php
-                $userName = session('name'); 
+                <?php
                 $convertDateStart = date('l F j, Y', strtotime($datStart));
                 $convertDateEnd = date('l F j, Y', strtotime($datEnd));
-                $pieces = explode("-", $datStart);
-                $startDate =  "$pieces[1]/$pieces[2]/$pieces[0]";
-                $piece2 = explode("-",$datEnd);
-                $endDate = "$piece2[1]/$piece2[2]/$piece2[0]";
+                $pieces = explode(" ", $datStart);
+                $timeStart = date('h:i A',strtotime($pieces[1]));//convert to user readable -start
+                // $startDate =  "$pieces[1]/$pieces[2]/$pieces[0]";
+                // $piece2 = explode("-",$datEnd);
+                // $endDate = "$piece2[1]/$piece2[2]/$piece2[0]";
                 // $timeStart = $startdatetime[1].$startdatetime[2];
-
+                $pieces2 = explode(" ",$datEnd);
+                $timeEnd = date('h:i A',strtotime($pieces2[1]));//convert to user readable -end
                 // format $datStart = YYYY-MM-DD   
-                $dateretrieve = $startDate.'-'.$endDate;
+                // $dateretrieve = $startDate.'-'.$endDate;
+                $startDate = explode("-",$pieces[0]);
+                $endDate = explode("-", $pieces2[0]);
+                $finalstartdate = "$startDate[1]/$startDate[2]/$startDate[0] $timeStart-$endDate[1]/$endDate[2]/$endDate[0] $timeEnd";
+                // $finalstarttime = "$timeStart";
                 ?>
             <div class="box-body">
             Start date: <i>{{$convertDateStart}}</i><br>
-            End date : <i>{{$convertDateEnd}}</i><br>
+            Start time:<i> {{$timeStart}}</i><br><br>
+            End date: <i>{{$convertDateEnd}}</i><br>
+            End time: <i>{{$timeEnd}}</i>
                 <div class="form-group">
                     <label><br>Date and time Range:</label>
                     <div class="input-group">
                         <div class="input-group-addon">
                             <i class="fa fa-clock-o"></i>
                         </div>
-                        <input type="text" name="txtSchedule" class="form-control pull-right" id="reservationtime" value=<?=$dateretrieve?> >
-                    
+                        <input type="text" name="txtSchedule" class="form-control pull-right" id="reservationtime" value="<?=$finalstartdate?>" >
                     </div>
                 </div>
             </div>
