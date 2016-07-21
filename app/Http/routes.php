@@ -424,5 +424,8 @@ Route::get('/votedandsurveyed', function () {
 Route::get('/votednotsurveyed', function () {
        return view('votednotsurveyed');
 });
+Route::get('/endelection', function () {
+       return view('endelection');
+});
 //Log In User//
 

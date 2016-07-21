@@ -27,6 +27,13 @@
       
       
     }
+    footer {
+      width:100%;
+      height:100px;
+      position:absolute;
+      bottom:0;
+      left:0;
+    }
     
 </style>
 
@@ -36,23 +43,24 @@
     <center>
     <p style="font-size:70px;color:white;margin-top:130px;font-family:Helvetica;text-shadow: 2px 2px 8px rgba(5, 5, 5, 0.62);">You already voted but you did not answer the survey.</p>
     </center>
-    <div class="row">
-               <div class="col-md-4 col-md-offset-4">
-                  <center>
-                      <button style="font-size:20px;background-color:rgba(232, 232, 232, 0.55);color:DarkSlateGray " type="submit" class="btn btn-primary btn-block btn-flat">
-Click to start answering the survey</button>
-                    </center> 
-                </div>
-            </div>
+    
     <center>
     <p style="font-size:65px;color:#1d96f3  ;font-family:Helvetica ;">Thank you for participating.</p>
     </center>
+    <div class="row">
+               <div class="col-md-4 col-md-offset-4" style="padding-top:30px;">
+                  <center>
+                      <button style="font-size:14px;background-color:rgba(250, 254, 255, 0.93);color:DarkSlateGray;border-color: none; width:60%" type="submit" class="btn btn-primary btn-block btn-flat">
+Click to start answering the survey</button>
+                    </center> 
+                </div>
+    </div>
 
   </div>
   </div>
 	
   <!-- /.form-box -->
-<footer style="margin-top:162px;text-shadow: 2px 2px 8px rgba(5, 5, 5, 0.62);background-color:rgba(0, 0, 0, 0.35);height:60px;">
+<footer style="text-shadow: 2px 2px 8px rgba(5, 5, 5, 0.62);background-color:rgba(0, 0, 0, 0.35);height:60px;">
 <center><p style="color:white;font-size:14px;font-family: segoe ui;padding-top:10px;">Copyright © 2015-2016 iVote++<br>All rights reserved.</p></center>
 </footer>
 
