@@ -101,7 +101,7 @@
                     <div class="col-md-10">
                      <select name="position" class="form-control" required>
                          @foreach($Positions as $Position)
-                         @if($Member->strMemberId == $Candidate->strCandMemId)
+                         @if($Position->strPositionId == $Candidate->strCandPosId)
                          <option value='{{$Position->strPositionId}}' selected>{{$Position->strPosName}}</option>
                          @else
                          <option value='{{$Position->strPositionId}}'>{{$Position->strPosName}}</option>
