@@ -34,7 +34,7 @@ class gensetController extends Controller
         return view('Settings.general', ['strElecName' => $strElecName,'strElecDesc' => $strElecDesc,'datStart' => $datStart,'timeStart' => $timeStart ,'datEnd' => $datEnd, 'timeEnd' => $timeEnd,'blSurvey' => $blSurvey,'blParty' => $blParty, 'strHeaders' => $strHeaders , 'LogoPic'=>$LogoPic, 'strSetAddress' => $strAddress]);
     }
     public function save(Request $request){
-        var_dump($_POST);       
+        var_dump($_POST);  
     	$rules = array(
 			'txtElectionTitle' => 'required',
 			'txtElectionDesc' => 'required',
@@ -64,20 +64,39 @@ class gensetController extends Controller
                                             // $startdatetime[0] = MM/DD/YYYY 
                                             // $startdatetime[1] = 12:00 
                                             // $startdatetime[2] = AM
+            
             $timeStartPart = explode(":", $startdatetime[1]); //$timeStartPart[0] = HH // $timeStartPart[1] = MM
             $finaltimestart =  0;
-            if ($startdatetime[2]='PM')
-            {
-                if($timeStartPart[0]!='12')
-                {
-                    $sum = 12+$timeStartPart[0];
-                    $finaltimestart = "$sum:timeStartPart[1]:00";
-                    echo"asdad";
-                }
+            if ($startdatetime[2]=='PM')
+            {       
+                    if($timeStartPart[0] == 12){
+                        $sum = $timeStartPart[0];
+                        $finaltimestart = "$sum:$timeStartPart[1]";
+                        $finaltimestart = date_create($finaltimestart);
+                        var_dump($finaltimestart);
+                    }
+                    else{
+                        $sum = 12+$timeStartPart[0];
+                        $finaltimestart = "$sum:$timeStartPart[1]";
+                        $finaltimestart = date_create($finaltimestart);
+                        var_dump($finaltimestart);
+                    }
+                
             }
             else 
-            {
-                $finaltimestart = "$timeStartPart[0]:$timeStartPart[1]:00";
+            {    
+                if($timeStartPart[0] == 12){
+                        $sum = $timeStartPart[0]-12;
+                        $finaltimestart = "$sum:$timeStartPart[1]";
+                        $finaltimestart = date_create($finaltimestart);
+                        var_dump($finaltimestart);  
+                }
+                else{
+                    $sum = $timeStartPart[0];
+                    $finaltimestart = "$sum:$timeStartPart[1]";
+                    $finaltimestart = date_create($finaltimestart);
+                    var_dump($finaltimestart);
+                }
             }
             
 
@@ -88,11 +107,38 @@ class gensetController extends Controller
                                             // $enddatetime[1] = 12:00
                                             // $enddatetime[2] = AM
             $timeEndPart = explode(":", $enddatetime[1]); //$timeStartPart[0] = 12 // $timeStartPart[1] = 00
-            if ($enddatetime[2]='PM')
-            {
-                $finaltimeEnd = "120000+$timeEndPart[0]:$timeEndPart[1]:00";
+            $finaltimeEnd = 0;
+            if ($enddatetime[2]=='PM')
+            {  
+                if($timeEndPart[0] == 12){
+                    $sum = $timeEndPart[0];
+                    $finaltimeEnd = "$sum:$timeEndPart[1]";
+                    $finaltimeEnd = date_create($finaltimeEnd);
+                    var_dump($finaltimeEnd);
+                }
+                else{
+                    $sum = 12 + $timeEndPart[0];
+                    $finaltimeEnd = "$sum:$timeEndPart[1]";
+                    $finaltimeEnd = date_create($finaltimeEnd);
+                    var_dump($finaltimeEnd);
+                }
+                
             }
-            else $finaltimeEnd = "$timeEndPart[0]:$timeEndPart[1]:00";
+            else {
+                
+                if($timeEndPart[0] == 12){
+                    $sum = $timeEndPart[0]-12;
+                    $finaltimeEnd = "$sum:$timeEndPart[1]";
+                    $finaltimeEnd = date_create($finaltimeEnd);
+                    var_dump($finaltimeEnd);
+                }
+                else{
+                    $sum = $timeEndPart[0];
+                    $finaltimeEnd = "$sum:$timeEndPart[1]";
+                    $finaltimeEnd = date_create($finaltimeEnd);
+                    var_dump($finaltimeEnd);
+                }
+            }
             $enddate = explode("/", $enddatetime[0]);
                                             // $enddate[0] = MM // $enddate[1] = DD // $enddate[2] = YYYY
             $finalEnddate = "$enddate[2]-$enddate[0]-$enddate[1]";
