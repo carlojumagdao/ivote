@@ -3,3 +3,11 @@
 Homestead.yaml
 Homestead.json
 .env
+public/assets/images/20160705013308-270100.jpg
+*.jpg
+public/assets/images/20160705013030-818467.jpeg
+composer.lock
+composer.lock
+app/Http/Controllers/gensetController.php
+app/Http/Controllers/gensetController.php
+app/Http/Controllers/gensetController.php

@@ -14,12 +14,16 @@ use App\Http\Controllers\Controller;
 class gensetController extends Controller
 {
     public function index(){
+        
+
     	$Settings = DB::table('tblSetting')->select('*')->get();
     	foreach ($Settings as $value) {
     		$strElecName = $value->strSetElecName;
     		$strElecDesc = $value->strSetElecDesc;
     		$datStart = $value->datSetStart;
+            $timeStart = $value->timeStart;
     		$datEnd = $value->datSetEnd;
+            $timeEnd = $value->timeEnd;
     		$blSurvey = $value->blSetSurvey;
     		$blParty = $value->blSetParty;
             $strHeaders = $value->strHeader;
@@ -27,10 +31,10 @@ class gensetController extends Controller
             $LogoPic = $value->txtSetLogo;
             /*$strSetLogo = $value->txtSetLogo;*/
     	}
-        return view('Settings.general', ['strElecName' => $strElecName,'strElecDesc' => $strElecDesc,'datStart' => $datStart,'datEnd' => $datEnd,'blSurvey' => $blSurvey,'blParty' => $blParty, 'strHeaders' => $strHeaders , 'LogoPic'=>$LogoPic, 'strSetAddress' => $strAddress]);
+        return view('Settings.general', ['strElecName' => $strElecName,'strElecDesc' => $strElecDesc,'datStart' => $datStart,'timeStart' => $timeStart ,'datEnd' => $datEnd, 'timeEnd' => $timeEnd,'blSurvey' => $blSurvey,'blParty' => $blParty, 'strHeaders' => $strHeaders , 'LogoPic'=>$LogoPic, 'strSetAddress' => $strAddress]);
     }
     public function save(Request $request){
-                
+        var_dump($_POST);       
     	$rules = array(
 			'txtElectionTitle' => 'required',
 			'txtElectionDesc' => 'required',
@@ -53,20 +57,55 @@ class gensetController extends Controller
             return Redirect::back()->withErrors($validator);
         } 
         else{
-            $date = $request->input('txtSchedule');
-            $pieces = explode("-", $date);
-            $startdate = explode("/", $pieces[0]);
-            $finalStartdate = "$startdate[2]-$startdate[0]-$startdate[1]";
-            $enddate = explode("/", $pieces[1]);
-            $finalEnddate = "$enddate[2]-$enddate[0]-$enddate[1]";
+            $date = $request->input('txtSchedule'); // MM/DD/YYYY 12:00 AM-MM/DD/YYYY 12:00 PM
+            $pieces = explode("-", $date); // $pieces[0] = MM/DD/YYYY 12:00 AM 
+                                           // $pieces[1] = MM/DD/YYYY 12:00 PM
+            $startdatetime = explode(" ", $pieces[0]); 
+                                            // $startdatetime[0] = MM/DD/YYYY 
+                                            // $startdatetime[1] = 12:00 
+                                            // $startdatetime[2] = AM
+            $timeStartPart = explode(":", $startdatetime[1]); //$timeStartPart[0] = HH // $timeStartPart[1] = MM
+            $finaltimestart =  0;
+            if ($startdatetime[2]='PM')
+            {
+                if($timeStartPart[0]!='12')
+                {
+                    $sum = 12+$timeStartPart[0];
+                    $finaltimestart = "$sum:timeStartPart[1]:00";
+                    echo"asdad";
+                }
+            }
+            else 
+            {
+                $finaltimestart = "$timeStartPart[0]:$timeStartPart[1]:00";
+            }
             
+
+            $startdate = explode("/", $startdatetime[0]);// $startdate[0] = MM // $startdate[1] = DD // $startdate[2] = YYYY
+            $finalStartdate = "$startdate[2]-$startdate[0]-$startdate[1]";
+            $enddatetime = explode(" ", $pieces[1]); 
+                                            // $enddatetime[0] = MM/DD/YYYY
+                                            // $enddatetime[1] = 12:00
+                                            // $enddatetime[2] = AM
+            $timeEndPart = explode(":", $enddatetime[1]); //$timeStartPart[0] = 12 // $timeStartPart[1] = 00
+            if ($enddatetime[2]='PM')
+            {
+                $finaltimeEnd = "120000+$timeEndPart[0]:$timeEndPart[1]:00";
+            }
+            else $finaltimeEnd = "$timeEndPart[0]:$timeEndPart[1]:00";
+            $enddate = explode("/", $enddatetime[0]);
+                                            // $enddate[0] = MM // $enddate[1] = DD // $enddate[2] = YYYY
+            $finalEnddate = "$enddate[2]-$enddate[0]-$enddate[1]";
+            //format of date for Data insertion YYYY-MM-DD
             if($request->file('logo') == null){
                 try{
                     $GenSet = GenSet::find(1);
                     $GenSet->strSetElecName = $request->input('txtElectionTitle');
                     $GenSet->strSetElecDesc = $request->input('txtElectionDesc');
                     $GenSet->datSetStart = $finalStartdate;
+                    $GenSet->timeStart = $finaltimestart;
                     $GenSet->datSetEnd = $finalEnddate;
+                    $GenSet->timeEnd = $finaltimeEnd;
                     $GenSet->blSetSurvey = $request->input('txtSurveyStatus');
                     $GenSet->blSetParty = $request->input('txtPartyStatus');
                     $GenSet->strSetAddress = $request->input('txtAddress');
@@ -89,7 +128,9 @@ class gensetController extends Controller
                 $GenSet->strSetElecName = $request->input('txtElectionTitle');
                 $GenSet->strSetElecDesc = $request->input('txtElectionDesc');
                 $GenSet->datSetStart = $finalStartdate;
+                $GenSet->timeStart = $finaltimestart;
                 $GenSet->datSetEnd = $finalEnddate;
+                $GenSet->timeEnd = $finaltimeEnd;
                 $GenSet->blSetSurvey = $request->input('txtSurveyStatus');
                 $GenSet->blSetParty = $request->input('txtPartyStatus');
                 $GenSet->strSetAddress = $request->input('txtAddress');
@@ -100,8 +141,8 @@ class gensetController extends Controller
                 return Redirect::back()->withErrors("uploaded file is not valid");
             }
         }
-        //redirect
-        $request->session()->flash('message', 'Successfully updated.');    
-        return Redirect::back();
+        // redirect
+        //$request->session()->flash('message', 'Successfully updated.');    
+        //return Redirect::back();
     }
 }

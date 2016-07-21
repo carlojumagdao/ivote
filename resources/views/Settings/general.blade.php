@@ -5,6 +5,7 @@
 @section('style')
 <link rel="stylesheet" href="{{ URL::asset('assets/plugins/daterangepicker/daterangepicker-bs3.css') }}">
 <link rel="stylesheet" href="{{ URL::asset('assets/switch-css/bootstrap-switch.min.css') }}">
+<link rel="stylesheet" href="{{ URL::asset('assets/plugins/timepicker/bootstrap-timepicker.min.css') }}">
 <style>
     h3{
         margin: -10px;
@@ -135,27 +136,30 @@
                 </div>
             </div>
             <!-- to convert to an end-user readable date -->
-            <?php 
+            <?php
+                $userName = session('name'); 
                 $convertDateStart = date('l F j, Y', strtotime($datStart));
                 $convertDateEnd = date('l F j, Y', strtotime($datEnd));
                 $pieces = explode("-", $datStart);
                 $startDate =  "$pieces[1]/$pieces[2]/$pieces[0]";
                 $piece2 = explode("-",$datEnd);
                 $endDate = "$piece2[1]/$piece2[2]/$piece2[0]";
+                // $timeStart = $startdatetime[1].$startdatetime[2];
 
-                // %datStart = YYYY-MM-DD   
+                // format $datStart = YYYY-MM-DD   
                 $dateretrieve = $startDate.'-'.$endDate;
                 ?>
             <div class="box-body">
             Start date: <i>{{$convertDateStart}}</i><br>
-            End date : <i>{{$convertDateEnd}}</i>
+            End date : <i>{{$convertDateEnd}}</i><br>
                 <div class="form-group">
-                    <label>Date Range:</label>
+                    <label><br>Date and time Range:</label>
                     <div class="input-group">
                         <div class="input-group-addon">
-                            <i class="fa fa-calendar"></i>
+                            <i class="fa fa-clock-o"></i>
                         </div>
-                        <input type="text" name="txtSchedule" class="form-control pull-right" id="reservation" value=<?=$dateretrieve?> >
+                        <input type="text" name="txtSchedule" class="form-control pull-right" id="reservationtime" value=<?=$dateretrieve?> >
+                    
                     </div>
                 </div>
             </div>
