@@ -21,7 +21,7 @@ class CountdownController extends Controller
     	$day = date_diff($now, $start);
         $sec = ($day->d * 24 * 3600) + ($day->h * 3600) + ($day->i * 60) + $day->s;
         //var_dump($start);
-        //var_dump($now);
+        //var_dump($day);
     	return view('Countdown', ['day'=> $sec, 'set'=> $GenSet]);
         
         

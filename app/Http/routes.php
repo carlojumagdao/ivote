@@ -122,6 +122,8 @@ Route::group(['middleware' => 'auth'], function(){
 	
 	Route::get('/getPDF',
 		'PDFController@getPDF');
+    Route::get('/winnerPDF',
+		'PDFController@getWinner');
 	/*Route::get('/settings/pdfile',function(){
 		'uses' => 'PDFController@PDFunct',
 		'as' => 'settings.pdfile'
@@ -316,6 +318,10 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/tallyvotes', array(
 		'uses' => 'reportController@tallyvotes',
 		'as' => 'report.tallyvotes'
+	));
+    Route::get('/winner', array(
+		'uses' => 'reportController@determineWinners',
+		'as' => 'report.winner'
 	));
     //Reports//
 });

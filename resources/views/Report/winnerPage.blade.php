@@ -42,7 +42,7 @@
     <div class="col-md-12">
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">Tally of Votes</h3>
+                <h3 class="box-title">Winners</h3>
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
                     <i class="fa fa-minus"></i></button>
@@ -53,10 +53,13 @@
                 <div class="row ">
                     <div class="col-md-12">
                 <h3>{{$pos->strPosName}}</h3>
+                        <?php $counter = 0;?>
                
                 @foreach($tally as $cand)
                 <!-- Apply any bg-* class to to the info-box to color it -->
                 @if($pos->strPositionId == $cand->strCandPosId)
+                        
+                @if($pos->intPosVoteLimit > $counter)        
                 <div class="col-md-3">
                 <div class="info-box bg-blue">
                     <span class="info-box-icon"><image class="img-circle" src ="assets/images/{{$cand->txtCandPic}}" height="80" width="80"></span>
@@ -73,6 +76,8 @@
                     </div><!-- /.info-box-content -->
                 </div><!-- /.info-box -->
                     </div>
+                @endif
+                    <?php $counter++;?>
                     @endif
                 @endforeach
                         </div>
@@ -80,7 +85,7 @@
                 @endforeach
             </div>
             <div class="box-footer">
-                <a href="{{ URL::to('/getPDF') }}" target="_blank"><input type="button" class="btn btn-primary pull-right" name="btnSubmit" value="Create PDF"></a>
+                <a href="{{ URL::to('/winnerPDF') }}" target="_blank"><input type="button" class="btn btn-primary pull-right" name="btnSubmit" value="Create PDF"></a>
             </div>
         </div>
         

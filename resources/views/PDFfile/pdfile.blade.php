@@ -68,6 +68,7 @@
                 @foreach($tally as $cand)
                 <!-- Apply any bg-* class to to the info-box to color it -->
                 @if($pos->strPositionId == $cand->strCandPosId)
+                
         <tr>
             <td class="td"><img src="assets/images/{{$cand->txtCandPic}}" height="100px" width="100px"></td>
             <td class="td">{{$cand->strMemLName}}, {{$cand->strMemFName}}</td>
@@ -76,6 +77,7 @@
             
         </tr>
         @endif
+        
         @endforeach
     </table>
     @endforeach
