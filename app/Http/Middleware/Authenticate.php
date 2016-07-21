@@ -5,7 +5,8 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 use Auth;
-
+use DB;
+use App\active AS active;
 class Authenticate
 {
     /**
@@ -47,6 +48,26 @@ class Authenticate
         }
         session(['name' => Auth::user()->name, 'email' => Auth::user()->email, 'picname' => Auth::user()->txtPath,
             'id' => Auth::user()->id, 'admin' => Auth::user()->blAdmin, 'password' => Auth::user()->password]);
+         $name = session('name');
+        
+        DB::table('tblactiveuser')
+            ->where('tblactiveuserID',1)
+            ->update(
+                ['name' => $name] 
+            );
+        //  $active = active::find(1);
+        // // if($active) $name = $active->name;
+        // // else $name = 'skin-blue';
+        // // $ui = ui::find(1);
+        
+        // if($active)
+        // {            
+        //     $active->name = $request->session('name');
+        // }
+        // else{
+        //     $active = new active();
+        //     $active->name = $request->session('name');
+        // }
         return $next($request);
     }
 }
