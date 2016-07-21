@@ -21,9 +21,7 @@ class gensetController extends Controller
     		$strElecName = $value->strSetElecName;
     		$strElecDesc = $value->strSetElecDesc;
     		$datStart = $value->datSetStart;
-            $timeStart = $value->timeStart;
     		$datEnd = $value->datSetEnd;
-            $timeEnd = $value->timeEnd;
     		$blSurvey = $value->blSetSurvey;
     		$blParty = $value->blSetParty;
             $strHeaders = $value->strHeader;
@@ -31,7 +29,7 @@ class gensetController extends Controller
             $LogoPic = $value->txtSetLogo;
             /*$strSetLogo = $value->txtSetLogo;*/
     	}
-        return view('Settings.general', ['strElecName' => $strElecName,'strElecDesc' => $strElecDesc,'datStart' => $datStart,'timeStart' => $timeStart ,'datEnd' => $datEnd, 'timeEnd' => $timeEnd,'blSurvey' => $blSurvey,'blParty' => $blParty, 'strHeaders' => $strHeaders , 'LogoPic'=>$LogoPic, 'strSetAddress' => $strAddress]);
+        return view('Settings.general', ['strElecName' => $strElecName,'strElecDesc' => $strElecDesc,'datStart' => $datStart,'datEnd' => $datEnd, 'blSurvey' => $blSurvey,'blParty' => $blParty, 'strHeaders' => $strHeaders , 'LogoPic'=>$LogoPic, 'strSetAddress' => $strAddress]);
     }
     public function save(Request $request){
         var_dump($_POST);  
@@ -72,14 +70,10 @@ class gensetController extends Controller
                     if($timeStartPart[0] == 12){
                         $sum = $timeStartPart[0];
                         $finaltimestart = "$sum:$timeStartPart[1]";
-                        $finaltimestart = date_create($finaltimestart);
-                        var_dump($finaltimestart);
                     }
                     else{
                         $sum = 12+$timeStartPart[0];
                         $finaltimestart = "$sum:$timeStartPart[1]";
-                        $finaltimestart = date_create($finaltimestart);
-                        var_dump($finaltimestart);
                     }
                 
             }
@@ -87,21 +81,20 @@ class gensetController extends Controller
             {    
                 if($timeStartPart[0] == 12){
                         $sum = $timeStartPart[0]-12;
-                        $finaltimestart = "$sum:$timeStartPart[1]";
-                        $finaltimestart = date_create($finaltimestart);
-                        var_dump($finaltimestart);  
+                        $finaltimestart = "$sum:$timeStartPart[1]";  
                 }
                 else{
                     $sum = $timeStartPart[0];
                     $finaltimestart = "$sum:$timeStartPart[1]";
-                    $finaltimestart = date_create($finaltimestart);
-                    var_dump($finaltimestart);
                 }
             }
             
 
             $startdate = explode("/", $startdatetime[0]);// $startdate[0] = MM // $startdate[1] = DD // $startdate[2] = YYYY
             $finalStartdate = "$startdate[2]-$startdate[0]-$startdate[1]";
+            $finalStartDateTime = "$finalStartdate $finaltimestart";
+            $finalStartDateTime = date_create($finalStartDateTime);
+            var_dump($finalStartDateTime);
             $enddatetime = explode(" ", $pieces[1]); 
                                             // $enddatetime[0] = MM/DD/YYYY
                                             // $enddatetime[1] = 12:00
@@ -113,14 +106,10 @@ class gensetController extends Controller
                 if($timeEndPart[0] == 12){
                     $sum = $timeEndPart[0];
                     $finaltimeEnd = "$sum:$timeEndPart[1]";
-                    $finaltimeEnd = date_create($finaltimeEnd);
-                    var_dump($finaltimeEnd);
                 }
                 else{
                     $sum = 12 + $timeEndPart[0];
                     $finaltimeEnd = "$sum:$timeEndPart[1]";
-                    $finaltimeEnd = date_create($finaltimeEnd);
-                    var_dump($finaltimeEnd);
                 }
                 
             }
@@ -129,29 +118,26 @@ class gensetController extends Controller
                 if($timeEndPart[0] == 12){
                     $sum = $timeEndPart[0]-12;
                     $finaltimeEnd = "$sum:$timeEndPart[1]";
-                    $finaltimeEnd = date_create($finaltimeEnd);
-                    var_dump($finaltimeEnd);
                 }
                 else{
                     $sum = $timeEndPart[0];
                     $finaltimeEnd = "$sum:$timeEndPart[1]";
-                    $finaltimeEnd = date_create($finaltimeEnd);
-                    var_dump($finaltimeEnd);
                 }
             }
             $enddate = explode("/", $enddatetime[0]);
                                             // $enddate[0] = MM // $enddate[1] = DD // $enddate[2] = YYYY
             $finalEnddate = "$enddate[2]-$enddate[0]-$enddate[1]";
+            $finalEndDateTime = "$finalEnddate $finaltimeEnd";
+            $finalEndDateTime = date_create($finalEndDateTime);
+            var_dump($finalEndDateTime);
             //format of date for Data insertion YYYY-MM-DD
             if($request->file('logo') == null){
                 try{
                     $GenSet = GenSet::find(1);
                     $GenSet->strSetElecName = $request->input('txtElectionTitle');
                     $GenSet->strSetElecDesc = $request->input('txtElectionDesc');
-                    $GenSet->datSetStart = $finalStartdate;
-                    $GenSet->timeStart = $finaltimestart;
-                    $GenSet->datSetEnd = $finalEnddate;
-                    $GenSet->timeEnd = $finaltimeEnd;
+                    $GenSet->datSetStart = $finalStartDateTime;
+                    $GenSet->datSetEnd = $finalEndDateTime;
                     $GenSet->blSetSurvey = $request->input('txtSurveyStatus');
                     $GenSet->blSetParty = $request->input('txtPartyStatus');
                     $GenSet->strSetAddress = $request->input('txtAddress');
@@ -173,10 +159,8 @@ class gensetController extends Controller
                 $GenSet->txtSetLogo = $filename;
                 $GenSet->strSetElecName = $request->input('txtElectionTitle');
                 $GenSet->strSetElecDesc = $request->input('txtElectionDesc');
-                $GenSet->datSetStart = $finalStartdate;
-                $GenSet->timeStart = $finaltimestart;
-                $GenSet->datSetEnd = $finalEnddate;
-                $GenSet->timeEnd = $finaltimeEnd;
+                $GenSet->datSetStart = $finalStartDateTime;
+                $GenSet->datSetEnd = $finalEndDateTime;
                 $GenSet->blSetSurvey = $request->input('txtSurveyStatus');
                 $GenSet->blSetParty = $request->input('txtPartyStatus');
                 $GenSet->strSetAddress = $request->input('txtAddress');
@@ -187,8 +171,8 @@ class gensetController extends Controller
                 return Redirect::back()->withErrors("uploaded file is not valid");
             }
         }
-        // redirect
-        //$request->session()->flash('message', 'Successfully updated.');    
-        //return Redirect::back();
+         //redirect
+        $request->session()->flash('message', 'Successfully updated.');    
+        return Redirect::back();
     }
 }
