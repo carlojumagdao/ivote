@@ -51,7 +51,10 @@
             </td>
         </tr>
     </table>
-    
+     @foreach($positions as $pos)
+    <br>
+                <h3>{{$pos->strPosName}}</h3>
+    <br>
     <table width="100%">
         <tr>
             <th class="td" width="10%"></th>
@@ -59,7 +62,12 @@
             <th class="td">Vote Count</th>
             <th class="td">Percentage</th>
         </tr>
-         @foreach($tally as $cand)
+        
+                
+               
+                @foreach($tally as $cand)
+                <!-- Apply any bg-* class to to the info-box to color it -->
+                @if($pos->strPositionId == $cand->strCandPosId)
         <tr>
             <td class="td"><img src="assets/images/{{$cand->txtCandPic}}" height="100px" width="100px"></td>
             <td class="td">{{$cand->strMemLName}}, {{$cand->strMemFName}}</td>
@@ -67,8 +75,10 @@
             <td class="td">{{($cand->votes / $count )* 100}}%</td>
             
         </tr>
+        @endif
         @endforeach
     </table>
+    @endforeach
     <br>
     <br>
     <h3>Total Voters: {{$count}}</h3>

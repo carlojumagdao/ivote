@@ -49,9 +49,15 @@
                 </div>
             </div>
             <div class="box-body table-responsive">
+                @foreach($positions as $pos)
+                <div class="row ">
+                    <div class="col-md-12">
+                <h3>{{$pos->strPosName}}</h3>
+               
                 @foreach($tally as $cand)
                 <!-- Apply any bg-* class to to the info-box to color it -->
-                <div class="col-md-4">
+                @if($pos->strPositionId == $cand->strCandPosId)
+                <div class="col-md-3">
                 <div class="info-box bg-blue">
                     <span class="info-box-icon"><image class="img-circle" src ="assets/images/{{$cand->txtCandPic}}" height="80" width="80"></span>
                     <div class="info-box-content">
@@ -67,7 +73,10 @@
                     </div><!-- /.info-box-content -->
                 </div><!-- /.info-box -->
                     </div>
-                    
+                    @endif
+                @endforeach
+                        </div>
+                </div>
                 @endforeach
             </div>
             <div class="box-footer">

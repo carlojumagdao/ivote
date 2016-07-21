@@ -63,7 +63,7 @@ class candidateController extends Controller
     
     public function newCandidate(Request $request)
     {
-        var_dump($_POST);
+       
        $rules = array(
 			'member' => 'required',
 			'position' => 'required',

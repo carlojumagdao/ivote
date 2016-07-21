@@ -17,11 +17,12 @@ class reportController extends Controller
      */
     public function tallyvotes()
     {
-        $tally = DB::select('SELECT strCandID, strMemLName, strMemFName, txtCandPic, count(strVDCandId) as `votes` FROM tblcandidate 
+        $positions = DB::table('tblposition')->get();
+        $tally = DB::select('SELECT strCandID, strMemLName, strMemFName, strCandPosId, txtCandPic, count(strVDCandId) as `votes` FROM tblcandidate 
 join tblmember on strMemberId = strCandMemId
 left join tblvotedetail on strCandId = strVDCandId
 group by strVDCandID, strMemLName, txtCandPic
-order by 5 desc;');
+order by 6 desc;');
         $voted = DB::table('tblvoteheader')->count();
         $GenSet = GenSet::find(1);
     	$start = date_create($GenSet->datSetStart);
@@ -30,7 +31,7 @@ order by 5 desc;');
         $now = date_create(date("Y-m-d H:i:s"));
         
         if($nowNoTime < $start) echo "the election is ongoing"; 
-        else if($nowNoTime > $end) return view('Report.tallyvotes', ['tally'=>$tally, 'count'=>$voted] );
+        else if($nowNoTime > $end) return view('Report.tallyvotes', ['tally'=>$tally, 'count'=>$voted, 'positions'=>$positions] );
     	else echo "the election has not yet started";
     }
 }
