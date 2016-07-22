@@ -30,15 +30,8 @@ class candidateController extends Controller
             ->join('tblparty', 'tblcandidate.intCandParId', '=', 'tblparty.intPartyId')
             ->where('blCandDelete', 0)
             ->select('tblcandidate.*', 'tblmember.strMemFname', 'tblmember.strMemLname', 'tblposition.strPosName', 'tblparty.strPartyName')->get();
-            foreach ($candidates as $value) 
-                {
-                    $strCandEducBackg = $value->strCandEducBack;
-                    $strCandInfor = $value->strCandInfo;
-                }
-            return view('Candidate.candidate', ['candidates' => $candidates, 'intCounter'=>0, 'party' => $PartyStatus, 'strCandEducBackg' => 
-                $strCandEducBackg , 
-                  'strCandInfor' => 
-                $strCandInfor]);
+    
+            return view('Candidate.candidate', ['candidates' => $candidates, 'intCounter'=>0, 'party' => $PartyStatus]);
        
         
 

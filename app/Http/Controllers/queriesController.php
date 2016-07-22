@@ -45,7 +45,9 @@ class queriesController extends Controller
                             ->where('blMemDelete', '=', 0)
                             ->where('blMemCodeSendStat', '=', 1)
                             ->count();
+           if($members != 0)
             $percent = ($count/$members) * 100;
+            else  $percent = 0;
             
             $title = "Who Took Survey";
             
@@ -73,7 +75,9 @@ class queriesController extends Controller
                             ->where('blMemDelete', '=', 0)
                             ->where('blMemCodeSendStat', '=', 1)
                             ->count();
+            if($members != 0)
             $percent = ($count/$members) * 100;
+            else  $percent = 0;
             $title = "Who did not take Survey";
             
             return view('Queries.index', ['title'=>$title, 'query'=>$query,'list'=>$list, 'count'=>$count, 'members'=>$members, 'percent'=>$percent, 'surveystat' => $setting->blSetSurvey, 'partystat'=>$setting->blSetParty]);
@@ -93,7 +97,9 @@ class queriesController extends Controller
                             ->where('blMemDelete', '=', 0)
                             ->where('blMemCodeSendStat', '=', 1)
                             ->count();
+           if($members != 0)
             $percent = ($count/$members) * 100;
+            else  $percent = 0;
             $title = "Who Voted";
             
             return view('Queries.index', ['title'=>$title, 'query'=>$query,'list'=>$list, 'count'=>$count, 'members'=>$members, 'percent'=>$percent, 'surveystat' => $setting->blSetSurvey, 'partystat'=>$setting->blSetParty]);
@@ -119,7 +125,9 @@ class queriesController extends Controller
                             ->where('blMemDelete', '=', 0)
                             ->where('blMemCodeSendStat', '=', 1)
                             ->count();
+            if($members != 0)
             $percent = ($count/$members) * 100;
+            else  $percent = 0;
             $title = "Who did not vote";
             
             return view('Queries.index', ['title'=>$title, 'query'=>$query,'list'=>$list, 'count'=>$count, 'members'=>$members, 'percent'=>$percent, 'surveystat' => $setting->blSetSurvey, 'partystat'=>$setting->blSetParty]);
@@ -143,7 +151,9 @@ class queriesController extends Controller
                             ->where('blMemDelete', '=', 0)
                             ->where('blMemCodeSendStat', '=', 1)
                             ->count();
+            if($members != 0)
             $percent = ($count/$members) * 100;
+            else  $percent = 0;
             $title = "Candidates Who Voted";
             
             return view('Queries.index', ['title'=>$title, 'query'=>$query,'list'=>$list, 'count'=>$count, 'members'=>$members, 'percent'=>$percent, 'surveystat' => $setting->blSetSurvey, 'partystat'=>$setting->blSetParty]);
@@ -173,7 +183,9 @@ class queriesController extends Controller
                             ->where('blMemDelete', '=', 0)
                             ->where('blMemCodeSendStat', '=', 1)
                             ->count();
+            if($members != 0)
             $percent = ($count/$members) * 100;
+            else  $percent = 0;
             $title = "Candidates Who did not vote";
             
             return view('Queries.index', ['title'=>$title, 'query'=>$query,'list'=>$list, 'count'=>$count, 'members'=>$members, 'percent'=>$percent, 'surveystat' => $setting->blSetSurvey, 'partystat'=>$setting->blSetParty]);
@@ -197,7 +209,9 @@ class queriesController extends Controller
                             ->where('blMemDelete', '=', 0)
                             ->where('blMemCodeSendStat', '=', 1)
                             ->count();
+            if($members != 0)
             $percent = ($count/$members) * 100;
+            else  $percent = 0;
             $title = "Members Who Undervoted";
             
             return view('Queries.index', ['title'=>$title, 'query'=>$query,'list'=>$list, 'count'=>$count, 'members'=>$members, 'percent'=>$percent, 'surveystat' => $setting->blSetSurvey, 'partystat'=>$setting->blSetParty]);
@@ -219,7 +233,9 @@ class queriesController extends Controller
                             ->where('blMemDelete', '=', 0)
                             ->where('blMemCodeSendStat', '=', 1)
                             ->count();
-            $percent = ($count/$members) * 100;
+            if($members != 0)
+                $percent = ($count/$members) * 100;
+            else  $percent = 0;
             $title = "Members Who did not undervote";
             
             return view('Queries.index', ['title'=>$title, 'query'=>$query,'list'=>$list, 'count'=>$count, 'members'=>$members, 'percent'=>$percent, 'surveystat' => $setting->blSetSurvey, 'partystat'=>$setting->blSetParty]);
@@ -243,7 +259,9 @@ class queriesController extends Controller
                             ->where('blMemDelete', '=', 0)
                             ->where('blMemCodeSendStat', '=', 1)
                             ->count();
-            $percent = ($count/$members) * 100;
+            if($members != 0)
+                $percent = ($count/$members) * 100;
+            else  $percent = 0;
             $title = "Members Who VoteStraight";
             
             return view('Queries.index', ['title'=>$title, 'query'=>$query,'list'=>$list, 'count'=>$count, 'members'=>$members, 'percent'=>$percent, 'surveystat' => $setting->blSetSurvey, 'partystat'=>$setting->blSetParty]);
@@ -265,7 +283,9 @@ class queriesController extends Controller
                             ->where('blMemDelete', '=', 0)
                             ->where('blMemCodeSendStat', '=', 1)
                             ->count();
+            if($members != 0)
             $percent = ($count/$members) * 100;
+            else  $percent = 0;
             $title = "Members Who did not votestraight";
             
             return view('Queries.index', ['title'=>$title, 'query'=>$query,'list'=>$list, 'count'=>$count, 'members'=>$members, 'percent'=>$percent, 'surveystat' => $setting->blSetSurvey, 'partystat'=>$setting->blSetParty]);
