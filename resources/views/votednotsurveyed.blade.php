@@ -43,10 +43,6 @@
     <center>
     <p style="font-size:70px;color:white;margin-top:130px;font-family:Helvetica;text-shadow: 2px 2px 8px rgba(5, 5, 5, 0.62);">You already voted but you did not answer the survey.</p>
     </center>
-    
-    <center>
-    <p style="font-size:65px;color:#1d96f3  ;font-family:Helvetica ;">Thank you for participating.</p>
-    </center>
     <div class="row">
                <div class="col-md-4 col-md-offset-4" style="padding-top:30px;">
                   <center>
@@ -55,6 +51,11 @@ Click to start answering the survey</button></a>
                     </center> 
                 </div>
     </div>
+    
+    <center>
+    <p style="font-size:65px;color:#1d96f3  ;padding-top:30px;font-family:Helvetica ;">Thank you for participating.</p>
+    </center>
+    
 
   </div>
   </div>

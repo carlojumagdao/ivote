@@ -112,7 +112,7 @@
                                     <center>
                                         <div class="col s12">
                                             <div class="card-panel2 tooltipped" data-position="top" data-delay="50" data-tooltip="logo picture">
-                                                <img class="img-circle" id="user-pic" src="{{ URL::asset('assets/images/'.$imgPath.'') }}" width="300px" style="background-size: contain" /> 
+                                                <img class="img-circle" id="userProfile-pic" src="{{ URL::asset('assets/images/'.$imgPath.'') }}" width="300px" style="background-size: contain" /> 
                                             </div>
                                         </div>
                                         <div class="form-group col-md-8 ">
@@ -156,7 +156,7 @@
         if (input.files && input.files[0]) {
             var reader = new FileReader();
                 reader.onload = function (e) {
-                    $('#user-pic')
+                    $('#userProfile-pic')
                     .attr('src', e.target.result);
                 };
             reader.readAsDataURL(input.files[0]);

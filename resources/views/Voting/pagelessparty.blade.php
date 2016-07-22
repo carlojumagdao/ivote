@@ -126,18 +126,18 @@
             <img src="assets/images/{{$set->txtSetLogo}}" class="paddify img-responsive">
         </div>
         <div class="col-md-3 col-xs-8">
-            <h3>{{$set->strSetElecName}}</h3>
-            <h4>{{$set->strHeader}}</h4>
-            <h5>Powered by: iVOTE++</h5>
+            <h3 style="font-family:helvetica;text-align:left;text-transform:capitalize">{{$set->strSetElecName}}</h3>
+            <h4 style="font-family:segoe ui;text-align:left;margin-top:10px;text-transform:capitalize">{{$set->strHeader}}</h4>
+            <h5 style="font-family:segoe ui;text-align:left;text-transform:capitalize">Powered by: iVOTE++</h5>
         </div>
     </div>
     
     <div class="row header2">
         <div class="col-md-4 col-md-offset-1" >
-            <h4>SELECT YOUR CANDIDATE</h4>
+            <h4 style="font-family:helvetica; letter-spacing: 1px; text-transform: uppercase">Select Your Candidate</h4>
         </div>
         <div class="col-md-2 col-md-offset-4" >
-            <h5>Member: <big style="font-weight:bold">{{$memberName}}</big> </h5>
+            <h5 style="font-family:segoe ui; ">Member: <big style="font-weight:bold;font-family:helvetica;text-transform:capitalize">{{$memberName}}</big> </h5>
         </div>
             
     </div>
@@ -157,7 +157,7 @@
         <div class="col-md-10 col-md-offset-1">
             @foreach($positions as $position)
             <div class="box-header boxhead" style="background-color: @if($position->strPosColor == NULL) cornflowerblue @else {{$position->strPosColor}} @endif ">
-                <h3 class="box-title">{{$position->strPosName}} | <span style="font-size: 12px">vote limit: {{$position->intPosVoteLimit}}</span></h3>
+                <h3  style="font-family:helvetica;letter-spacing:1px;text-transform:capitalize" class="box-title">{{$position->strPosName}} | <span style="font-size: 12px">vote limit: {{$position->intPosVoteLimit}}</span></h3>
                 <input type="hidden" name='position[]' value='{{$position->strPositionId}}'>
             </div>
             <div class="box-body boxbody" style="padding: 40px;">
@@ -175,7 +175,7 @@
                         </div>
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" value="{{$candidate->strCandId}}" name="vote[]" class="pos_{{$position->strPositionId}}" onclick=" return maxCast_{{$position->strPositionId}}()">
+                                <input style="text-transform:capitalize" type="checkbox" value="{{$candidate->strCandId}}" name="vote[]" class="pos_{{$position->strPositionId}}" onclick=" return maxCast_{{$position->strPositionId}}()">
                                      {{$candidate->strMemFname}} {{$candidate->strMemLname}}
                             </label>
                         </div>
@@ -189,9 +189,9 @@
             <br>
             @endforeach
         </div>
-        <div class="row">
+        <div class="row"  style="padding-right:72px;">
             <div class="col-md-2 col-md-offset-10 col-xs-4 col-xs-offset-4 col-sm-4">
-                <input type="submit" class="btn btn-primary" name="btnSubmit" value="CAST MY VOTES!">
+                <input  style="font-family:segoe ui;height:40px;"  type="submit" class="btn btn-primary" name="btnSubmit" value="CAST MY VOTES!">
             </div>
             
         </div>
@@ -203,8 +203,8 @@
             <div class="pull-right hidden-xs">
                 <b>Version</b> 1.2.1
             </div>
-            <strong>Copyright &copy; 2015-2016 <a href="http://ivote++.com" class="btn btn-xs btn-primary">iVote++</a>.</strong> All rights
-            reserved.
+            <strong style="margin-left:10px;padding-top:40px;">Copyright &copy; 2015-2016 <a href="http://ivote++.com" class="btn btn-xs btn-primary">&nbsp iVote++ &nbsp</a>&nbsp .</strong> All rights
+            reserved. &nbsp &nbsp 
         </div>  
     </footer>
     <!-- jQuery 2.2.0 -->

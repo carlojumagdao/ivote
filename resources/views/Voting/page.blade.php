@@ -127,9 +127,9 @@
             <img src="assets/images/{{$set->txtSetLogo}}" class="paddify img-responsive">
         </div>
         <div class="col-md-3 col-xs-8">
-            <h2 style="font-family:helvetica;text-align:left;">{{$set->strSetElecName}}</h3>
-            <h4  style="font-family:segoe ui;text-align:left;margin-top:10px;">{{$set->strHeader}}</h4>
-            <h5  style="font-family:segoe ui;text-align:left;">Powered by: iVOTE++</h5>
+            <h2 style="font-family:helvetica;text-align:left;text-transform:capitalize">{{$set->strSetElecName}}</h3>
+            <h4  style="font-family:segoe ui;text-align:left;margin-top:10px;text-transform:capitalize">{{$set->strHeader}}</h4>
+            <h5  style="font-family:segoe ui;text-align:left;text-transform:capitalize">Powered by: iVOTE++</h5>
         </div>
     </div>
     
@@ -138,7 +138,7 @@
             <h4 style="font-family:helvetica; letter-spacing: 1px; text-transform: uppercase">Select Your Candidate</h4>
         </div>
         <div class="col-md-2 col-md-offset-4" >
-            <h5 style="font-family:segoe ui; ">Member: <big style="font-weight:bold;font-family:helvetica">{{$memberName}}</big> </h5>
+            <h5 style="font-family:segoe ui; ">Member: <big style="font-weight:bold;font-family:helvetica;text-transform:capitalize">{{$memberName}}</big> </h5>
         </div>
             
     </div>
@@ -213,7 +213,7 @@
                         </div>
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" value="{{$candidate->strCandId}}" name="vote[]"  class="pos_{{$position->strPositionId}} v_{{$candidate->intCandParId}}" onclick=" return maxCast_{{$position->strPositionId}}()" onchange="return maxCast_{{$position->strPositionId}}()">
+                                <input style="text-transform:capitalize" type="checkbox" value="{{$candidate->strCandId}}" name="vote[]"  class="pos_{{$position->strPositionId}} v_{{$candidate->intCandParId}}" onclick=" return maxCast_{{$position->strPositionId}}()" onchange="return maxCast_{{$position->strPositionId}}()">
                                      {{$candidate->strMemFname}} {{$candidate->strMemLname}}
                             </label>
                             <p style="font-size: 10px;">{{$candidate->strPartyName}}</p>
