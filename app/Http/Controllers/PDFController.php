@@ -19,7 +19,12 @@ class PDFController extends Controller
             $Picture = $result->txtSetLogo;
             $Address = $result->strSetAddress;
         }
-    	$positions = DB::table('tblposition')->get();
+    	$positions = DB::table('tblcandidate')
+                            ->join('tblposition', 'strPositionId', '=', 'strCandPosId')
+                            ->select('strCandPosId', 'strPosName')
+                            ->where('blPosDelete', '=', '0')
+                            ->distinct()
+                            ->get();
         $tally = DB::select('SELECT strCandID, strMemLName, strMemFName, strCandPosId, txtCandPic, count(strVDCandId) as `votes` FROM tblcandidate 
 join tblmember on strMemberId = strCandMemId
 left join tblvotedetail on strCandId = strVDCandId
@@ -39,7 +44,12 @@ order by 6 desc;');
             $Picture = $result->txtSetLogo;
             $Address = $result->strSetAddress;
         }
-    	$positions = DB::table('tblposition')->get();
+    	$positions = DB::table('tblcandidate')
+                            ->join('tblposition', 'strPositionId', '=', 'strCandPosId')
+                            ->select('strCandPosId', 'strPosName', 'intPosVoteLimit')
+                            ->where('blPosDelete', '=', '0')
+                            ->distinct()
+                            ->get();
         $tally = DB::select('SELECT strCandID, strMemLName, strMemFName, strCandPosId, txtCandPic, count(strVDCandId) as `votes` FROM tblcandidate 
 join tblmember on strMemberId = strCandMemId
 left join tblvotedetail on strCandId = strVDCandId

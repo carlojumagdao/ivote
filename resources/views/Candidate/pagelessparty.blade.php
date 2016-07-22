@@ -69,11 +69,11 @@
                 
                 @foreach($candidates as $candidate)
                      
-                    @if($candidate->strCandPosId == $position->strPositionId )
+                    @if($candidate->strCandPosId == $position->strCandPosId )
                      <div class="col-md-2">
                          <div class="thumbnail">
                              <div class="panel tooltipped" data-position="top" data-delay="50" data-tooltip="logo picture">
-                                 <img id="cand-pic" src="../assets/images/{{$candidate->txtCandPic}}" style="background-size: contain; max-width:152px;border: 2px solid darkgray" /> 
+                                 <img id="cand-pic" src="../assets/images/{{$candidate->txtCandPic}}" style="background-size: contain; max-width:152px;border: 2px solid darkgray" class="img-responsive" /> 
                              </div>
                              <div class="caption">
                                  <center><p style="text-transform: capitalize;font-size: 16px;font-family: segoe ui ">{{$candidate->strMemFname}} {{$candidate->strMemLname}}</p></center>

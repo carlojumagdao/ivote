@@ -57,7 +57,7 @@
                
                 @foreach($tally as $cand)
                 <!-- Apply any bg-* class to to the info-box to color it -->
-                @if($pos->strPositionId == $cand->strCandPosId)
+                @if($pos->strCandPosId == $cand->strCandPosId)
                         
                 @if($pos->intPosVoteLimit > $counter)        
                 <div class="col-md-3">

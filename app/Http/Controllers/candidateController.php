@@ -252,7 +252,12 @@ class candidateController extends Controller
                             ->where('blCandDelete', '=', 0)
                             ->select('tblcandidate.intCandParId','tblparty.strPartyName', 'tblparty.strPartyColor')
                             ->get();
-            $positions = DB::table('tblposition')->get();
+            $positions = DB::table('tblcandidate')
+                            ->join('tblposition', 'strPositionId', '=', 'strCandPosId')
+                            ->select('strCandPosId', 'strPosName')
+                            ->where('blPosDelete', '=', '0')
+                            ->distinct()
+                            ->get();
             $candidates = DB::table('tblcandidate')
                             ->join('tblmember', 'tblcandidate.strCandMemId', '=', 'tblmember.strMemberId')
                             ->where('blCandDelete', '=', 0)
@@ -265,7 +270,12 @@ class candidateController extends Controller
         }
         
         else {
-            $positions = DB::table('tblposition')->get();
+            $positions = DB::table('tblcandidate')
+                            ->join('tblposition', 'strPositionId', '=', 'strCandPosId')
+                            ->select('strCandPosId', 'strPosName')
+                            ->where('blPosDelete', '=', '0')
+                            ->distinct()
+                            ->get();
             $candidates = DB::table('tblcandidate')
                             ->join('tblmember', 'tblcandidate.strCandMemId', '=', 'tblmember.strMemberId')
                             ->where('blCandDelete', '=', 0)

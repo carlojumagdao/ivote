@@ -56,7 +56,7 @@
                
                 @foreach($tally as $cand)
                 <!-- Apply any bg-* class to to the info-box to color it -->
-                @if($pos->strPositionId == $cand->strCandPosId)
+                @if($pos->strCandPosId == $cand->strCandPosId)
                 <div class="col-md-3">
                 <div class="info-box bg-blue">
                     <span class="info-box-icon"><image class="img-circle" src ="assets/images/{{$cand->txtCandPic}}" height="80" width="80"></span>

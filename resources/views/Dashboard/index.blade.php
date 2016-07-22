@@ -179,7 +179,12 @@
                                             ->where('blCandDelete', '=', 0)
                                             ->select('tblcandidate.intCandParId','tblparty.strPartyName', 'tblparty.strPartyColor')
                                             ->get();
-                            $positions = DB::table('tblposition')->get();
+                            $positions = DB::table('tblcandidate')
+                                            ->join('tblposition', 'strPositionId', '=', 'strCandPosId')
+                                            ->select('strCandPosId', 'strPosName')
+                                            ->where('blPosDelete', '=', '0')
+                                            ->distinct()
+                                            ->get();
                             $candidates = DB::table('tblcandidate')
                                             ->join('tblmember', 'tblcandidate.strCandMemId', '=', 'tblmember.strMemberId')
                                             ->where('blCandDelete', '=', 0)
@@ -193,7 +198,7 @@
                                             <h3>{{$party->strPartyName}}</h3>
                                             @foreach($positions as $position)
                                                 @foreach($candidates as $candidate)
-                                                    @if($candidate->strCandPosId == $position->strPositionId )
+                                                    @if($candidate->strCandPosId == $position->strCandPosId )
                                                     @if($candidate->intCandParId == $party->intCandParId)
                                                      <div class="col-md-4">
                                                         <li>
@@ -215,10 +220,11 @@
                         <?php
                         }
                         else {
-                                $positions = DB::table('tblposition')
-                                                /*->join('tblcandidate', 'tblposition.strPositionId', '=', 'tblcandidate.strCandPosId')
-                                                ->where('blPosDelete', '=', 0)
-                                                ->select('tblposition.*')*/
+                                $positions = DB::table('tblcandidate')
+                                                ->join('tblposition', 'strPositionId', '=', 'strCandPosId')
+                                                ->select('strCandPosId', 'strPosName')
+                                                ->where('blPosDelete', '=', '0')
+                                                ->distinct()
                                                 ->get();
                                 $candidates = DB::table('tblcandidate')
                                                 ->join('tblmember', 'tblcandidate.strCandMemId', '=', 'tblmember.strMemberId')
@@ -234,7 +240,7 @@
                                             </div>
                                             <div class="box-body">
                                                 @foreach($candidates as $candidate)
-                                                    @if($candidate->strCandPosId == $position->strPositionId)
+                                                    @if($candidate->strCandPosId == $position->strCandPosId)
                                                         <div class="col-md-4">
                                                             <li>
                                                                 <center>

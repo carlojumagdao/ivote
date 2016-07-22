@@ -201,7 +201,7 @@
             <div class="box-body boxbody" style="padding: 40px;">
                     @foreach($candidates as $candidate)
                      
-                    @if($candidate->strCandPosId == $position->strPositionId )
+                    @if($candidate->strCandPosId == $position->strCandPosId )
                 
                     
                         

@@ -40,8 +40,11 @@ class votingController extends Controller
                             ->get();
             $only = "";
             $index = 0;
-            $positions = DB::table('tblposition')
+            $positions = DB::table('tblcandidate')
+                            ->join('tblposition', 'strPositionId', '=', 'strCandPosId')
+                            ->select('strCandPosId', 'strPosName')
                             ->where('blPosDelete', '=', '0')
+                            ->distinct()
                             ->get();
             
             foreach($positions as $pos){
@@ -104,9 +107,11 @@ class votingController extends Controller
                             ->where('strMemDeMemId', '=', session('memid'))
                             ->get();
             $only = "";
-            $index = 0;
-            $positions = DB::table('tblposition')
+            $positions = DB::table('tblcandidate')
+                            ->join('tblposition', 'strPositionId', '=', 'strCandPosId')
+                            ->select('strCandPosId', 'strPosName')
                             ->where('blPosDelete', '=', '0')
+                            ->distinct()
                             ->get();
             
             foreach($positions as $pos){

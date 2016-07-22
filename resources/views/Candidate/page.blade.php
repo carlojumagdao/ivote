@@ -70,7 +70,7 @@
                 
                 @foreach($candidates as $candidate)
                      
-                    @if($candidate->strCandPosId == $position->strPositionId )
+                    @if($candidate->strCandPosId == $position->strCandPosId )
                     @if($candidate->intCandParId == $party->intCandParId)
                      <div class="col-md-2">
                          <div class="thumbnail">

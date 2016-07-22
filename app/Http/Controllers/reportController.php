@@ -17,7 +17,12 @@ class reportController extends Controller
      */
     public function tallyvotes()
     {
-        $positions = DB::table('tblposition')->where('blPosDelete', '=', 0)->get();
+        $positions = DB::table('tblcandidate')
+                            ->join('tblposition', 'strPositionId', '=', 'strCandPosId')
+                            ->select('strCandPosId', 'strPosName')
+                            ->where('blPosDelete', '=', '0')
+                            ->distinct()
+                            ->get();
         $tally = DB::select('SELECT strCandID, strMemLName, strMemFName, strCandPosId, txtCandPic, count(strVDCandId) as `votes` FROM tblcandidate 
 join tblmember on strMemberId = strCandMemId
 left join tblvotedetail on strCandId = strVDCandId
@@ -36,7 +41,12 @@ order by 6 desc;');
     }
     
     public function determineWinners(){
-        $positions = DB::table('tblposition')->where('blPosDelete', '=', 0)->get();
+        $positions = DB::table('tblcandidate')
+                            ->join('tblposition', 'strPositionId', '=', 'strCandPosId')
+                            ->select('strCandPosId', 'strPosName', 'intPosVoteLimit')
+                            ->where('blPosDelete', '=', '0')
+                            ->distinct()
+                            ->get();
         $tally = DB::select('SELECT strCandID, strMemLName, strMemFName, strCandPosId, txtCandPic, count(strVDCandId) as `votes` FROM tblcandidate 
 join tblmember on strMemberId = strCandMemId
 left join tblvotedetail on strCandId = strVDCandId
