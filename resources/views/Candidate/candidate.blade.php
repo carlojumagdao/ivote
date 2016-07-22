@@ -40,6 +40,10 @@
         <div class="box">
             <div class="box-header with-border">
                 <h3 class="box-title">Display all candidates</h3>
+                <div class="box-tools pull-right">
+                    <a href="{{ URL::to('/candidates/add') }}" class="btn btn-success btn-xs">
+                    <i class="glyphicon glyphicon-plus"></i> Add New</a>
+                </div>
             </div>
             <div class="box-body dataTable_wrapper">
                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
