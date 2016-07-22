@@ -19,6 +19,7 @@
     body{
       background-image: url("{{ URL::asset('../assets/images/7.jpg') }}");
       background-repeat: no-repeat;
+      background-size: cover;
       background-attachment: fixed;
       }
       /*footer {
