@@ -24,26 +24,22 @@ class UserMiddleware
             $memid = session('memid');
             $voted = DB::table('tblvoteheader')->where('strVHMemId', '=', $memid)->select('strVHCode')->get();
             if($voted){
-                $SH = SurveyHeader::where('strSHMemCode', "=", $memid)->first();
-                if($SH){
-                    return view('votedandsurveyed');
+                $SurveyStatus = DB::table('tblSetting')->where('blSetSurvey', '=', 1)->get();
+                if($SurveyStatus){
+                    $SH = SurveyHeader::where('strSHMemCode', "=", $retMemId)->first();
+                    if($SH){
+                        return view('votedandsurveyed');
+                    }
+                    
+                    else return view('votednotsurveyed');
+                } 
+                else{
+                    return view('voted');
                 }
-                
-                else return $next($request);
+                    
+                    
             }
-            else{
-                /*$member = DB::select('select CONCAT(strMemFname," ",strMemLname) as FullName, strMemberId, intMemSecQuesId, strMemSecQuesAnswer from tblMember where strMemPasscode = ?', [$request->input('txtPasscode')]);
-                if($member){
-                foreach ($member as $value) {
-                    $retSecQues = $value->intMemSecQuesId;
-                    $retAnswer = $value->strMemSecQuesAnswer;
-                    $retMemId = $value->strMemberId;
-                    $retFullName = $value->FullName;
-                }
-                session(['memid' => $retMemId, 'memfullname' => $retFullName]);*/
-               
-                return $next($request);
-            }
+            else return $next($request);
             
         }
         else{
@@ -67,12 +63,19 @@ class UserMiddleware
                 session(['memid' => $retMemId, 'memfullname' => $retFullName]);
                 $voted = DB::table('tblvoteheader')->where('strVHMemId', '=', $retMemId)->select('strVHCode')->get();
                 if($voted){
-                    $SH = SurveyHeader::where('strSHMemCode', "=", $retMemId)->first();
-                    if($SH){
-                        return view('votedandsurveyed');
+                    $SurveyStatus = DB::table('tblSetting')->where('blSetSurvey', '=', 1)->get();
+                    if($SurveyStatus){
+                        $SH = SurveyHeader::where('strSHMemCode', "=", $retMemId)->first();
+                        if($SH){
+                            return view('votedandsurveyed');
+                        }
+                    
+                        else return view('votednotsurveyed');
+                    } else{
+                        return view('voted');
                     }
                     
-                    else return Redirect::route('survey.answerSurvey');
+                    
                 }
                 else return $next($request);
             }else{
