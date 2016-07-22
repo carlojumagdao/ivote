@@ -63,7 +63,7 @@
         @foreach($partylist as $party)
             <div class="row panel" style="border-left: 4px solid {{$party->strPartyColor}}; background-color:rgba(0, 0, 0, 0.20)">
                  <div class="col-md-12">
-                 <div class="col-md-12" style="font-family:segoe ui;text-transform: capitalize;"><h5 style="letter-spacing:1px">Party Affiliation</h5><h3 style="letter-spacing:1px;font-family: helvetica;color: white ;text-shadow: 1px 1px 5px rgba(5, 5, 5, 0.62);">{{$party->strPartyName}}</h3></div>
+                 <div class="col-md-12" style="font-family:segoe ui;text-transform: capitalize;"><h5 style="letter-spacing:1px"></h5><h3 style="letter-spacing:1px;font-family: helvetica;color: white ;text-shadow: 1px 1px 5px rgba(5, 5, 5, 0.62);">{{$party->strPartyName}}</h3></div>
                  
                     
             @foreach($positions as $position)
