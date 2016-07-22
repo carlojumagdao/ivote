@@ -26,7 +26,7 @@ class UserMiddleware
             if($voted){
                 $SurveyStatus = DB::table('tblSetting')->where('blSetSurvey', '=', 1)->get();
                 if($SurveyStatus){
-                    $SH = SurveyHeader::where('strSHMemCode', "=", $retMemId)->first();
+                    $SH = SurveyHeader::where('strSHMemCode', "=", $memid)->first();
                     if($SH){
                         return view('votedandsurveyed');
                     }
