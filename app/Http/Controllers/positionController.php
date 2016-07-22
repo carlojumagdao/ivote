@@ -31,7 +31,6 @@ class positionController extends Controller
 
         $PositionsId = DB::table('tblPosition')
         				->select('strPositionId')
-        				->where('blPosDelete', '=', 0)
         				->orderBy('strPositionId')
         				->get();
         $id = "POS000";

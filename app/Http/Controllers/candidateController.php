@@ -33,28 +33,6 @@ class candidateController extends Controller
             ->select('tblcandidate.*', 'tblmember.strMemFname', 'tblmember.strMemLname', 'tblposition.strPosName', 'tblparty.strPartyName')->get();
     
             return view('Candidate.candidate', ['candidates' => $candidates, 'intCounter'=>0, 'party' => $PartyStatus]);
-
-        $candidates = DB::table('tblcandidate')
-        ->join('tblmember', 'tblcandidate.strCandMemId', '=', 'tblmember.strMemberId')
-        ->join('tblposition', 'tblcandidate.strCandPosId', '=', 'tblposition.strPositionId')
-        ->join('tblparty', 'tblcandidate.intCandParId', '=', 'tblparty.intPartyId')
-        ->where('blCandDelete', 0)
-        ->select('tblcandidate.*', 'tblmember.strMemFname', 'tblmember.strMemLname', 'tblposition.strPosName', 'tblparty.strPartyName')->get();
-        $strCandEducBackg = "";
-        $strCandInfor = "";
-        foreach ($candidates as $value) 
-            {
-                $strCandEducBackg = $value->strCandEducBack;
-                $strCandInfor = $value->strCandInfo;
-            }
-        return view('Candidate.candidate', ['candidates' => $candidates, 'intCounter'=>0, 'party' => $PartyStatus, 'strCandEducBackg' => 
-            $strCandEducBackg , 
-              'strCandInfor' => 
-            $strCandInfor]);
-
-       
-        
-
     }
 
     public function add()
@@ -235,7 +213,7 @@ class candidateController extends Controller
         $validator = Validator::make($request->all(),$rules,$messages);
         $validator->setAttributeNames($niceNames); 
         if ($validator->fails()) {
-            return Redirect::back()->withErrors($validator);
+            return Redirect::route('candidate.index')->withErrors($validator);
         }
         
         
@@ -259,13 +237,15 @@ class candidateController extends Controller
                                                         ->select('strCandPosId')
                                                         ->count();
             
-            if($request->has('party') && $party != 1){
+            /*if($request->has('party') && $party != 1){
             if($limit[0]->intPosVoteLimit == $countPos && $party != 1){
+                
+                
                 $errMess = "Candidate limit of " . $limit[0]->strPosName . " in Party " . $partyName[0]->strPartyName . " has EXCEEDED";    
-                return Redirect::back()->withErrors($errMess);
+                return Redirect::route('candidate.index')->withErrors($errMess);
             }
                 
-            }
+            }*/
             
         
             
@@ -276,7 +256,6 @@ class candidateController extends Controller
             $Candidate->strCandEducBack = $request->input('txtEducback');
             $Candidate->strCandInfo = $request->input('txtinfo');
             if ($request->has('party'))$Candidate->intCandParId = $request->input('party');
-            else $Candidate->intCandParId = 1;
             
             if ($request->hasFile('image')){
 
@@ -297,7 +276,7 @@ class candidateController extends Controller
             $Candidate->save();
         }catch (\Illuminate\Database\QueryException $e){
             $errMess = $e->getMessage();
-            return Redirect::back()->withErrors($errMess);
+            return Redirect::route('candidate.index')->withErrors($errMess);
         }
         //redirect
         $request->session()->flash('message', 'Successfully Updates.');    

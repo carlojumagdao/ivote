@@ -225,11 +225,11 @@ Route::group(['middleware' => 'auth'], function(){
 		'uses' => 'candidateController@delete',
 		'as' => 'candidate.delete'
 	));
-    Route::post('/candidates/edit', array(
+    Route::any('/candidates/edit', array(
 		'uses' => 'candidateController@editpage',
 		'as' => 'candidate.edit'
 	));
-    Route::post('/candidates/update', array(
+    Route::any('/candidates/update', array(
 		'uses' => 'candidateController@update',
 		'as' => 'candidate.update'
 	));
