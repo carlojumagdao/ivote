@@ -178,13 +178,14 @@ class votingController extends Controller
             $VHID = VoteHeader::find($id);
             $VDID = $VHID->strVHCode;
             
-            
+            if(isset($_POST['vote'])){
             foreach ($_POST['vote'] as $candID) {
                 $VoteDetail = new VoteDetail();
                 $VoteDetail->strVDVHCode = $VDID;
                 $VoteDetail->strVDCandId = $candID;
                 $VoteDetail->save();
                 
+            }
             }
             DB::commit();
             
