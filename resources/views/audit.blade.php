@@ -62,6 +62,8 @@
         <!-- timeline icon -->
         @if($aud->Action == 'UPDATED')
         <i class="fa fa-plus-square bg-yellow"></i>
+        @elseif($aud->Action == 'DELETED')
+        <i class="fa fa-trash bg-red"></i>
         @else
         <i class="fa fa-edit bg-blue"></i>
         @endif

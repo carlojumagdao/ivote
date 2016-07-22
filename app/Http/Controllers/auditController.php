@@ -22,7 +22,7 @@ class auditController extends Controller
      */
     public function index(){
         $audit = DB::select("SELECT user, strMemberId, tblaudit.Action, date(tblaudit.Date) as `date`, time(tblaudit.Date) as `time`
-from tblaudit;");
+from tblaudit order by date, time desc;");
         
         
         if($audit){
