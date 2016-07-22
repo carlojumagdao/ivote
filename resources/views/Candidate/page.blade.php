@@ -21,7 +21,23 @@
       background-repeat: no-repeat;
       background-size: cover;
       background-attachment: fixed;
+      margin:0;
+      padding:40;
+      height:100%;
       }
+      header {
+        background:#ededed;
+        padding:10px;
+        padding-left: 50px;
+        height: 200px;
+      }
+      .header-cont {
+          width:97%;
+          position:relative;
+          top:0px;
+         margin-left: 20px;
+      }
+
       /*footer {
       width:100%;
       height:100px;
@@ -32,18 +48,18 @@
       
     
 </style>
-<body >
-    <div style="padding: 20px">
-    <h3></h3>
-    <div class="row">
-        <div class="col-md-2">
-            <div class="card-panel2 tooltipped" data-position="top" data-delay="50" data-tooltip="logo picture">
-                <img id="cand-pic" src="../assets/images/ivote7.jpg" width="200px" height="174px" style="background-size: contain;opacity:2px" /> 
+<header style="background-color:rgba(248, 248, 248, 0.71);border-bottom: 3px solid  DodgerBlue ">
+ @foreach($election as $setting)
+ <div class="row">
+ 
+      <div class="col-md-2 col-xs-6">
+            <div class="tooltipped" data-position="top" data-delay="50" data-tooltip="logo picture">
+                <img id="cand-pic" class="img-responsive" src="../assets/images/{{$setting->txtSetLogo}}"  style="opacity:2px; width: 180px;background-size: contain " /> 
             </div>
         </div>
-        <div class="col-md-9 panel" style="border-left: 4px solid CornflowerBlue ; background-color:rgba(248, 248, 248, 0.71);width:1048px">
-            <div class="panel-body">
-                @foreach($election as $setting)
+        <div class="col-md-7 col-xs-6 "  >
+            
+               
                 <h2 style="font-family:helvetica;text-align:left;text-transform: capitalize;letter-spacing:1px">{{$setting->strHeader}}</h2>
                 
                 <h4 style="font-family:segoe ui;text-align:left;margin-top:10px;">{{$setting->strSetElecName}}</h5>
@@ -51,11 +67,19 @@
                 @endforeach
                 <h5 style="style=font-family:segoe ui;text-align:left;letter-spacing:1px;color:Tomato ">"Election Not Open Yet"</h5>
                 
-            </div>
+            
         </div>
+
+</div>
+  
+</header>
+<body >
+
+    <div style="padding: 10px">
+    <h3></h3>
     </div>
     
-    <div class="box" style="background-color:rgba(248, 248, 248, 0.71);" >
+    <div class="box header-cont" style="background-color:rgba(248, 248, 248, 0.71);" >
         <div class="box-header"  style=" ">
             <p class="box-title" style="font-family:helvetica;letter-spacing:2px;font-size:28px;margin-left: 16px;color: DodgerBlue    ">Candidates</p>
         </div>
@@ -63,7 +87,7 @@
         @foreach($partylist as $party)
             <div class="row panel" style="border-left: 4px solid {{$party->strPartyColor}}; background-color:rgba(0, 0, 0, 0.20)">
                  <div class="col-md-12">
-                 <div class="col-md-12" style="font-family:segoe ui;text-transform: capitalize;"><h5 style="letter-spacing:1px"></h5><h3 style="letter-spacing:1px;font-family: helvetica;color: white ;text-shadow: 1px 1px 5px rgba(5, 5, 5, 0.62);">{{$party->strPartyName}}</h3></div>
+                 <div class="col-md-12" style="font-family:segoe ui;text-transform: capitalize;"><h5 style="letter-spacing:1px">Party Affiliation</h5><h3 style="letter-spacing:1px;font-family: helvetica;color: white ;text-shadow: 1px 1px 5px rgba(5, 5, 5, 0.62);">{{$party->strPartyName}}</h3></div>
                  
                     
             @foreach($positions as $position)
@@ -73,17 +97,17 @@
                      
                     @if($candidate->strCandPosId == $position->strCandPosId )
                     @if($candidate->intCandParId == $party->intCandParId)
-                     <div class="col-md-2">
+                     <div class="col-md-2 col-xs-6">
                          <div class="thumbnail">
                              <div class="panel tooltipped" data-position="top" data-delay="50" data-tooltip="logo picture">
-                                 <img id="cand-pic" src="../assets/images/{{$candidate->txtCandPic}}" style="background-size: contain; max-width:152px;border: 2px solid darkgray" /> 
+                                 <img id="cand-pic" class="img-responsive" src="../assets/images/{{$candidate->txtCandPic}}" style="background-size: contain; border: 2px solid darkgray" /> 
                              </div>
                              <div class="caption">
                                  <h4 style="text-transform: capitalize;font-weight:bold">{{$candidate->strMemFname}} {{$candidate->strMemLname}}</h4>
                                  <h5 style="font-family:segoe ui;text-transform: capitalize;"> {{$position->strPosName}}</h5>
                              </div>
                              <center>
-                             <button type="button" class="btn btn-info btn-xs" data-toggle="collapse" href="#{{$candidate->strCandId}}" style="width:150px;">Information</button></center>
+                             <button type="button" class="btn btn-info btn-xs" data-toggle="collapse" href="#{{$candidate->strCandId}}" style="width:120px;">Information</button></center>
                                   <div id="{{$candidate->strCandId}}" class="collapse" >
                                     <p style="margin-left:5px;font-family:segoe ui;">Education Background: &nbsp {{ $candidate->strCandEducBack}} </p>
 
