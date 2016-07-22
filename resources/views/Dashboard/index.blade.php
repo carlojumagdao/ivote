@@ -55,10 +55,7 @@
     </div>
     <div class="col-md-12">
         <div class="col-lg-3 col-xs-6" id="position">
-            <div class="panel" style="border-left:8px solid #2c8798;color:#2c8798;" data-toggle="modal" data-target="#viewPosition">   
-
-
-                
+            <div class="panel" style="border-left:8px solid #2c8798;color:#2c8798; cursor:pointer" data-toggle="modal" data-target="#viewPosition">   
                 <div class="panel-body">
                     <div class="info-box-number text-center" style="font-size:70px;" > {{$TotalPosition}}</div>
                     <div class="info-box-text text-center" style="font-size:130%">Position</div>
@@ -66,7 +63,7 @@
             </div>
         </div>
         <div class="col-lg-3 col-xs-6">
-            <div class="panel" style="border-left:8px solid #006400;color:#006400;" data-toggle="modal" data-target="#viewCandidate">
+            <div class="panel" style="border-left:8px solid #006400;color:#006400; cursor:pointer" data-toggle="modal" data-target="#viewCandidate">
                 <div class="panel-body"> 
                     <div class="info-box-number text-center" style="font-size:70px">{{$TotalCandidate}}</div>
                     <div class="info-box-text text-center" style="font-size:130%">Candidate</div>
@@ -74,7 +71,7 @@
             </div>
         </div>
         <div class="col-lg-3 col-xs-6">
-            <div class="panel" style="border-left:8px solid #b22222;color:#b22222;" data-toggle="modal" data-target="#viewVoter">
+            <div class="panel" style="border-left:8px solid #b22222;color:#b22222; cursor:pointer" data-toggle="modal" data-target="#viewVoter">
                 <div class="panel-body">  
                     <div class="info-box-number text-center" style="font-size:70px">{{$TotalVoter}}</div>
                     <div class="info-box-text text-center" style="font-size:130%">Voter</div>
@@ -82,7 +79,7 @@
             </div>
         </div>
         <div class="col-lg-3 col-xs-6">
-            <div class="panel" style="border-left:8px solid #605ca8;color:#605ca8;" data-toggle="modal" data-target="#viewVoted">
+            <div class="panel" style="border-left:8px solid #605ca8;color:#605ca8; cursor:pointer" data-toggle="modal" data-target="#viewVoted">
                 <div class="panel-body">  
                     <div class="info-box-number text-center" style="font-size:70px">{{$TotalVoted}}</div>
                     <div class="info-box-text text-center" style="font-size:130%">Voted</div>
@@ -158,6 +155,13 @@
                         <h4 class="modal-title" id="myModalLabel">List of Candidates</h4>
                     </div>
                 <div class="modal-body" style="padding:40px">
+                    <center>
+                        <img src='{{ URL::asset("assets/images/$logo") }}' style="max-width: 200px;">
+                        <br>
+                        <h3>{{$election}}</h3>
+                        <h4>{{$org}}</h4>
+                        <h5>{{$address}}</h5>
+                    </center>
                     <?php
                         $party = DB::table('tblSetting')->where('blSetParty', '=', 1)->get();
                         $formDesign = DB::table('tblSetting')->select('strHeader','txtSetLogo','strSetElecName','strSetAddress')->get();
@@ -181,49 +185,74 @@
                                             ->where('blCandDelete', '=', 0)
                                             ->select('tblcandidate.*', 'tblmember.strMemFname', 'tblmember.strMemLname')
                                             ->get();
+                            ?>
+                            <ul class="users-list clearfix">
+                                @foreach($partylist as $party)
+                                    <div class="col-md-12 row panel" style="border-left: 4px solid {{$party->strPartyColor}}; background-color:#eee">
+                                        <div class="col-md-12">
+                                            <h3>{{$party->strPartyName}}</h3>
+                                            @foreach($positions as $position)
+                                                @foreach($candidates as $candidate)
+                                                    @if($candidate->strCandPosId == $position->strPositionId )
+                                                    @if($candidate->intCandParId == $party->intCandParId)
+                                                     <div class="col-md-4">
+                                                        <li>
+                                                            <center>
+                                                                <img class="img-circle" height="100" width="100" id="cand-pic" src="../assets/images/{{$candidate->txtCandPic}}">
+                                                                <a class="users-list-name">{{$candidate->strMemFname}} {{$candidate->strMemLname}}</a>
+                                                                <span class="users-list-position">{{$position->strPosName}}</span>
+                                                            </center>
+                                                        </li>
+                                                    </div>
+                                                    @endif
+                                                    @endif
+                                                @endforeach
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </ul>
+                        <?php
                         }
                         else {
-                            $positions = DB::table('tblposition')->get();
-                            $candidates = DB::table('tblcandidate')
-                                            ->join('tblmember', 'tblcandidate.strCandMemId', '=', 'tblmember.strMemberId')
-                                            ->where('blCandDelete', '=', 0)
-                                            ->select('tblcandidate.*', 'tblmember.strMemFname', 'tblmember.strMemLname')
-                                            ->get();
+                                $positions = DB::table('tblposition')
+                                                /*->join('tblcandidate', 'tblposition.strPositionId', '=', 'tblcandidate.strCandPosId')
+                                                ->where('blPosDelete', '=', 0)
+                                                ->select('tblposition.*')*/
+                                                ->get();
+                                $candidates = DB::table('tblcandidate')
+                                                ->join('tblmember', 'tblcandidate.strCandMemId', '=', 'tblmember.strMemberId')
+                                                ->where('blCandDelete', '=', 0)
+                                                ->select('tblcandidate.*', 'tblmember.strMemFname', 'tblmember.strMemLname')
+                                                ->get();
+                            ?>
+                            <ul class="users-list clearfix">
+                                    @foreach($positions as $position)
+                                        <div class="col-md-12 box border-style=none" > 
+                                            <div class="box-header with-border">
+                                                <h3 class="box-title">{{$position->strPosName}}</h3>
+                                            </div>
+                                            <div class="box-body">
+                                                @foreach($candidates as $candidate)
+                                                    @if($candidate->strCandPosId == $position->strPositionId)
+                                                        <div class="col-md-4">
+                                                            <li>
+                                                                <center>
+                                                                    <img class="img-circle" height="100" width="100" id="cand-pic" src="../assets/images/{{$candidate->txtCandPic}}">
+                                                                    <a class="users-list-name">{{$candidate->strMemFname}} {{$candidate->strMemLname}}</a>
+                                                                    <span class="users-list-position">{{$position->strPosName}}</span>
+                                                                </center>
+                                                            </li>
+                                                        </div>
+                                                    @endif
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    @endforeach
+                            </ul>
+                        <?php
                         }
                     ?>
-                    <center>
-                        <img src='{{ URL::asset("assets/images/$logo") }}' style="max-width: 200px;">
-                        <br>
-                        <h3>{{$election}}</h3>
-                        <h4>{{$org}}</h4>
-                        <h5>{{$address}}</h5>
-                    </center>
-                    <ul class="users-list clearfix">
-                        @foreach($partylist as $party)
-                            <div class="col-md-12 row panel" style="border-left: 4px solid {{$party->strPartyColor}}; background-color:#eee">
-                                <div class="col-md-12">
-                                    <h3>{{$party->strPartyName}}</h3>
-                                    @foreach($positions as $position)
-                                        @foreach($candidates as $candidate)
-                                            @if($candidate->strCandPosId == $position->strPositionId )
-                                            @if($candidate->intCandParId == $party->intCandParId)
-                                             <div class="col-md-4">
-                                                <li>
-                                                    <center>
-                                                        <img class="img-circle" height="100" width="100" id="cand-pic" src="../assets/images/{{$candidate->txtCandPic}}">
-                                                        <a class="users-list-name">{{$candidate->strMemFname}} {{$candidate->strMemLname}}</a>
-                                                        <span class="users-list-position">{{$position->strPosName}}</span>
-                                                    </center>
-                                                </li>
-                                            </div>
-                                            @endif
-                                            @endif
-                                        @endforeach
-                                    @endforeach
-                                </div>
-                            </div>
-                        @endforeach
-                    </ul>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
