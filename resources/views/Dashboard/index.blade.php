@@ -86,16 +86,32 @@
                 </div>
             </div>
         </div>
+        <?php
+            $convertDateStart = date('l F j, Y', strtotime($start));
+            $convertDateEnd = date('l F j, Y', strtotime($end));
+            $pieces = explode(" ", $start);
+            $timeStart = date('h:i A',strtotime($pieces[1]));//convert to user readable -start
+                // $startDate =  "$pieces[1]/$pieces[2]/$pieces[0]";
+                // $piece2 = explode("-",$datEnd);
+                // $endDate = "$piece2[1]/$piece2[2]/$piece2[0]";
+                // $timeStart = $startdatetime[1].$startdatetime[2];
+            $pieces2 = explode(" ",$end);
+            $timeEnd = date('h:i A',strtotime($pieces2[1]));
+            $startDate = explode("-",$pieces[0]);
+            $endDate = explode("-", $pieces2[0]);
+            $finalstartdate = "$startDate[1]/$startDate[2]/$startDate[0] $timeStart-$endDate[1]/$endDate[2]/$endDate[0] $timeEnd";
+                // $finalstarttime = "$timeStart"; 
+        ?>
         <div class="col-md-3 col-xs-6">
             <div class="panel panel-default">
-                <div class="panel-heading"><i class="glyphicon glyphicon-calendar"></i> Start Date</div>
-                <div class="panel-body">{{$start}}</div>    
+                <div class="panel-heading"><i class="glyphicon glyphicon-calendar"></i> Start Date and Time</div>
+                <div class="panel-body">{{$convertDateStart}}<br>{{$timeStart}}</div>    
             </div>  
         </div>
         <div class="col-md-3 col-xs-6">
             <div class="panel panel-default">
-                <div class="panel-heading"><i class="glyphicon glyphicon-calendar"></i> End Date</div>
-                <div class="panel-body">{{$end}}</div>  
+                <div class="panel-heading"><i class="glyphicon glyphicon-calendar"></i> End Date and Time</div>
+                <div class="panel-body">{{$convertDateEnd}}<br>{{$timeEnd}}</div>  
             </div>  
         </div>
     </div> 
