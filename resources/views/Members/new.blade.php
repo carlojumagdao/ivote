@@ -57,9 +57,7 @@ textarea.form-control {
                   <form action="{{ URL::to('form/build') }}" id="rendered-form" method="POST">
                   </form>
               </div>
-              <div class="box-footer">
-                This is footer
-              </div>
+              
           </div>
           <div class="hide" id="formData">{{$form}}</div>
       </div>

@@ -61,9 +61,7 @@
                 </p>
                 <p>Security Question Answer:<br><span style="font-size:20px">{{$strMemSecAnswer}}</span>
             </div>
-            <div class="box-footer">
-                Footer
-            </div>
+            
         </div>
     </div>
 @stop 

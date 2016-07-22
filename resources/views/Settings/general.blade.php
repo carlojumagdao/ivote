@@ -121,9 +121,7 @@
                         !!}
                     </div>
             </div>
-            <div class="box-footer">
-                Footer
-            </div>
+            
         </div>
     </div>
     <div class="col-md-5">
@@ -145,9 +143,7 @@
                 // $endDate = "$piece2[1]/$piece2[2]/$piece2[0]";
                 // $timeStart = $startdatetime[1].$startdatetime[2];
                 $pieces2 = explode(" ",$datEnd);
-                $timeEnd = date('h:i A',strtotime($pieces2[1]));//convert to user readable -end
-                // format $datStart = YYYY-MM-DD   
-                // $dateretrieve = $startDate.'-'.$endDate;
+                $timeEnd = date('h:i A',strtotime($pieces2[1]));
                 $startDate = explode("-",$pieces[0]);
                 $endDate = explode("-", $pieces2[0]);
                 $finalstartdate = "$startDate[1]/$startDate[2]/$startDate[0] $timeStart-$endDate[1]/$endDate[2]/$endDate[0] $timeEnd";

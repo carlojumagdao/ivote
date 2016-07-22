@@ -41,9 +41,7 @@
             <div class="box-body">
                 <?php echo "$form"; ?>
             </div>
-            <div class="box-footer">
-                Footer
-            </div>
+            
         </div>
     </div>
 @stop 

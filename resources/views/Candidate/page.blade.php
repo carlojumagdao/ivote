@@ -15,38 +15,56 @@
   <link rel="stylesheet" href="{{ URL::asset('assets/dist/css/AdminLTE.min.css') }}">
   <link rel="stylesheet" href="{{ URL::asset('assets/dist/css/skins/_all-skins.min.css') }}">
 </head>
-<body style="background-color: #bbb">
+<style>
+    body{
+      background-image: url("{{ URL::asset('../assets/images/7.jpg') }}");
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      }
+      /*footer {
+      width:100%;
+      height:100px;
+      position:absolute;
+      bottom:0;
+      left:0;
+    }*/
+      
+    
+</style>
+<body >
     <div style="padding: 20px">
     <h3></h3>
     <div class="row">
         <div class="col-md-2">
             <div class="card-panel2 tooltipped" data-position="top" data-delay="50" data-tooltip="logo picture">
-                <img id="cand-pic" src="../assets/images/ivote.jpg" width="200px" style="background-size: contain" /> 
+                <img id="cand-pic" src="../assets/images/ivote7.jpg" width="200px" height="174px" style="background-size: contain;opacity:2px" /> 
             </div>
         </div>
-        <div class="col-md-9 panel" style="border-left: 4px solid #2c8798; background-color:#eee">
+        <div class="col-md-9 panel" style="border-left: 4px solid CornflowerBlue ; background-color:rgba(248, 248, 248, 0.71);width:1048px">
             <div class="panel-body">
-               
-                <h2>Header Here</h2>
                 @foreach($election as $setting)
-                <h4>{{$setting->strSetElecName}}</h5>
-                <h5>{{$setting->strSetElecDesc}}</h5>
+                <h2 style="font-family:helvetica;text-align:left;text-transform: capitalize;letter-spacing:1px">{{$setting->strHeader}}</h2>
+                
+                <h4 style="font-family:segoe ui;text-align:left;margin-top:10px;">{{$setting->strSetElecName}}</h5>
+                <h5 style="font-family:segoe ui;text-align:left;letter-spacing:1px;text-transform: capitalize;">{{$setting->strSetElecDesc}}</h5>
                 @endforeach
-                <h5 style="color: red">"Election Not Open Yet"</h5>
+                <h5 style="style=font-family:segoe ui;text-align:left;letter-spacing:1px;color:Tomato ">"Election Not Open Yet"</h5>
                 
             </div>
         </div>
     </div>
     
-    <div class="box">
-        <div class="box-header"  style="border-top: 4px solid #2c8798; background-color:#eee">
-            <h3 class="box-title">Candidates</h3>
+    <div class="box" style="background-color:rgba(248, 248, 248, 0.71);" >
+        <div class="box-header"  style=" ">
+            <p class="box-title" style="font-family:helvetica;letter-spacing:2px;font-size:28px;margin-left: 16px;color: DodgerBlue    ">Candidates</p>
         </div>
-        <div class="box-body" style="padding: 40px">
+        <div class="box-body" style="padding-left: 40px;padding-right:40px">
         @foreach($partylist as $party)
-            <div class="row panel" style="border-left: 4px solid {{$party->strPartyColor}}; background-color:#eee">
+            <div class="row panel" style="border-left: 4px solid {{$party->strPartyColor}}; background-color:rgba(0, 0, 0, 0.20)">
                  <div class="col-md-12">
-                     <h3>{{$party->strPartyName}}</h3>
+                 <div class="col-md-12" style="font-family:segoe ui;text-transform: capitalize;"><h5 style="letter-spacing:1px">Party Affiliation</h5><h3 style="letter-spacing:1px;font-family: helvetica;color: white ;text-shadow: 1px 1px 5px rgba(5, 5, 5, 0.62);">{{$party->strPartyName}}</h3></div>
+                 
+                    
             @foreach($positions as $position)
                    
                 
@@ -57,13 +75,20 @@
                      <div class="col-md-2">
                          <div class="thumbnail">
                              <div class="panel tooltipped" data-position="top" data-delay="50" data-tooltip="logo picture">
-                                 <img id="cand-pic" src="../assets/images/{{$candidate->txtCandPic}}" style="background-size: contain; max-width:165px" /> 
+                                 <img id="cand-pic" src="../assets/images/{{$candidate->txtCandPic}}" style="background-size: contain; max-width:152px;border: 2px solid darkgray" /> 
                              </div>
                              <div class="caption">
-                                 <h4>{{$candidate->strMemFname}} {{$candidate->strMemLname}}</h4>
-                                 <h5> {{$position->strPosName}}</h5>
+                                 <h4 style="text-transform: capitalize;font-weight:bold">{{$candidate->strMemFname}} {{$candidate->strMemLname}}</h4>
+                                 <h5 style="font-family:segoe ui;text-transform: capitalize;"> {{$position->strPosName}}</h5>
                              </div>
-                         </div>
+                             <center>
+                             <button type="button" class="btn btn-info btn-xs" data-toggle="collapse" href="#{{$candidate->strCandId}}" style="width:150px;">Information</button></center>
+                                  <div id="{{$candidate->strCandId}}" class="collapse" >
+                                    <p style="margin-left:5px;font-family:segoe ui;">Education Background: &nbsp {{ $candidate->strCandEducBack}} </p>
+
+                                    <p style="margin-left:5px;font-family:segoe ui;"> Platform: &nbsp {{ $candidate->strCandInfo}} </p>
+                                  </div>
+                          </div>
                     </div>
                     @endif
                     @endif
@@ -76,6 +101,9 @@
         
     </div>
     </div>
+<footer style="text-shadow: 2px 2px 8px rgba(5, 5, 5, 0.62);background-color:rgba(0, 0, 0, 0.35);height:59px;">
+<center><p style="color:white;font-size:14px;font-family: segoe ui;padding-top:10px;">Copyright © 2015-2016 iVote++<br>All rights reserved</p></center>
+</footer>
     
     <!-- jQuery 2.2.0 -->
 <script src="{{ URL::asset('assets/jquery/jquery.min.js') }}"></script>

@@ -39,9 +39,7 @@
             <div class="box-body">
                 <div id="formBuilder"></div>
             </div>
-            <div class="box-footer">
-                Footer
-            </div>
+            
         </div>
     </div>
 @stop 

@@ -122,9 +122,7 @@
                 </div> 
                 </form>
             </div>
-            <div class="box-footer">
-                Footer
-            </div>
+            
             
         </div>
     </div> 

@@ -41,9 +41,7 @@
             <div class="box-body">
                 <?php echo "$viewForm"; ?>
             </div>
-            <div class="box-footer">
-                Footer
-            </div>
+            
         </div>
     </div>
     <div class="col-md-4">

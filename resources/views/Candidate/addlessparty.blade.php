@@ -136,9 +136,7 @@
                 </div>
                 {!! Form::close() !!}
             </div>
-            <div class="box-footer">
-                footer text
-            </div>
+            
         </div>
     </div> 
 @stop 

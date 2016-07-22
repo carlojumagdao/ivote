@@ -130,7 +130,7 @@
                 </div>
                 <div class="form-group col-md-12 ">
                     <div class="col-md-2">
-                    {!! Form::label( 'info', 'Candidate Information:' ) !!}
+                    {!! Form::label( 'info', 'Candidate Platform:' ) !!}
                     </div>
                     <div class="col-md-10">
                         {!! Form::text
@@ -148,9 +148,7 @@
                 </div>
                 {!! Form::close() !!}
             </div>
-            <div class="box-footer">
-                footer text
-            </div>
+            
         </div>
     </div> 
 @stop 

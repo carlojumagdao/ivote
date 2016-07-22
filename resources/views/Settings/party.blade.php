@@ -72,9 +72,7 @@
                 @endforeach
                 </table>
             </div>
-            <div class="box-footer">
-                Footer
-            </div>
+            
         </div>
     </div> 
     <!-- Modal | Add -->

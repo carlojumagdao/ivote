@@ -140,9 +140,7 @@
                         </div>
                     </div> 
             </div>
-            <div class="box-footer">
-                Footer
-            </div>
+            
         </div>
     </div>
     
