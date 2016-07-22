@@ -24,6 +24,7 @@
       margin:0;
       padding:40;
       height:100%;
+       
       }
       header {
         background:#ededed;
@@ -33,11 +34,11 @@
       }
       .header-cont {
           width:97%;
-          position:relative;
+
           top:0px;
          margin-left: 20px;
       }
-
+     
       /*footer {
       width:100%;
       height:100px;
@@ -50,7 +51,7 @@
 </style>
 <header style="background-color:rgba(248, 248, 248, 0.71);border-bottom: 3px solid  DodgerBlue ">
  @foreach($election as $setting)
- <div class="row">
+ <div class="row ">
  
       <div class="col-md-2 col-xs-6">
             <div class="tooltipped" data-position="top" data-delay="50" data-tooltip="logo picture">
@@ -60,12 +61,12 @@
         <div class="col-md-7 col-xs-6 "  >
             
                
-                <h2 style="font-family:helvetica;text-align:left;text-transform: capitalize;letter-spacing:1px">{{$setting->strHeader}}</h2>
+                <h2 class="responsive-text-fill" style="font-family:helvetica;text-align:left;text-transform: capitalize;letter-spacing:1px;overflow:hidden; overflow-wrap: nowrap ">{{$setting->strHeader}}</h2>
                 
-                <h4 style="font-family:segoe ui;text-align:left;margin-top:10px;">{{$setting->strSetElecName}}</h5>
-                <h5 style="font-family:segoe ui;text-align:left;letter-spacing:1px;text-transform: capitalize;">{{$setting->strSetElecDesc}}</h5>
+                <h4 class="responsive-text-fill" style="font-family:segoe ui;text-align:left;margin-top:10px;overflow:hidden;overflow-wrap: nowrap">{{$setting->strSetElecName}}</h5>
+                <h5 class="responsive-text-fill" style="font-family:segoe ui;text-align:left;letter-spacing:1px;text-transform: capitalize;overflow-wrap: nowrap;overflow:hidden">{{$setting->strSetElecDesc}}</h5>
                 @endforeach
-                <h5 style="style=font-family:segoe ui;text-align:left;letter-spacing:1px;color:Tomato ">"Election Not Open Yet"</h5>
+                <h5 class="responsive-text-fill" style="style=font-family:segoe ui;text-align:left;letter-spacing:1px;color:Tomato;overflow:hidden ;overflow-wrap: nowrap">"Election Not Open Yet"</h5>
                 
             
         </div>
@@ -133,6 +134,7 @@
     <!-- jQuery 2.2.0 -->
 <script src="{{ URL::asset('assets/jquery/jquery.min.js') }}"></script>
 <script src="{{ URL::asset('assets/jquery/jquery-ui.min.js') }}"></script>
+<script src="{{ URL::asset('assets/responsivetext/jquery.responsivetext.js') }}"></script>
 <!-- Bootstrap 3.3.6 -->
 <script src="{{ URL::asset('assets/bootstrap/js/bootstrap.min.js') }}"></script>
 <!-- SlimScroll -->
@@ -144,6 +146,16 @@
 <script src="{{ URL::asset('assets/dist/js/app.min.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ URL::asset('assets/dist/js/demo.js')}}"></script>
+<script type="text/javascript">
+  $("header").responsiveText();
+
+</script>
+<script type="text/javascript">
+  $("header").responsiveText({
+     bottomStop : '450',
+     topStop    : '1500'
+});
+</script>
 <script>
   $(function () {
     //iCheck for checkbox and radio inputs

@@ -97,6 +97,7 @@
                              </div>
                              <div class="caption">
                                  <center><p style="text-transform: capitalize;font-size: 16px;font-family: segoe ui ">{{$candidate->strMemFname}} {{$candidate->strMemLname}}</p></center>
+                                 <center>
                                  <button type="button" class="btn btn-info btn-xs" data-toggle="collapse" href="#{{$candidate->strCandId}}" style="width:120px;">Information</button></center>
                                   <div id="{{$candidate->strCandId}}" class="collapse" >
                                     <p style="margin-left:5px;font-family:segoe ui;">Education Background: &nbsp {{ $candidate->strCandEducBack}} </p>

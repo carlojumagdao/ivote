@@ -118,7 +118,7 @@
                    {!! Form::label( 'educback', 'Candidate Education Background:' ) !!}
                     </div>
                     <div class="col-md-10">
-                        {!! Form::text
+                        {!! Form::textarea
                             ('educback','' , array(
                             'id' => 'educback',
                             'placeholder' => "This will be use for the campaign page",
@@ -133,7 +133,7 @@
                     {!! Form::label( 'info', 'Candidate Platform:' ) !!}
                     </div>
                     <div class="col-md-10">
-                        {!! Form::text
+                        {!! Form:: textarea
                             ('info','' , array(
                             'id' => 'info',
                             'placeholder' => "This will be use for the campaign page",
