@@ -114,6 +114,7 @@ class candidateController extends Controller
             if ($request->has('party')  && $party != 1) $countPos = DB::table('tblcandidate')
                                                         ->where('strCandPosId', '=', $position)
                                                         ->where('intCandParId', "=", $party )
+                                                        ->where('blCandDelete', "=", 0)
                                                         ->select('strCandPosId')
                                                         ->count();
             
@@ -254,6 +255,7 @@ class candidateController extends Controller
             if ($request->has('party')  && $party != 1) $countPos = DB::table('tblcandidate')
                                                         ->where('strCandPosId', '=', $position)
                                                         ->where('intCandParId', "=", $party )
+                                                        ->where('blCandDelete', "=", 0)
                                                         ->select('strCandPosId')
                                                         ->count();
             
