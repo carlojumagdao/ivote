@@ -307,6 +307,10 @@ Route::group(['middleware' => 'auth'], function(){
 		'uses' => 'reportController@determineWinners',
 		'as' => 'report.winner'
 	));
+    Route::get('/voteDistro', array(
+		'uses' => 'reportController@distroIndex',
+		'as' => 'report.distIndex'
+	));
     //Reports//
 });
 

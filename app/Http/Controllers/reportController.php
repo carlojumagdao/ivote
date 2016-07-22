@@ -54,4 +54,14 @@ order by 6 desc;');
     	else echo "the election is ongoing";
         
     }
+    
+    public function distroIndex(){
+        $posdetail = DB::table('tblpositiondetail')->select('strPosDeFieldName')->get();
+        
+        return view('Report.voteDistro', ['posdetail'=>$posdetail]);
+    }
+    
+    public function voteDistro(Request $page){
+        
+    }
 }
