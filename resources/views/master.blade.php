@@ -201,7 +201,7 @@
           </ul>
         </li>
         <li>
-          <a href="../widgets.html">
+          <a href="{{ URL::to('/audit') }}">
             <i class="fa fa-unlock-alt"></i> <span>Audit</span>
           </a>
         </li>

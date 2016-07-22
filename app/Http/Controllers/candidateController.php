@@ -110,7 +110,7 @@ class candidateController extends Controller
                 return Redirect::back()->withErrors($errMess);
             }
                 
-            $already = DB::table('tblcandidate')->where('strCandMemId', '=', $request->input('member'))->get();
+           $already = DB::table('tblcandidate')->where('strCandMemId', '=', $request->input('member'))->where('blCandDelete', '=', '0')->get();
                 
                 if($already){
                     $PRTY = DB::table('tblparty')->where('intPartyId', '=', $already[0]->intCandParId)->get();
@@ -119,7 +119,7 @@ class candidateController extends Controller
                 }
             }
             
-                $already = DB::table('tblcandidate')->where('strCandMemId', '=', $request->input('member'))->get();
+                $already = DB::table('tblcandidate')->where('strCandMemId', '=', $request->input('member'))->where('blCandDelete', '=', '0')->get();
                 
                 if($already){
                     
