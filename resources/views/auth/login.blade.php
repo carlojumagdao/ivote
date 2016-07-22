@@ -92,7 +92,9 @@
                <div class="col-xs-4">
                   <button type="submit" class="btn btn-primary btn-block btn-flat">Login</button>
                 </div>
-                <!-- /.col -->
+                <div class="col-md-12">
+                 <a href="{{ URL::to('/auth/register') }}" class="text-center">Register a new account</a>
+                </div><!-- /.col -->
             </div>
     </form>
 
