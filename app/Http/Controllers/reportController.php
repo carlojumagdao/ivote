@@ -35,9 +35,9 @@ order by 6 desc;');
         $nowNoTime = date_create(date("Y-m-d"));
         $now = date_create(date("Y-m-d H:i:s"));
         
-        if($nowNoTime < $start) echo "the election has not yet started";
-        else if($nowNoTime > $end) return view('Report.tallyvotes', ['tally'=>$tally, 'count'=>$voted, 'positions'=>$positions] );
-    	else echo "the election is ongoing";
+        if($now < $start) return view('Report.startpage');
+        else if($now > $end) return view('Report.tallyvotes', ['tally'=>$tally, 'count'=>$voted, 'positions'=>$positions] );
+    	else return view('Report.endpage');
     }
     
     public function determineWinners(){
@@ -59,9 +59,9 @@ order by 6 desc;');
         $nowNoTime = date_create(date("Y-m-d"));
         $now = date_create(date("Y-m-d H:i:s"));
         
-        if($nowNoTime < $start) echo "the election has not yet started";
-        else if($nowNoTime > $end) return view('Report.winnerPage', ['tally'=>$tally, 'count'=>$voted, 'positions'=>$positions] );
-    	else echo "the election is ongoing";
+        if($now < $start) return view('Report.startpage');
+        else if($now > $end) return view('Report.winnerPage', ['tally'=>$tally, 'count'=>$voted, 'positions'=>$positions] );
+    	else return view('Report.endpage');
         
     }
     

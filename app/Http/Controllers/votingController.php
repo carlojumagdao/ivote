@@ -193,8 +193,18 @@ class votingController extends Controller
             
             Session::put('memid', $memid);
             Session::put('votereference', $VDID);
+            $SurveyStatus = DB::table('tblSetting')->where('blSetSurvey', '=', 1)->get();
+            if($SurveyStatus){
+                return redirect()->route("survey.answerSurvey");
+            } else{
+                $votereference = session('votereference');
+        
+                if(Session::has('memid')) Session::forget('memid');
+                if(Session::has('votereference')) Session::forget('memid');
+    
+                return Redirect::route('thanks', ['votereference'=>$votereference, 'memid'=>$memid]);
+            }
             
-            return redirect()->route("survey.answerSurvey");
         }catch (\Illuminate\Database\QueryException $e){
             DB::rollBack();
             $errMess = $e->getMessage();

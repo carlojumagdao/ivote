@@ -35,8 +35,8 @@ class responseController extends Controller
         $nowNoTime = date_create(date("Y-m-d"));
         $now = date_create(date("Y-m-d H:i:s"));
         
-        if($nowNoTime < $start) return Redirect::route('Countdown');
-        else if($nowNoTime > $end) echo "end page";
+        if($now < $start) return Redirect::route('Countdown');
+        else if($now > $end) return view('endelection');
     	else return view('LogInUser', ['header'=>$header, 'logo'=>$logo,'SecQues'=>$SecQues]);
     }
     public function Validation(Request $request){
