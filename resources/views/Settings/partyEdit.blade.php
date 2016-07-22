@@ -45,7 +45,6 @@
                     'method' => 'post',
                     'id' => 'form-edit-setting',
                     'action' => 'partyController@update',
-                    'enctype' => 'multipart/form-data',
                     'class' => 'col s12',
                     'files' => true
                 ) ) !!}
@@ -55,31 +54,6 @@
                     'name' => 'txtPartyId',
                     'required' => true,)) 
                 !!} 
-                
-                <center>
-                    <div class="col s12">
-                        <div class="card-panel2 tooltipped" data-position="top" data-delay="50" data-tooltip="logo picture">
-                            <img id="cand-pic" src="../assets/images/@if ($part->txtPartyPic == NULL)ivote.jpg @else{{$part->txtPartyPic}} @endif" width="180px" style="background-size: contain" /> 
-                        </div>
-                    </div>
-                </center>
-                <div class="form-group col-md-12 ">
-                    
-                    <span class="btn btn-default btn-file">
-                  
-                    {!! Form::label( 'file', 'File Path:' ) !!}
-                    {!! Form::file
-                        ('file', array(
-                        'id' => 'file',
-                        'name' => 'image',
-                        'class' => 'form-control btn btn-success btn-xs',
-                        'style' => 'display:none',
-                        'onchange' => '$("#upload-file-info").html($(this).val());readURL(this)',
-                        )) 
-                    !!}
-                    </span>
-                    <span class='label label-info' id="upload-file-info"></span>
-                </div>
                 <div class="form-group col-md-12 ">
                     {!! Form::label( 'PartyName', 'Party Name:' ) !!}
                     {!! Form::text
@@ -131,21 +105,6 @@
     $(document).ready(function(){
         $('[data-toggle="tooltip"]').tooltip(); 
     });
-</script>
-<script> 
-    function readURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-                reader.onload = function (e) {
-                    $('#cand-pic')
-                    .attr('src', e.target.result)
-                    .width(150)
-                    .height(150);
-                    
-                };
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
 </script>
 <script src="{{ URL::asset('assets/plugins/select2/select2.full.min.js') }}"></script>
 <script src="{{ URL::asset('assets/plugins/colorpicker/bootstrap-colorpicker.min.js') }}"></script>

@@ -58,7 +58,7 @@
             <div class="panel" style="border-left:8px solid #2c8798;color:#2c8798; cursor:pointer" data-toggle="modal" data-target="#viewPosition">   
                 <div class="panel-body">
                     <div class="info-box-number text-center" style="font-size:70px;" > {{$TotalPosition}}</div>
-                    <div class="info-box-text text-center" style="font-size:130%">Position</div>
+                    <div class="info-box-text text-center" style="font-size:130%">Positions</div>
                 </div>
             </div>
         </div>
@@ -66,15 +66,15 @@
             <div class="panel" style="border-left:8px solid #006400;color:#006400; cursor:pointer" data-toggle="modal" data-target="#viewCandidate">
                 <div class="panel-body"> 
                     <div class="info-box-number text-center" style="font-size:70px">{{$TotalCandidate}}</div>
-                    <div class="info-box-text text-center" style="font-size:130%">Candidate</div>
+                    <div class="info-box-text text-center" style="font-size:130%">Candidates</div>
                 </div>
             </div>
         </div>
         <div class="col-lg-3 col-xs-6">
-            <div class="panel" style="border-left:8px solid #b22222;color:#b22222; cursor:pointer" data-toggle="modal" data-target="#viewVoter">
+            <div class="panel" style="border-left:8px solid #b22222;color:#b22222; cursor:pointer">
                 <div class="panel-body">  
-                    <div class="info-box-number text-center" style="font-size:70px">{{$TotalVoter}}</div>
-                    <div class="info-box-text text-center" style="font-size:130%">Voter</div>
+                    <a href="{{ URL::to('/member') }}" class="info-box-number text-center" style="font-size:70px;color:#b22222;" >{{$TotalVoter}}</a>
+                    <div class="info-box-text text-center" style="font-size:130%">Members</div>
                 </div>
             </div>
         </div>

@@ -205,9 +205,14 @@
                 
                     
                         
+<<<<<<< Updated upstream
                 <div class="col-md-2 col-xs-12">
                     <div class="thumbnail boxtheme" style="border-left: 5px solid {{$candidate->strPartyColor}}; ">
                         <center>
+=======
+                <div class="col-md-2 col-xs-8">
+                    <div class="thumbnail box" style="border-left: 3px solid {{$candidate->strPartyColor}}; ">
+>>>>>>> Stashed changes
                         <div class="tooltipped" data-position="top" data-delay="50" data-tooltip="logo picture">
                             <img id="cand-pic" src="../assets/images/{{$candidate->txtCandPic}}" style="background-size: contain;  border: 0px;" class="img-responsive"/> 
                         </div>

@@ -57,7 +57,7 @@
                             <td class="email">{{$value->intPosVoteLimit}}</td>  
                             <td>
                                 <a href="position/edit/{{$value->strPositionId}}" class="btn btn-warning btn-sm edit" title="Edit"><i class="glyphicon glyphicon-edit"></i></a>
-                                <button class="btn btn-danger btn-sm delMember" data-toggle="tooltip" title="Delete"><i class="glyphicon glyphicon-trash"></i></button>
+                                <button class="btn btn-danger btn-sm delPosition" data-toggle="tooltip" title="Delete"><i class="glyphicon glyphicon-trash"></i></button>
                             </td>
                         </tr>
                     @endforeach
@@ -77,8 +77,8 @@
     </div> 
     <!-- Delete Form -->
     <div class="hide">
-        <form method="POST" action="{{ URL::to('/member/delete') }}" id="delform">
-            <input type="hidden" name="id" id="delmem">
+        <form method="POST" action="{{ URL::to('/position/delete') }}" id="delform">
+            <input type="hidden" name="id" id="delpos">
         </form>
     </div>
 @stop 
@@ -89,11 +89,11 @@
     $(document).ready(function(){
         $('[data-toggle="tooltip"]').tooltip(); 
     });
-    $(document).on("click", ".delMember", function(){
+    $(document).on("click", ".delPosition", function(){
         var x = confirm("Are you sure you want to delete this record?");
         if (x){
             var id = $(this).parent().parent().find('.id').text();
-            document.getElementById('delmem').value = id;
+            document.getElementById('delpos').value = id;
             document.getElementById('delform').submit();
         }
         else

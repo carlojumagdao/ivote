@@ -8,19 +8,43 @@
   <meta name="csrf_token" content="{{ csrf_token() }}" />
   <title>@yield('title', 'iVote++ | Home')</title>
   @yield('style')
-  <link rel="stylesheet" href="{{ URL::asset('assets/bootstrap/css/bootstrap.min.css') }}">
-  <link rel="stylesheet" href="{{ URL::asset('assets/bootstrap/css/font-awesome.css') }}">
-  <link rel="stylesheet" href="{{ URL::asset('assets/bootstrap/css/ionicons.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('assets/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('assets/bootstrap/css/font-awesome.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('assets/mc-profile/dist/material-cards-auto-height.css') }}">
+    <!-- <link rel="stylesheet" href="{{ URL::asset('assets/bootstrap/css/ionicons.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('assets/plugins/iCheck/all.css') }}">
-  <link rel="stylesheet" href="{{ URL::asset('assets/dist/css/AdminLTE.min.css') }}">
-  <link rel="stylesheet" href="{{ URL::asset('assets/dist/css/skins/_all-skins.min.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('assets/dist/css/AdminLTE.min.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('assets/dist/css/skins/_all-skins.min.css') }}"> -->
 </head>
 <style>
+
+    html {
+            position: relative;
+            min-height: 100%;
+    }
+
+    body {
+        
+    }
+
+    h1, h2, h3 {
+        font-weight: 200;
+    }
+
+    .grid-item {
+        width: 390px;
+        padding: 15px;
+    }
     body{
-      background-image: url("{{ URL::asset('../assets/images/7.jpg') }}");
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-attachment: fixed;
+        background-image: url("{{ URL::asset('../assets/images/bgGlass.jpg') }}");
+        background-color: #ECEFF1;
+        color: #37474F;
+        font-family: 'Raleway', sans-serif;
+        font-weight: 300;
+        font-size: 16px;
+      /*background-repeat: no-repeat;*/
+      /*background-size: cover;*/
+      /*background-attachment: fixed;*/
 
       }
       header {
@@ -33,7 +57,7 @@
           width:97%;
           position:relative;
           top:0px;
-         margin-left: 20px;
+          margin-left: 20px;
       }
       /*footer {
       width:100%;
@@ -57,12 +81,12 @@
         <div class="col-md-7 col-xs-6 "  >
             
                
-                <h2 style="font-family:helvetica;text-align:left;text-transform: capitalize;letter-spacing:1px">{{$setting->strHeader}}</h2>
+                <h2 style="text-align:left;text-transform: capitalize;letter-spacing:1px">{{$setting->strHeader}}</h2>
                 
-                <h4 style="font-family:segoe ui;text-align:left;margin-top:10px;">{{$setting->strSetElecName}}</h5>
-                <h5 style="font-family:segoe ui;text-align:left;letter-spacing:1px;text-transform: capitalize;">{{$setting->strSetElecDesc}}</h5>
+                <h4 style="text-align:left;margin-top:10px;">{{$setting->strSetElecName}}</h5>
+                <h5 style="text-align:left;letter-spacing:1px;text-transform: capitalize;">{{$setting->strSetElecDesc}}</h5>
                 @endforeach
-                <h5 style="style=font-family:segoe ui;text-align:left;letter-spacing:1px;color:Tomato ">"Election Not Open Yet"</h5>
+                <h5 style="text-align:left;letter-spacing:1px;color:Tomato ">"Election Not Open Yet"</h5>
                 
             
         </div>
@@ -75,37 +99,51 @@
     <h3></h3>
     </div>
     
-    <div class="box header-cont" style="background-color:rgba(248, 248, 248, 0.71);" >
-        <div class="box-header"  style="background-color:rgba(248, 248, 248, 0.71)">
+    <!-- <div class="box header-cont" style="background-color:rgba(248, 248, 248, 0.71);" > -->
+        <!-- <div class="box-header"  style="background-color:rgba(248, 248, 248, 0.71)">
             <p class="box-title" style="font-family:helvetica;letter-spacing:2px;font-size:28px;margin-left: 16px;color: DodgerBlue">Candidates</p>
-        </div>
+        </div> -->
         <div class="box-body" style="padding-left: 40px;padding-right:40px">
             
             @foreach($positions as $position)
-                   <div class="row panel" style="border-left: 4px solid GoldenRod    ;background-color:rgba(0, 0, 0, 0.20)">
-                 <div class="col-md-12">
-                      <div class="col-md-12" style="font-family:segoe ui;text-transform: capitalize;"><h5 style="letter-spacing:1px">Position Name</h5><h3 style="letter-spacing:1px;font-family: helvetica;color: white  ;text-shadow: 1px 1px 4px rgba(6, 5, 5, 0.62);">{{$position->strPosName}}</h3></div>
-                     
-                
+                   <div class="row panel" style="border-left: 4px solid {{$position->strPosColor}};background-color:rgba(0, 0, 0, 0.20)">
+                        <div class="col-md-12">
+                            <div class="col-md-12" style="text-transform: capitalize;">
+                                <h3 style="letter-spacing:1px;font-family: helvetica;color: white  ;text-shadow: 1px 1px 4px rgba(6, 5, 5, 0.62);">{{$position->strPosName}}</h3>
+                            </div>
                 @foreach($candidates as $candidate)
-                     
                     @if($candidate->strCandPosId == $position->strCandPosId )
-                     <div class="col-md-2 col-xs-6">
-                         <div class="thumbnail">
-                             <div class="panel tooltipped" data-position="top" data-delay="50" data-tooltip="logo picture">
-                                 <img id="cand-pic" src="../assets/images/{{$candidate->txtCandPic}}"  class="img-responsive" style="background-size: contain; border: 2px solid darkgray" class="img-responsive" /> 
-                             </div>
-                             <div class="caption">
-                                 <center><p style="text-transform: capitalize;font-size: 16px;font-family: segoe ui ">{{$candidate->strMemFname}} {{$candidate->strMemLname}}</p></center>
-                                 <center>
-                                 <button type="button" class="btn btn-info btn-xs" data-toggle="collapse" href="#{{$candidate->strCandId}}" style="width:120px;">Information</button></center>
-                                  <div id="{{$candidate->strCandId}}" class="collapse" >
-                                    <p style="margin-left:5px;font-family:segoe ui;">Education Background: &nbsp {{ $candidate->strCandEducBack}} </p>
-
-                                    <p style="margin-left:5px;font-family:segoe ui;"> Platform: &nbsp {{ $candidate->strCandInfo}} </p>
-                                  </div>
-                             </div>
-                         </div>
+                    <div class="grid-item">
+                        <article class="material-card Teal">
+                            <h2>
+                                <span>{{$candidate->strMemFname}} {{$candidate->strMemLname}}</span>
+                                <strong>
+                                    <i class="fa fa-fw fa-star"></i>
+                                    The Big Lebowski
+                                </strong>
+                            </h2>
+                            <div class="mc-content">
+                                <div class="img-container">
+                                    <img class="img-responsive" src="../assets/images/{{$candidate->txtCandPic}}">
+                                </div>
+                                <div class="mc-description">
+                                    Education Background: &nbsp {{ $candidate->strCandEducBack}}
+                                    Platform: &nbsp {{ $candidate->strCandInfo}}
+                                </div>
+                            </div>
+                            <a class="mc-btn-action">
+                                <i class="fa fa-bars"></i>
+                            </a>
+                            <div class="mc-footer">
+                                <h4>
+                                    Social
+                                </h4>
+                                <a class="fa fa-fw fa-facebook"></a>
+                                <a class="fa fa-fw fa-twitter"></a>
+                                <a class="fa fa-fw fa-linkedin"></a>
+                                <a class="fa fa-fw fa-google-plus"></a>
+                            </div>
+                        </article>
                     </div>
                     @endif
                 @endforeach           
@@ -113,11 +151,10 @@
             </div>
             @endforeach
         </div>
-        
     </div>
-    </div>
+    <!-- </div> -->
 <footer style="text-shadow: 2px 2px 8px rgba(5, 5, 5, 0.62);background-color:rgba(0, 0, 0, 0.35);height:59px;">
-<center><p style="color:white;font-size:14px;font-family: segoe ui;padding-top:10px;">Copyright © 2015-2016 iVote++<br>All rights reserved</p></center>
+<center><p style="color:white;font-size:14px;padding-top:10px;">Copyright © 2015-2016 iVote++<br>All rights reserved</p></center>
 </footer>
     
     <!-- jQuery 2.2.0 -->
@@ -125,33 +162,23 @@
 <script src="{{ URL::asset('assets/jquery/jquery-ui.min.js') }}"></script>
 <!-- Bootstrap 3.3.6 -->
 <script src="{{ URL::asset('assets/bootstrap/js/bootstrap.min.js') }}"></script>
-<!-- SlimScroll -->
-<script src="{{ URL::asset('assets/plugins/slimScroll/jquery.slimscroll.min.js')}}"></script>
-<script src="{{ URL::asset('assets/plugins/iCheck/icheck.min.js')}}"></script>
-<!-- FastClick -->
-<script src="{{ URL::asset('assets/plugins/fastclick/fastclick.js')}}"></script>
-<!-- AdminLTE App -->
-<script src="{{ URL::asset('assets/dist/js/app.min.js')}}"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="{{ URL::asset('assets/dist/js/demo.js')}}"></script>
+<script src="{{ URL::asset('assets/mc-profile/js/jquery.material-cards.min.js') }}"></script>
+<script src="{{ URL::asset('assets/mc-profile/dist/mansory.js') }}"></script>
 <script>
-  $(function () {
-    //iCheck for checkbox and radio inputs
-    $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
-      checkboxClass: 'icheckbox_minimal-blue',
-      radioClass: 'iradio_minimal-blue'
+    $(function() {
+
+        var $grid = $('.grid').masonry({
+            itemSelector: '.grid-item',
+            columnWidth: 390,
+        });
+
+        $('.material-card').materialCard();
+
+        $('.material-card').on('shown.material-card hidden.material-card', function (event) {
+            $grid.masonry();
+        });
+
     });
-    //Red color scheme for iCheck
-    $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
-      checkboxClass: 'icheckbox_minimal-red',
-      radioClass: 'iradio_minimal-red'
-    });
-    //Flat red color scheme for iCheck
-    $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
-      checkboxClass: 'icheckbox_flat-green',
-      radioClass: 'iradio_flat-green'
-    });
-  });
 </script>
 @yield('script')   
 </body>

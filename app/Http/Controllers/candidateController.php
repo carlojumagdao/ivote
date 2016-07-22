@@ -24,6 +24,7 @@ class candidateController extends Controller
     public function index()
     {
         $PartyStatus = DB::table('tblSetting')->where('blSetParty', '=', 1)->get();
+<<<<<<< Updated upstream
              $candidates = DB::table('tblcandidate')
             ->join('tblmember', 'tblcandidate.strCandMemId', '=', 'tblmember.strMemberId')
             ->join('tblposition', 'tblcandidate.strCandPosId', '=', 'tblposition.strPositionId')
@@ -32,6 +33,25 @@ class candidateController extends Controller
             ->select('tblcandidate.*', 'tblmember.strMemFname', 'tblmember.strMemLname', 'tblposition.strPosName', 'tblparty.strPartyName')->get();
     
             return view('Candidate.candidate', ['candidates' => $candidates, 'intCounter'=>0, 'party' => $PartyStatus]);
+=======
+        $candidates = DB::table('tblcandidate')
+        ->join('tblmember', 'tblcandidate.strCandMemId', '=', 'tblmember.strMemberId')
+        ->join('tblposition', 'tblcandidate.strCandPosId', '=', 'tblposition.strPositionId')
+        ->join('tblparty', 'tblcandidate.intCandParId', '=', 'tblparty.intPartyId')
+        ->where('blCandDelete', 0)
+        ->select('tblcandidate.*', 'tblmember.strMemFname', 'tblmember.strMemLname', 'tblposition.strPosName', 'tblparty.strPartyName')->get();
+        $strCandEducBackg = "";
+        $strCandInfor = "";
+        foreach ($candidates as $value) 
+            {
+                $strCandEducBackg = $value->strCandEducBack;
+                $strCandInfor = $value->strCandInfo;
+            }
+        return view('Candidate.candidate', ['candidates' => $candidates, 'intCounter'=>0, 'party' => $PartyStatus, 'strCandEducBackg' => 
+            $strCandEducBackg , 
+              'strCandInfor' => 
+            $strCandInfor]);
+>>>>>>> Stashed changes
        
         
 
@@ -313,7 +333,7 @@ class candidateController extends Controller
         else {
             $positions = DB::table('tblcandidate')
                             ->join('tblposition', 'strPositionId', '=', 'strCandPosId')
-                            ->select('strCandPosId', 'strPosName')
+                            ->select('strCandPosId', 'strPosName','strPosColor')
                             ->where('blPosDelete', '=', '0')
                             ->distinct()
                             ->get();

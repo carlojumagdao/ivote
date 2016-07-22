@@ -19,7 +19,7 @@ class dashboardController extends Controller
     {
         $TotalPosition = DB::table('tblposition')->where('blPosDelete', '=', 0)->count();
         $TotalCandidate = DB::table('tblcandidate')->where('blCandDelete', '=', 0)->count();
-        $TotalVoter = DB::table('tblmember')->where('blMemDelete', '=', 0)->where('blMemCodeSendStat', '=', 1)->count();
+        $TotalVoter = DB::table('tblmember')->where('blMemDelete', '=', 0)->count();
         $TotalVoted = DB::table('tblvoteheader')->count();
         
         $Date = GenSet::find(1);

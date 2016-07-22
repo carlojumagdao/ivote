@@ -103,7 +103,7 @@
     <!-- Delete Form -->
     <!-- Edit Form -->
     <div class="hide">
-        <form method="POST" action="{{ URL::to('/candidates') }}" id="editform">
+        <form method="POST" action="{{ URL::to('/candidates/edit') }}" id="editform">
             <input type="hidden" name="id" id="editcandidate">
         </form>
     </div>

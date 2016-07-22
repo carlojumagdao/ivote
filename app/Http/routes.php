@@ -180,6 +180,10 @@ Route::group(['middleware' => 'auth'], function(){
 		'uses' => 'positionController@update',
 		'as' => 'position.update'
 	));
+	Route::post('/position/delete', array(
+		'uses' => 'positionController@delete',
+		'as' => 'position.delete'
+	));
 	// Position //
 
 	// Survey //
@@ -221,11 +225,11 @@ Route::group(['middleware' => 'auth'], function(){
 		'uses' => 'candidateController@delete',
 		'as' => 'candidate.delete'
 	));
-    Route::post('/candidates/', array(
+    Route::post('/candidates/edit', array(
 		'uses' => 'candidateController@editpage',
 		'as' => 'candidate.edit'
 	));
-    Route::post('/candidates/edit', array(
+    Route::post('/candidates/update', array(
 		'uses' => 'candidateController@update',
 		'as' => 'candidate.update'
 	));

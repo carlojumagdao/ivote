@@ -34,6 +34,7 @@ class positionController extends Controller
         				->where('blPosDelete', '=', 0)
         				->orderBy('strPositionId')
         				->get();
+        $id = "POS000";
         foreach ($PositionsId as $value) {
         	$id = $value->strPositionId;
         }
@@ -148,7 +149,20 @@ class positionController extends Controller
         $editForm = $editLoader->render_form();
         return view('Positions.editPosition', ['editForm' => $editForm,'strPositionId' => $strPositionId, 'strPosName' => $strPosName, 'strPosColor' => $strPosColor,'intVoteLimit' => $intVoteLimit]);
     }
-
+    public function delete(Request $request){
+        $id = $request->input("id");
+        $candidate = DB::table('tblCandidate')->where('strCandPosId', '=', $id)->get();
+        if($candidate){
+            return Redirect::back()->withErrors("Cannot delete this record, because it is used by another record.");
+        } else{           
+            $Position = Position::find($id);
+            $Position->blPosDelete = 1;
+            $Position->save();
+        }
+        //redirect
+        $request->session()->flash('message', 'Successfully deleted.');  
+        return Redirect::back();
+    }
     public function add(Request $request){
     	$rules = array(
             'txtPositionId' => 'required',

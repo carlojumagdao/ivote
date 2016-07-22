@@ -29,7 +29,6 @@ class partyController extends Controller
 			'txtPartyName' => 'required',
 			'txtPartyLeader' => 'required',
 			'txtPartyColor' => 'required',
-            'image' => 'required|mimes:jpeg,jpg,png,bmp|max:10000',
 		);
 		$messages = [
 		    'required' => 'The :attribute field is required.',
@@ -46,21 +45,10 @@ class partyController extends Controller
         }
         try{
             
-            $destinationPath =  'assets/images/'; // upload path
-            $extension = $request->file('image')->getClientOriginalExtension(); // getting image extension
-            $date = date("Ymdhis");
-            $filename = $date.'-'.rand(111111,999999).'.'.$extension;
-            
             $Party = new Party();
             $Party->strPartyName = $request->input('txtPartyName');
             $Party->strPartyLeader = $request->input('txtPartyLeader');
-            $Party->strPartyColor = $request->input('txtPartyColor');
-            
-            if ($request->file('image')->isValid()) {
-                $request->file('image')->move($destinationPath, $filename);
-                $Party->txtPartyPic = $filename;
-            }
-           
+            $Party->strPartyColor = $request->input('txtPartyColor');       
             $Party->save();
         }catch (\Illuminate\Database\QueryException $e){
             $errMess = $e->getMessage();
@@ -94,24 +82,8 @@ class partyController extends Controller
             $Party->strPartyName = $request->input('txtPartyName');
             $Party->strPartyLeader = $request->input('txtPartyLeader');
             $Party->strPartyColor = $request->input('txtPartyColor');
-            
-            if ($request->hasFile('image')){
-
-                $destinationPath =  'assets/images/'; // upload path
-                $extension = $request->file('image')->getClientOriginalExtension(); // getting image extension
-                $date = date("Ymdhis");
-                $filename = $date.'-'.rand(111111,999999).'.'.$extension;
-
-                
-                if ($request->file('image')->isValid()) {
-                    $request->file('image')->move($destinationPath, $filename);
-                    $Party->txtPartyPic = $filename;
-                        
-                }
-                
-            }
-            $request->session()->flash('message', "Successfully Updated"); 
             $Party->save();
+            $request->session()->flash('message', "Successfully Updated"); 
         }catch (\Illuminate\Database\QueryException $e){
             $errMess = $e->getMessage();
             return Redirect::back();
