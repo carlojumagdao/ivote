@@ -43,7 +43,7 @@
                 {!! Form::open( array(
                     'method' => 'post',
                     'id' => 'form-edit-setting',
-                    'action' => 'candidateController@update',
+                    'url' => 'candidateController@update',
                     'enctype' => 'multipart/form-data',
                     'class' => 'col s12',
                     'files' => true

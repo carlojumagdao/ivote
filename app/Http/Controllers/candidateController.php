@@ -24,7 +24,7 @@ class candidateController extends Controller
     public function index()
     {
         $PartyStatus = DB::table('tblSetting')->where('blSetParty', '=', 1)->get();
-<<<<<<< Updated upstream
+
              $candidates = DB::table('tblcandidate')
             ->join('tblmember', 'tblcandidate.strCandMemId', '=', 'tblmember.strMemberId')
             ->join('tblposition', 'tblcandidate.strCandPosId', '=', 'tblposition.strPositionId')
@@ -33,7 +33,7 @@ class candidateController extends Controller
             ->select('tblcandidate.*', 'tblmember.strMemFname', 'tblmember.strMemLname', 'tblposition.strPosName', 'tblparty.strPartyName')->get();
     
             return view('Candidate.candidate', ['candidates' => $candidates, 'intCounter'=>0, 'party' => $PartyStatus]);
-=======
+
         $candidates = DB::table('tblcandidate')
         ->join('tblmember', 'tblcandidate.strCandMemId', '=', 'tblmember.strMemberId')
         ->join('tblposition', 'tblcandidate.strCandPosId', '=', 'tblposition.strPositionId')
@@ -51,7 +51,7 @@ class candidateController extends Controller
             $strCandEducBackg , 
               'strCandInfor' => 
             $strCandInfor]);
->>>>>>> Stashed changes
+
        
         
 
@@ -299,7 +299,7 @@ class candidateController extends Controller
         }
         //redirect
         $request->session()->flash('message', 'Successfully Updates.');    
-        return Redirect::back();
+        return Redirect::route('candidate.index');
     }
     
     public function page(){
