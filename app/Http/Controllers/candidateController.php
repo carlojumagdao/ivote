@@ -109,7 +109,25 @@ class candidateController extends Controller
                 $errMess = "Candidate limit of " . $limit[0]->strPosName . " in Party " . $partyName[0]->strPartyName . " has EXCEEDED";    
                 return Redirect::back()->withErrors($errMess);
             }
+                
+            $already = DB::table('tblcandidate')->where('strCandMemId', '=', $request->input('member'))->get();
+                
+                if($already){
+                    $PRTY = DB::table('tblparty')->where('intPartyId', '=', $already[0]->intCandParId)->get();
+                    $errMess = "Candidate is already a member of the " . $PRTY[0]->strPartyName . " party";    
+                    return Redirect::back()->withErrors($errMess);
+                }
             }
+            
+                $already = DB::table('tblcandidate')->where('strCandMemId', '=', $request->input('member'))->get();
+                
+                if($already){
+                    
+                    $errMess = "Member is already a Candidate";    
+                    return Redirect::back()->withErrors($errMess);
+                }
+            
+            
             
             $destinationPath =  'assets/images/'; // upload path
             $extension = $request->file('image')->getClientOriginalExtension(); // getting image extension
@@ -205,7 +223,37 @@ class candidateController extends Controller
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator);
         }
+        
+        
         try{
+            
+            $limit = 0;
+            $countPos = 0;
+            $position = $request->input('position');
+            if ($request->has('party')) $party = $request->input('party');
+            if ($request->has('party')) $partyName = DB::table('tblparty')
+                                            ->where('intPartyId', "=", $party)
+                                            ->select('strPartyName')
+                                            ->get();
+            if ($request->has('party') && $party != 1) $limit = DB::table('tblposition')->where('strPositionId', '=', $position)->select('intPosVoteLimit', 'strPositionId', 'strPosName')->get();
+            
+                
+            if ($request->has('party')  && $party != 1) $countPos = DB::table('tblcandidate')
+                                                        ->where('strCandPosId', '=', $position)
+                                                        ->where('intCandParId', "=", $party )
+                                                        ->select('strCandPosId')
+                                                        ->count();
+            
+            if($request->has('party') && $party != 1){
+            if($limit[0]->intPosVoteLimit == $countPos && $party != 1){
+                $errMess = "Candidate limit of " . $limit[0]->strPosName . " in Party " . $partyName[0]->strPartyName . " has EXCEEDED";    
+                return Redirect::back()->withErrors($errMess);
+            }
+                
+            }
+            
+        
+            
             $id = $request->input('txtCandId');
             $Candidate = Candidate::find($id);
             $Candidate->strCandMemId = $request->input('member');
