@@ -22,10 +22,11 @@
 
 <style>
     body{
-      background-image: url("{{ URL::asset('assets/images/bglogin.png') }}");
+      background-image: url("{{ URL::asset('assets/images/7.jpg') }}");
+        background-size: cover;
     }
     .login-box-body{
-      background-color:rgba(232, 232, 232, 0.28);
+      background-color:rgba(248, 248, 248, 0.71);
       color:black;
     }
     h1{
@@ -78,8 +79,14 @@
     </form>
   </div>
   <!-- /.form-box -->
-<br>  
-<center><p style="color:white;">Powered by iVote++</p></center>
+<footer style="text-shadow: 2px 2px 8px rgba(5, 5, 5, 0.62);background-color:rgba(0, 0, 0, 0.35);height:59px;">
+<div class="col-md-8">
+      <p style="color:white;font-size:16px;font-family: segoe ui;padding-top:20px;margin-left:65px;">Powered by iVote++</p>
+</div>
+<div class="col-md-4">
+<img src="assets/images/ivote5.png" style="width:50%;padding-top:13px;">
+</div>
+</footer>
 </div>
 <!-- /.login-box -->
 <!-- jQuery 2.2.0 -->

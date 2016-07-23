@@ -68,10 +68,14 @@
                         <span class="info-box-number">{{$cand->votes}}</span>
                         <!-- The progress section is optional -->
                         <div class="progress">
-                            <div class="progress-bar" style="width: {{($cand->votes / $count )* 100}}%"></div>
+                            <div class="progress-bar" style="width: @if($count != 0){{($cand->votes / $count )* 100}}% 
+                            @else 0% 
+                            @endif"></div>
                         </div>
                         <span class="progress-description">
-                            {{($cand->votes / $count )* 100}}% of Votes
+                            @if($count!=0){{($cand->votes / $count )* 100}}% of Votes
+                            @else 0% of Votes
+                            @endif
                         </span>
                     </div><!-- /.info-box-content -->
                 </div><!-- /.info-box -->

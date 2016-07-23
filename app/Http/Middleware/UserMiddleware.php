@@ -31,7 +31,8 @@ class UserMiddleware
                         return view('votedandsurveyed');
                     }
                     
-                    else return view('votednotsurveyed');
+                    else return $next($request);
+            
                 } 
                 else{
                     return view('voted');

@@ -60,7 +60,7 @@
     <!-- timeline item -->
     <li>
         <!-- timeline icon -->
-        @if($aud->Action == 'UPDATED')
+        @if($aud->Action == 'INSERTED')
         <i class="fa fa-plus-square bg-yellow"></i>
         @elseif($aud->Action == 'DELETED')
         <i class="fa fa-trash bg-red"></i>

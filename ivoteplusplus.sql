@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `dbvote++` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `dbvote++`;
 -- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: dbvote++
@@ -180,6 +182,55 @@ LOCK TABLES `tblcandidate` WRITE;
 /*!40000 ALTER TABLE `tblcandidate` DISABLE KEYS */;
 /*!40000 ALTER TABLE `tblcandidate` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `tblcandidate_AINS` AFTER INSERT ON `tblcandidate` FOR EACH ROW begin
+declare user varchar(50);
+set user = (SELECT name from tblactiveuser where tblactiveuserID=1); 
+INSERT INTO tblaudit (User,Action,strMemberId,Date) 
+value (user,'INSERTED',new.strCandId,now());
+end */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `tblcandidate_AUPD` AFTER UPDATE ON `tblcandidate` FOR EACH ROW
+
+begin
+
+declare user varchar(50);
+set user = (SELECT name from tblactiveuser where tblactiveuserID=1);
+IF (new.blCandDelete = '1')
+THEN
+INSERT INTO tblaudit (User,strMemberId,Action,Date) 
+value (user,old.strCandId,'DELETED',now());
+ELSE
+INSERT INTO tblaudit (User,strMemberId,Action,Date) 
+value (user,NEW.strCandId,'UPDATED',now());
+END IF;
+end */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `tbldynamicfield`
@@ -267,6 +318,55 @@ LOCK TABLES `tblmember` WRITE;
 /*!40000 ALTER TABLE `tblmember` DISABLE KEYS */;
 /*!40000 ALTER TABLE `tblmember` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `tblmember_AINS` AFTER INSERT ON `tblmember` FOR EACH ROW begin
+declare user varchar(50);
+set user = (SELECT name from tblactiveuser where tblactiveuserID=1); 
+INSERT INTO tblaudit (User,Action,strMemberId,Date) 
+value (user,'INSERTED',new.strMemberId,now());
+end */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `tblmember_AUPD` AFTER UPDATE ON `tblmember` FOR EACH ROW
+
+begin
+
+declare user varchar(50);
+set user = (SELECT name from tblactiveuser where tblactiveuserID=1);
+IF (new.blMemDelete = '1')
+THEN
+INSERT INTO tblaudit (User,strMemberId,Action,Date) 
+value (user,old.strMemberId,'DELETED',now());
+ELSE
+INSERT INTO tblaudit (User,strMemberId,Action,Date) 
+value (user,NEW.strMemberId,'UPDATED',now());
+END IF;
+end */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `tblmemberdetail`
@@ -377,6 +477,57 @@ LOCK TABLES `tblposition` WRITE;
 /*!40000 ALTER TABLE `tblposition` DISABLE KEYS */;
 /*!40000 ALTER TABLE `tblposition` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `tblposition_AINS` AFTER INSERT ON `tblposition` FOR EACH ROW
+begin
+declare user varchar(50);
+set user = (SELECT name from tblactiveuser where tblactiveuserID=1); 
+INSERT INTO tblaudit (User,Action,strMemberId,Date) 
+value (user,'INSERTED',new.strPositionId,now());
+end */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `tblposition_AUPD` AFTER UPDATE ON `tblposition` FOR EACH ROW
+
+
+begin
+
+declare user varchar(50);
+set user = (SELECT name from tblactiveuser where tblactiveuserID=1);
+IF (new.blPosDelete = '1')
+THEN
+INSERT INTO tblaudit (User,strMemberId,Action,Date) 
+value (user,old.strPositionId,'DELETED',now());
+ELSE
+INSERT INTO tblaudit (User,strMemberId,Action,Date) 
+value (user,NEW.strPositionId,'UPDATED',now());
+END IF;
+end */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `tblpositiondetail`
@@ -813,6 +964,10 @@ LOCK TABLES `users` WRITE;
 INSERT INTO `users` VALUES (1,'Mon Paulo Velasco','mpvelasco27@outlook.ph','$2y$10$hHPWPCPoUOfV0wLBghVEcemQwgajtCHm.uZ3Z6S1/YtOxdRurc.9C','2Im2oHO9jmciijSK0pC59R01whHcHdfbvMbtK9yAS8jTr8ILZ1M9yNjTnQTI',0,'20160706061213-619520.jpg',0,'2016-06-24 06:49:35','2016-07-22 09:51:33');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Dumping events for database 'dbvote++'
+--
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -823,4 +978,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-07-22 22:48:20
+-- Dump completed on 2016-07-23 11:53:05

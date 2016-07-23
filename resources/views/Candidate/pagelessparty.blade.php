@@ -23,16 +23,8 @@
             min-height: 100%;
     }
 
-    body {
-        
-    }
-
-    h1, h2, h3 {
-        font-weight: 200;
-    }
-
     .grid-item {
-        width: 390px;
+        width: 300px;
         padding: 15px;
     }
     body{
@@ -49,23 +41,20 @@
       }
       header {
         background:#ededed;
-        padding:10px;
         padding-left: 50px;
         height: 200px;
       }
       .header-cont {
           width:97%;
-          position:relative;
-          top:0px;
           margin-left: 20px;
       }
-      /*footer {
+      footer {
       width:100%;
       height:100px;
       position:absolute;
       bottom:0;
       left:0;
-    }*/
+    }
       
     
 </style>
@@ -75,18 +64,18 @@
  
       <div class="col-md-2 col-xs-6">
             <div class="tooltipped" data-position="top" data-delay="50" data-tooltip="logo picture">
-                <img id="cand-pic" class="img-responsive" src="../assets/images/{{$setting->txtSetLogo}}"  style="opacity:2px; width: 180px;background-size: contain " /> 
+                <img id="cand-pic" class="img-responsive" src="../assets/images/{{$setting->txtSetLogo}}"  style="opacity:2px; width: 180px;background-size: contain;margin-top: 10px; " /> 
             </div>
         </div>
         <div class="col-md-7 col-xs-6 "  >
             
                
-                <h2 style="text-align:left;text-transform: capitalize;letter-spacing:1px">{{$setting->strHeader}}</h2>
+                <h2 class="responsive-text" style="font-family:helvetica;text-align:left;text-transform: capitalize;letter-spacing:1px">{{$setting->strHeader}}</h2>
                 
-                <h4 style="text-align:left;margin-top:10px;">{{$setting->strSetElecName}}</h5>
-                <h5 style="text-align:left;letter-spacing:1px;text-transform: capitalize;">{{$setting->strSetElecDesc}}</h5>
+                <h4 class="responsive-text" style="font-family:segoe ui;text-align:left;margin-top:10px;">{{$setting->strSetElecName}}</h4>
+                <h6 class="responsive-text" style="font-family:segoe ui;text-align:left;letter-spacing:1px;text-transform: capitalize;">{{$setting->strSetElecDesc}}</h6>
                 @endforeach
-                <h5 style="text-align:left;letter-spacing:1px;color:Tomato ">"Election Not Open Yet"</h5>
+                <h6 class="responsive-text" style="style=font-family:segoe ui;text-align:left;letter-spacing:1px;color:Tomato ">"Election Not Open Yet"</h6>
                 
             
         </div>
@@ -99,10 +88,7 @@
     <h3></h3>
     </div>
     
-    <!-- <div class="box header-cont" style="background-color:rgba(248, 248, 248, 0.71);" > -->
-        <!-- <div class="box-header"  style="background-color:rgba(248, 248, 248, 0.71)">
-            <p class="box-title" style="font-family:helvetica;letter-spacing:2px;font-size:28px;margin-left: 16px;color: DodgerBlue">Candidates</p>
-        </div> -->
+    
         <div class="box-body" style="padding-left: 40px;padding-right:40px">
             
             @foreach($positions as $position)
@@ -113,13 +99,14 @@
                             </div>
                 @foreach($candidates as $candidate)
                     @if($candidate->strCandPosId == $position->strCandPosId )
-                    <div class="grid-item">
+                    <div class="col-md-2 col-xs-12" style="padding:10px;" >
+                    <div class="grid-item col-md-4 col-xs-12 ">
                         <article class="material-card Teal">
                             <h2>
                                 <span>{{$candidate->strMemFname}} {{$candidate->strMemLname}}</span>
                                 <strong>
                                     <i class="fa fa-fw fa-star"></i>
-                                    The Big Lebowski
+                                    Candidate
                                 </strong>
                             </h2>
                             <div class="mc-content">
@@ -136,7 +123,7 @@
                             </a>
                             <div class="mc-footer">
                                 <h4>
-                                    Social
+                                    Social Accounts
                                 </h4>
                                 <a class="fa fa-fw fa-facebook"></a>
                                 <a class="fa fa-fw fa-twitter"></a>
@@ -145,6 +132,7 @@
                             </div>
                         </article>
                     </div>
+                </div>
                     @endif
                 @endforeach           
                 </div>
@@ -164,12 +152,19 @@
 <script src="{{ URL::asset('assets/bootstrap/js/bootstrap.min.js') }}"></script>
 <script src="{{ URL::asset('assets/mc-profile/js/jquery.material-cards.min.js') }}"></script>
 <script src="{{ URL::asset('assets/mc-profile/dist/mansory.js') }}"></script>
+<script src="{{ URL::asset('assets/responsivetext/jquery.responsivetext.js') }}"></script>
+<script type="text/javascript">
+  $("header").responsiveText({
+     bottomStop : '100',
+     topStop    : '1500'
+});
+</script>
 <script>
     $(function() {
 
         var $grid = $('.grid').masonry({
             itemSelector: '.grid-item',
-            columnWidth: 390,
+            columnWidth: 300,
         });
 
         $('.material-card').materialCard();

@@ -73,7 +73,9 @@
             <td class="td"><img src="assets/images/{{$cand->txtCandPic}}" height="100px" width="100px"></td>
             <td class="td">{{$cand->strMemLName}}, {{$cand->strMemFName}}</td>
             <td class="td">{{$cand->votes}}</td>
-            <td class="td">{{($cand->votes / $count )* 100}}%</td>
+            <td class="td">@if($count!=0){{($cand->votes / $count )* 100}}% of Votes
+                            @else 0% of Votes
+                            @endif</td>
             
         </tr>
         @endif

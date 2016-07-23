@@ -49,7 +49,7 @@
                     <div class="col s12">
                         <br>
                         <div class="card-panel2 tooltipped" data-position="top" data-delay="50" data-tooltip="logo picture">
-                            <img id="user-pic" src="../assets/images/ivote.jpg" width="180px" style="background-size: contain;" /> 
+                            <img id="userEdit-pic" src="../assets/images/ivote.jpg" width="180px" style="background-size: contain;" /> 
                         </div>
                     </div>
                 </center>
@@ -118,7 +118,7 @@
         if (input.files && input.files[0]) {
             var reader = new FileReader();
                 reader.onload = function (e) {
-                    $('#user-pic')
+                    $('#userEdit-pic')
                     .attr('src', e.target.result)
                     .width(150)
                     .height(150);
