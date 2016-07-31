@@ -179,16 +179,18 @@ class surveyController extends Controller
             $SurveyHeader->save();
             
             $SH = SurveyHeader::where('strSHMemCode', "=", $memid)->first();
-            //var_dump($SH);
-            //var_dump($_POST);
+            var_dump($SH);
+            var_dump($_POST);
             $SHID = $SH->intSHId;
             
                 
             foreach ($_POST as $key => $value) {
-                // if the field is checkbox, it will extract the array value
-                $question = DB::table('tblsurveyquestion')->where('strSQQuestion', "=", $key)->get();
-                $id =  $question[0]->intSQId;
+                 var_dump($question);
                 var_dump($key);
+                // if the field is checkbox, it will extract the array value
+                $question = DB::table('tblsurveyquestion')->where('strSQQuestion', "=", $key)->where('blSQStatus', "=", 1)->get();
+                $id =  $question[0]->intSQId;
+                
                 if(is_array($value)){
                     foreach ($value as $checked) {
                         $SurveyDetail = new SurveyDetail();
