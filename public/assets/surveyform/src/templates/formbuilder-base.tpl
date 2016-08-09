@@ -5,7 +5,7 @@
                 <ul class="nav-tabs" role="tablist">
                     <li class="active toolbox-tab" data-target="#add-field">Add Question</li>
                     <li class="toolbox-tab" data-target="#field-settings">Question Setting</li>
-                    <li class="toolbox-tab" data-target="#form-settings">Survey Title</li>
+                    <li class="toolbox-tab" data-target="#form-settings">Change Survey Title</li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane fade in active" id="add-field">
