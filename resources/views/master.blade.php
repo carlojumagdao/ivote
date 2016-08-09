@@ -98,7 +98,7 @@
         </div>
         <div class="pull-left info">
           <p><?php echo $userName; ?></p>
-          <a href="#">Administrator</a>
+          <a href="{{ URL::to('/user/profile') }}">Administrator</a>
         </div>
       </div>
       <!-- search form -->

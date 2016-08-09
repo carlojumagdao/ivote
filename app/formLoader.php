@@ -23,6 +23,18 @@ class formLoader {
 		}
 		return $id;
 	}
+	public function getElementType(){
+		if( empty($this->form_data) || empty($this->action) ) {
+			throw new Exception("Error Processing Request", 1);
+		}
+		$fields = '';
+		$intCounter = 0;
+		foreach ($this->form_data->fields as $field) {
+			$type[$intCounter] = $field->type;
+			$intCounter++;
+		}
+		return $type;	
+	}
 	private function encode_element_title($title) {
 		$str = str_replace(' ', '_', strtolower($title));
 		$str = preg_replace("/[^a-zA-Z0-9.-_]/", "", $str);

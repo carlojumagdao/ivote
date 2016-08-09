@@ -230,6 +230,11 @@ Route::group(['middleware' => 'auth'], function(){
 		'as' => 'candidate.edit'
 	));
     Route::any('/candidates/update', array(
+		'uses' => 'candidateController@editpage',
+		'as' => 'candidate.edit'
+	));
+
+    Route::post('/candidates/editpage', array(
 		'uses' => 'candidateController@update',
 		'as' => 'candidate.update'
 	));
@@ -316,7 +321,7 @@ Route::group(['middleware' => 'auth'], function(){
 		'as' => 'report.distIndex'
 	));
     //Reports//
-    
+
     //audit//
     Route::get('/audit', array(
 		'uses' => 'auditController@index',
