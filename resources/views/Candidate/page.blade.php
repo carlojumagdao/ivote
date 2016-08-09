@@ -156,7 +156,6 @@
 <script src="{{ URL::asset('assets/mc-profile/dist/mansory.js') }}"></script>
 <script src="{{ URL::asset('assets/responsivetext/jquery.responsivetext.js') }}"></script>
 <script type="text/javascript">
-<script type="text/javascript">
   $("header").responsiveText();
 
 </script>

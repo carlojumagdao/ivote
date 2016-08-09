@@ -25,13 +25,14 @@
         background-size: cover;
     }
     .form-control{
-      background-color: rgba(232, 232, 232, 0.28);
+      background-color: rgba(232, 232, 232, 0.71);
       border-color: gray;
       
     }
     .login-box-body{
-      background-color:rgba(248, 248, 248, 0.71);
+      background-color:transparent;
       color:black;
+      
     }
     h1{
       font-weight: bold;
@@ -40,70 +41,106 @@
       -webkit-text-stroke-color: yellow;
       -webkit-font-smoothing: antialiased;
     }
-    .custom {height: 50px}
+    .custom {height: 180px; }
     input[type="text"]{
     	color: SteelBlue;
     } 
-    
+     
+    header {
+        background:#ededed;
+        padding-left: 50px;
+        padding-bottom: none;
+      }
+      .header-cont {
+          width:97%;
+         
+      }
+      footer {
+      width:100%;
+      height:100px;
+      position:absolute;
+      bottom:0;
+      left:0;
+    }
 </style>
 
 </head>
+<header style="background-color:rgba(248, 248, 248, 0.71);border-bottom: 3px solid  DodgerBlue ">
+    
+ <div class="row ">
+ 
+      <div class="col-md-2 col-xs-6">
+            <div class="tooltipped" data-position="top" data-delay="50" data-tooltip="logo picture">
+                <img id="cand-pic" class="img-responsive" src="assets/images/systemlogo.png"  style="opacity:2px; width: 140px;padding-left: 10px " /> 
+            </div>
+        </div>
+        <div class="col-md-10 col-xs-6 "  >
+            
+               
+                <h4 class="responsive-text" style="font-family:helvetica;text-align:left;letter-spacing:1px;padding-top:23px;">The iVote++</h4>
+                
+                <h4 class="responsive-text" style="font-family:segoe ui;text-align:left;">Election System</h4>
+                
+            
+        </div>
+
+</div>
+</header>
 <body>
-  <div class="wrapper">
-	<div class="login-box">
-  <div class="login-box-body">
-    <center>
-      <img src='{{ URL::asset("assets/images/$logo") }}' style="max-width: 130px;">
-      <br>
-      <h3>{{$header}}</h3>
-    </center>
-    <div class="col-md-12">
-        @if ($errors->any())
-            <div class="alert alert-danger alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                {!! implode('', $errors->all(
-                    '<li>:message</li>'
-                )) !!}
-            </div>
-        @endif
-    </div>
-    <br><br>
-         <form action='{{ URL::to("/") }}' method="post">
-      		{!! csrf_field() !!}
-            <div class="form-group has-feedback">
-                <input style="font-size:25px; text-align:center;" type="text" name="txtPasscode" class="form-control custom" placeholder="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6-digit Passcode" autocomplete="off" maxlength="6">
-            </div>
-            <div class="form-group has-feedback">
-                <select name="secques" class="form-control" required>
-                     <option disabled="true" selected="true">Choose your security question</option>
-                     @foreach($SecQues as $value)
-                     	<option value='{{$value->intSecQuesId}}'>{{$value->strSecQuestion}}</option>
-                     @endforeach
-                 </select>
-            </div>
-            <div class="form-group has-feedback">
-                <input type="text" name="txtAnswer" class="form-control" placeholder="Enter your answer in your security question" autocomplete="off">
-            </div>
-            <br><br>
-            <div class="row">
-               <div class="col-md-6 col-md-offset-3">
-               		<center>
-                  		<button style="font-size:20px;" type="submit" class="btn btn-primary btn-block btn-flat">Start Voting</button>
-                  	</center>	
+  <div class="container">
+      <div class="login-box" style="width:80%;padding-top:none;">
+          
+                <h6 class="responsive-text"  style="font-family:helvetica;text-align:center;letter-spacing:1px;color: white; ">Enter your Member Code to start voting</h6>
+                <div class="col-md-4 col-xs-12">
+                    <img id="cand-pic" class="img-responsive" src='{{ URL::asset("assets/images/$logo") }}' style="padding-top:30px">
+                    <br>
+                    <h4 class="responsive-text" style="color:white;text-align:center;">{{$header}}</h4>
+                    <h6 class="responsive-text" style="font-family:helvetica;text-align:center;color:rgba(232, 232, 232, 0.71)">Powered by iVote++</h6>
                 </div>
-            </div>
-    </form>
+                <div class="col-md-6 col-xs-12"> 
+                    <div class="col-md-12">
+                    @if ($errors->any())
+                        <div class="alert alert-danger alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            {!! implode('', $errors->all(
+                                '<li>:message</li>'
+                            )) !!}
+                        </div>
+                    @endif
+                    </div>
+                <br><br>
+                <div class="login-box-body">
+                     <form action='{{ URL::to("/") }}' method="post">
+                      {!! csrf_field() !!}
+                        <div class="form-group has-feedback">
+                            <input style="font-size:80px; text-align:center;" type="text" name="txtPasscode" class="form-control custom responsive-text" autocomplete="off" maxlength="6">
+                        </div>
+                        <div class="form-group has-feedback">
+                            <select name="secques" class="form-control " required>
+                                 <option disabled="true" selected="true">Choose your security question</option>
+                                 @foreach($SecQues as $value)
+                                  <option value='{{$value->intSecQuesId}}'>{{$value->strSecQuestion}}</option>
+                                 @endforeach
+                             </select>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <input type="text" name="txtAnswer" class="form-control " placeholder="Enter your answer in your security question" autocomplete="off">
+                        </div>
+                        
+                        <div class="row">
+                           <div class="col-md-12">
+                              <center>
+                                  <button style="font-size:30px;" type="submit" class="btn btn-primary btn-block btn-flat ">Start Voting</button>
+                                </center> 
+                            </div>
+                        </div>
+                      </form>
+          </div> 
+      </div>
   </div>
   <!-- /.form-box -->
-<footer style="text-shadow: 2px 2px 8px rgba(5, 5, 5, 0.62);background-color:rgba(0, 0, 0, 0.35);height:59px;">
-<div class="col-md-8">
-      <p style="color:white;font-size:16px;font-family: segoe ui;padding-top:20px;margin-left:65px;">Powered by iVote++</p>
-</div>
-<div class="col-md-4">
-<img src="assets/images/ivote5.png" style="width:50%;padding-top:13px;">
-</div>
-</footer>
-</div>
+
+
 <!-- /.login-box -->
 <!-- jQuery 2.2.0 -->
 <script src="{{ URL::asset('assets/jquery/jquery.min.js') }}"></script>
@@ -112,6 +149,17 @@
 <script src="{{ URL::asset('assets/bootstrap/js/bootstrap.min.js') }}"></script>
 <!-- iCheck -->
 <script src="{{ URL::asset('assets/plugins/iCheck/icheck.min.js')}}"></script>
+<script src="{{ URL::asset('assets/responsivetext/jquery.responsivetext.js') }}"></script>
+<script type="text/javascript">
+  $("header").responsiveText();
+
+</script>
+<script type="text/javascript">
+  $("header").responsiveText({
+     bottomStop : '500',
+     topStop    : '1500'
+});
+</script>
 <script>
   //iCheck for checkbox and radio inputs
     $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
