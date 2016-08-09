@@ -24,7 +24,6 @@ class candidateController extends Controller
     public function index()
     {
         $PartyStatus = DB::table('tblSetting')->where('blSetParty', '=', 1)->get();
-
              $candidates = DB::table('tblcandidate')
             ->join('tblmember', 'tblcandidate.strCandMemId', '=', 'tblmember.strMemberId')
             ->join('tblposition', 'tblcandidate.strCandPosId', '=', 'tblposition.strPositionId')
@@ -33,6 +32,23 @@ class candidateController extends Controller
             ->select('tblcandidate.*', 'tblmember.strMemFname', 'tblmember.strMemLname', 'tblposition.strPosName', 'tblparty.strPartyName')->get();
     
             return view('Candidate.candidate', ['candidates' => $candidates, 'intCounter'=>0, 'party' => $PartyStatus]);
+        $candidates = DB::table('tblcandidate')
+        ->join('tblmember', 'tblcandidate.strCandMemId', '=', 'tblmember.strMemberId')
+        ->join('tblposition', 'tblcandidate.strCandPosId', '=', 'tblposition.strPositionId')
+        ->join('tblparty', 'tblcandidate.intCandParId', '=', 'tblparty.intPartyId')
+        ->where('blCandDelete', 0)
+        ->select('tblcandidate.*', 'tblmember.strMemFname', 'tblmember.strMemLname', 'tblposition.strPosName', 'tblparty.strPartyName')->get();
+        $strCandEducBackg = "";
+        $strCandInfor = "";
+        foreach ($candidates as $value) 
+            {
+                $strCandEducBackg = $value->strCandEducBack;
+                $strCandInfor = $value->strCandInfo;
+            }
+        return view('Candidate.candidate', ['candidates' => $candidates, 'intCounter'=>0, 'party' => $PartyStatus, 'strCandEducBackg' => 
+            $strCandEducBackg , 
+              'strCandInfor' => 
+            $strCandInfor]);
     }
 
     public function add()
@@ -176,8 +192,8 @@ class candidateController extends Controller
     }
     
     public function editpage(Request $request){
-        $PartyStatus = DB::table('tblSetting')->where('blSetParty', '=', 1)->get();
         $id = $request->input('id');
+        $PartyStatus = DB::table('tblSetting')->where('blSetParty', '=', 1)->get();
         $Candidate = Candidate::find($id);
         
         if($PartyStatus){
@@ -222,11 +238,13 @@ class candidateController extends Controller
             $limit = 0;
             $countPos = 0;
             $position = $request->input('position');
-            if ($request->has('party')) $party = $request->input('party');
-            if ($request->has('party')) $partyName = DB::table('tblparty')
-                                            ->where('intPartyId', "=", $party)
-                                            ->select('strPartyName')
-                                            ->get();
+            if ($request->has('party')) 
+                $party = $request->input('party');
+            if ($request->has('party')) 
+                $partyName = DB::table('tblparty')
+                    ->where('intPartyId', "=", $party)
+                    ->select('strPartyName')
+                    ->get();
             if ($request->has('party') && $party != 1) $limit = DB::table('tblposition')->where('strPositionId', '=', $position)->select('intPosVoteLimit', 'strPositionId', 'strPosName')->get();
             
                 
@@ -246,6 +264,12 @@ class candidateController extends Controller
             }
                 
             }*/
+            if($request->has('party') && $party != 1){
+                if($limit[0]->intPosVoteLimit == $countPos && $party != 1){
+                    $errMess = "Candidate limit of " . $limit[0]->strPosName . " in Party " . $partyName[0]->strPartyName . " has EXCEEDED";    
+                    return Redirect::back()->withErrors($errMess);
+                }
+            }
             
         
             
@@ -324,7 +348,7 @@ class candidateController extends Controller
                             ->select('tblcandidate.*', 'tblmember.strMemFname', 'tblmember.strMemLname')
                             ->get();
             $election = DB::table('tblsetting')->get();
-            return view('Candidate.pagelessparty', [ 'positions'=>$positions, 'candidates'=>$candidates, 'election' => $election]);
+            return view('Candidate.pagelessparty1', [ 'positions'=>$positions, 'candidates'=>$candidates, 'election' => $election]);
         }
         
     

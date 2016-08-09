@@ -50,6 +50,7 @@ class surveyController extends Controller
         $qrSurveyQuestions = DB::table('tblSurveyQuestion')->select('strSQQuestion')->get();
 
         $arrFieldNames = $loader->render_form();
+        $arrElementType = $loader->getElementType();
         $form_title = $loader->form_title();
         $form_title = trim($form_title);
         $form_description = $loader->form_description();
@@ -90,7 +91,7 @@ class surveyController extends Controller
                 DB::table('tblSurveyForm')->insert(['strSurveyFormTitle' => $form_title, 'strSurveyForm' => $form_data, 'strSurveyFormDesc' => $form_description]);
                 
                 DB::update('UPDATE tblSurveyQuestion SET blSQStatus = 0');
-
+                $intCounter = 0;
                 foreach ($arrFieldNames as $strFieldname) {
                     $blFieldExist = false;
                     foreach ($qrSurveyQuestions as $qrSurveyQuestion) {
@@ -102,12 +103,13 @@ class surveyController extends Controller
                     if($blFieldExist){
                         DB::table('tblSurveyQuestion')
                             ->where('strSQQuestion', $strFieldname)
-                            ->update(['blSQStatus' => 1]);
+                            ->update(['blSQStatus' => 1, 'strSQQuesType' => $arrElementType[$intCounter]]);
                     } else{
                         DB::table('tblSurveyQuestion')->insert([
-                            ['strSQQuestion' => $strFieldname, 'blSQStatus' => $blStatus]
+                            ['strSQQuestion' => $strFieldname, 'strSQQuesType' => $arrElementType[$intCounter], 'blSQStatus' => $blStatus]
                         ]);
                     }
+                    $intCounter++;
                 }
                 DB::commit();
             } catch(Exception $ex){
