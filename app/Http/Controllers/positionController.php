@@ -150,7 +150,10 @@ class positionController extends Controller
     }
     public function delete(Request $request){
         $id = $request->input("id");
-        $candidate = DB::table('tblCandidate')->where('strCandPosId', '=', $id)->get();
+        $candidate = DB::table('tblCandidate')
+            ->where('strCandPosId', '=', $id)
+            ->where('blCandDelete', '=', 0)
+            ->get();
         if($candidate){
             return Redirect::back()->withErrors("Cannot delete this record, because it is used by another record.");
         } else{           

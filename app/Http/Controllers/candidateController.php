@@ -47,7 +47,7 @@ class candidateController extends Controller
         else{
             
             $Members = DB::table('tblmember')->select('strMemberId', 'strMemFname', 'strMemLname', 'strMemMname')->where('blMemDelete', '=', 0)->get();
-            $Positions = DB::table('tblposition')->select('strPositionId', 'strPosName')->get();
+            $Positions = DB::table('tblposition')->select('strPositionId', 'strPosName')->where('blPosDelete', '=', 0)->get();
             return view('Candidate.addlessparty', ['Members' => $Members, 'Positions' => $Positions]);
         }
     }
