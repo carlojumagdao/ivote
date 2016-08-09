@@ -48,13 +48,10 @@
      
     header {
         background:#ededed;
-        padding-left: 50px;
+        padding-left: 0px;
         padding-bottom: none;
       }
-      .header-cont {
-          width:97%;
-         
-      }
+      
       footer {
       width:100%;
       height:100px;
@@ -71,7 +68,7 @@
  
       <div class="col-md-2 col-xs-6">
             <div class="tooltipped" data-position="top" data-delay="50" data-tooltip="logo picture">
-                <img id="cand-pic" class="img-responsive" src="assets/images/systemlogo.png"  style="opacity:2px; width: 140px;padding-left: 10px " /> 
+                <img id="cand-pic" class="img-responsive" src="assets/images/systemlogo.png"  style="opacity:2px; width: 140px;margin-left: 50px " /> 
             </div>
         </div>
         <div class="col-md-10 col-xs-6 "  >
@@ -113,7 +110,7 @@
                      <form action='{{ URL::to("/") }}' method="post">
                       {!! csrf_field() !!}
                         <div class="form-group has-feedback">
-                            <input style="font-size:80px; text-align:center;" type="text" name="txtPasscode" class="form-control custom responsive-text" autocomplete="off" maxlength="6">
+                            <input style="font-size:75px; text-align:center;" type="text" name="txtPasscode" class="form-control custom responsive-text" autocomplete="off" maxlength="6">
                         </div>
                         <div class="form-group has-feedback">
                             <select name="secques" class="form-control " required>
