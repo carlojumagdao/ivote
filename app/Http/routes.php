@@ -321,6 +321,13 @@ Route::group(['middleware' => 'auth'], function(){
 		'as' => 'report.distIndex'
 	));
     //Reports//
+
+    //audit//
+    Route::get('/audit', array(
+		'uses' => 'auditController@index',
+		'as' => 'audit.index'
+	));
+    //audit//
 });
 
 // Candidate Page//

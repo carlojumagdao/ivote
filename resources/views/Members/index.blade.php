@@ -172,6 +172,16 @@
                     <i class="glyphicon glyphicon-plus"></i> Add New</a>
                 </div>
             </div>
+            <div class="pull-right">
+              <label class="checkbox-inline">
+                <input type="checkbox" id="show_deleted">
+                Show Deleted Items
+              </label>
+              <label class="checkbox-inline">
+                <input type="checkbox" id="show_meta">
+                Show Metadata
+              </label>
+            </div>
             <div class="box-body dataTable_wrapper">
                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                     <thead>
@@ -180,6 +190,8 @@
                             <th>Full Name</th>
                             <th>Email</th>
                             <th>Sent Passcode?</th>
+                            <th>Date Created</th>
+                            <th>Date Updated</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -193,14 +205,15 @@
                                 <td class="passcode">Yes</td>  
                             @else
                                 <td class="passcode">No</td>  
-                            @endif    
+                            @endif 
+                            <td class="created">{{$value->created_at}}</td>
+                            <td class="updated">{{$value->updated_at}}</td>
                             <td>
                                 <a href="member/view/{{$value->strMemberId}}" class="btn btn-primary btn-sm view" data-toggle="tooltip" title="View"><i class="fa fa-eye"></i></a>
                                 <a href="member/edit/{{$value->strMemberId}}" class="btn btn-warning btn-sm edit" data-toggle="tooltip" title="Edit"><i class="glyphicon glyphicon-edit"></i></a>
                                 <a class="btn btn-primary btn-sm send sendMember" data-toggle="tooltip" title="Send Passcode"><i class="glyphicon glyphicon-send"></i></a>
                                 <button class="btn btn-danger btn-sm delMember" data-toggle="tooltip" title="Delete"><i class="glyphicon glyphicon-trash"></i></button>
-                            </td>
-                        </tr>
+                            </td></tr>
                     @endforeach
                     </tbody>
                     <tfoot>
@@ -209,6 +222,8 @@
                             <th>Full Name</th>
                             <th>Email</th>
                             <th>Sent Passcode?</th>
+                            <th>Date Created</th>
+                            <th>Date Updated</th>
                             <th>Action</th>
                         </tr>
                     </tfoot>
@@ -267,10 +282,51 @@
 
 </script>
 <script>
-    $(document).ready(function() {
-        $('#dataTables-example').DataTable({
-                responsive: true
+    $(document).ready(function () {
+      responsive: true
+      var table = $('#dataTables-example').DataTable({
+        columnDefs: [
+          {
+            targets: [4, 5],
+            visible: false,
+            searchable: false
+          },
+          {
+            targets: [5],
+            visible: false
+          }
+        ]
+      });
+
+      $('#show_meta').on('change', function () {
+        if ($('#show_meta:checked').length > 0) {
+          table.columns([0, 1, 2, 3, 4, 5, 6]).visible(true);
+        } else {
+          table.columns([4, 5]).visible(false);
+        }
+      });
+
+      $('#show_deleted').on('change', function () {
+        table.draw();
+      });
+
+      $.fn.dataTableExt.afnFiltering.push(function (oSettings, aData, iDataIndex) {
+        var show_deleted = $('#show_deleted:checked').length;
+        if (!show_deleted) return aData[5] == '';
+        return true;
+      });
+
+      table.draw();
+
+      table.on('draw.dt', function () {
+        $('.submit-icon').on('click', function () {
+          $(this).closest('form').submit();
         });
+      });
+
+      $('.submit-icon').on('click', function () {
+        $(this).closest('form').submit();
+      });
     });
 </script>
 <script>
