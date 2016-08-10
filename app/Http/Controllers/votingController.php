@@ -74,12 +74,10 @@ class votingController extends Controller
                     } 
                     
                 }
-                
                 else{
                     $only[$index] = $pos;
                     $index++;
                 }
-                
             }
             $candidates = DB::table('tblcandidate')
                             ->join('tblmember', 'tblcandidate.strCandMemId', '=', 'tblmember.strMemberId')

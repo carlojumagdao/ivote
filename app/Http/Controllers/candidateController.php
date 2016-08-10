@@ -68,8 +68,7 @@ class candidateController extends Controller
         }
     }
     
-    public function newCandidate(Request $request)
-    {
+    public function newCandidate(Request $request){
        
        $rules = array(
 			'member' => 'required',
@@ -126,7 +125,6 @@ class candidateController extends Controller
                     return Redirect::back()->withErrors($errMess);
                 }
             }
-            
                 $already = DB::table('tblcandidate')->where('strCandMemId', '=', $request->input('member'))->where('blCandDelete', '=', '0')->get();
                 
                 if($already){
@@ -134,9 +132,6 @@ class candidateController extends Controller
                     $errMess = "Member is already a Candidate";    
                     return Redirect::back()->withErrors($errMess);
                 }
-            
-            
-            
             $destinationPath =  'assets/images/'; // upload path
             $extension = $request->file('image')->getClientOriginalExtension(); // getting image extension
             $date = date("Ymdhis");
@@ -147,7 +142,6 @@ class candidateController extends Controller
             foreach($ids as $id){
                 $latest = $id->strCandId;
             }
-            
             $counter = new SmartCounter();
             $Candidate = new Candidate();
             $Candidate->strCandId = $counter->smartcounter($latest);
@@ -160,10 +154,7 @@ class candidateController extends Controller
             if ($request->file('image')->isValid()) {
                 $request->file('image')->move($destinationPath, $filename);
                 $Candidate->txtCandPic = $filename;
-            }
-
-
-           
+            }  
             $Candidate->save();
         }catch (\Illuminate\Database\QueryException $e){
             $errMess = $e->getMessage();
@@ -351,8 +342,53 @@ class candidateController extends Controller
             return view('Candidate.pagelessparty1', [ 'positions'=>$positions, 'candidates'=>$candidates, 'election' => $election]);
         }
         
-    
     }
-
-    
+    public function filterposition(){
+        $id = $_POST['id'];
+        $positions = DB::table('tblposition')->select('strPositionId', 'strPosName')->get();
+        $memdetail = DB::table('tblmemberdetail')
+                            ->select('strMemDeFieldName', 'strMemDeFieldData')
+                            ->where('strMemDeMemId', '=', $id)
+                            ->get();
+        $arrPosAvail = "";
+        $arrPosAvailId = "";
+        $index = 0;               
+        foreach($positions as $pos){
+            $posdetail = DB::table('tblpositiondetail')
+                            ->select('strPosDeFieldName','strPosDeFieldData')
+                            ->where('strPosDePosId', '=', $pos->strPositionId)
+                            ->get();
+            $numdet = DB::table('tblpositiondetail')
+                            ->select('strPosDeFieldName')
+                            ->where('strPosDePosId', '=', $pos->strPositionId)
+                            ->distinct()
+                            ->count();
+            if($posdetail){
+                $count = 0;
+                foreach($posdetail as $posdet){
+                    $counter = 0;
+                    foreach($memdetail as $memdet){
+                        if($posdet->strPosDeFieldName == $memdet->strMemDeFieldName){
+                            if($posdet->strPosDeFieldData == $memdet->strMemDeFieldData){
+                                $counter++;
+                            }
+                        }
+                    }
+                    if($counter > 0) $count++;
+                }
+                if($count == $numdet){
+                    $arrPosAvailId[$index] = $pos->strPositionId;
+                    $arrPosAvail[$index] = $pos->strPosName;
+                    $index++;
+                }
+            }
+            else{
+                // global position to..
+                $arrPosAvailId[$index] = $pos->strPositionId;
+                $arrPosAvail[$index] = $pos->strPosName;
+                $index++;
+            }
+        }
+        return view('Candidate.positionFilter', [ 'arrPosAvail'=>$arrPosAvail, 'arrPosAvailId'=>$arrPosAvailId]);
+    }    
 }

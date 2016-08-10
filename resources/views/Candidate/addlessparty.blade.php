@@ -80,7 +80,7 @@
                      {!! Form::label( 'member', 'Candidate Name:' ) !!}
                      </div>
                      <div class="col-md-10">
-                     <select name="member" class="form-control select2" required>
+                     <select name="member" class="form-control select2" id="memberId" onchange="getPosition()" required>
                          <option></option>
                          @foreach($Members as $Member)
                          <option value='{{$Member->strMemberId}}'>{{$Member->strMemFname}} {{$Member->strMemLname}}</option>
@@ -92,7 +92,7 @@
                     <div class="col-md-2">
                      {!! Form::label( 'position', 'Position:' ) !!}
                     </div>
-                    <div class="col-md-10">
+                    <div class="col-md-10" id="positionId">
                      <select name="position" class="form-control select2" required>
                          <option></option>
                          @foreach($Positions as $Position)
@@ -177,6 +177,30 @@
             document.getElementById('editform').submit();
         
     });
+</script>
+<script>
+function getPosition() {
+    var id = document.getElementById("memberId").value;
+    $.ajax({
+        url: "{{ URL::to('candidates/filterposition') }}",
+        type:"POST",
+        beforeSend: function (xhr) {
+            var token = $('meta[name="csrf_token"]').attr('content');
+            if (token) {
+                  return xhr.setRequestHeader('X-CSRF-TOKEN', token);
+            }
+        },
+        data: { id : id },
+        success:function(data){
+            $( "#positionId" ).empty();
+            $( "#positionId" ).append(data);
+        },error:function(){ 
+            alert("Error: Please check your input.");
+        }
+    }); //end of ajax
+}
+    
+
 </script>
 <script src="{{ URL::asset('assets/plugins/select2/select2.full.min.js') }}"></script>
 <script src="{{ URL::asset('assets/plugins/colorpicker/bootstrap-colorpicker.min.js') }}"></script>
