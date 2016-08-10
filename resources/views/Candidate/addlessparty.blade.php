@@ -66,7 +66,8 @@
                     
                     <span class="btn btn-default btn-file">
                   
-                    {!! Form::label( 'file', 'File Path:' ) !!}
+                    {!! Form::label( 'file', 'File Path ',array(
+                        'class' => 'required') ) !!}
                     {!! Form::file
                         ('file', array(
                         'id' => 'file',
