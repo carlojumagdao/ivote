@@ -53,7 +53,7 @@ class positionController extends Controller
             $Position->save();
         
         //redirect
-        $request->session()->flash('message', 'Member reverted.');  
+        $request->session()->flash('message', 'Position reverted.');  
         return Redirect::back();
     }
 
@@ -173,6 +173,7 @@ class positionController extends Controller
         } else{           
             $Position = Position::find($id);
             $Position->blPosDelete = 1;
+            $Position->deleted_at = date("Y-m-d H:i:s");
             $Position->save();
         }
         //redirect

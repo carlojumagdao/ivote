@@ -175,7 +175,7 @@
             <div class="pull-right">
               <label class="checkbox-inline">
                 <input type="checkbox" id="show_deleted">
-                Show Deleted Items
+                Show Deleted Members
               </label>
               <label class="checkbox-inline">
                 <input type="checkbox" id="show_meta">
