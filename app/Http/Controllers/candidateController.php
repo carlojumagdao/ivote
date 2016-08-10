@@ -339,7 +339,7 @@ class candidateController extends Controller
                             ->select('tblcandidate.*', 'tblmember.strMemFname', 'tblmember.strMemLname')
                             ->get();
             $election = DB::table('tblsetting')->get();
-            return view('Candidate.pagelessparty1', [ 'positions'=>$positions, 'candidates'=>$candidates, 'election' => $election]);
+            return view('Candidate.pagelessparty', [ 'positions'=>$positions, 'candidates'=>$candidates, 'election' => $election]);
         }
         
     }

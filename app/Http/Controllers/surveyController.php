@@ -185,10 +185,11 @@ class surveyController extends Controller
             
                 
             foreach ($_POST as $key => $value) {
-                 //var_dump($question);
-                //var_dump($key);
+                
                 // if the field is checkbox, it will extract the array value
                 $question = DB::table('tblsurveyquestion')->where('strSQQuestion', "=", $key)->where('blSQStatus', "=", 1)->get();
+                 var_dump($question);
+                var_dump($key);
                 $id =  $question[0]->intSQId;
                 
                 if(is_array($value)){

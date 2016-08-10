@@ -236,6 +236,11 @@ Route::group(['middleware' => 'auth'], function(){
 		'as' => 'candidate.update'
 	));
     
+    Route::any('/candidates/page', array(
+		'uses' => 'candidateController@page',
+		'as' => 'candidate.page'
+	));
+    
     
     Route::post('/candidates/filterposition', array(
 		'uses' => 'candidateController@filterposition',
