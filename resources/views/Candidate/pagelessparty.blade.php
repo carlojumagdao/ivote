@@ -21,15 +21,16 @@
     html {
             position: relative;
             min-height: 100%;
+            overflow-x: hidden;
+            overflow-y: scroll;
     }
 
     .grid-item {
-        width: 300px;
-        padding: 15px;
+        width: 330px;
+        padding-right: 15px;
     }
     body{
-        background-image: url("{{ URL::asset('../assets/images/bgGlass.jpg') }}");
-        background-color: #ECEFF1;
+        background-color: white;
         color: #37474F;
         font-family: 'Raleway', sans-serif;
         font-weight: 300;
@@ -45,20 +46,20 @@
         height: 200px;
       }
       .header-cont {
-          width:97%;
+          width:100%;
           margin-left: 20px;
       }
       footer {
       width:100%;
       height:100px;
-      position:absolute;
+      position:relative;
       bottom:0;
       left:0;
     }
       
     
 </style>
-<header style="background-color:rgba(248, 248, 248, 0.71);border-bottom: 3px solid  DodgerBlue ">
+<header style="background-color:rgba(248, 248, 248, 0.71);border-bottom: 2px solid  DodgerBlue ">
  @foreach($election as $setting)
  <div class="row">
  
@@ -92,20 +93,20 @@
         <div class="box-body" style="padding-left: 40px;padding-right:40px">
             
             @foreach($positions as $position)
-                   <div class="row panel" style="border-left: 4px solid {{$position->strPosColor}};background-color:rgba(0, 0, 0, 0.20)">
+                   <div class="row panel " style="border-left: 13px solid {{$position->strPosColor}};background-color:rgba(0, 0, 0, 0.10)">
                         <div class="col-md-12">
                             <div class="col-md-12" style="text-transform: capitalize;">
-                                <h3 style="letter-spacing:1px;font-family: helvetica;color: white  ;text-shadow: 1px 1px 4px rgba(6, 5, 5, 0.62);">{{$position->strPosName}}</h3>
+                                <h4 class="responsive-text" style="letter-spacing:1px;font-family: helvetica;">{{$position->strPosName}}</h4>
                             </div>
                 @foreach($candidates as $candidate)
                     @if($candidate->strCandPosId == $position->strCandPosId )
-                    <div class="col-md-2 col-xs-12" style="padding:10px;" >
-                    <div class="grid-item col-md-4 col-xs-12 ">
-                        <article class="material-card Teal">
+                    <div class="col-md-3 col-xs-12" style="padding:10px;padding-right:80px;" >
+                    <div class="grid-item col-md-4 col-xs-12 " style="padding-right:50px;">
+                        <article class="material-card Blue">
                             <h2>
-                                <span>{{$candidate->strMemFname}} {{$candidate->strMemLname}}</span>
-                                <strong>
-                                    <i class="fa fa-fw fa-star"></i>
+                                <span style="font-size:16px">{{$candidate->strMemFname}} {{$candidate->strMemLname}}</span>
+                                <strong style="font-size:14px">
+                                    <i  class="fa fa-fw fa-star"></i>
                                     Candidate
                                 </strong>
                             </h2>
@@ -113,8 +114,10 @@
                                 <div class="img-container">
                                     <img class="img-responsive" src="../assets/images/{{$candidate->txtCandPic}}">
                                 </div>
-                                <div class="mc-description">
+                                <div class="mc-description " style="font-size:14px;">
                                     Education Background: &nbsp {{ $candidate->strCandEducBack}}
+
+                                    <br>
                                     Platform: &nbsp {{ $candidate->strCandInfo}}
                                 </div>
                             </div>
@@ -127,7 +130,6 @@
                                 </h4>
                                 <a class="fa fa-fw fa-facebook"></a>
                                 <a class="fa fa-fw fa-twitter"></a>
-                                <a class="fa fa-fw fa-linkedin"></a>
                                 <a class="fa fa-fw fa-google-plus"></a>
                             </div>
                         </article>
@@ -141,8 +143,8 @@
         </div>
     </div>
     <!-- </div> -->
-<footer style="text-shadow: 2px 2px 8px rgba(5, 5, 5, 0.62);background-color:rgba(0, 0, 0, 0.35);height:59px;">
-<center><p style="color:white;font-size:14px;padding-top:10px;">Copyright © 2015-2016 iVote++<br>All rights reserved</p></center>
+<footer style="text-shadow: 2px 2px 8px rgba(5, 5, 5, 0.20);background-color:rgba(248, 248, 248, 0.90);height:59px;border-top: 2px solid  DodgerBlue ">
+<center><p class="responsive-text" style="font-size:14px;padding-top:10px;">Copyright © 2015-2016 iVote++<br>All rights reserved</p></center>
 </footer>
     
     <!-- jQuery 2.2.0 -->
@@ -155,7 +157,19 @@
 <script src="{{ URL::asset('assets/responsivetext/jquery.responsivetext.js') }}"></script>
 <script type="text/javascript">
   $("header").responsiveText({
-     bottomStop : '100',
+     bottomStop : '550',
+     topStop    : '1500'
+});
+</script>
+<script type="text/javascript">
+  $("body").responsiveText({
+     bottomStop : '550',
+     topStop    : '1500'
+});
+</script>
+<script type="text/javascript">
+  $("footer").responsiveText({
+     bottomStop : '550',
      topStop    : '1500'
 });
 </script>
@@ -164,7 +178,7 @@
 
         var $grid = $('.grid').masonry({
             itemSelector: '.grid-item',
-            columnWidth: 300,
+            columnWidth: 100,
         });
 
         $('.material-card').materialCard();

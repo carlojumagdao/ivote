@@ -43,7 +43,7 @@
 </style>
 
 </head>
-<body onLoad="setTimeout(location.href='/survey/answersurvey', '100000')">
+<body >
   <div class="wrapper">
 	<div class="login-box">
   <div class="login-box-body">
@@ -67,7 +67,7 @@
       		{!! csrf_field() !!}
             <div class="form-group has-feedback">
                 <center>
-                <label style="font-size: 14px; font-weight: bold">You Have Successfully Voted!<br> Thanks for your Participation</label>
+                <label style="font-size: 14px; font-weight: bold ; color: steelblue;">You Have Successfully Voted!<br>In ten 8 seconds you will be directed to the survey page . . . . .</label>
                 <h2>Vote Reference:<br>{{$votereference}}</h2>
                 <center>
                 
@@ -96,6 +96,11 @@
 <script src="{{ URL::asset('assets/bootstrap/js/bootstrap.min.js') }}"></script>
 <!-- iCheck -->
 <script src="{{ URL::asset('assets/plugins/iCheck/icheck.min.js')}}"></script>
+<script type="text/javascript">
+  window.setTimeout(function(){
+    window.location.href = "/survey/answersurvey";
+  },8000);
+</script>
 <script>
   //iCheck for checkbox and radio inputs
     $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({

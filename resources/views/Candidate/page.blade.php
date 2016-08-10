@@ -16,6 +16,8 @@
     html {
             position: relative;
             min-height: 100%;
+            overflow-x: hidden;
+            overflow-y: scroll;
     }
 
     .grid-item {
@@ -46,7 +48,7 @@
       footer {
       width:100%;
       height:100px;
-      position:absolute;
+      position:relative;
       bottom:0;
       left:0;
     }
@@ -86,9 +88,9 @@
     
         <div class="box-body" style="padding-left: 40px;padding-right:40px">
         @foreach($partylist as $party)
-            <div class="row panel" style="border-left: 4px solid {{$party->strPartyColor}}; background-color:rgba(0, 0, 0, 0.20)">
+            <div class="row panel" style="border-left: 13px solid {{$party->strPartyColor}}; background-color:rgba(0, 0, 0, 0.10)">
                  <div class="col-md-12">
-                 <div class="col-md-12" style="font-family:segoe ui;text-transform: capitalize;"><h3 style="letter-spacing:1px;font-family: helvetica;color: white ;text-shadow: 1px 1px 5px rgba(5, 5, 5, 0.62);">{{$party->strPartyName}}</h3></div>
+                 <div class="col-md-12" style="text-transform: capitalize;"><h3 style="letter-spacing:1px;font-family: helvetica;">{{$party->strPartyName}}</h3></div>
                  
                     
             @foreach($positions as $position)
@@ -98,12 +100,12 @@
                      
                     @if($candidate->strCandPosId == $position->strCandPosId )
                     @if($candidate->intCandParId == $party->intCandParId)
-                    <div class="col-md-2 col-xs-12" style="padding:10px;" >
-                    <div class="grid-item col-md-4 col-xs-12 ">
-                        <article class="material-card Teal">
+                    <div class="col-md-3 col-xs-12" style="padding:10px;padding-right:80px;" >
+                    <div class="grid-item col-md-4 col-xs-12 " style="padding-right:50px;">
+                        <article class="material-card Blue">
                             <h2>
-                                <span>{{$candidate->strMemFname}} {{$candidate->strMemLname}}</span>
-                                <strong>
+                                <span style="font-size:16px">{{$candidate->strMemFname}} {{$candidate->strMemLname}}</span>
+                                <strong style="font-size:14px">
                                     <i class="fa fa-fw fa-star"></i>
                                     {{$position->strPosName}}
                                 </strong>
@@ -112,8 +114,9 @@
                                 <div class="img-container">
                                     <img class="img-responsive" src="../assets/images/{{$candidate->txtCandPic}}">
                                 </div>
-                                <div class="mc-description">
+                                <div class="mc-description" style="font-size:14px;">
                                     Education Background: &nbsp {{ $candidate->strCandEducBack}}
+                                    <br>
                                     Platform: &nbsp {{ $candidate->strCandInfo}}
                                 </div>
                             </div>
@@ -126,7 +129,6 @@
                                 </h4>
                                 <a class="fa fa-fw fa-facebook"></a>
                                 <a class="fa fa-fw fa-twitter"></a>
-                                <a class="fa fa-fw fa-linkedin"></a>
                                 <a class="fa fa-fw fa-google-plus"></a>
                             </div>
                         </article>
@@ -142,9 +144,8 @@
         </div>
         
     </div>
-    </div>
-<footer style="text-shadow: 2px 2px 8px rgba(5, 5, 5, 0.62);background-color:rgba(0, 0, 0, 0.35);height:59px;">
-<center><p style="color:white;font-size:14px;font-family: segoe ui;padding-top:10px;">Copyright © 2015-2016 iVote++<br>All rights reserved</p></center>
+<footer style="text-shadow: 2px 2px 8px rgba(5, 5, 5, 0.20);background-color:rgba(248, 248, 248, 0.90);height:59px; border-top: 2px solid  DodgerBlue">
+<center><p class="responsive-text" style="font-size:14px;padding-top:10px;">Copyright © 2015-2016 iVote++<br>All rights reserved</p></center>
 </footer>
     
     <!-- jQuery 2.2.0 -->
@@ -161,7 +162,19 @@
 </script>
 <script type="text/javascript">
   $("header").responsiveText({
-     bottomStop : '100',
+     bottomStop : '550',
+     topStop    : '1500'
+});
+</script>
+<script type="text/javascript">
+  $("body").responsiveText({
+     bottomStop : '550',
+     topStop    : '1500'
+});
+</script>
+<script type="text/javascript">
+  $("footer").responsiveText({
+     bottomStop : '550',
      topStop    : '1500'
 });
 </script>

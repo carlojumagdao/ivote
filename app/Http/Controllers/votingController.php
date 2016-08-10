@@ -225,7 +225,12 @@ class votingController extends Controller
             Session::put('votereference', $VDID);
             $SurveyStatus = DB::table('tblSetting')->where('blSetSurvey', '=', 1)->get();
             if($SurveyStatus){
-                return redirect()->route("survey.answerSurvey");
+                $votereference = session('votereference');
+        
+                if(Session::has('memid')) Session::forget('memid');
+                if(Session::has('votereference')) Session::forget('memid');
+    
+                return Redirect::route('thanks', ['votereference'=>$votereference, 'memid'=>$memid]);
             } else{
                 $votereference = session('votereference');
         

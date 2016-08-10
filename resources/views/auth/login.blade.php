@@ -101,8 +101,14 @@
     <!-- <a href="#" style="color:white;">forgot password?</a><br> -->
   </div>
   <!-- /.form-box -->
-<br> 
-<center><p style="color:white;font-size:16px;">Powered by iVote++</p></center>
+<footer style="text-shadow: 2px 2px 8px rgba(5, 5, 5, 0.62);background-color:rgba(0, 0, 0, 0.35);height:59px;">
+<div class="col-md-8">
+      <p style="color:white;font-size:16px;font-family: segoe ui;padding-top:20px;margin-left:65px;">Powered by iVote++</p>
+</div>
+<div class="col-md-4">
+<img src="assets/images/ivote5.png" style="width:50%;padding-top:13px;">
+</div>
+</footer>
 </div>
 <!-- /.login-box -->
 
