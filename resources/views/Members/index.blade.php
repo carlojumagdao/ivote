@@ -192,6 +192,8 @@
                             <th>Sent Passcode?</th>
                             <th>Date Created</th>
                             <th>Date Updated</th>
+                            <th>Date Deleted</th>
+                            <th style="display:none">Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -208,12 +210,24 @@
                             @endif 
                             <td class="created">{{$value->created_at}}</td>
                             <td class="updated">{{$value->updated_at}}</td>
+                            <td class="deleted">
+                              {{$value->deleted_at}}
+                            </td>
+                            <td class="status" style="display:none">{{$value->blMemDelete}}</td>
                             <td>
+                                @if($value->blMemDelete == 0)
                                 <a href="member/view/{{$value->strMemberId}}" class="btn btn-primary btn-sm view" data-toggle="tooltip" title="View"><i class="fa fa-eye"></i></a>
                                 <a href="member/edit/{{$value->strMemberId}}" class="btn btn-warning btn-sm edit" data-toggle="tooltip" title="Edit"><i class="glyphicon glyphicon-edit"></i></a>
                                 <a class="btn btn-primary btn-sm send sendMember" data-toggle="tooltip" title="Send Passcode"><i class="glyphicon glyphicon-send"></i></a>
                                 <button class="btn btn-danger btn-sm delMember" data-toggle="tooltip" title="Delete"><i class="glyphicon glyphicon-trash"></i></button>
-                            </td></tr>
+                                @else
+                                <button class="btn btn-info btn-sm revMember" data-toggle="tooltip" title="Revert"><i class="glyphicon glyphicon-refresh"></i></button>
+                                @endif
+                            </td>
+                            <!-- <td>
+                                <a href="member/view/{{$value->strMemberId}}" class="btn btn-primary btn-sm revert" data-toggle="tooltip" title="View"><i class="glyphicon glyphicon-refresh"></i></a>
+                            </td> -->
+                          </tr>
                     @endforeach
                     </tbody>
                     <tfoot>
@@ -224,6 +238,8 @@
                             <th>Sent Passcode?</th>
                             <th>Date Created</th>
                             <th>Date Updated</th>
+                            <th>Date Deleted</th>
+                            <th style="display:none">Status</th>
                             <th>Action</th>
                         </tr>
                     </tfoot>
@@ -239,6 +255,11 @@
         </form>
     </div>
 
+    <div class="hide">
+        <form method="POST" action="{{ URL::to('/member/revert') }}" id="revform">
+            <input type="hidden" name="id" id="revmem">
+        </form>
+    </div>
 
     <div class="hide">
         <form method="POST" action="{{ URL::to('/member/send') }}" id="sendform">
@@ -269,7 +290,16 @@
         else
             return false;
     });
-
+    $(document).on("click", ".revMember", function(){
+        var x = confirm("Are you sure you want to revert this record?");
+        if (x){
+            var id = $(this).parent().parent().find('.id').text();
+            document.getElementById('revmem').value = id;
+            document.getElementById('revform').submit();
+        }
+        else
+            return false;
+    });
 
 
     $(document).on("click", ".sendMember", function(){
@@ -287,7 +317,7 @@
       var table = $('#dataTables-example').DataTable({
         columnDefs: [
           {
-            targets: [4, 5],
+            targets: [4, 5, 6],
             visible: false,
             searchable: false
           },
@@ -297,35 +327,25 @@
           }
         ]
       });
-
+      $('.status:contains(1)').parent().toggle();
       $('#show_meta').on('change', function () {
         if ($('#show_meta:checked').length > 0) {
-          table.columns([0, 1, 2, 3, 4, 5, 6]).visible(true);
+          table.columns([0, 1, 2, 3, 4, 5, 7]).visible(true);
         } else {
           table.columns([4, 5]).visible(false);
         }
       });
 
       $('#show_deleted').on('change', function () {
+        if ($('#show_deleted:checked').length > 0) {
+            $('.status:contains(1)').parent().toggle();
+          table.columns([0, 1, 2, 6]).visible(true);
+        } else {
+          $('.status:contains(1)').parent().toggle();
+          table.columns([4, 5, 6]).visible(false);
+        }
+        //$('.status:contains(0)').parent().toggle();
         table.draw();
-      });
-
-      $.fn.dataTableExt.afnFiltering.push(function (oSettings, aData, iDataIndex) {
-        var show_deleted = $('#show_deleted:checked').length;
-        if (!show_deleted) return aData[5] == '';
-        return true;
-      });
-
-      table.draw();
-
-      table.on('draw.dt', function () {
-        $('.submit-icon').on('click', function () {
-          $(this).closest('form').submit();
-        });
-      });
-
-      $('.submit-icon').on('click', function () {
-        $(this).closest('form').submit();
       });
     });
 </script>

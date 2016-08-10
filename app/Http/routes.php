@@ -46,6 +46,10 @@ Route::group(['middleware' => 'auth'], function(){
 		'uses' => 'formController@index',
 		'as' => 'member.index'
 	));
+	Route::post('/member/revert', array(
+		'uses' => 'formController@revert',
+		'as' => 'member.revert'
+	));	
 	Route::get('/member/view/{id}', array(
 		'uses' => 'formController@view',
 		'as' => 'member.view'
@@ -164,6 +168,10 @@ Route::group(['middleware' => 'auth'], function(){
 		'uses' => 'positionController@index',
 		'as' => 'position.index'
 	));
+	Route::post('/position/revert', array(
+		'uses' => 'positionController@revert',
+		'as' => 'position.revert'
+	));	
 	Route::get('/position/create', array(
 		'uses' => 'positionController@create',
 		'as' => 'position.create'

@@ -21,7 +21,7 @@ class formController extends Controller
 {
     
     public function index(){
-        $Members = DB::table('tblMember')->where('blMemDelete', '=', 0)->get();
+        $Members = DB::table('tblMember')->get();
         return view('Members.index', ['Members' => $Members, 'intCounter'=>0]);
     } 
     public function view($id){
@@ -76,12 +76,27 @@ class formController extends Controller
         } else{           
             $Member = Member::find($id);
             $Member->blMemDelete = 1;
+            $Member->deleted_at = date("Y-m-d H:i:s");
             $Member->save();
         }
         //redirect
         $request->session()->flash('message', 'Successfully deleted.');  
         return Redirect::back();
     } 
+
+    public function revert(Request $request){
+        $id = $request->input("id");
+        $candidate = DB::table('tblCandidate')->where('strCandMemId', '=', $id)->get();
+          
+            $Member = Member::find($id);
+            $Member->blMemDelete = 0;
+            $Member->deleted_at = "0000-00-00 00:00:00";
+            $Member->save();
+        
+        //redirect
+        $request->session()->flash('message', 'Member reverted.');  
+        return Redirect::back();
+    }
 
     public function send(Request $request){
         $id = $request->input("id");

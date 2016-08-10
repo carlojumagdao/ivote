@@ -18,7 +18,7 @@ use App\Http\Controllers\Controller;
 class positionController extends Controller
 {
     public function index(){
-        $Positions = DB::table('tblPosition')->where('blPosDelete', '=', 0)->get();
+        $Positions = DB::table('tblPosition')->get();
         return view('Positions.index', ['Positions' => $Positions, 'intCounter'=>0]);
     } 
     public function create(){
@@ -41,6 +41,20 @@ class positionController extends Controller
         $code = $counter->smartcounter($id);
 
         return view('Positions.addPosition', ['posForm' => $posForm, 'code' => $code]);
+    }
+
+    public function revert(Request $request){
+        $id = $request->input("id");
+        $Positions = DB::table('tblPosition')->where('strPositionId', '=', $id)->get();
+          
+            $Position = Position::find($id);
+            $Position->blPosDelete = 0;
+            $Position->deleted_at = "0000-00-00 00:00:00";
+            $Position->save();
+        
+        //redirect
+        $request->session()->flash('message', 'Member reverted.');  
+        return Redirect::back();
     }
 
     public function update(Request $request){
