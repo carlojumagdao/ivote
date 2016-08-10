@@ -225,19 +225,17 @@ Route::group(['middleware' => 'auth'], function(){
 		'uses' => 'candidateController@delete',
 		'as' => 'candidate.delete'
 	));
-    Route::any('/candidates/edit', array(
+    
+    Route::post('/candidates/edit', array(
 		'uses' => 'candidateController@editpage',
-		'as' => 'candidate.edit'
-	));
-    Route::any('/candidates/update', array(
-		'uses' => 'candidateController@editpage',
-		'as' => 'candidate.edit'
+		'as' => 'candidate.editpage'
 	));
 
-    Route::post('/candidates/editpage', array(
+    Route::post('/candidates/update', array(
 		'uses' => 'candidateController@update',
 		'as' => 'candidate.update'
 	));
+    
     
     Route::post('/candidates/filterposition', array(
 		'uses' => 'candidateController@filterposition',
