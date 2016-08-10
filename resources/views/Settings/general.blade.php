@@ -67,7 +67,8 @@
                             'class' => 'col s12', 
                             'novalidate' => 'novalidate'
                          ) ) !!}
-                        {!! Form::label( 'file', 'File Path:' ) !!}
+                        {!! Form::label( 'file', 'File Path ',array(
+                            'class' => 'required') ) !!}
                         {!! Form::file
                             ('file',array(
                             'id' => 'file',
