@@ -79,6 +79,9 @@
     <link rel="stylesheet" href="{{ URL::asset('assets/plugins/iCheck/all.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('assets/dist/css/AdminLTE.min.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('assets/dist/css/skins/_all-skins.min.css') }}">
+    <!-- for the jquery to hide positions without candidate -->
+    <script src="{{ URL::asset('assets/jquery/jquery.min.js') }}"></script>
+
     <style>
         .body{
             padding:0;
@@ -124,24 +127,24 @@
 <body class="body">
     @foreach($election as $set)
     <div class="row header2">
-        <div class="col-md-2 col-xs-4 col-md-offset-2">
+        <div class="col-md-2 col-xs-4 col-md-offset-1">
             <img src="assets/images/{{$set->txtSetLogo}}" class="paddify img-responsive">
         </div>
-        <div class="col-md-3 col-xs-8">
-            <h2 style="font-family:helvetica;text-align:left;text-transform:capitalize">{{$set->strSetElecName}}</h3>
-            <h4  style="font-family:segoe ui;text-align:left;margin-top:10px;text-transform:capitalize">{{$set->strHeader}}</h4>
-            <h5  style="font-family:segoe ui;text-align:left;text-transform:capitalize">Powered by: iVOTE++</h5>
+        <div class="col-md-5 col-xs-8">
+            <h2>{{$set->strSetElecName}}</h2>
+            <h4>{{$set->strHeader}}</h4>
+            <h5>Powered by: iVOTE++</h5>
         </div>
     </div>
-    
-    <div class="row header2">
-        <div class="col-md-4 col-md-offset-1" >
-            <h4 style="font-family:helvetica; letter-spacing: 1px; text-transform: uppercase">Select Your Candidate</h4>
+    <div class="row header2" style="border-top:1px solid white;">
+        <div class="col-lg-10 col-lg-offset-1">
+            <div class="pull-left" >
+                <h4>SELECT YOUR CANDIDATE</h4>
+            </div>
+            <div class="pull-right" >
+                <h4>Member: <span style="font-weight:bold">{{$memberName}}</span> </h4>
+            </div>  
         </div>
-        <div class="col-md-2 col-md-offset-4" >
-            <h5 style="font-family:segoe ui; ">Member: <big style="font-weight:bold;font-family:helvetica;text-transform:capitalize">{{$memberName}}</big> </h5>
-        </div>
-            
     </div>
     @endforeach
     <br>
@@ -194,49 +197,50 @@
         <div class="col-md-10 col-md-offset-1">
             
             @foreach($positions as $position)
-            <div class="box-header boxhead" style="background-color: @if($position->strPosColor == NULL) cornflowerblue @else {{$position->strPosColor}} @endif ">
+            <div class="box-header boxhead {{$position->strPosName}}" style="background-color: @if($position->strPosColor == NULL) cornflowerblue @else {{$position->strPosColor}} @endif ">
                 <h3  style="font-family:helvetica;letter-spacing:1px;" class="box-title">{{$position->strPosName}} | <span style="font-size: 12px;">vote limit: {{$position->intPosVoteLimit}}</span></h3>
                 <input type="hidden" name='position[]' value='{{$position->strPositionId}}'>
             </div>
-            <div class="box-body boxbody" style="padding: 40px;">
-                    @foreach($candidates as $candidate)
+            <div class="box-body boxbody {{$position->strPosName}}" style="padding: 40px;">
+                <?php $intCounter = 0; ?>
+                @foreach($candidates as $candidate)
                     @if($candidate->strCandPosId == $position->strCandPosId )
-                    
-                
-                    
-                <div class="col-md-2 col-xs-12">
-                    <div class="thumbnail boxtheme" style="border-left: 5px solid {{$candidate->strPartyColor}}; ">
-                        <center>
-
-                        <div class="tooltipped" data-position="top" data-delay="50" data-tooltip="logo picture">
-                            <img id="cand-pic" src="../assets/images/{{$candidate->txtCandPic}}" style="background-size: contain;  border: 0px;" class="img-responsive"/> 
+                        <div class="col-lg-3 col-md-5 col-xs-12">
+                            <div class="thumbnail boxtheme" style="border-left: 5px solid {{$candidate->strPartyColor}}; ">
+                                <center>
+                                <div class="checkbox">
+                                    <label>
+                                        <div>
+                                            <img id="cand-pic" src="../assets/images/{{$candidate->txtCandPic}}" style="background-size: contain; border: 0px;" class="img-responsive"/> 
+                                        </div>
+                                        <input style="text-transform:capitalize" type="checkbox" value="{{$candidate->strCandId}}" name="vote[]"  class="pos_{{$position->strPositionId}} v_{{$candidate->intCandParId}}" onclick=" return maxCast_{{$position->strPositionId}}()" onchange="return maxCast_{{$position->strPositionId}}()"
+                                        <?php
+                                            $cdvote = old('vote');
+                                            for($x=0; $x<sizeOf(old('vote')); $x++){
+                                
+                                                if($cdvote[$x] == $candidate->strCandId)
+                                                  echo 'checked=checked';
+                                            }
+                                        
+                                        ?>
+                                       >
+                                        {{$candidate->strMemFname}} {{$candidate->strMemLname}}
+                                    </label>
+                                    <p style="font-size: 10px;">{{$candidate->strPartyName}}</p>
+                                </div>
+                                </center>
+                            </div>
                         </div>
-                        <div class="checkbox">
-                            <label>
-                                
-                                <input style="text-transform:capitalize" type="checkbox" value="{{$candidate->strCandId}}" name="vote[]"  class="pos_{{$position->strPositionId}} v_{{$candidate->intCandParId}}" onclick=" return maxCast_{{$position->strPositionId}}()" onchange="return maxCast_{{$position->strPositionId}}()"
-                                
-                                <?php
-                                    $cdvote = old('vote');
-                                    
-                                  for($x=0; $x<sizeOf(old('vote')); $x++){
-                        
-                                      if($cdvote[$x] == $candidate->strCandId)
-                                          echo 'checked=checked';
-                                  }
-                                
-                                ?>
-        
-                               >
-                                     {{$candidate->strMemFname}} {{$candidate->strMemLname}}
-                            </label>
-                            <p style="font-size: 10px;">{{$candidate->strPartyName}}</p>
-                        </div>
-                        </center>
-                    </div>
-                </div>
+                        <?php $intCounter++; ?>
                     @endif
-                @endforeach          
+                @endforeach  
+                @if(!$intCounter)
+                    <script>
+                         $(function(){
+                            $(".{{$position->strPosName}}").hide();
+                          });
+                    </script>
+                @endif         
             </div>
             <br>
             @endforeach
