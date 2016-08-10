@@ -4,6 +4,7 @@
 @stop   
 @section('style')
     <link rel="stylesheet" href="{{ URL::asset('assets/plugins/colorpicker/bootstrap-colorpicker.min.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('assets/plugins/select2/select2.min.css') }}">
     <style>
         .colorpicker {
             z-index: 9999 !important;
@@ -83,7 +84,7 @@
                      {!! Form::label( 'member', 'Candidate Name:' ) !!}
                      </div>
                      <div class="col-md-10">
-                     <select name="member" class="form-control" required>
+                     <select name="member" class="form-control select2 " onchange="getPosition()" id="memberId" required>
                          @foreach($Members as $Member)
                             @if($Member->strMemberId == $Candidate->strCandMemId)
                          <option value='{{$Member->strMemberId}}' selected>{{$Member->strMemFname}} {{$Member->strMemLname}}</option>
@@ -98,8 +99,8 @@
                     <div class="col-md-2">
                      {!! Form::label( 'position', 'Position:' ) !!}
                     </div>
-                    <div class="col-md-10">
-                     <select name="position" class="form-control" required>
+                    <div class="col-md-10" id="positionId">
+                     <select name="position" class="form-control select2" required>
                          @foreach($Positions as $Position)
                          @if($Position->strPositionId == $Candidate->strCandPosId)
                          <option value='{{$Position->strPositionId}}' selected>{{$Position->strPosName}}</option>
@@ -115,7 +116,7 @@
                      {!! Form::label( 'party', 'Party Affiliation:' ) !!}
                     </div>
                     <div class="col-md-10">
-                     <select name="party" class="form-control" required>
+                     <select name="party" class="form-control select2" required>
                          @foreach($Parties as $Party)
                           @if($Party->intPartyId == $Candidate->intCandParId)
                          <option value='{{$Party->intPartyId}}' selected>{{$Party->strPartyName}}</option>
@@ -203,14 +204,35 @@
         
     });
 </script>
+<script>
+function getPosition() {
+    var id = document.getElementById("memberId").value;
+    $.ajax({
+        url: "{{ URL::to('candidates/filterposition') }}",
+        type:"POST",
+        beforeSend: function (xhr) {
+            var token = $('meta[name="csrf_token"]').attr('content');
+            if (token) {
+                  return xhr.setRequestHeader('X-CSRF-TOKEN', token);
+            }
+        },
+        data: { id : id },
+        success:function(data){
+            $( "#positionId" ).empty();
+            $( "#positionId" ).append(data);
+        },error:function(){ 
+            alert("Error: Please check your input.");
+        }
+    }); //end of ajax
+}
+</script>
 <script src="{{ URL::asset('assets/plugins/select2/select2.full.min.js') }}"></script>
 <script src="{{ URL::asset('assets/plugins/colorpicker/bootstrap-colorpicker.min.js') }}"></script>
 <script>
+    $(".select2").select2();
     //Colorpicker
     $(".my-colorpicker1").colorpicker();
     //color picker with addon
     $(".my-colorpicker2").colorpicker();
-
 </script>
-
 @stop
