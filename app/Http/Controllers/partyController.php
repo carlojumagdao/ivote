@@ -28,7 +28,7 @@ class partyController extends Controller
     	$rules = array(
 			'txtPartyName' => 'required',
 			'txtPartyLeader' => 'required',
-			'txtPartyColor' => 'required',
+			// 'txtPartyColor' => 'required',
 		);
 		$messages = [
 		    'required' => 'The :attribute field is required.',
@@ -62,7 +62,7 @@ class partyController extends Controller
     	$rules = array(
 			'txtPartyName' => 'required',
 			'txtPartyLeader' => 'required',
-			'txtPartyColor' => 'required'
+			// 'txtPartyColor' => 'required'
 		);
 		$messages = [
 		    'required' => 'The :attribute field is required.',

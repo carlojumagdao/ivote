@@ -6,6 +6,12 @@
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/datatables/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/datatables/datatables-responsive/css/dataTables.responsive.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('assets/plugins/colorpicker/bootstrap-colorpicker.min.css') }}">
+    <style>
+         .required:after{
+        content: "*";
+        color:red
+        }
+    </style>
 @stop
 @section('content')
 <!-- START CONTENT -->
@@ -65,7 +71,8 @@
             </div>
             <div class="box-body">
                 <div class="form-group col-md-12 ">
-                    {!! Form::label( 'PositionId', 'Position Id:' ) !!}
+                    {!! Form::label( 'PositionId', 'Position Id ',array(
+                        'class' => 'required') ) !!}
                     {!! Form::text
                         ('PositionId', $strPositionId, array(
                         'readonly',
@@ -76,7 +83,8 @@
                     !!}  
                 </div>
                 <div class="form-group col-md-12 ">
-                    {!! Form::label( 'PositionName', 'Position Name:' ) !!}
+                    {!! Form::label( 'PositionName', 'Position Name ',array(
+                        'class' => 'required') ) !!}
                     {!! Form::text
                         ('PositionName', $strPosName, array(
                         'id' => 'PositionName',
@@ -87,7 +95,8 @@
                     !!}  
                 </div>
                 <div class="form-group col-md-12 ">
-                    {!! Form::label( 'VoteLimit', 'Vote Limit:' ) !!}
+                    {!! Form::label( 'VoteLimit', 'Vote Limit ',array(
+                        'class' => 'required') ) !!}
                     {!! Form::number
                         ('VoteLimit', $intVoteLimit, array(
                         'id' => 'VoteLimit',
