@@ -33,6 +33,14 @@ from tblaudit order by date, time desc;");
         else return view('audit-none');
         
     }
+    
+    public function vote(){
+        $voted = DB::table('tblvoteheader')
+                ->join('tblmember', 'tblvoteheader.strVHMemId', '=', 'tblmember.strMemberId')
+                ->get();
+        
+        return view('auditvote', ['voted' => $voted]);
+    }
 
 }
 

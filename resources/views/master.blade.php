@@ -205,6 +205,11 @@
             <i class="fa fa-unlock-alt"></i> <span>Audit</span>
           </a>
         </li>
+        <li>
+          <a href="{{ URL::to('/audit/vote') }}">
+            <i class="fa fa-check-square-o"></i> <span>Voting Audit</span>
+          </a>
+        </li>  
       </ul>
     </section>
     <!-- /.sidebar -->
