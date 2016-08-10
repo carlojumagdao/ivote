@@ -149,7 +149,7 @@
       var table = $('#dataTables-example').DataTable({
         columnDefs: [
           {
-            targets: [3, 4, 5, 6],
+            targets: [3, 4, 5],
             visible: false,
             searchable: false
           },
@@ -162,19 +162,19 @@
       $('.status:contains(1)').parent().toggle();
       $('#show_meta').on('change', function () {
         if ($('#show_meta:checked').length > 0) {
-          table.columns([0, 1, 2, 3, 4, 5, 7]).visible(true);
+          table.columns([0, 1, 2, 3, 4, 5]).visible(true);
         } else {
-          table.columns([3, 4, 5, 6]).visible(false);
+          table.columns([3, 4, 5]).visible(false);
         }
       });
 
       $('#show_deleted').on('change', function () {
         if ($('#show_deleted:checked').length > 0) {
             $('.status:contains(1)').parent().toggle();
-          table.columns([0, 1, 2, 5, 6]).visible(true);
+          table.columns([0, 1, 2, 5, 6, 7]).visible(true);
         } else {
           $('.status:contains(1)').parent().toggle();
-          table.columns([4, 5, 6]).visible(false);
+          table.columns([3, 4, 5]).visible(false);
         }
         //$('.status:contains(0)').parent().toggle();
         table.draw();
