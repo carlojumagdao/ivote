@@ -30,8 +30,7 @@ class UserMiddleware
                     if($SH){
                         return view('votedandsurveyed');
                     }
-                    
-                    else return $next($request);
+                    else return view('votednotsurveyed');
             
                 } 
                 else{

@@ -12,6 +12,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Redirect;
 use Session;
+use App\SurveyHeader AS SurveyHeader;
 
 class votingController extends Controller
 {
@@ -22,7 +23,7 @@ class votingController extends Controller
      */
     public function page()
     {
-        
+
         $party = DB::table('tblSetting')->where('blSetParty', '=', 1)->get();
         
         if($party){
@@ -86,7 +87,7 @@ class votingController extends Controller
                             ->select('tblcandidate.*', 'tblmember.strMemFname', 'tblmember.strMemLname', 'tblparty.strPartyName', 'tblparty.strPartyColor')
                             ->get();
             $election = DB::table('tblsetting')->get();
-            return view('Voting.page', ['partylist'=>$partylist, 'positions'=>$only, 'candidates'=>$candidates, 'election' => $election]);
+            return view('Voting.page', ['partylist'=>$partylist, 'positions'=>$only, 'candidates'=>$candidates, 'election' => $election, 'vote' => old('vote')]);
             
             
         }
@@ -153,9 +154,39 @@ class votingController extends Controller
         }
         
     }
-    
-    public function cast()
+
+    public function summary(Request $request){
+        $request->flash();
+        $voted = "";
+        if(isset($_POST['vote'])){
+            $count = 0;
+            foreach ($_POST['vote'] as $candID) {
+                $candidates = DB::table('tblcandidate')
+                            ->join('tblmember', 'tblcandidate.strCandMemId', '=', 'tblmember.strMemberId')
+                            ->join('tblposition', 'tblcandidate.strCandPosId', '=', 'tblposition.strPositionId')
+                            ->where('blCandDelete', '=', 0)
+                            ->where('strCandId', '=', $candID)
+                            ->select('tblcandidate.*', 'tblmember.strMemFname', 'tblmember.strMemLname', 'tblposition.strPosName', 'tblposition.strPosColor')
+                            ->get();    
+                $voted[$count] = $candidates[0];
+                $count++;
+            }
+            
+        }
+        $election = DB::table('tblsetting')->get();
+        return view('Voting.summary', ['candidates'=>$voted, 'election' => $election]);
+            
+    }
+
+    public function cast(Request $request)
     {
+        
+        
+        if($_POST['redirect'] == 1)
+            return Redirect::route('voting.page')->withInput();
+        
+    
+        
         try{
             DB::beginTransaction();  
             

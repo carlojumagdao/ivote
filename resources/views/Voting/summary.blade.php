@@ -60,7 +60,6 @@
         $memberName = "None";
     }
 
-   
 ?>
 
 <!DOCTYPE html>
@@ -136,7 +135,7 @@
     
     <div class="row header2">
         <div class="col-md-4 col-md-offset-1" >
-            <h4 style="font-family:helvetica; letter-spacing: 1px; text-transform: uppercase">Select Your Candidate</h4>
+            <h4 style="font-family:helvetica; letter-spacing: 1px; text-transform: uppercase">Summary of Votes</h4>
         </div>
         <div class="col-md-2 col-md-offset-4" >
             <h5 style="font-family:segoe ui; ">Member: <big style="font-weight:bold;font-family:helvetica;text-transform:capitalize">{{$memberName}}</big> </h5>
@@ -169,84 +168,62 @@
         {!! Form::open( array(
                     'method' => 'post',
                     'id' => 'form-vote',
-                    'action' => 'votingController@summary',
+                    'action' => 'votingController@cast',
+                    'onsubmit' => 'return confirm_submit()',
                     'class' => 'col s12',
                     'files' => true
                 ) ) !!}
-        <div class="col-md-10 col-md-offset-1">
-        <div class="box-header boxhead" style="background-color: cornflowerblue ">
-            <h3 style="font-family:helvetica;letter-spacing:1px;" class="box-title">Vote Straight ?</h3>
-        </div>
-        <div class="box-body boxbody" style="padding: 40px;font-family:segoe ui;">
-            @foreach($partylist as $party)
-            @if($party->strPartyName != 'Independent')
-            <div class="radio">
-                <label >
-                    <input  type="radio" value="{{$party->intCandParId}}" name="par" class="vote_{{$party->intCandParId}}" onclick="revert(); auto_{{$party->intCandParId}}()" value='{{$party->strPartyName}}'>
-                    {{$party->strPartyName}}
-                </label>
-            </div>
-            @endif
-             @endforeach
-        </div>
-            <br>
-        </div>    
+           
         <div class="col-md-10 col-md-offset-1">
             
-            @foreach($positions as $position)
-            <div class="box-header boxhead" style="background-color: @if($position->strPosColor == NULL) cornflowerblue @else {{$position->strPosColor}} @endif ">
-                <h3  style="font-family:helvetica;letter-spacing:1px;" class="box-title">{{$position->strPosName}} | <span style="font-size: 12px;">vote limit: {{$position->intPosVoteLimit}}</span></h3>
-                <input type="hidden" name='position[]' value='{{$position->strPositionId}}'>
-            </div>
+            
             <div class="box-body boxbody" style="padding: 40px;">
+                <center>
                     @foreach($candidates as $candidate)
-                    @if($candidate->strCandPosId == $position->strCandPosId )
-                    
+                     
                 
                     
-                <div class="col-md-2 col-xs-12">
-                    <div class="thumbnail boxtheme" style="border-left: 5px solid {{$candidate->strPartyColor}}; ">
-                        <center>
-
-                        <div class="tooltipped" data-position="top" data-delay="50" data-tooltip="logo picture">
-                            <img id="cand-pic" src="../assets/images/{{$candidate->txtCandPic}}" style="background-size: contain;  border: 0px;" class="img-responsive"/> 
-                        </div>
-                        <div class="checkbox">
-                            <label>
-                                
-                                <input style="text-transform:capitalize" type="checkbox" value="{{$candidate->strCandId}}" name="vote[]"  class="pos_{{$position->strPositionId}} v_{{$candidate->intCandParId}}" onclick=" return maxCast_{{$position->strPositionId}}()" onchange="return maxCast_{{$position->strPositionId}}()"
-                                
-                                <?php
-                                    $cdvote = old('vote');
-                                    
-                                  for($x=0; $x<sizeOf(old('vote')); $x++){
+                    <div class="row col-md-offset-4">
                         
-                                      if($cdvote[$x] == $candidate->strCandId)
-                                          echo 'checked=checked';
-                                  }
+                            <center>
+
+                        <div class="tooltipped col-md-3" data-position="top" data-delay="50" data-tooltip="logo picture">
+                            <img id="cand-pic" src="../assets/images/{{$candidate->txtCandPic}}" style="background-size: contain;  border: 0px; border-left: 5px solid {{$candidate->strPosColor}};" class="img-responsive"/> 
+                        </div>
+                        <div class="col-md-3">
+                            <label style="font-size: 20px;">
+                                <input style="text-transform:capitalize" type="hidden" value="{{$candidate->strCandId}}" name="vote[]">
+                                <br>
                                 
-                                ?>
-        
-                               >
                                      {{$candidate->strMemFname}} {{$candidate->strMemLname}}
                             </label>
-                            <p style="font-size: 10px;">{{$candidate->strPartyName}}</p>
+                            <p style="font-size: 15px;">{{$candidate->strPosName}}</p>
                         </div>
                         </center>
                     </div>
-                </div>
-                    @endif
-                @endforeach          
-            </div>
-            <br>
-            @endforeach
-        </div>
-        <div class="row"  style="padding-right:72px;">
-            <div class="col-md-2 col-md-offset-10 col-xs-4 col-xs-offset-4 col-sm-4">
-                <input style="font-family:segoe ui;height:40px;" type="submit" class="btn btn-primary" name="btnSubmit" value="CAST MY VOTES!">
+                    <br>
+                    <div class="col-md-6 col-md-offset-3" style="border-bottom: 1px solid {{$color}};">
+                    
+                    </div>
+                    <br>
+                @endforeach  
+                    </center>
+                <input type="hidden" id="blRedirect" name="redirect">
+                <div class="row"  style="padding-right:72px;">
+            <a style="font-family:segoe ui;height:40px;" onclick="redirect()"><div class="col-md-1 col-md-offset-6 col-xs-4 col-xs-offset-3 col-sm-4" style="width:145px">
+                change my votes |
+            </div></a>
+            <div class="col-md-1 col-xs-4 col-sm-4">
+                <input style="font-family:segoe ui;height:40px;" type="submit" class="btn btn-primary" name="btnSubmit" value="SUBMIT MY VOTES!">
             </div>
             
         </div>
+            </div>
+            <br>
+            
+           
+        </div>
+        
          {!! Form::close() !!}
     </div>
     <br>
@@ -293,29 +270,6 @@
   });
 </script>
 <script>
-@foreach($positions as $position)
-
-function maxCast_{{$position->strPositionId}}(){
-
-		var maxcheck = {{$position->intPosVoteLimit}};
-		var position = "{{$position->strPosName}}";
-		
-		var checkedBox = $(".pos_{{$position->strPositionId}}:checked").size();
-		var radio = document.getElementsByName('par');
-        for(var x=0; x<radio.length; x++){
-            if(radio[x].checked == true) radio[x].checked=false; 
-        }
-		if(checkedBox > maxcheck){
-		
-			alert('You can only vote ' + maxcheck + ' from the ' + position + ' position.');document.voteform; return false;
-			
-		}
-		
-		else return true;
-	}
- @endforeach
-</script>
-<script>
     function confirm_submit(){
         var r = confirm("Are you sure you want to cast this votes?");
         if (r == true) {
@@ -325,23 +279,10 @@ function maxCast_{{$position->strPositionId}}(){
         }
     }
     
-    @foreach($partylist as $party)
-    function auto_{{$party->intCandParId}}(){
-        
-        $('.v_{{$party->intCandParId}}').prop('checked', true);
+    function redirect(){
+        document.getElementById('blRedirect').value = 1;
+        document.getElementById('form-vote').submit();
     }
-    
-    @endforeach
-    
-    
-    function revert(){
-        @foreach($partylist as $party)
-        $('.v_{{$party->intCandParId}}').prop('checked', false);
-        @endforeach
-    }
-    
-    
-    
     
 </script>
 @yield('script')   

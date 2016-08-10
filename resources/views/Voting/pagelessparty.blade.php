@@ -147,7 +147,7 @@
         {!! Form::open( array(
                     'method' => 'post',
                     'id' => 'form-vote',
-                    'action' => 'votingController@cast',
+                    'action' => 'votingController@summary',
                     'onsubmit' => 'return confirm_submit()',
                     'class' => 'col s12',
                     'files' => true
@@ -175,7 +175,20 @@
                         </div>
                         <div class="checkbox">
                             <label>
-                                <input style="text-transform:capitalize" type="checkbox" value="{{$candidate->strCandId}}" name="vote[]" class="pos_{{$position->strPositionId}}" onclick=" return maxCast_{{$position->strPositionId}}()">
+                                <input style="text-transform:capitalize" type="checkbox" value="{{$candidate->strCandId}}" name="vote[]" class="pos_{{$position->strPositionId}}" onclick=" return maxCast_{{$position->strPositionId}}()"
+                                
+                                       <?php
+                                    $cdvote = old('vote');
+                                    
+                                  for($x=0; $x<sizeOf(old('vote')); $x++){
+                        
+                                      if($cdvote[$x] == $candidate->strCandId)
+                                          echo 'checked=checked';
+                                  }
+                                
+                                ?>
+                                       
+                                       >
                                      {{$candidate->strMemFname}} {{$candidate->strMemLname}}
                             </label>
                         </div>

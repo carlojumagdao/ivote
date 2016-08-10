@@ -396,10 +396,16 @@ Route::group(['middleware' => 'userlog'], function(){
 		'as' => 'voting.page'
 	));
     
-    Route::post('/vote', array(
+    Route::post('/summary', array(
+		'uses' => 'votingController@summary',
+		'as' => 'voting.summary'
+	));
+    
+    Route::post('/cast', array(
 		'uses' => 'votingController@cast',
 		'as' => 'voting.cast'
 	));
+    
     //Voting Route
     
     Route::get('/query',array(
