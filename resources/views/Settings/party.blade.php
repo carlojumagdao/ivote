@@ -8,6 +8,10 @@
         .colorpicker {
             z-index: 9999 !important;
         }
+        .required:after{
+        content: "*";
+        color:red
+        }
     </style>
 @stop
 @section('content')
@@ -92,7 +96,8 @@
                     'files' => true
                 ) ) !!}
                 <div class="form-group col-md-12 ">
-                    {!! Form::label( 'PartyName', 'Party Name:' ) !!}
+                    {!! Form::label( 'PartyName', 'Party Name ',array(
+                        'class' => 'required') ) !!}
                     {!! Form::text
                         ('PartyName', '', array(
                         'id' => 'PartyName',
@@ -103,7 +108,8 @@
                     !!}  
                 </div>
                 <div class="form-group col-md-12 ">
-                    {!! Form::label( 'PartyLeader', 'Party Leader:' ) !!}
+                    {!! Form::label( 'PartyLeader', 'Party Leader ',array(
+                        'class' => 'required') ) !!}
                     {!! Form::text
                         ('PartyLeader', '', array(
                         'id' => 'PartyLeader',

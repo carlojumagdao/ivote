@@ -9,6 +9,10 @@
         .colorpicker {
             z-index: 9999 !important;
         }
+        .required:after{
+        content: "*";
+        color:red
+    }
     </style>
 @stop
 @section('content')
@@ -77,7 +81,8 @@
                 </div>
                  <div class="form-group col-md-12 ">
                      <div class="col-md-2 ">
-                     {!! Form::label( 'member', 'Candidate Name:' ) !!}
+                     {!! Form::label( 'member', 'Candidate Name ',array(
+                            'class' => 'required') ) !!}
                      </div>
                      <div class="col-md-10">
                      <select name="member" class="form-control select2" id="memberId" onchange="getPosition()" required>
@@ -90,7 +95,8 @@
                 </div>
                 <div class="form-group col-md-12 ">
                     <div class="col-md-2">
-                     {!! Form::label( 'position', 'Position:' ) !!}
+                     {!! Form::label( 'position', 'Position ',array(
+                            'class' => 'required') ) !!}
                     </div>
                     <div class="col-md-10" id="positionId">
                      <select name="position" class="form-control select2" required>
@@ -111,8 +117,7 @@
                             'id' => 'educback',
                             'placeholder' => "This will be use for the campaign page",
                             'name' => 'txtEducback',
-                            'class' => 'form-control',
-                            'required' => true,)) 
+                            'class' => 'form-control')) 
                         !!}  
                     </div> 
                 </div>
@@ -127,7 +132,7 @@
                             'placeholder' => "This will be use for the campaign page",
                             'name' => 'txtinfo',
                             'class' => 'form-control',
-                            'required' => true,)) 
+                            )) 
                         !!}
                     </div>  
                 </div>

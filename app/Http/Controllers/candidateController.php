@@ -73,8 +73,8 @@ class candidateController extends Controller
        $rules = array(
 			'member' => 'required',
 			'position' => 'required',
-            'txtEducback' => 'required',
-            'txtinfo' => 'required',
+            // 'txtEducback' => 'required',
+            // 'txtinfo' => 'required',
             'image' => 'required|mimes:jpeg,jpg,png,bmp|max:50000',
 		);
 		$messages = [

@@ -36,7 +36,7 @@ class gensetController extends Controller
         // var_dump($_POST);  
     	$rules = array(
 			'txtElectionTitle' => 'required',
-			'txtElectionDesc' => 'required',
+			// 'txtElectionDesc' => 'required',
             'txtSchedule' => 'required',
             'txtHeader' => 'required',
             'logo' => 'mimes:jpeg,jpg,png,bmp|max:10000',

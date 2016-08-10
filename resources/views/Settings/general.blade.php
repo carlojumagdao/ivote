@@ -10,6 +10,10 @@
     h3{
         margin: -10px;
     }
+    .required:after{
+        content: "*";
+        color:red
+    }
 </style>
 @stop
 @section('content')
@@ -76,8 +80,9 @@
                         </span>
                         <span class='label label-info' id="upload-file-info"></span>
                     </div>
-                    <div class="form-group col-md-12 ">
-                        {!! Form::label( 'Header', 'Organization Name:' ) !!}
+                    <div class="form-group col-md-12 :after">
+                        {!! Form::label( 'Header', 'Organization Name ', array(
+                            'class' => 'required') ) !!}
                         {!! Form::text
                             ('Header', $strHeaders, array(
                             'id' => 'Header',
@@ -88,7 +93,8 @@
                         !!}  
                     </div>
                     <div class="form-group col-md-12 ">
-                        {!! Form::label( 'Address', "Organization's Address:" ) !!}
+                        {!! Form::label( 'Address', "Organization's Address ",array(
+                            'class' => 'required') ) !!}
                         {!! Form::text
                             ('Address', $strSetAddress, array(
                             'id' => 'Address',
@@ -99,7 +105,8 @@
                         !!}  
                     </div>
                     <div class="form-group col-md-12 ">
-                    {!! Form::label( 'ElectionTitle', 'Election Title:' ) !!}
+                    {!! Form::label( 'ElectionTitle', 'Election Title ', array(
+                            'class' => 'required') ) !!}
                         {!! Form::text
                             ('ElectionTitle', $strElecName, array(
                             'id' => 'ElectionTitle',
