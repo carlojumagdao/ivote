@@ -321,9 +321,11 @@
 
 var clock = $('.clock').FlipClock({{$day}}, {
 		clockFace: 'DailyCounter',
-		countdown: true
+		countdown: true,
+		stop: function () {
+	        window.location.href = "/"
+	    }
 	}); 
-
 </script>
 
 

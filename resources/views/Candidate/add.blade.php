@@ -35,7 +35,7 @@
             </div>
         @endif
     </div>
-    <div class="col-md-12">
+    <div class="col-md-8">
         <div class="box">
             <div class="box-header with-border">
                 <h3 class="box-title">Add New Candidate</h3>
