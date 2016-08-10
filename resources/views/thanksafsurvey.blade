@@ -43,7 +43,7 @@
 </style>
 
 </head>
-<body onLoad="setTimeout(location.href='/survey/answersurvey', '100000')">
+<body>
   <div class="wrapper">
 	<div class="login-box">
   <div class="login-box-body">
@@ -67,8 +67,7 @@
       		{!! csrf_field() !!}
             <div class="form-group has-feedback">
                 <center>
-                <label style="font-size: 14px; font-weight: bold">You Have Successfully Voted!<br> Thanks for your Participation</label>
-                <h2>Vote Reference:<br>{{$votereference}}</h2>
+                <label style="font-size: 14px; font-weight: bold">Thank you for your Participation on the Survey <br> In ten seconds you will be redirected to the partial unofficial vote count</label>
                 <center>
                 
             </div>

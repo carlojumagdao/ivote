@@ -21,8 +21,9 @@
 
 <style>
     body{
-      background-image: url("{{ URL::asset('assets/images/7.jpg') }}");
-        background-size: cover;
+      /*background-image: url("{{ URL::asset('assets/images/7.jpg') }}");
+        background-size: cover;*/
+        background-color: white;
     }
     .form-control{
       background-color: rgba(232, 232, 232, 0.71);
@@ -87,12 +88,12 @@
   <div class="container">
       <div class="login-box" style="width:80%;padding-top:none;">
           
-                <h6 class="responsive-text"  style="font-family:helvetica;text-align:center;letter-spacing:1px;color: white; ">Enter your Member Code to start voting</h6>
+                <h6 class="responsive-text"  style="font-family:helvetica;text-align:center;letter-spacing:1px;">Enter your Member Code to start voting</h6>
                 <div class="col-md-4 col-xs-12">
                     <img id="cand-pic" class="img-responsive" src='{{ URL::asset("assets/images/$logo") }}' style="padding-top:30px">
                     <br>
-                    <h4 class="responsive-text" style="color:white;text-align:center;">{{$header}}</h4>
-                    <h6 class="responsive-text" style="font-family:helvetica;text-align:center;color:rgba(232, 232, 232, 0.71)">Powered by iVote++</h6>
+                    <h4 class="responsive-text" style="color:white;text-align:center;color:SteelBlue;">{{$header}}</h4>
+                    <h6 class="responsive-text" style="font-family:helvetica;text-align:center;">Powered by iVote++</h6>
                 </div>
                 <div class="col-md-6 col-xs-12"> 
                     <div class="col-md-12">
@@ -154,6 +155,12 @@
 <script type="text/javascript">
   $("header").responsiveText({
      bottomStop : '500',
+     topStop    : '1500'
+});
+</script>
+<script type="text/javascript">
+  $("h6").responsiveText({
+     bottomStop : '800',
      topStop    : '1500'
 });
 </script>
