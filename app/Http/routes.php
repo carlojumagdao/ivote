@@ -348,6 +348,11 @@ Route::group(['middleware' => 'auth'], function(){
 		'uses' => 'auditController@vote',
 		'as' => 'audit.vote'
 	));
+    
+    Route::post('/audit/viewvote', array(
+		'uses' => 'auditController@view',
+		'as' => 'audit.view'
+	));
     //audit//
 });
 

@@ -59,7 +59,7 @@
                             <!-- if else to make the independent party not editable/deletable -->
                            
                             <td>
-                                <a href="member/view/{{$value->strMemberId}}" class="btn btn-primary btn-sm view" data- toggle="tooltip" title="View"><i class="fa fa-eye"></i></a>
+                                <button class="btn btn-primary btn-sm view" data- toggle="tooltip" title="View"><i class="fa fa-eye"></i></button>
                             </td>
                             
                         </tr>
@@ -80,20 +80,13 @@
             
         </div>
     </div> 
-    <!-- Delete Form -->
+    <!-- View Form -->
     <div class="hide">
-        <form method="POST" action="{{ URL::to('/settings/party/delete') }}" id="delform">
-            <input type="hidden" name="id" id="delparty">
+        <form method="POST" action="{{ URL::to('audit/viewvote') }}" id="viewform">
+            <input type="hidden" name="id" id="viewvote">
         </form>
     </div>
-    <!-- Delete Form -->
-    <!-- Edit Form -->
-    <div class="hide">
-        <form method="POST" action="{{ URL::to('/settings/party/') }}" id="editform">
-            <input type="hidden" name="id" id="editparty">
-        </form>
-    </div>
-    <!-- Edit Form -->
+    <!-- View Form -->
 @stop 
 @section('script')
 <script src="{{ URL::asset('assets/datatables/datatables/media/js/jquery.dataTables.min.js') }}"></script>
@@ -111,21 +104,10 @@
     });
 </script>
 <script>
-    $(document).on("click", ".delParty", function(){
-        var x = confirm("Are you sure you want to delete this record?");
-        if (x){
-            var id = $(this).parent().parent().find('.id').text();
-            document.getElementById('delparty').value = id;
-            document.getElementById('delform').submit();
-        }
-        else
-            return false;
-    });
-    $(document).on("click", ".editParty", function(){
-            var id = $(this).parent().parent().find('.id').text();
-            document.getElementById('editparty').value = id;
-            document.getElementById('editform').submit();
-        
+    $(document).on("click", ".view", function(){
+            var id = $(this).parent().parent().find('.code').text();
+            document.getElementById('viewvote').value = id;
+            document.getElementById('viewform').submit();
     });
 </script>
 

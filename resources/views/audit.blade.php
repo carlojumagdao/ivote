@@ -42,7 +42,7 @@
 <ul class="timeline">
     <li class="time-label">
         <span class="bg-red">
-            {{date('D M. Y', strtotime($first))}}
+            {{date('D, M. d Y', strtotime($first))}}
         </span>
     </li>
     @foreach($audit as $aud)
@@ -51,7 +51,7 @@
     <?php $first = $aud->date ?>
     <li class="time-label">
         <span class="bg-red">
-           {{date('D M. Y', strtotime($first))}}
+           {{date('D, M. d Y', strtotime($first))}}
         </span>
     </li>
     @endif

@@ -22,7 +22,7 @@ class auditController extends Controller
      */
     public function index(){
         $audit = DB::select("SELECT user, strMemberId, tblaudit.Action, date(tblaudit.Date) as `date`, time(tblaudit.Date) as `time`
-from tblaudit order by date, time desc;");
+from tblaudit order by date desc, time desc;");
         
         
         if($audit){
@@ -40,6 +40,20 @@ from tblaudit order by date, time desc;");
                 ->get();
         
         return view('auditvote', ['voted' => $voted]);
+    }
+    
+    public function view(Request $request){
+        $votes = DB::table('tblvotedetail')
+                ->join('tblcandidate', 'tblcandidate.strCandId', '=', 'tblvotedetail.strVDCandId')
+                ->join('tblmember', 'tblcandidate.strCandMemId', '=', 'tblmember.strMemberId')
+                ->join('tblposition', 'tblcandidate.strCandPosId', '=', 'tblposition.strPositionId')
+                ->where('strVDVHCode', '=', $request->input('id'))
+                ->get();
+        $voted = DB::table('tblvoteheader')
+                ->join('tblmember', 'tblvoteheader.strVHMemId', '=', 'tblmember.strMemberId')
+                ->get();
+        
+        return view('viewvote', ['votes' => $votes, 'voted'=>$voted]);
     }
 
 }
