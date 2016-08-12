@@ -79,10 +79,6 @@ Route::group(['middleware' => 'auth'], function(){
     'uses' => 'MailController@send',
     'as' => 'member.email'
 	));
-	Route::post('member/send', array(
-		'uses' => 'formController@send',
-		'as' => 'member.send'
-	));
 	// Member //
 
 	// General Setting //
