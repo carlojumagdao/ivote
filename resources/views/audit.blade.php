@@ -39,7 +39,7 @@
         @endif
     </div>
     <div class="col-md-12">
-<ul class="timeline">
+<ul class="timeline" id="myList">
     <li class="time-label">
         <span class="bg-red">
             {{date('D, M. d Y', strtotime($first))}}
@@ -89,6 +89,8 @@
     </li>
 
 </ul>
+<div id="loadMore" class="btn btn-primary">Load more</div>
+<div id="showLess" class="btn btn-danger">Show less</div>
 </div>           
                 
 @stop 
@@ -134,6 +136,30 @@
     //color picker with addon
     $(".my-colorpicker2").colorpicker();
 
+</script>
+<script>
+$(document).ready(function () {
+    size_li = $("#myList li").size();
+    x=3;
+    $('#myList li:lt('+x+')').show();
+    $('#loadMore').click(function () {
+        x= (x+5 <= size_li) ? x+5 : size_li;
+        $('#myList li:lt('+x+')').show();
+         $('#showLess').show();
+        if(x == size_li){
+            $('#loadMore').hide();
+        }
+    });
+    $('#showLess').click(function () {
+        x=(x-5<0) ? 3 : x-5;
+        $('#myList li').not(':lt('+x+')').hide();
+        $('#loadMore').show();
+         $('#showLess').show();
+        if(x == 3){
+            $('#showLess').hide();
+        }
+    });
+});
 </script>
 
 @stop
