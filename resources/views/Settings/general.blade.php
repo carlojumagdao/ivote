@@ -196,13 +196,23 @@
                 @else
                     <?php $partyStatus = ""; $party = 0?>
                 @endif
+                
+                @if($blSetPublish)
+                    <?php $publishedStatus = "checked"; $published = 1?>
+                @else
+                    <?php $publishedStatus = ""; $published = 0?>
+                @endif
                 <div class="form-group" style="border-bottom:1px solid rgba(130, 116, 116, 0.1);; padding-bottom:4%;">
                     <input type="checkbox" name="chkbxSurvey" class="chkbxSurvey" {{$surveyStatus}} ><span style="margin-left:30%; font-size:15px;">Exit Poll Survey</span>
                     <input type="hidden" id="survey" name="txtSurveyStatus" value="{{$survey}}">
                 </div>
-                <div class="form-group">
+                <div class="form-group" style="border-bottom:1px solid rgba(130, 116, 116, 0.1);; padding-bottom:4%;">
                     <input type="checkbox" name="chkbxParty" class="chkbxParty" {{$partyStatus}} ><span style="margin-left:30%; font-size:15px;">Party Affiliation</span>
                     <input type="hidden" id="party" name="txtPartyStatus" value="{{$party}}">
+                </div>
+                <div class="form-group">
+                    <input type="checkbox" name="chkbxPublish" class="chkbxPublish" {{$publishedStatus}} ><span style="margin-left:30%; font-size:15px;">Publish Website</span>
+                    <input type="hidden" id="publish" name="txtPublishStatus" value="{{$published}}">
                 </div>
             </div>
         </div>
@@ -325,6 +335,15 @@
             $( "#party" ).val(1); 
         } else{
             $( "#party" ).val(0);
+        }
+    });
+</script>
+<script>$("[name='chkbxPublish']").bootstrapSwitch();
+    $('.chkbxPublish').on('switchChange.bootstrapSwitch', function (event, state) {
+        if(state){
+            $( "#publish" ).val(1); 
+        } else{
+            $( "#publish" ).val(0);
         }
     });
 </script>

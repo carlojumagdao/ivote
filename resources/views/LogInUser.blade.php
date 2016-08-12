@@ -113,6 +113,7 @@
                         <div class="form-group has-feedback">
                             <input style="font-size:75px; text-align:center;" type="text" name="txtPasscode" class="form-control custom responsive-text" autocomplete="off" maxlength="6">
                         </div>
+                        @if($published)
                         <div class="form-group has-feedback">
                             <select name="secques" class="form-control " required>
                                  <option disabled="true" selected="true">Choose your security question</option>
@@ -124,6 +125,7 @@
                         <div class="form-group has-feedback">
                             <input type="text" name="txtAnswer" class="form-control " placeholder="Enter your answer in your security question" autocomplete="off">
                         </div>
+                         @endif
                         
                         <div class="row">
                            <div class="col-md-12">

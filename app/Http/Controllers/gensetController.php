@@ -26,10 +26,11 @@ class gensetController extends Controller
     		$blParty = $value->blSetParty;
             $strHeaders = $value->strHeader;
             $strAddress = $value->strSetAddress;
+            $blSetPublish = $value->blSetPublish;
             $LogoPic = $value->txtSetLogo;
             /*$strSetLogo = $value->txtSetLogo;*/
     	}
-         return view('Settings.general', ['strElecName' => $strElecName,'strElecDesc' => $strElecDesc,'datStart' => $datStart,'datEnd' => $datEnd, 'blSurvey' => $blSurvey,'blParty' => $blParty, 'strHeaders' => $strHeaders , 'LogoPic'=>$LogoPic, 'strSetAddress' => $strAddress]);
+         return view('Settings.general', ['strElecName' => $strElecName,'strElecDesc' => $strElecDesc,'datStart' => $datStart,'datEnd' => $datEnd, 'blSurvey' => $blSurvey,'blParty' => $blParty, 'strHeaders' => $strHeaders , 'LogoPic'=>$LogoPic, 'strSetAddress' => $strAddress, 'blSetPublish'=>$blSetPublish]);
     }
     public function save(Request $request){
 
@@ -144,6 +145,7 @@ class gensetController extends Controller
                     $GenSet->blSetParty = $request->input('txtPartyStatus');
                     $GenSet->strSetAddress = $request->input('txtAddress');
                     $GenSet->strHeader = $request->input('txtHeader');
+                    $GenSet->blSetPublish = $request->input('txtPublishStatus');
                     $GenSet->save();
                 }catch (\Illuminate\Database\QueryException $e){
                     $errMess = $e->getMessage();
@@ -167,6 +169,7 @@ class gensetController extends Controller
                 $GenSet->blSetParty = $request->input('txtPartyStatus');
                 $GenSet->strSetAddress = $request->input('txtAddress');
                 $GenSet->strHeader = $request->input('txtHeader');
+                $GenSet->blSetPublish = $request->input('txtPublishStatus');
                 $GenSet->save();
             }
             else{

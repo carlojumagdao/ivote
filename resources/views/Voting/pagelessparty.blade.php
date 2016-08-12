@@ -151,7 +151,6 @@
                     'method' => 'post',
                     'id' => 'form-vote',
                     'action' => 'votingController@summary',
-                    'onsubmit' => 'return confirm_submit()',
                     'class' => 'col s12',
                     'files' => true
                 ) ) !!}

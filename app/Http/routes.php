@@ -428,11 +428,7 @@ Route::group(['middleware' => 'userlog'], function(){
 	));
     
     //Voting Route
-    
-    Route::get('/query',array(
-    	'uses' => 'queryController@index',
-    	'as' => 'query.index'
-    ));
+
 });
 
 Route::post('/survey/add', array(
