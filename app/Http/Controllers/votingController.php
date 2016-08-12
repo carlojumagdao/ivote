@@ -39,12 +39,9 @@ class votingController extends Controller
                             ->get();
             $only = "";
             $index = 0;
-            $positions = DB::table('tblcandidate')
-                            ->join('tblposition', 'strPositionId', '=', 'strCandPosId')
-                            ->select('strCandPosId', 'tblposition.*')
-                            ->where('blPosDelete', '=', '0')
-                            ->distinct()
-                            ->get();
+            $positions = DB::select('SELECT distinct tblposition.* FROM tblposition
+left join tblcandidate on strPositionId = strCandPosId
+WHERE strCandId IS NOT NULL and blPosDelete = 0 and blCandDelete = 0');
             
             foreach($positions as $pos){
                 $posdetail = DB::table('tblpositiondetail')

@@ -204,7 +204,7 @@
             <div class="box-body boxbody {{$position->strPosName}}" style="padding: 40px;">
                 <?php $intCounter = 0; ?>
                 @foreach($candidates as $candidate)
-                    @if($candidate->strCandPosId == $position->strCandPosId )
+                    @if($candidate->strCandPosId == $position->strPositionId )
                         <div class="col-lg-3 col-md-5 col-xs-12">
                             <div class="thumbnail boxtheme" style="border-left: 5px solid {{$candidate->strPartyColor}}; ">
                                 <center>

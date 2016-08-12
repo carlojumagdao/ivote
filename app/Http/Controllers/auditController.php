@@ -51,6 +51,7 @@ from tblaudit order by date desc, time desc;");
                 ->get();
         $voted = DB::table('tblvoteheader')
                 ->join('tblmember', 'tblvoteheader.strVHMemId', '=', 'tblmember.strMemberId')
+                ->where('strVHCode', '=', $request->input('id'))
                 ->get();
         
         return view('viewvote', ['votes' => $votes, 'voted'=>$voted]);
