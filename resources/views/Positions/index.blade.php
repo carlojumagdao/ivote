@@ -162,7 +162,7 @@
       $('.status:contains(1)').parent().toggle();
       $('#show_meta').on('change', function () {
         if ($('#show_meta:checked').length > 0) {
-          table.columns([0, 1, 2, 3, 4, 5]).visible(true);
+          table.columns([0, 1, 2, 3, 4]).visible(true);
         } else {
           table.columns([3, 4, 5]).visible(false);
         }
