@@ -6,6 +6,9 @@
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/datatables/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/datatables/datatables-responsive/css/dataTables.responsive.css') }}">
     <style>
+
+.red-tooltip + .tooltip > .tooltip-inner {font-size:20px;background-color: #f00;}
+
         /* Absolute Center Spinner */
 .loading {
   position: fixed;
@@ -168,21 +171,23 @@
             <div class="box-header with-border">
                 <h3 class="box-title">List of all members</h3>
                 <div class="box-tools pull-right">
-                    <a href="{{ URL::to('/member/create') }}" class="btn btn-success btn-xs">
+                    <a href="{{ URL::to('/member/create') }}" class="btn btn-primary btn-xs" data-toggle="tooltip" title="Add New Member">
                     <i class="glyphicon glyphicon-plus"></i> Add New</a>
+                    <button class="btn btn-xs btn-info sendall" data-toggle="tooltip" title="Send All Passcodes"><i class="glyphicon glyphicon-send"></i> Send All Passcode</button>
                 </div>
             </div>
-            <div class="pull-right">
-              <label class="checkbox-inline">
-                <input type="checkbox" id="show_deleted">
-                Show Deleted Members
-              </label>
-              <label class="checkbox-inline">
-                <input type="checkbox" id="show_meta">
-                Show Metadata
-              </label>
-            </div>
+            
             <div class="box-body dataTable_wrapper">
+                <div class="pull-right">
+                    <label class="checkbox-inline">
+                    <input type="checkbox" id="show_deleted">
+                    Show Deleted Members
+                    </label>
+                    <label class="checkbox-inline">
+                    <input type="checkbox" id="show_meta">
+                    Show Metadata
+                    </label>
+                </div>
                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                     <thead>
                         <tr>
@@ -200,13 +205,14 @@
                     <tbody>
                     @foreach($Members as $value)
                         <tr>
+                            <p class="hide passcode">{{$value->strMemPasscode}}</p>
                             <td class="id">{{$value->strMemberId}}</td>
                             <td class="name">{{$value->strMemFname.' '.$value->strMemLname}}</td>
                             <td class="email">{{$value->strMemEmail}}</td>
                             @if($value->blMemCodeSendStat == 1)
-                                <td class="passcode">Yes</td>  
+                                <td class="passcode">Yes  <button class="btn btn-default btn-circle btn-sm edit red-tooltip" data-placement="right" data-toggle="tooltip" title="{{$value->strMemPasscode}}"><i class="glyphicon glyphicon-qrcode"></i></button></td>  
                             @else
-                                <td class="passcode">No</td>  
+                                <td class="passcode">No  <button class="btn btn-default btn-circle btn-sm edit red-tooltip" data-placement="right" data-toggle="tooltip" title="{{$value->strMemPasscode}}"><i class="glyphicon glyphicon-qrcode"></i></button></td>  
                             @endif 
                             <td class="created">{{$value->created_at}}</td>
                             <td class="updated">{{$value->updated_at}}</td>
@@ -218,7 +224,7 @@
                                 @if($value->blMemDelete == 0)
                                 <a href="member/view/{{$value->strMemberId}}" class="btn btn-primary btn-sm view" data-toggle="tooltip" title="View"><i class="fa fa-eye"></i></a>
                                 <a href="member/edit/{{$value->strMemberId}}" class="btn btn-warning btn-sm edit" data-toggle="tooltip" title="Edit"><i class="glyphicon glyphicon-edit"></i></a>
-                                <a class="btn btn-primary btn-sm send sendMember" data-toggle="tooltip" title="Send Passcode"><i class="glyphicon glyphicon-send"></i></a>
+                                <a class="btn btn-info btn-sm send" data-toggle="tooltip" title="Send Passcode"><i class="glyphicon glyphicon-send"></i></a>
                                 <button class="btn btn-danger btn-sm delMember" data-toggle="tooltip" title="Delete"><i class="glyphicon glyphicon-trash"></i></button>
                                 @else
                                 <button class="btn btn-info btn-sm revMember" data-toggle="tooltip" title="Revert"><i class="glyphicon glyphicon-refresh"></i></button>
@@ -246,9 +252,7 @@
                 </table>
             </div>
             <div class="box-footer">
-                <div class="box-tools pull-right">
-                    <button class="btn btn-success sendall" data-toggle="tooltip" title="Send All Emails"><i class="glyphicon glyphicon-send"></i> Send all Emails</button>
-                </div>
+                
             </div>
             
         </div>
@@ -266,13 +270,6 @@
             <input type="hidden" name="id" id="revmem">
         </form>
     </div>
-
-    <div class="hide">
-        <form method="POST" action="{{ URL::to('/member/send') }}" id="sendform">
-            <input type="hidden" name="id" id="sendmem">
-        </form>
-    </div>
-
 
     <div class="loading hide">Loading&#8230;</div>
 @stop 
@@ -297,7 +294,7 @@
             return false;
     });
     $(document).on("click", ".revMember", function(){
-        var x = confirm("Are you sure you want to revert this record?");
+        var x = confirm("Are you sure you want to retrieve this record?");
         if (x){
             var id = $(this).parent().parent().find('.id').text();
             document.getElementById('revmem').value = id;
@@ -305,15 +302,6 @@
         }
         else
             return false;
-    });
-
-
-    $(document).on("click", ".sendMember", function(){
-       
-            var id = $(this).parent().parent().find('.id').text();
-            document.getElementById('sendmem').value = id;
-            document.getElementById('sendform').submit();
-       
     });
 
 </script>
@@ -372,11 +360,11 @@
             data: { id:id },
             success:function(data){
                 $( ".loading" ).addClass( "hide" );
-                 $( ".emailSent" ).removeClass( "hide" ); 
+                $( ".emailSent" ).removeClass( "hide" ); 
+                location.reload();
             },error:function(){ 
                 $( ".loading" ).addClass( "hide" );
                 $( ".emailFailed" ).removeClass( "hide" ); 
-//                Materialize.toast('Sending Failed', 4000); 
             }
         }); //end of ajax 
     });
@@ -401,11 +389,12 @@
             data: { id: $(this).text() },
             success:function(data){
                 $( ".loading" ).addClass( "hide" );
-                 $( ".emailSent" ).removeClass( "hide" ); 
+                $( ".emailSent" ).removeClass( "hide" ); 
+                location.reload();
             },error:function(){ 
                 $( ".loading" ).addClass( "hide" );
-                $( ".emailFailed" ).removeClass( "hide" ); 
-//                Materialize.toast('Sending Failed', 4000); 
+                $( ".emailFailed" ).removeClass( "hide" );  
+                location.reload();
             }
             
             }); //end of ajax 

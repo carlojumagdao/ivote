@@ -6,10 +6,13 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\GenSet AS GenSet;
 
 class LogInUserController extends Controller
 {
     public function LogInUser(){
-    	return view('LogInUser');
+        $settings = GenSet::find(1);
+        
+    	return view('LogInUser', ['published'=>$settings->blSetPublish]);
     }
 }

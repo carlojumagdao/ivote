@@ -37,7 +37,7 @@ class responseController extends Controller
         
         if($now < $start) return Redirect::route('Countdown');
         else if($now > $end) return view('endelection');
-    	else return view('LogInUser', ['header'=>$header, 'logo'=>$logo,'SecQues'=>$SecQues]);
+    	else return view('LogInUser', ['header'=>$header, 'logo'=>$logo,'SecQues'=>$SecQues, 'published'=>$GenSet->blSetPublish]);
     }
     public function Validation(Request $request){
        return redirect()->route('voting.page');

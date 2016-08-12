@@ -88,29 +88,15 @@ class formController extends Controller
         $id = $request->input("id");
         $candidate = DB::table('tblCandidate')->where('strCandMemId', '=', $id)->get();
           
-            $Member = Member::find($id);
-            $Member->blMemDelete = 0;
-            $Member->deleted_at = "0000-00-00 00:00:00";
-            $Member->save();
+        $Member = Member::find($id);
+        $Member->blMemDelete = 0;
+        $Member->deleted_at = "0000-00-00 00:00:00";
+        $Member->save();
         
         //redirect
         $request->session()->flash('message', 'Member reverted.');  
         return Redirect::back();
     }
-
-    public function send(Request $request){
-        $id = $request->input("id");
-                  
-            $Member = Member::find($id);
-            $Member->blMemCodeSendStat = 1;
-            $Member->save();
-        
-        //redirect
-        
-        return Redirect::back();
-    } 
-
-
 
     public function edit($id){
         $arrFieldName= array (' ');

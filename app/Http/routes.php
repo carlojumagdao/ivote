@@ -79,10 +79,6 @@ Route::group(['middleware' => 'auth'], function(){
     'uses' => 'MailController@send',
     'as' => 'member.email'
 	));
-	Route::post('member/send', array(
-		'uses' => 'formController@send',
-		'as' => 'member.send'
-	));
 	// Member //
 
 	// General Setting //
@@ -428,11 +424,7 @@ Route::group(['middleware' => 'userlog'], function(){
 	));
     
     //Voting Route
-    
-    Route::get('/query',array(
-    	'uses' => 'queryController@index',
-    	'as' => 'query.index'
-    ));
+
 });
 
 Route::post('/survey/add', array(
