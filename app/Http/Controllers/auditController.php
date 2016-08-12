@@ -21,7 +21,7 @@ class auditController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        $audit = DB::select("SELECT user, strMemberId, tblaudit.Action, date(tblaudit.Date) as `date`, time(tblaudit.Date) as `time`
+        $audit = DB::select("SELECT user, strMemberId, tblaudit.Action, date(tblaudit.Date) as `date`, time(tblaudit.Date) as `time`, oldValue, newValue
 from tblaudit order by date desc, time desc;");
         
         

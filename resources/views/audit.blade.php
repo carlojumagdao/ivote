@@ -71,13 +71,12 @@
             <span class="time"><i class="fa fa-clock-o"></i>{{date('h:i a', strtotime($aud->time) )}}</span>
 
             <h3 class="timeline-header"><a href="#">{{$aud->user}}</a> {{$aud->Action}}  {{$aud->strMemberId}}</h3>
-
-            <!--div class="timeline-body">
-                ...
-                Content goes here
+            @if($aud->Action == 'UPDATED')
+            <div class="timeline-body">
+                {{$aud->oldValue}} updated to <big><strong>{{$aud->newValue}}</strong></big>
             </div>
-
-            <div class="timeline-footer">
+            @endif
+            <!--div class="timeline-footer">
                 <a class="btn btn-primary btn-xs">...</a>
             </div-->
         </div>
