@@ -42,66 +42,66 @@ class responseController extends Controller
     public function Validation(Request $request){
        return redirect()->route('voting.page');
     }
-    public function survey(){
-    	$SurveyStatus = DB::table('tblSetting')->where('blSetSurvey', '=', 1)->get();
-        if($SurveyStatus){
-            $formData = DB::table('tblSurveyForm')->select('strSurveyForm','strSurveyFormTitle','strSurveyFormDesc')->get();
-            $formDesign = DB::table('tblSetting')->select('strHeader','txtSetLogo')->get();
-            foreach ($formDesign as $design) {
-                $header = $design->strHeader;
-                $logo = $design->txtSetLogo;
-            }
-            foreach ($formData as $form) {
-                $data = $form->strSurveyForm;
-                $formTitle = $form->strSurveyFormTitle;
-                $formDesc = $form->strSurveyFormDesc;
-            }
-            $loader = new formEncoder($data, '/survey/add');
-            $form = $loader->render_form("001"); // 001 is just to have a value
-            return view('Response.survey', ['form' => $form,'formTitle' => $formTitle,'formDesc' =>$formDesc, 'header'=>$header, 'logo'=>$logo]);
-        }
-    }
+    // public function survey(){
+    // 	$SurveyStatus = DB::table('tblSetting')->where('blSetSurvey', '=', 1)->get();
+    //     if($SurveyStatus){
+    //         $formData = DB::table('tblSurveyForm')->select('strSurveyForm','strSurveyFormTitle','strSurveyFormDesc')->get();
+    //         $formDesign = DB::table('tblSetting')->select('strHeader','txtSetLogo')->get();
+    //         foreach ($formDesign as $design) {
+    //             $header = $design->strHeader;
+    //             $logo = $design->txtSetLogo;
+    //         }
+    //         foreach ($formData as $form) {
+    //             $data = $form->strSurveyForm;
+    //             $formTitle = $form->strSurveyFormTitle;
+    //             $formDesc = $form->strSurveyFormDesc;
+    //         }
+    //         $loader = new formEncoder($data, '/survey/add');
+    //         $form = $loader->render_form("001"); // 001 is just to have a value
+    //         return view('Response.survey', ['form' => $form,'formTitle' => $formTitle,'formDesc' =>$formDesc, 'header'=>$header, 'logo'=>$logo]);
+    //     }
+    // }
 
-    public function postsurvey(Request $request){
+    // public function postsurvey(Request $request){
     	
-    	try{
-            DB::beginTransaction();  
+    // 	try{
+    //         DB::beginTransaction();  
 
-            $SurveyHeader = new SurveyHeader();
-            $SurveyHeader->strSHMemCode = session('memid');
-            $SurveyHeader->save();
+    //         $SurveyHeader = new SurveyHeader();
+    //         $SurveyHeader->strSHMemCode = session('memid');
+    //         $SurveyHeader->save();
 
-            $SurveyId = DB::table('tblSurveyHeader')->get();
-            foreach ($SurveyId as $value) {
-            	$SurveyHeaderId = $value->intSHId;
-            }
+    //         $SurveyId = DB::table('tblSurveyHeader')->get();
+    //         foreach ($SurveyId as $value) {
+    //         	$SurveyHeaderId = $value->intSHId;
+    //         }
 
-            foreach ($_POST as $key => $value) {
-                // if the field is checkbox, it will extract the array value
-                if(is_array($value)){
-                    foreach ($value as $checked) {
-                        $SurveyDetail = new SurveyDetail();
-                        $SurveyDetail->intSDSHId = $SurveyHeaderId;
-                        $SurveyDetail->strSDSQ = $key;
-                        $SurveyDetail->strSDAnswer = $checked;
-                        $SurveyDetail->save();
-                    }
-                }else{
-                    $SurveyDetail = new SurveyDetail();
-                    $SurveyDetail->intSDSHId = $SurveyHeaderId;
-                    $SurveyDetail->strSDSQ = $key;
-                    $SurveyDetail->strSDAnswer = $value;
-                    $SurveyDetail->save();
-                }
-            }
-            DB::commit();
-            echo "Success | Redirect to thank you page.";
-        }catch (\Illuminate\Database\QueryException $e){
-            DB::rollBack();
-            $errMess = $e->getMessage();
-            return Redirect::back()->withErrors($errMess);
-        }
-    }
+    //         foreach ($_POST as $key => $value) {
+    //             // if the field is checkbox, it will extract the array value
+    //             if(is_array($value)){
+    //                 foreach ($value as $checked) {
+    //                     $SurveyDetail = new SurveyDetail();
+    //                     $SurveyDetail->intSDSHId = $SurveyHeaderId;
+    //                     $SurveyDetail->strSDSQ = $key;
+    //                     $SurveyDetail->strSDAnswer = $checked;
+    //                     $SurveyDetail->save();
+    //                 }
+    //             }else{
+    //                 $SurveyDetail = new SurveyDetail();
+    //                 $SurveyDetail->intSDSHId = $SurveyHeaderId;
+    //                 $SurveyDetail->strSDSQ = $key;
+    //                 $SurveyDetail->strSDAnswer = $value;
+    //                 $SurveyDetail->save();
+    //             }
+    //         }
+    //         DB::commit();
+    //         echo "Success | Redirect to thank you page.";
+    //     }catch (\Illuminate\Database\QueryException $e){
+    //         DB::rollBack();
+    //         $errMess = $e->getMessage();
+    //         return Redirect::back()->withErrors($errMess);
+    //     }
+    // }
     
     public function thanks(){
         $formDesign = DB::table('tblSetting')->select('strHeader','txtSetLogo')->get();
@@ -109,11 +109,8 @@ class responseController extends Controller
             $header = $design->strHeader;
             $logo = $design->txtSetLogo;
         }
-        
-        return view('thanks', ['header'=>$header, 'logo'=>$logo, 'votereference' => $_GET['votereference'], 'memid' =>$_GET['memid']]);
-        
-        
-        
+        $votereference = session('votereference');
+        $memid = session('memid');
+        return view('thanks', ['header'=>$header, 'logo'=>$logo,'memid'=>$memid,'votereference'=>$votereference]);   
     }
-    
 }

@@ -8,7 +8,7 @@
 	
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>iVote++ | User Login Page</title>
+  <title>iVote++ | Thank you</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -63,20 +63,13 @@
         @endif
     </div>
     <br><br>
-         <form action='{{ URL::to("/survey/view") }}' method="post">
-      		{!! csrf_field() !!}
-            <div class="form-group has-feedback">
-                <center>
-                <label style="font-size: 14px; font-weight: bold ; color: steelblue;">You Have Successfully Voted!<br>In ten 8 seconds you will be directed to the survey page . . . . .</label>
-                <h2>Vote Reference:<br>{{$votereference}}</h2>
-                <center>
-                
-            </div>
-            <div class="form-group has-feedback">
-                <input type="hidden" name="memid" class="form-control" value="{{$memid}}" autocomplete="off">
-            </div>
-            <br><br>
-    </form>
+      <div class="form-group has-feedback">
+          <center>
+          <label style="font-size: 14px; font-weight: bold ; color: steelblue;">You Have Successfully Voted!<br>In 8 seconds you will be directed to the survey page . . . . .</label>
+          <h2>Vote Reference:<br>{{$votereference}}</h2>
+          <center>
+          
+      </div>
   </div>
   <!-- /.form-box -->
 <footer style="text-shadow: 2px 2px 8px rgba(5, 5, 5, 0.62);background-color:rgba(0, 0, 0, 0.35);height:59px;">
@@ -99,7 +92,7 @@
 <script type="text/javascript">
   window.setTimeout(function(){
     window.location.href = "/survey/answersurvey";
-  },8000);
+  },7000);
 </script>
 <script>
   //iCheck for checkbox and radio inputs

@@ -406,6 +406,11 @@ Route::group(['middleware' => 'userlog'], function(){
 		'uses' => 'surveyController@answer',
 		'as' => 'survey.answer'
 	));
+
+	Route::get('survey/answersurvey', array(
+		'uses' => 'surveyController@survey',
+		'as' => 'survey.answerSurvey'
+	));
     
     // Voting route
     Route::get('/vote', array(
@@ -438,10 +443,6 @@ Route::get('/thanks', array(
 	'as' => 'thanks'
 ));
 
-Route::get('survey/answersurvey', array(
-		'uses' => 'surveyController@survey',
-		'as' => 'survey.answerSurvey'
-	));
 
 Route::get('/security/question/{id}', array(
 		'uses' => 'securityController@createPage',

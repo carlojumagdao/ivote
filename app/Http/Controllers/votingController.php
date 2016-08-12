@@ -21,11 +21,9 @@ class votingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function page()
-    {
+    public function page(){
 
         $party = DB::table('tblSetting')->where('blSetParty', '=', 1)->get();
-        
         if($party){
             $partylist = DB::table('tblcandidate')
                             ->distinct()
@@ -40,9 +38,8 @@ class votingController extends Controller
             $only = "";
             $index = 0;
             $positions = DB::select('SELECT distinct tblposition.* FROM tblposition
-left join tblcandidate on strPositionId = strCandPosId
-WHERE strCandId IS NOT NULL and blPosDelete = 0 and blCandDelete = 0');
-            
+                                    left join tblcandidate on strPositionId = strCandPosId
+                                    WHERE strCandId IS NOT NULL and blPosDelete = 0 and blCandDelete = 0');
             foreach($positions as $pos){
                 $posdetail = DB::table('tblpositiondetail')
                                 ->select('strPosDeFieldName','strPosDeFieldData')
@@ -85,11 +82,7 @@ WHERE strCandId IS NOT NULL and blPosDelete = 0 and blCandDelete = 0');
                             ->get();
             $election = DB::table('tblsetting')->get();
             return view('Voting.page', ['partylist'=>$partylist, 'positions'=>$only, 'candidates'=>$candidates, 'election' => $election, 'vote' => old('vote')]);
-            
-            
-        }
-        
-        else {
+        } else {
             
             $candidates = DB::table('tblcandidate')
                             ->join('tblmember', 'tblcandidate.strCandMemId', '=', 'tblmember.strMemberId')
@@ -103,9 +96,8 @@ WHERE strCandId IS NOT NULL and blPosDelete = 0 and blCandDelete = 0');
             $only = "";
             $index = 0;
             $positions = DB::select('SELECT distinct tblposition.* FROM tblposition
-left join tblcandidate on strPositionId = strCandPosId
-WHERE strCandId IS NOT NULL and blPosDelete = 0 and blCandDelete = 0');
-            
+                                    left join tblcandidate on strPositionId = strCandPosId
+                                    WHERE strCandId IS NOT NULL and blPosDelete = 0 and blCandDelete = 0'); 
             foreach($positions as $pos){
                 $posdetail = DB::table('tblpositiondetail')
                                 ->select('strPosDeFieldName','strPosDeFieldData')
@@ -116,7 +108,6 @@ WHERE strCandId IS NOT NULL and blPosDelete = 0 and blCandDelete = 0');
                                 ->where('strPosDePosId', '=', $pos->strPositionId)
                                 ->distinct()
                                 ->count();
-                
                 if($posdetail){
                     $count = 0;
                     foreach($posdetail as $posdet){
@@ -128,21 +119,17 @@ WHERE strCandId IS NOT NULL and blPosDelete = 0 and blCandDelete = 0');
                         }
                         if($counter != 0) $count++;
                     }
-                    
                     if($count == $numdet){
                         $only[$index] = $pos;
                         $index++;
-                    } 
-                    
+                    }    
                 }
-                
                 else{
                     $only[$index] = $pos;
                     $index++;
                 }
                 
-            }
-            
+            } 
             $election = DB::table('tblsetting')->get();
             return view('Voting.pagelessparty', [ 'positions'=>$only, 'candidates'=>$candidates, 'election' => $election]);
         }
@@ -174,13 +161,8 @@ WHERE strCandId IS NOT NULL and blPosDelete = 0 and blCandDelete = 0');
 
     public function cast(Request $request)
     {
-        
-        
         if($_POST['redirect'] == 1)
             return Redirect::route('voting.page')->withInput();
-        
-    
-        
         try{
             DB::beginTransaction();  
             
@@ -217,21 +199,17 @@ WHERE strCandId IS NOT NULL and blPosDelete = 0 and blCandDelete = 0');
             
             Session::put('memid', $memid);
             Session::put('votereference', $VDID);
+
             $SurveyStatus = DB::table('tblSetting')->where('blSetSurvey', '=', 1)->get();
             if($SurveyStatus){
-                $votereference = session('votereference');
-        
-                if(Session::has('memid')) Session::forget('memid');
-                if(Session::has('votereference')) Session::forget('memid');
-    
-                return Redirect::route('thanks', ['votereference'=>$votereference, 'memid'=>$memid]);
+                // redirect to thanks then survey
+                return Redirect::route('thanks');
             } else{
-                $votereference = session('votereference');
-        
                 if(Session::has('memid')) Session::forget('memid');
                 if(Session::has('votereference')) Session::forget('memid');
-    
-                return Redirect::route('thanks', ['votereference'=>$votereference, 'memid'=>$memid]);
+                
+                //redirect to realtime voting result
+                return Redirect::route('LogInUser');
             }
             
         }catch (\Illuminate\Database\QueryException $e){

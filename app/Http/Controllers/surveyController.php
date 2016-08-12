@@ -179,8 +179,6 @@ class surveyController extends Controller
             $SurveyHeader->save();
             
             $SH = SurveyHeader::where('strSHMemCode', "=", $memid)->first();
-            //var_dump($SH);
-            //var_dump($_POST);
             $SHID = $SH->intSHId;
             
                 
@@ -188,8 +186,6 @@ class surveyController extends Controller
                 
                 // if the field is checkbox, it will extract the array value
                 $question = DB::table('tblsurveyquestion')->where('strSQQuestion', "=", $key)->where('blSQStatus', "=", 1)->get();
-                 var_dump($question);
-                var_dump($key);
                 $id =  $question[0]->intSQId;
                 
                 if(is_array($value)){
@@ -216,12 +212,13 @@ class surveyController extends Controller
             $errMess = $e->getMessage();
             echo $errMess;
         }
-        //redirect
+
+        //clear user sessions
         $votereference = session('votereference');
-        
         if(Session::has('memid')) Session::forget('memid');
         if(Session::has('votereference')) Session::forget('memid');
-    
-        return Redirect::route('thanks', ['votereference'=>$votereference, 'memid'=>$memid]);
+
+        //redirect to realtime voting result
+        return Redirect::route('LogInUser');
     }
 }

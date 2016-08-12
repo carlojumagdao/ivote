@@ -58,8 +58,8 @@ class UserMiddleware
             $member = "";
             $err = $request->input('txtPasscode');
             if($settings->blSetPublished){
-            $SecQues = $request->input('secques');
-            $Answer = $request->input('txtAnswer');
+                $SecQues = $request->input('secques');
+                $Answer = $request->input('txtAnswer');
             }
             $member = DB::select('select CONCAT(strMemFname," ",strMemLname) as FullName, strMemberId, intMemSecQuesId, strMemSecQuesAnswer from tblmember where strMemPasscode = ?', [$request->input('txtPasscode')]);
             if($member){
@@ -85,13 +85,10 @@ class UserMiddleware
                             if($SH){
                                 return view('votedandsurveyed');
                             }
-                    
                             else return view('votednotsurveyed');
                         } else{
                             return view('voted');
-                        }
-                    
-                        
+                        }    
                     }
                     else return $next($request);
                 }else{
@@ -110,13 +107,10 @@ class UserMiddleware
                         if($SH){
                             return view('votedandsurveyed');
                         }
-                    
                         else return view('votednotsurveyed');
                     } else{
                         return view('voted');
                     }
-                    
-                        
                 }
                 else return $next($request);
             }

@@ -5,6 +5,7 @@
 @section('style')
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/datatables/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/datatables/datatables-responsive/css/dataTables.responsive.css') }}">
+
     <style>
 
 .red-tooltip + .tooltip > .tooltip-inner {font-size:20px;background-color: #f00;}
@@ -178,7 +179,7 @@
             </div>
             
             <div class="box-body dataTable_wrapper">
-                <div class="pull-right">
+                <div class="" style="margin-bottom:1%;">
                     <label class="checkbox-inline">
                     <input type="checkbox" id="show_deleted">
                     Show Deleted Members
@@ -210,9 +211,9 @@
                             <td class="name">{{$value->strMemFname.' '.$value->strMemLname}}</td>
                             <td class="email">{{$value->strMemEmail}}</td>
                             @if($value->blMemCodeSendStat == 1)
-                                <td class="passcode">Yes  <button class="btn btn-default btn-circle btn-sm edit red-tooltip" data-placement="right" data-toggle="tooltip" title="{{$value->strMemPasscode}}"><i class="glyphicon glyphicon-qrcode"></i></button></td>  
+                                <td class="passcode">Yes  <button class="btn btn-default btn-circle btn-sm edit red-tooltip" data-placement="right" data-toggle="tooltip" title="{{$value->strMemPasscode}}" data-clipboard-text="{{$value->strMemPasscode}}"><i class="glyphicon glyphicon-qrcode"></i></button></td>  
                             @else
-                                <td class="passcode">No  <button class="btn btn-default btn-circle btn-sm edit red-tooltip" data-placement="right" data-toggle="tooltip" title="{{$value->strMemPasscode}}"><i class="glyphicon glyphicon-qrcode"></i></button></td>  
+                                <td class="passcode">No  <button class="btn btn-default btn-circle btn-sm edit red-tooltip" data-placement="right" data-toggle="tooltip" title="{{$value->strMemPasscode}}" data-clipboard-text="{{$value->strMemPasscode}}"><i class="glyphicon glyphicon-qrcode"></i></button></td>  
                             @endif 
                             <td class="created">{{$value->created_at}}</td>
                             <td class="updated">{{$value->updated_at}}</td>
@@ -276,9 +277,16 @@
 @section('script')
 <script src="{{ URL::asset('assets/datatables/datatables/media/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ URL::asset('assets/datatables/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js') }}"></script>
-<script src="{{ URL::asset('assets/loader/bootstrap-waitingfor') }}"></script>
-<script src="{{ URL::asset('assets/loader/bootstrap-waitingfor.min') }}"></script>
-
+<script src="{{ URL::asset('assets/clipboard/clipboard.min.js') }}"></script>
+ <script>
+    var clipboard = new Clipboard('.btn');
+    clipboard.on('success', function(e) {
+        console.log(e);
+    });
+    clipboard.on('error', function(e) {
+        console.log(e);
+    });
+</script>
 <script>
     $(document).ready(function(){
         $('[data-toggle="tooltip"]').tooltip(); 
