@@ -94,8 +94,7 @@
                         !!}  
                     </div>
                     <div class="form-group col-md-12 ">
-                        {!! Form::label( 'Address', "Organization's Address ",array(
-                            'class' => 'required') ) !!}
+                        {!! Form::label( 'Address', "Organization's Address: ") !!}
                         {!! Form::text
                             ('Address', $strSetAddress, array(
                             'id' => 'Address',
