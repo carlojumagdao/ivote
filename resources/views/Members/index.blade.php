@@ -245,9 +245,15 @@
                     </tfoot>
                 </table>
             </div>
+            <div class="box-footer">
+                <div class="box-tools pull-right">
+                    <button class="btn btn-success sendall" data-toggle="tooltip" title="Send All Emails"><i class="glyphicon glyphicon-send"></i> Send all Emails</button>
+                </div>
+            </div>
             
         </div>
-    </div> 
+        
+    </div>
     <!-- Delete Form -->
     <div class="hide">
         <form method="POST" action="{{ URL::to('/member/delete') }}" id="delform">
@@ -378,6 +384,36 @@
 
 </script>
 
+<script>
+    $(".sendall").click(function(){
+        $('.id').each(function(){
+            $( ".loading" ).removeClass( "hide" );
+            $.ajax({
+            url: "{{ URL::to('member/email') }}",
+            type:"POST",
+            beforeSend: function (xhr) {
+                var token = $('meta[name="csrf_token"]').attr('content');
+
+                if (token) {
+                      return xhr.setRequestHeader('X-CSRF-TOKEN', token);
+                }
+            },
+            data: { id: $(this).text() },
+            success:function(data){
+                $( ".loading" ).addClass( "hide" );
+                 $( ".emailSent" ).removeClass( "hide" ); 
+            },error:function(){ 
+                $( ".loading" ).addClass( "hide" );
+                $( ".emailFailed" ).removeClass( "hide" ); 
+//                Materialize.toast('Sending Failed', 4000); 
+            }
+            
+            }); //end of ajax 
+        });
+    });
+
+
+</script>
 
 
 @stop
