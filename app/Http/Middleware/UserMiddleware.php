@@ -72,7 +72,7 @@ class UserMiddleware
             
             } else{
                 $errMess = 'Authentication Failed';
-                //return Redirect::back()->withErrors($errMess);
+                return Redirect::back()->withErrors($errMess);
             }
             if($settings->blSetPublished){
                 if(($SecQues == $retSecQues) && ($Answer == $retAnswer)){
