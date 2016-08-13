@@ -180,7 +180,7 @@
         <div class="box-header boxhead" style="background-color: cornflowerblue ">
             <h3 style="font-family:helvetica;letter-spacing:1px;" class="box-title">Vote Straight ?</h3>
         </div>
-        <div class="box-body boxbody" style="padding: 40px;font-family:segoe ui;">
+        <div class="box-body boxbody" style="padding: 40px;">
             @foreach($partylist as $party)
             @if($party->strPartyName != 'Independent')
             <div class="radio">
@@ -247,7 +247,7 @@
         </div>
         <div class="row"  style="padding-right:72px;">
             <div class="col-md-2 col-md-offset-10 col-xs-4 col-xs-offset-4 col-sm-4">
-                <input style="font-family:segoe ui;height:40px;" type="submit" class="btn btn-primary" name="btnSubmit" value="CAST MY VOTES!">
+                <input style="height:40px;" type="submit" class="btn btn-primary" name="btnSubmit" value="CAST MY VOTES!">
             </div>
             
         </div>
@@ -299,11 +299,9 @@
 <script>
 @foreach($positions as $position)
 
-function maxCast_{{$position->strPositionId}}(){
-
+    function maxCast_{{$position->strPositionId}}(){
 		var maxcheck = {{$position->intPosVoteLimit}};
 		var position = "{{$position->strPosName}}";
-		
 		var checkedBox = $(".pos_{{$position->strPositionId}}:checked").size();
 		var radio = document.getElementsByName('par');
         for(var x=0; x<radio.length; x++){
@@ -311,10 +309,8 @@ function maxCast_{{$position->strPositionId}}(){
         }
 		if(checkedBox > maxcheck){
 		
-			alert('You can only vote ' + maxcheck + ' from the ' + position + ' position.');document.voteform; return false;
-			
+			alert('You can only vote ' + maxcheck + ' from the ' + position + ' position.');document.voteform; return false;	
 		}
-		
 		else return true;
 	}
  @endforeach
@@ -330,23 +326,16 @@ function maxCast_{{$position->strPositionId}}(){
     }
     
     @foreach($partylist as $party)
-    function auto_{{$party->intCandParId}}(){
-        
-        $('.v_{{$party->intCandParId}}').prop('checked', true);
-    }
-    
+        function auto_{{$party->intCandParId}}(){
+            
+            $('.v_{{$party->intCandParId}}').prop('checked', true);
+        }
     @endforeach
-    
-    
     function revert(){
         @foreach($partylist as $party)
         $('.v_{{$party->intCandParId}}').prop('checked', false);
         @endforeach
-    }
-    
-    
-    
-    
+    }   
 </script>
 @yield('script')   
 </body>

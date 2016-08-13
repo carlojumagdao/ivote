@@ -123,24 +123,24 @@
 <body class="body">
     @foreach($election as $set)
     <div class="row header2">
-        <div class="col-md-2 col-xs-4 col-md-offset-2">
+        <div class="col-md-2 col-xs-4 col-md-offset-1">
             <img src="assets/images/{{$set->txtSetLogo}}" class="paddify img-responsive">
         </div>
-        <div class="col-md-3 col-xs-8">
-            <h2 style="font-family:helvetica;text-align:left;text-transform:capitalize">{{$set->strSetElecName}}</h3>
-            <h4  style="font-family:segoe ui;text-align:left;margin-top:10px;text-transform:capitalize">{{$set->strHeader}}</h4>
-            <h5  style="font-family:segoe ui;text-align:left;text-transform:capitalize">Powered by: iVOTE++</h5>
+        <div class="col-md-5 col-xs-8">
+            <h2>{{$set->strSetElecName}}</h2>
+            <h4>{{$set->strHeader}}</h4>
+            <h5>Powered by: iVOTE++</h5>
         </div>
     </div>
-    
-    <div class="row header2">
-        <div class="col-md-4 col-md-offset-1" >
-            <h4 style="font-family:helvetica; letter-spacing: 1px; text-transform: uppercase">Summary of Votes</h4>
+    <div class="row header2" style="border-top:1px solid white;">
+        <div class="col-lg-10 col-lg-offset-1">
+            <div class="pull-left" >
+                <h4>SELECT YOUR CANDIDATE</h4>
+            </div>
+            <div class="pull-right" >
+                <h4>Member: <span style="font-weight:bold">{{$memberName}}</span> </h4>
+            </div>  
         </div>
-        <div class="col-md-2 col-md-offset-4" >
-            <h5 style="font-family:segoe ui; ">Member: <big style="font-weight:bold;font-family:helvetica;text-transform:capitalize">{{$memberName}}</big> </h5>
-        </div>
-            
     </div>
     @endforeach
     <br>
@@ -209,15 +209,16 @@
                 @endforeach  
                     </center>
                 <input type="hidden" id="blRedirect" name="redirect">
-                <div class="row"  style="padding-right:72px;">
-            <a style="font-family:segoe ui;height:40px;" onclick="redirect()"><div class="col-md-1 col-md-offset-6 col-xs-4 col-xs-offset-3 col-sm-4" style="width:145px">
-                change my votes |
-            </div></a>
-            <div class="col-md-1 col-xs-4 col-sm-4">
-                <input style="font-family:segoe ui;height:40px;" type="submit" class="btn btn-primary" name="btnSubmit" value="SUBMIT MY VOTES!">
-            </div>
-            
-        </div>
+                <div class="row" style="padding-right:72px;">
+                    <a href="#" style="height:40px;" onclick="redirect()">
+                        <div class="col-md-1 col-md-offset-6 col-xs-4 col-xs-offset-3 col-sm-4" style="width:145px">
+                            change my votes |
+                        </div>
+                    </a>
+                    <div class="col-md-1 col-xs-4 col-sm-4">
+                        <input style="height:40px;" type="submit" class="btn btn-primary" name="btnSubmit" value="SUBMIT MY VOTES!">
+                    </div>
+                </div>
             </div>
             <br>
             

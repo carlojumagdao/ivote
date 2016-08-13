@@ -196,18 +196,17 @@ class surveyController extends Controller
                         $SurveyDetail->strSDAnswer= $checked;
                         $SurveyDetail->save();
                     }
-                }else{
+                } else{
                     $SurveyDetail = new SurveyDetail();
                     $SurveyDetail->intSDSHId = $SHID;
                     $SurveyDetail->intSDSQId = $id;
                     $SurveyDetail->strSDAnswer= $value;
                     $SurveyDetail->save();
-                }
-                
+                } 
             }
             DB::commit();
         
-        }catch (\Illuminate\Database\QueryException $e){
+        } catch (\Illuminate\Database\QueryException $e){
             DB::rollBack();
             $errMess = $e->getMessage();
             echo $errMess;

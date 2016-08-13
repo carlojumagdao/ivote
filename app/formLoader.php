@@ -38,6 +38,7 @@ class formLoader {
 	private function encode_element_title($title) {
 		$str = str_replace(' ', '_', strtolower($title));
 		$str = preg_replace("/[^a-zA-Z0-9.-_]/", "", $str);
+		$str = preg_replace("/[9.]/", "_", $str); 			// pattern 3. will become 3_
 		$str = htmlentities($str, ENT_QUOTES, 'UTF-8');
 		$str = html_entity_decode($str, ENT_QUOTES, 'UTF-8');
 		return $str;
