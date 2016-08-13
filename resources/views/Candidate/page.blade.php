@@ -98,7 +98,7 @@
                 
                 @foreach($candidates as $candidate)
                      
-                    @if($candidate->strCandPosId == $position->strCandPosId )
+                    @if($candidate->strCandPosId == $position->strPositionId )
                     @if($candidate->intCandParId == $party->intCandParId)
                     <div class="col-md-3 col-xs-12" style="padding:10px;padding-right:80px;" >
                     <div class="grid-item col-md-4 col-xs-12 " style="padding-right:50px;">

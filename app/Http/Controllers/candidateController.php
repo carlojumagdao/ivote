@@ -309,12 +309,9 @@ class candidateController extends Controller
                             ->where('blCandDelete', '=', 0)
                             ->select('tblcandidate.intCandParId','tblparty.strPartyName', 'tblparty.strPartyColor')
                             ->get();
-            $positions = DB::table('tblcandidate')
-                            ->join('tblposition', 'strPositionId', '=', 'strCandPosId')
-                            ->select('strCandPosId', 'strPosName')
-                            ->where('blPosDelete', '=', '0')
-                            ->distinct()
-                            ->get();
+            $positions = DB::select('SELECT distinct tblposition.* FROM tblposition
+                                    left join tblcandidate on strPositionId = strCandPosId
+                                    WHERE strCandId IS NOT NULL and blPosDelete = 0 and blCandDelete = 0');
             $candidates = DB::table('tblcandidate')
                             ->join('tblmember', 'tblcandidate.strCandMemId', '=', 'tblmember.strMemberId')
                             ->where('blCandDelete', '=', 0)
@@ -327,12 +324,9 @@ class candidateController extends Controller
         }
         
         else {
-            $positions = DB::table('tblcandidate')
-                            ->join('tblposition', 'strPositionId', '=', 'strCandPosId')
-                            ->select('strCandPosId', 'strPosName','strPosColor')
-                            ->where('blPosDelete', '=', '0')
-                            ->distinct()
-                            ->get();
+            $positions = DB::select('SELECT distinct tblposition.* FROM tblposition
+                                    left join tblcandidate on strPositionId = strCandPosId
+                                    WHERE strCandId IS NOT NULL and blPosDelete = 0 and blCandDelete = 0');
             $candidates = DB::table('tblcandidate')
                             ->join('tblmember', 'tblcandidate.strCandMemId', '=', 'tblmember.strMemberId')
                             ->where('blCandDelete', '=', 0)
