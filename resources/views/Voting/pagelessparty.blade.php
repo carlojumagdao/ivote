@@ -170,11 +170,12 @@
                             <div class="thumbnail boxtheme">
                                 <center>
                                 <div class="checkbox">
-                                    <label>
+                                    <label style="font-size:14px;font-family:helvetica;color:steelblue;font-weight: bold;">
                                         <div>
-                                            <img id="cand-pic" src="../assets/images/{{$candidate->txtCandPic}}" style="background-size: contain;" class="img-responsive"/>
+                                            <img id="cand-pic" src="../assets/images/{{$candidate->txtCandPic}}" style="background-size: contain;padding-bottom:10px;padding-right:15px;" class="img-responsive"/>
                                         </div>
-                                        <input style="text-transform:capitalize" type="checkbox" value="{{$candidate->strCandId}}" name="vote[]" class="pos_{{$position->strPositionId}}" onclick=" return maxCast_{{$position->strPositionId}}()"
+                                        <div class="icheckbox_flat-green" aria-checked="false" aria-disabled="false" style="position: relative;pa">
+                                        <input style="text-transform:capitalize" class="flat-red" type="checkbox" value="{{$candidate->strCandId}}" name="vote[]" class="pos_{{$position->strPositionId}}" onclick=" return maxCast_{{$position->strPositionId}}()"
                                            <?php
                                                 $cdvote = old('vote');
                                                 for($x=0; $x<sizeOf(old('vote')); $x++){
@@ -183,7 +184,9 @@
                                                 }
                                             ?>   
                                         >
+                                        </div>
                                        {{$candidate->strMemFname}} {{$candidate->strMemLname}}
+
                                     </label>
                                 </div>
                                 </center>

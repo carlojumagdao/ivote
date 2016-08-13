@@ -42,7 +42,7 @@
       }
       header {
         background:#ededed;
-        padding-left: 50px;
+        padding-left: 30px;
         height: 200px;
       }
       .header-cont {
@@ -157,20 +157,20 @@
 <script src="{{ URL::asset('assets/responsivetext/jquery.responsivetext.js') }}"></script>
 <script type="text/javascript">
   $("header").responsiveText({
-     bottomStop : '550',
-     topStop    : '1500'
+     bottomStop : '480',
+     topStop    : '1400'
 });
 </script>
 <script type="text/javascript">
   $("body").responsiveText({
-     bottomStop : '550',
-     topStop    : '1500'
+     bottomStop : '480',
+     topStop    : '1400'
 });
 </script>
 <script type="text/javascript">
   $("footer").responsiveText({
-     bottomStop : '550',
-     topStop    : '1500'
+     bottomStop : '480',
+     topStop    : '1400'
 });
 </script>
 <script>

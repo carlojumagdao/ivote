@@ -208,12 +208,12 @@
                         <div class="col-lg-3 col-md-5 col-xs-12">
                             <div class="thumbnail boxtheme" style="border-left: 5px solid {{$candidate->strPartyColor}}; ">
                                 <center>
-                                <div class="checkbox">
+                                <div class="icheckbox_flat-green checked">
                                     <label>
                                         <div>
                                             <img id="cand-pic" src="../assets/images/{{$candidate->txtCandPic}}" style="background-size: contain; border: 0px;" class="img-responsive"/> 
                                         </div>
-                                        <input style="text-transform:capitalize" type="checkbox" value="{{$candidate->strCandId}}" name="vote[]"  class="pos_{{$position->strPositionId}} v_{{$candidate->intCandParId}}" onclick=" return maxCast_{{$position->strPositionId}}()" onchange="return maxCast_{{$position->strPositionId}}()"
+                                        <input style="text-transform:capitalize" type="checkbox"  value="{{$candidate->strCandId}}" name="vote[]"  class="pos_{{$position->strPositionId}} v_{{$candidate->intCandParId}}" onclick=" return maxCast_{{$position->strPositionId}}()" onchange="return maxCast_{{$position->strPositionId}}()"
                                         <?php
                                             $cdvote = old('vote');
                                             for($x=0; $x<sizeOf(old('vote')); $x++){
