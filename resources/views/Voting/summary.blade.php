@@ -206,8 +206,14 @@
                     
                     </div>
                     <br>
-                @endforeach  
+                @endforeach
                     </center>
+                <div class="col-md-6 col-md-offset-3 alert alert-warning alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            
+                        <h4><i class="icon fa fa-warning"></i><input type="checkbox" id="agree" name="agree"> IMPORTANT!</h4>
+                        I reviewed my vote and understand that once I submit this, it cannot be changed. 
+                    </div>
                 <input type="hidden" id="blRedirect" name="redirect">
                 <div class="row" style="padding-right:72px;">
                     <a href="#" style="height:40px;" onclick="redirect()">
@@ -216,7 +222,7 @@
                         </div>
                     </a>
                     <div class="col-md-1 col-xs-4 col-sm-4">
-                        <input style="height:40px;" type="submit" class="btn btn-primary" name="btnSubmit" value="SUBMIT MY VOTES!">
+                        <input style="height:40px;" id="btnSubmit" type="submit" class="btn btn-primary" name="btnSubmit" value="SUBMIT MY VOTES!" disabled>
                     </div>
                 </div>
             </div>
@@ -224,7 +230,7 @@
             
            
         </div>
-        
+         
          {!! Form::close() !!}
     </div>
     <br>
@@ -285,6 +291,11 @@
         document.getElementById('form-vote').submit();
     }
     
+</script>
+<script>
+    $('#agree').change(function() {
+        $('#btnSubmit').attr('disabled', !this.checked);
+    });
 </script>
 @yield('script')   
 </body>
