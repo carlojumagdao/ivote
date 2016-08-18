@@ -68,12 +68,18 @@
                         <tr>
                             <td class="id">{{$value->strPositionId}}</td>
                             <td class="name">{{$value->strPosName}}</td>
-                            <td class="email">{{$value->intPosVoteLimit}}</td> 
-                            <td class="created">{{$value->created_at}}</td>
-                            <td class="updated">{{$value->updated_at}}</td>
-                            <td class="deleted">
-                              {{$value->deleted_at}}
-                            </td>
+                            <td class="email">{{$value->intPosVoteLimit}}</td>
+                                <?php
+                                    $datecreated =  $value->created_at;
+                                    $converteddatecreated = date('M j, Y h:i A',strtotime($datecreated));
+                                    $dateupdated = $value->updated_at;
+                                    $converteddateupdated = date('M j, Y h:i A',strtotime($dateupdated));   
+                                    $datedeleted = $value->deleted_at;
+                                    $converteddatedeleted = date('M j, Y h:i A',strtotime($datedeleted));
+                                ?>
+                            <td class="created">{{$converteddatecreated}}</td>
+                            <td class="updated">{{$converteddateupdated}}</td>
+                            <td class="deleted">{{$converteddatedeleted}}</td>
                             <td class="status" style="display:none">{{$value->blPosDelete}}</td> 
                             <td>
                                 @if($value->blPosDelete == 0)

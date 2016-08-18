@@ -84,7 +84,11 @@
                         <h5>Date of Vote:</h5>
                     </div>
                     <div class="col-md-6">
-                        <p>{{$voted[0]->datVHVoted}}</p>
+                        <?php
+                            $dateofvote = $voted[0]->datVHVoted;
+                            $convertedDOV = date('M j, Y h:i A',strtotime($dateofvote));
+                        ?>
+                        <p>{{$convertedDOV}}</p>
                     </div>
                 </div>
             </div>
