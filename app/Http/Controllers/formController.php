@@ -10,6 +10,7 @@ use App\viewFormEncoder AS viewFormEncoder;
 use App\editFormEncoder AS editFormEncoder;
 use App\Member AS Member;
 use App\MemberDetail AS MemberDetail;
+use App\SmartCounter AS SmartCounter;
 use Validator;
 use DB;
 use Redirect;
@@ -315,13 +316,56 @@ class formController extends Controller
                 }
             }
             DB::commit();
+            $request->session()->flash('message', 'Successfully added.'); 
         }catch (\Illuminate\Database\QueryException $e){
             DB::rollBack();
-            $errMess = $e->getMessage();
-            return Redirect::back()->withErrors($errMess);
+            //$errMess = $e->getMessage();
+            //return Redirect::back()->withErrors($errMess);
+            $strNewMemId = DB::table('tblMember')->select('strMemberId')->orderBy('strMemberId')->get();
+            $strNewMemCode = "CODE000";
+            foreach ($strNewMemId as $value) {
+                $strNewMemCode = $value->strMemberId;
+            }
+            $counter = new SmartCounter();
+            DB::beginTransaction();    
+            $strPassCode = $this->fnGenerateCode();    
+            $Member = new Member();
+            $Member->strMemberID = $counter->smartcounter($strNewMemCode);
+            $Member->strMemFname = $request->input('first_name');
+            $Member->strMemMname = $request->input('middle_name');
+            $Member->strMemLname = $request->input('last_name');
+            $Member->strMemEmail = $request->input('email');
+            $Member->strMemPasscode = $strPassCode;
+            $Member->save();
+            foreach ($_POST as $key => $value) {
+                if($key == "member_id" || $key == "last_name" || $key == "first_name" || $key == "email" || $key =="middle_name"){
+                    
+                    //nothing will happen...
+
+                } else {
+                    // if the field is checkbox, it will extract the array value
+                    if(is_array($value)){
+                        foreach ($value as $checked) {
+                            $MemberDetail = new MemberDetail();
+                            $MemberDetail->strMemDeMemId = $counter->smartcounter($strNewMemCode);
+                            $MemberDetail->strMemDeFieldName = $key;
+                            $MemberDetail->strMemDeFieldData = $checked;
+                            $MemberDetail->save();
+                        }
+                    }else{
+                        $MemberDetail = new MemberDetail();
+                        $MemberDetail->strMemDeMemId = $counter->smartcounter($strNewMemCode);
+                        $MemberDetail->strMemDeFieldName = $key;
+                        $MemberDetail->strMemDeFieldData = $value;
+                        $MemberDetail->save();
+                    }
+                }
+            }
+            DB::commit();
+            $request->session()->flash('message', 'Successfully added. ID already taken, new ID given.');
         }
         //redirect
-        $request->session()->flash('message', 'Successfully added.');    
+           
         return Redirect::back();
     }
 
