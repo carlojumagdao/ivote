@@ -23,9 +23,9 @@
         };
     </script>
     <body>
-
         <!-- BAR CHART -->
         @foreach($positions as $position)
+        <?php $strPosName = str_replace(' ', '', strtolower($position->strPosName)); ?>
         <div class="col-lg-6">
             <div class="box box-success">
                 <div class="box-header with-border">
@@ -38,7 +38,7 @@
                 </div>
                 <div class="box-body">
                     <div class="chart">
-                        <canvas id="{{$position->strPosName}}" style="height:230px"></canvas>
+                        <canvas id="{{$strPosName}}" style="height:230px"></canvas>
                     </div>
                 </div>
             </div>
@@ -63,6 +63,7 @@
         <script src="{{ URL::asset('assets/toastr/toastr.min.js') }}"></script>
         <script>
         @foreach($positions as $position)
+            <?php $strPosName = str_replace(' ', '', strtolower($position->strPosName)); ?>
             $(function () {
                 var areaChartData = {
                     labels: [
@@ -73,7 +74,6 @@
                     @endforeach
                     ],
                     datasets: [{
-                        label: "Electronics",
                         fillColor: "rgba(210, 214, 222, 1)",
                         strokeColor: "rgba(210, 214, 222, 1)",
                         pointColor: "rgba(210, 214, 222, 1)",
@@ -89,7 +89,7 @@
                         ]
                     }]
                 };
-                var barChartCanvas = $("#{{$position->strPosName}}").get(0).getContext("2d");
+                var barChartCanvas = $("#{{$strPosName}}").get(0).getContext("2d");
                 var barChart = new Chart(barChartCanvas);
                 var barChartData = areaChartData;
                 barChartData.datasets[0].fillColor = "{{$position->strPosColor}}";
@@ -99,7 +99,14 @@
                 var barChartOptions = {
                     //Boolean - whether to make the chart responsive
                     responsive: true,
-                    maintainAspectRatio: true
+                    maintainAspectRatio: true,
+                    legend: {
+                        display: true,
+                        position: "top",
+                        labels: {
+                            fontColor: "black"
+                        }
+                    }
                 };
                 barChartOptions.datasetFill = false;
                 barChart.Bar(barChartData, barChartOptions);

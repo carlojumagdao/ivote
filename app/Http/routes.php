@@ -439,6 +439,10 @@ Route::get('/partialresult', array(
 	'uses' => 'resultController@index',
 	'as' => 'partialresult'
 ));
+Route::get('/partialsurveyresult', array(
+	'uses' => 'resultController@surveyindex',
+	'as' => 'surveyresult'
+));
 // Partial Result //
 
 Route::post('/survey/add', array(
