@@ -13,6 +13,7 @@ use App\Http\Controllers\Controller;
 use Redirect;
 use Session;
 use App\SurveyHeader AS SurveyHeader;
+use Illuminate\Support\Facades\App;
 
 class votingController extends Controller
 {
@@ -199,6 +200,14 @@ class votingController extends Controller
             
             Session::put('memid', $memid);
             Session::put('votereference', $VDID);
+
+            // Pusher: Sending an Channel and Event // 
+            $pusher = App::make('pusher');
+            $pusher->trigger('notifications',
+                             'new-notification',
+                             array('text' => 'Vote Entered')
+                             );
+            // Pusher: Sending an Channel and Event // 
 
             $SurveyStatus = DB::table('tblSetting')->where('blSetSurvey', '=', 1)->get();
             if($SurveyStatus){

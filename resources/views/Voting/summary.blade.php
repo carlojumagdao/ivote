@@ -78,6 +78,12 @@
     <link rel="stylesheet" href="{{ URL::asset('assets/plugins/iCheck/all.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('assets/dist/css/AdminLTE.min.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('assets/dist/css/skins/_all-skins.min.css') }}">
+    <script src="//js.pusher.com/3.0/pusher.min.js"></script>  <!-- download this -->
+    <script>
+        Pusher.log = function(msg) {
+            console.log(msg);
+        };
+    </script>
     <style>
         .body{
             padding:0;
@@ -221,10 +227,7 @@
                 </div>
             </div>
             <br>
-            
-           
         </div>
-        
          {!! Form::close() !!}
     </div>
     <br>
@@ -274,6 +277,7 @@
     function confirm_submit(){
         var r = confirm("Are you sure you want to cast this votes?");
         if (r == true) {
+            
             return true;
         } else {
             return false;
@@ -284,7 +288,6 @@
         document.getElementById('blRedirect').value = 1;
         document.getElementById('form-vote').submit();
     }
-    
 </script>
 @yield('script')   
 </body>

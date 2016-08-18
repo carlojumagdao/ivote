@@ -11,8 +11,6 @@
 |
 */
 
-
-
 Route::get('/admin', function () {
    if(Auth::check()){return Redirect::to('dashboard');}
     return view('auth/login');
@@ -427,40 +425,42 @@ Route::group(['middleware' => 'userlog'], function(){
 		'uses' => 'votingController@cast',
 		'as' => 'voting.cast'
 	));
-    
     //Voting Route
-
 });
+
+
+
+// Partial Result //
+Route::get('/partialresult', array(
+	'uses' => 'resultController@index',
+	'as' => 'partialresult'
+));
+// Partial Result //
 
 Route::post('/survey/add', array(
 	'uses' => 'responseController@postsurvey',
 	'as' => 'survey.postsurvey'
 ));
-
-
 Route::get('/thanks', array(
 	'uses' => 'responseController@thanks',
 	'as' => 'thanks'
 ));
-
-
 Route::get('/security/question/{id}', array(
-		'uses' => 'securityController@createPage',
-		'as' => 'security.createPage'
-	));
-
+	'uses' => 'securityController@createPage',
+	'as' => 'security.createPage'
+));
 Route::post('/security/question/{id}', array(
-		'uses' => 'securityController@setSecurity',
-		'as' => 'security.setSecurity'
-	));
+	'uses' => 'securityController@setSecurity',
+	'as' => 'security.setSecurity'
+));
 Route::get('/votedandsurveyed', function () {
-       return view('votedandsurveyed');
+    return view('votedandsurveyed');
 });
 Route::get('/votednotsurveyed', function () {
-       return view('votednotsurveyed');
+    return view('votednotsurveyed');
 });
 Route::get('/endelection', function () {
-       return view('endelection');
+    return view('endelection');
 });
 //Log In User//
 

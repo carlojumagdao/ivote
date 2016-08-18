@@ -23,11 +23,13 @@ class reportController extends Controller
                             ->where('blPosDelete', '=', '0')
                             ->distinct()
                             ->get();
-        $tally = DB::select('SELECT strCandID, strMemLName, strMemFName, strCandPosId, txtCandPic, count(strVDCandId) as `votes` FROM tblcandidate 
-join tblmember on strMemberId = strCandMemId
-left join tblvotedetail on strCandId = strVDCandId
-group by strVDCandID, strMemLName, txtCandPic
-order by 6 desc;');
+        $tally = DB::select('SELECT strCandID, strMemLName, strMemFName, strCandPosId,
+                            txtCandPic, count(strVDCandId) as `votes` FROM tblcandidate 
+                            join tblmember on strMemberId = strCandMemId
+                            left join tblvotedetail on strCandId = strVDCandId
+                            where blCandDelete = 0
+                            group by strVDCandID, strMemLName, txtCandPic
+                            order by 6 desc;');
         $voted = DB::table('tblvoteheader')->count();
         $GenSet = GenSet::find(1);
     	$start = date_create($GenSet->datSetStart);

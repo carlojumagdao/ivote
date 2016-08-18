@@ -137,6 +137,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        Vinkla\Pusher\PusherServiceProvider::class,
 
         /*
          * Application Service Providers...

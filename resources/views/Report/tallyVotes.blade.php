@@ -52,34 +52,31 @@
                 @foreach($positions as $pos)
                 <div class="row ">
                     <div class="col-md-12">
-                <h3>{{$pos->strPosName}}</h3>
-               
-                @foreach($tally as $cand)
-                <!-- Apply any bg-* class to to the info-box to color it -->
-                @if($pos->strCandPosId == $cand->strCandPosId)
-                <div class="col-md-3">
-                <div class="info-box bg-blue">
-                    <span class="info-box-icon"><image class="img-circle" src ="assets/images/{{$cand->txtCandPic}}" height="80" width="80"></span>
-                    <div class="info-box-content">
-                        <span class="info-box-text">{{$cand->strMemLName}}, {{$cand->strMemFName}}</span>
-                        <span class="info-box-number">{{$cand->votes}}</span>
-                        <!-- The progress section is optional -->
-                        <div class="progress">
-                            <div class="progress-bar" style="width: @if($count != 0){{($cand->votes / $count )* 100}}% 
-                            @else 0% 
-                            @endif"></div>
+                        <h3>{{$pos->strPosName}}</h3>
+                        @foreach($tally as $cand)
+                        @if($pos->strCandPosId == $cand->strCandPosId)
+                        <div class="col-md-3">
+                            <div class="info-box bg-blue">
+                                <span class="info-box-icon"><image class="img-circle" src ="assets/images/{{$cand->txtCandPic}}" height="80" width="80"></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">{{$cand->strMemLName}}, {{$cand->strMemFName}}</span>
+                                    <span class="info-box-number">{{$cand->votes}}</span>
+                                    <div class="progress">
+                                        <div class="progress-bar" style="width: @if($count != 0){{($cand->votes / $count )* 100}}% 
+                                        @else 0% 
+                                        @endif"></div>
+                                    </div>
+                                    <span class="progress-description">
+                                        @if($count != 0){{($cand->votes / $count )* 100}}% of Votes
+                                        @else 0% of Votes
+                                        @endif
+                                    </span>
+                                </div>
+                            </div>
                         </div>
-                        <span class="progress-description">
-                            @if($count != 0){{($cand->votes / $count )* 100}}% of Votes
-                            @else 0% of Votes
-                            @endif
-                        </span>
-                    </div><!-- /.info-box-content -->
-                </div><!-- /.info-box -->
+                        @endif
+                        @endforeach
                     </div>
-                    @endif
-                @endforeach
-                        </div>
                 </div>
                 @endforeach
             </div>
@@ -87,10 +84,7 @@
                 <a href="{{ URL::to('/getPDF') }}" target="_blank"><input type="button" class="btn btn-primary pull-right" name="btnSubmit" value="Create PDF"></a>
             </div>
         </div>
-        
-    </div>
-                
-                
+    </div>           
 @stop 
 @section('script')
 <script>
