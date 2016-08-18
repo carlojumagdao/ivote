@@ -339,6 +339,10 @@ Route::group(['middleware' => 'auth'], function(){
 		'uses' => 'auditController@index',
 		'as' => 'audit.index'
 	));
+    Route::post('/audit', array(
+		'uses' => 'auditController@load',
+		'as' => 'audit.load'
+	));
     
     Route::get('/audit/vote', array(
 		'uses' => 'auditController@vote',

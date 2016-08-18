@@ -40,57 +40,14 @@
     </div>
     <div class="col-md-12">
 <ul class="timeline" id="myList">
-    <li class="time-label">
-        <span class="bg-red">
-            {{date('D, M. d Y', strtotime($first))}}
-        </span>
-    </li>
-    @foreach($audit as $aud)
-    <!-- timeline time label -->
-    @if($first != $aud->date)
-    <?php $first = $aud->date ?>
-    <li class="time-label">
-        <span class="bg-red">
-           {{date('D, M. d Y', strtotime($first))}}
-        </span>
-    </li>
-    @endif
-    <!-- /.timeline-label -->
-
-    <!-- timeline item -->
-    <li>
-        <!-- timeline icon -->
-        @if($aud->Action == 'INSERTED')
-        <i class="fa fa-plus-square bg-yellow"></i>
-        @elseif($aud->Action == 'DELETED')
-        <i class="fa fa-trash bg-red"></i>
-        @else
-        <i class="fa fa-edit bg-blue"></i>
-        @endif
-        <div class="timeline-item">
-            <span class="time"><i class="fa fa-clock-o"></i>{{date('h:i a', strtotime($aud->time) )}}</span>
-
-            <h3 class="timeline-header"><a href="#">{{$aud->user}}</a> {{$aud->Action}}  {{$aud->strMemberId}}</h3>
-            @if($aud->Action == 'UPDATED')
-            <div class="timeline-body">
-                {{$aud->oldValue}} updated to <big><strong>{{$aud->newValue}}</strong></big>
-            </div>
-            @endif
-            <!--div class="timeline-footer">
-                <a class="btn btn-primary btn-xs">...</a>
-            </div-->
+    
+    
+</ul> 
+        <div class="stop"><center><h3>No More to Load</h3></center>
         </div>
-    </li>
-    <!-- END timeline item -->
-    @endforeach
-    <li>
-        <i class="fa fa-clock-o bg-gray"></i>
-    </li>
 
-</ul>
-<div id="loadMore" class="btn btn-primary">Load more</div>
-<div id="showLess" class="btn btn-danger">Show less</div>
-</div>           
+       <center> <div class="ajax-loading"><img src="{{URL::asset('assets/images/Loading_icon3.gif')}}" style="max-height:50px"/>
+           </div></center>
                 
 @stop 
 @section('script')
@@ -137,28 +94,55 @@
 
 </script>
 <script>
-$(document).ready(function () {
-    size_li = $("#myList li").size();
-    x=3;
-    $('#myList li:lt('+x+')').show();
-    $('#loadMore').click(function () {
-        x= (x+5 <= size_li) ? x+5 : size_li;
-        $('#myList li:lt('+x+')').show();
-         $('#showLess').show();
-        if(x == size_li){
-            $('#loadMore').hide();
+    var page = 1; //track user scroll as page number, right now page number is 1
+    $('.stop').hide();
+    load_more(page); //initial content load
+    $(window).scroll(function() { //detect page scroll
+        if($(window).scrollTop() + $(window).height() >= $(document).height()) { //if user scrolled from top to bottom of the page
+            page++; //page number increment
+            load_more(page); //load content   
         }
     });
-    $('#showLess').click(function () {
-        x=(x-5<0) ? 3 : x-5;
-        $('#myList li').not(':lt('+x+')').hide();
-        $('#loadMore').show();
-         $('#showLess').show();
-        if(x == 3){
-            $('#showLess').hide();
-        }
-    });
-});
+    
+function load_more(page){
+  $.ajax(
+        {
+            url: '?page=' + page,
+            type: "get",
+            datatype: "html",
+            beforeSend: function(xhr)
+            {
+                $('.stop').hide();
+                $('.ajax-loading').show();
+                if(page == 1)var token = $('meta[name="csrf_token"]').attr('content');
+
+                if (token) {
+                      return xhr.setRequestHeader('X-CSRF-TOKEN', token);
+                }
+            }
+        })
+        .done(function(data)
+        {
+            if(data.length == 0){
+            console.log(data.length);
+               
+                //notify user if nothing to load
+                $('.ajax-loading').html("No more records!");
+                return;
+            }
+            $('.ajax-loading').hide(); //hide loading animation once data is received
+            $("#myList").append(data); //append data into #results element          
+        })
+        .fail(function(jqXHR, ajaxOptions, thrownError)
+        {
+              //alert('No response from server');
+           
+            $('.stop').show();
+            $('.ajax-loading').hide();
+        });
+ }
+</script>
+    
 </script>
 
 @stop
