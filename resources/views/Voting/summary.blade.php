@@ -212,8 +212,14 @@
                     
                     </div>
                     <br>
-                @endforeach  
+                @endforeach
                     </center>
+                <div class="col-md-6 col-md-offset-3 alert alert-warning alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            
+                        <h4><i class="icon fa fa-warning"></i><input type="checkbox" id="agree" name="agree"> IMPORTANT!</h4>
+                        I reviewed my vote and understand that once I submit this, it cannot be changed. 
+                    </div>
                 <input type="hidden" id="blRedirect" name="redirect">
                 <div class="row" style="padding-right:72px;">
                     <a href="#" style="height:40px;" onclick="redirect()">
@@ -222,7 +228,7 @@
                         </div>
                     </a>
                     <div class="col-md-1 col-xs-4 col-sm-4">
-                        <input style="height:40px;" type="submit" class="btn btn-primary" name="btnSubmit" value="SUBMIT MY VOTES!">
+                        <input style="height:40px;" id="btnSubmit" type="submit" class="btn btn-primary" name="btnSubmit" value="SUBMIT MY VOTES!" disabled>
                     </div>
                 </div>
             </div>
@@ -236,7 +242,7 @@
             <div class="pull-right hidden-xs">
                 <b>Version</b> 1.2.1
             </div>
-            <strong style="margin-left:10px;padding-top:40px;">Copyright &copy; 2015-2016 <a href="http://ivote++.com" class="btn btn-xs btn-primary">&nbsp iVote++ &nbsp </a>&nbsp .</strong> All rights
+            <strong style="margin-left:10px;padding-top:40px;">Copyright &copy; 2015-2016 <a href="http://ivote++.com" class="btn btn-xs btn-primary">&nbsp iVote++ &nbsp</a>&nbsp .</strong> All rights
             reserved. &nbsp &nbsp 
         </div>  
     </footer>
@@ -288,6 +294,11 @@
         document.getElementById('blRedirect').value = 1;
         document.getElementById('form-vote').submit();
     }
+</script>
+<script>
+    $('#agree').change(function() {
+        $('#btnSubmit').attr('disabled', !this.checked);
+    });
 </script>
 @yield('script')   
 </body>
