@@ -24,6 +24,7 @@
       background-size: cover;
       background-attachment: inherit;
       background-repeat: no-repeat;
+      padding:20px;
       }
       footer {
       width:100%;
@@ -31,6 +32,8 @@
       position:absolute;
       bottom:0;
       left:0;
+      overflow-x: hidden;
+      overflow-y: hidden;
     }
       
     
@@ -40,10 +43,10 @@
 <body>
   <div class="wrapper">
     <center>
-    <p style="font-size:75px;color:white;margin-top:220px;font-family:Helvetica;text-shadow: 2px 2px 8px rgba(5, 5, 5, 0.62);">The Election is already closed. </p>
+    <p class="responsive-text" style="font-size:75px;color:white;margin-top:100px;font-family:Helvetica;text-shadow: 2px 2px 8px rgba(5, 5, 5, 0.62);">The Election is already closed. </p>
     </center>
     <center>
-    <p style="font-size:60px;color:#1d96f3 ;font-family:Helvetica ;">Thank you for participating.</p>
+    <p class="responsive-text" style="font-size:60px;color:#1d96f3 ;font-family:Helvetica ;">Thank you for participating.</p>
     </center>
 
   </div>
@@ -53,6 +56,20 @@
 <footer style="text-shadow: 2px 2px 8px rgba(5, 5, 5, 0.62);background-color:rgba(0, 0, 0, 0.35);height:59px;">
 <center><p style="color:white;font-size:14px;font-family: segoe ui;padding-top:10px;">Copyright © 2015-2016 iVote++<br>All rights reserved</p></center>
 </footer>
+
+<script src="{{ URL::asset('assets/jquery/jquery.min.js') }}"></script>
+<script src="{{ URL::asset('assets/jquery/jquery-ui.min.js') }}"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="{{ URL::asset('assets/bootstrap/js/bootstrap.min.js') }}"></script>
+<script src="{{ URL::asset('assets/mc-profile/js/jquery.material-cards.min.js') }}"></script>
+<script src="{{ URL::asset('assets/mc-profile/dist/mansory.js') }}"></script>
+<script src="{{ URL::asset('assets/responsivetext/jquery.responsivetext.js') }}"></script>
+<script type="text/javascript">
+  $("body").responsiveText({
+     bottomStop : '480',
+     topStop    : '1400'
+});
+</script>
 
 <!-- /.login-box -->
 <!-- jQuery 2.2.0 -->
