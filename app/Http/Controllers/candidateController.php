@@ -254,13 +254,13 @@ class candidateController extends Controller
                 return Redirect::route('candidate.index')->withErrors($errMess);
             }
                 
-            }*/
+            
             if($request->has('party') && $party != 1){
                 if($limit[0]->intPosVoteLimit == $countPos && $party != 1){
                     $errMess = "Candidate limit of " . $limit[0]->strPosName . " in Party " . $partyName[0]->strPartyName . " has EXCEEDED";    
                     return Redirect::back()->withErrors($errMess);
                 }
-            }
+            }*/
             
         
             

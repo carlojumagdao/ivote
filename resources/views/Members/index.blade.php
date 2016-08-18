@@ -214,12 +214,20 @@
                                 <td class="passcode">Yes  <button class="btn btn-default btn-circle btn-sm edit red-tooltip" data-placement="right" data-toggle="tooltip" title="{{$value->strMemPasscode}}" data-clipboard-text="{{$value->strMemPasscode}}"><i class="glyphicon glyphicon-qrcode"></i></button></td>  
                             @else
                                 <td class="passcode">No  <button class="btn btn-default btn-circle btn-sm edit red-tooltip" data-placement="right" data-toggle="tooltip" title="{{$value->strMemPasscode}}" data-clipboard-text="{{$value->strMemPasscode}}"><i class="glyphicon glyphicon-qrcode"></i></button></td>  
-                            @endif 
-                            <td class="created">{{$value->created_at}}</td>
-                            <td class="updated">{{$value->updated_at}}</td>
-                            <td class="deleted">
-                              {{$value->deleted_at}}
-                            </td>
+                            @endif
+                            
+                            <?php
+                                $datecreated =  $value->created_at;
+                                $converteddatecreated = date('M j, Y h:i A',strtotime($datecreated));
+                                $dateupdated = $value->updated_at;
+                                $converteddateupdated = date('M j, Y h:i A',strtotime($dateupdated));   
+                                $datedeleted = $value->deleted_at;
+                                $converteddatedeleted = date('M j, Y h:i A',strtotime($datedeleted));     
+                            ?>
+                            
+                            <td class="created">{{$converteddatecreated}}</td>
+                            <td class="updated">{{$converteddateupdated}}</td>
+                            <td class="deleted">{{$converteddatedeleted}}</td>
                             <td class="status" style="display:none">{{$value->blMemDelete}}</td>
                             <td>
                                 @if($value->blMemDelete == 0)

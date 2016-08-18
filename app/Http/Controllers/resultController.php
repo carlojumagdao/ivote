@@ -16,13 +16,27 @@ class resultController extends Controller
                             ->where('blPosDelete', '=', '0')
                             ->distinct()
                             ->get();
-        $tally = DB::select('SELECT strCandID, CONCAT(strMemFName," ",strMemLName) AS fullname, strCandPosId,
-                            txtCandPic, count(strVDCandId) as `votes` FROM tblcandidate 
+        $tally = DB::select('SELECT strCandID, CONCAT(strMemFName," ",strMemLName) AS 
+        					fullname, strCandPosId, txtCandPic, count(strVDCandId) as `votes`
+        					FROM tblcandidate 
                             join tblmember on strMemberId = strCandMemId
                             left join tblvotedetail on strCandId = strVDCandId
                             where blCandDelete = 0
                             group by strVDCandID, strMemLName, txtCandPic
                             order by 5 desc;');
     	return view("partialresult", ['tally'=>$tally, 'positions'=>$positions]);
+    }
+    public function surveyindex(){
+    	$SurveyQuestions = DB::select('SELECT intSQId,strSQQuestion, strSQQuesType FROM 
+    							tblsurveyquestion WHERE blSQStatus = 1;');
+    	$SurveyTally = DB::select('SELECT sd.strSDAnswer, count(sd.strSDAnswer) AS Tally,
+    								sq.intSQId, sd.intSDId
+									FROM tblsurveyquestion AS sq
+									LEFT JOIN tblsurveydetail AS sd
+										ON sq.intSQId = sd.intSDSQId
+									WHERE sq.blSQStatus = 1
+								    GROUP BY 1
+								    ORDER BY sq.strSQQuestion;');
+    	return view("surveypartial", ['SurveyTally'=>$SurveyTally, 'SurveyQuestions'=>$SurveyQuestions]);
     }
 }

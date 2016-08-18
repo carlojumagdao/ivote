@@ -234,13 +234,56 @@ class positionController extends Controller
                 }
             }
             DB::commit();
+            $request->session()->flash('message', 'Successfully added.');    
         }catch (\Illuminate\Database\QueryException $e){
             DB::rollBack();
-            $errMess = $e->getMessage();
-            return Redirect::back()->withErrors($errMess);
+            /*$errMess = $e->getMessage();
+            return Redirect::back()->withErrors($errMess);*/
+            $PositionsId = DB::table('tblPosition')
+                ->select('strPositionId')
+                ->orderBy('strPositionId')
+                ->get();
+            $id = "POS000";
+            foreach ($PositionsId as $value) {
+                $Newid = $value->strPositionId;
+            }
+            $counter = new SmartCounter();
+            DB::beginTransaction();    
+            $Position = new Position();
+            $Position->strPositionID = $counter->smartcounter($Newid);
+            $Position->strPosName = $request->input('txtPositionName');
+            $Position->strPosColor = $request->input('txtPositionColor');
+            $Position->intPosVoteLimit = $request->input('txtVoteLimit');
+            $Position->save();
+            foreach ($_POST as $key => $value) {
+
+                if($key == "btnSubmit" || $key == "txtPositionId" || $key == "txtPositionName" || $key == "txtVoteLimit" || $key == "txtPositionColor"){
+                    
+                    //nothing will happen...
+
+                } else {
+                    // if the field is checkbox, it will extract the array value
+                    if(is_array($value)){
+                        foreach ($value as $checked) {
+                            $PositionDetail = new PositionDetail();
+                            $PositionDetail->strPosDePosId = $counter->smartcounter($Newid);
+                            $PositionDetail->strPosDeFieldName = $key;
+                            $PositionDetail->strPosDeFieldData = $checked;
+                            $PositionDetail->save();
+                        }
+                    }else{
+                        $PositionDetail = new PositionDetail();
+                        $PositionDetail->strPosDePosId = $counter->smartcounter($Newid);
+                        $PositionDetail->strPosDeFieldName = $key;
+                        $PositionDetail->strPosDeFieldData = $value;
+                        $PositionDetail->save();
+                    }
+                }
+            }
+            DB::commit();
+            $request->session()->flash('message', 'Successfully added. ID already taken, new ID given.');
         }
         //redirect
-        $request->session()->flash('message', 'Successfully added.');    
         return Redirect::back();
     }
 }

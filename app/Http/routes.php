@@ -330,6 +330,10 @@ Route::group(['middleware' => 'auth'], function(){
 		'uses' => 'reportController@distroIndex',
 		'as' => 'report.distIndex'
 	));
+    Route::post('/viewDistro', array(
+		'uses' => 'reportController@voteDistro',
+		'as' => 'report.voteDistro'
+	));
     //Reports//
 
     //audit//
@@ -438,6 +442,10 @@ Route::group(['middleware' => 'userlog'], function(){
 Route::get('/partialresult', array(
 	'uses' => 'resultController@index',
 	'as' => 'partialresult'
+));
+Route::get('/partialsurveyresult', array(
+	'uses' => 'resultController@surveyindex',
+	'as' => 'surveyresult'
 ));
 // Partial Result //
 

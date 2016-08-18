@@ -68,12 +68,27 @@ order by 6 desc;');
     }
     
     public function distroIndex(){
-        $posdetail = DB::table('tblpositiondetail')->select('strPosDeFieldName')->get();
+        $posdetail = DB::table('tbldynamicfield')->select('strDynFieldName')->where('blDynStatus', '=', 1)->get();
         
         return view('Report.voteDistro', ['posdetail'=>$posdetail]);
     }
     
     public function voteDistro(Request $page){
+        $candidate = DB::table('tblcandidate')
+                        ->join('tblmember', 'tblmember.strMemberId', '=', 'tblcandidate.strCandMemId')
+                        ->get();
+        $posdetail = DB::table('tbldynamicfield')->select('strDynFieldName')->where('blDynStatus', '=', 1)->get();
+        $votedistro = DB::select('SELECT c.strCandId, CONCAT(m.strMemFname, " ", m.strMemLName) as "fullname" ,p.strPosName, md.strMemDeFieldData, count(vh.strVHCode) AS "count"
+            FROM tblcandidate AS c  
+            join tblmember as m on c.strCandMemId = m.strMemberID
+            join tblposition as p on c.strCandPosId = p.strPositionID
+            join tblvotedetail AS vd on c.strCandID = vd.strVDCandID
+            join tblvoteheader AS vh on vd.strVDVHCode = vh.strVHCode
+            left join tblmemberdetail AS md on vh.strVHMemID = md.strMemDeMemId
+            where md.strMemDeFieldName = ? OR md.strMemDeFieldName IS NULL
+            group by c.strCandId, fullname, p.strPosName,  md.strMemDeFieldData;',[$page->input('distro')]);
+        
+        return view('Report.distroview', ["candidate"=>$candidate, "votedistro" =>$votedistro, 'posdetail'=>$posdetail]);
         
     }
 }
