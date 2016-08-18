@@ -91,6 +91,9 @@
 <script src="{{ URL::asset('assets/bootstrap/js/bootstrap.min.js') }}"></script>
 <!-- iCheck -->
 <script src="{{ URL::asset('assets/plugins/iCheck/icheck.min.js')}}"></script>
+<script src="{{ URL::asset('assets/bootstrap/js/bootstrap.min.js') }}"></script>
+<script src="{{ URL::asset('assets/mc-profile/js/jquery.material-cards.min.js') }}"></script>
+<script src="{{ URL::asset('assets/mc-profile/dist/mansory.js') }}"></script>
 <script src="{{ URL::asset('assets/responsivetext/jquery.responsivetext.js') }}"></script>
 <script type="text/javascript">
   $("body").responsiveText({
