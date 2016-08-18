@@ -330,6 +330,10 @@ Route::group(['middleware' => 'auth'], function(){
 		'uses' => 'reportController@distroIndex',
 		'as' => 'report.distIndex'
 	));
+    Route::post('/viewDistro', array(
+		'uses' => 'reportController@voteDistro',
+		'as' => 'report.voteDistro'
+	));
     //Reports//
 
     //audit//

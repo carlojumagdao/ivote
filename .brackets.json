@@ -1,0 +1,5 @@
+{
+    "jscodehints.detectedExclusions": [
+        "C:/xampp/htdocs/ivote/public/assets/datatables/datatables-plugins/api/fnFilterOnReturn.js"
+    ]
+}
