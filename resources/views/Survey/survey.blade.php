@@ -63,7 +63,7 @@
                 <h3>
                     <center>
                     <img src='{{ URL::asset("assets/images/$logo") }}' style="max-width: 75px;">
-                    <b >&nbsp;{{$header}}</b>
+                    <b class="responsive-text">&nbsp;{{$header}}</b>
                     </center>
                 </h3>
                 <div class="box">
