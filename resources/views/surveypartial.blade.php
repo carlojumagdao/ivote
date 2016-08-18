@@ -22,7 +22,22 @@
             console.log(msg);
         };
     </script>
+
+     <style>
+        .wrapper{
+            padding: 30px;
+        }
+        body{
+            background-color: WhiteSmoke  ;
+        }
+
+
+    </style>
+
     <body>
+        <div class="wrapper">
+
+        <h3 class="responsive-text" style="font-style:Helvetica;color:black;text-shadow: 2px 2px 8px rgba(217, 217, 217, 0.88);margin-left:15px;"> Partial Survey Result <h3>
         
         @foreach($SurveyQuestions as $SurveyQuestion)
 
@@ -33,8 +48,8 @@
         ?>
 
             @if(($SurveyQuestion->strSQQuesType == "element-single-line-text") || ($SurveyQuestion->strSQQuesType == "element-paragraph"))
-                <div class="col-lg-6">
-                    <div class="box box-success">
+                <div class="col-lg-6 col-xs-12">
+                    <div class="box box-info">
                         <div class="box-header with-border">
                             <h3 class="box-title">{{$str}}</h3>
                             <div class="box-tools pull-right">
@@ -57,8 +72,8 @@
                     </div>
                 </div>
             @else
-                <div class="col-lg-6">
-                    <div class="box box-success">
+                <div class="col-lg-6 col-xs-12">
+                    <div class="box box-info">
                         <div class="box-header with-border">
                             <h3 class="box-title">{{$str}}</h3>
                             <div class="box-tools pull-right">
@@ -76,6 +91,7 @@
                 </div>
             @endif
         @endforeach
+    </div>
         <!-- BAR CHART -->
 
         <!-- jQuery 2.2.0 -->
@@ -93,6 +109,13 @@
         <!-- AdminLTE for demo purposes -->
         <script src="{{ URL::asset('assets/dist/js/demo.js')}}"></script>
         <script src="{{ URL::asset('assets/toastr/toastr.min.js') }}"></script>
+        <script src="{{ URL::asset('assets/responsivetext/jquery.responsivetext.js') }}"></script>
+        <script type="text/javascript">
+          $("body").responsiveText({
+             bottomStop : '800',
+             topStop    : '1400'
+        });
+        </script>
         <script>
         @foreach($SurveyQuestions as $SurveyQuestion)
             <?php $strQuestion = str_replace(' ', '', strtolower($SurveyQuestion->strSQQuestion)); ?>
