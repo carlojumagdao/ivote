@@ -65,7 +65,16 @@
     <br><br>
       <div class="form-group has-feedback">
           <center>
-          <label style="font-size: 14px; font-weight: bold ; color: steelblue;">You Have Successfully Voted!<br>In 8 seconds you will be directed to the survey page . . . . .</label>
+          <label style="font-size: 14px; font-weight: bold ; color: steelblue;">You Have Successfully Voted!<br>In 
+          <span id="counter">8</span> seconds you will be directed to the survey page . . . . .</label>
+            <script type="text/javascript">
+              function countdown() 
+              {
+                var i = document.getElementById('counter');
+                i.innerHTML = parseInt(i.innerHTML)-1;
+              }
+              setInterval(function(){ countdown(); },1000);
+            </script>
           <h2>Vote Reference:<br>{{$votereference}}</h2>
           <center>
           
@@ -92,7 +101,7 @@
 <script type="text/javascript">
   window.setTimeout(function(){
     window.location.href = "/survey/answersurvey";
-  },7000);
+  },8000);
 </script>
 <script>
   //iCheck for checkbox and radio inputs
@@ -111,5 +120,12 @@
       radioClass: 'iradio_flat-green'
     });
 </script>
+<!-- <script type="text/javascript">
+    setInterval(function())
+    {
+      seconds Span.innerHTML = 8;
+    },1000);
+     
+</script> -->
 </body>
 </html>
