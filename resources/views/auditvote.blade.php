@@ -55,7 +55,11 @@
                             <td class="code">{{$value->strVHCode}}</td>
                             <td class="id">{{$value->strMemberId}}</td>
                             <td class="name">{{$value->strMemFname.' '.$value->strMemLname}}</td>
-                            <td class="">{{$value->datVHVoted}}</td>
+                                <?php
+                                    $datevoted =  $value->datVHVoted;
+                                    $converteddatevoted = date('M j, Y h:i A',strtotime($datevoted));
+                                ?>
+                            <td class="">{{$converteddatevoted}}</td>
                             <!-- if else to make the independent party not editable/deletable -->
                            
                             <td>
