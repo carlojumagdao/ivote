@@ -53,40 +53,7 @@
             </div>
         @endif
     </div>
-    <div class="col-md-12">
-        <div class="col-lg-3 col-xs-6" id="position">
-            <div class="panel" style="border-left:8px solid #2c8798;color:#2c8798; cursor:pointer" data-toggle="modal" data-target="#viewPosition">   
-                <div class="panel-body">
-                    <div class="info-box-number text-center" style="font-size:70px;" > {{$TotalPosition}}</div>
-                    <div class="info-box-text text-center" style="font-size:130%">Positions</div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3 col-xs-6">
-            <div class="panel" style="border-left:8px solid #006400;color:#006400; cursor:pointer" data-toggle="modal" data-target="#viewCandidate">
-                <div class="panel-body"> 
-                    <div class="info-box-number text-center" style="font-size:70px">{{$TotalCandidate}}</div>
-                    <div class="info-box-text text-center" style="font-size:130%">Candidates</div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3 col-xs-6">
-            <div class="panel" style="border-left:8px solid #b22222;color:#b22222; cursor:pointer">
-                <div class="panel-body">  
-                    <a href="{{ URL::to('/member') }}" class="info-box-number text-center" style="font-size:70px;color:#b22222;" >{{$TotalVoter}}</a>
-                    <div class="info-box-text text-center" style="font-size:130%">Members</div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3 col-xs-6">
-            <div class="panel" style="border-left:8px solid #605ca8;color:#605ca8; cursor:pointer" data-toggle="modal" data-target="#viewVoted">
-                <div class="panel-body">  
-                    <div class="info-box-number text-center" style="font-size:70px">{{$TotalVoted}}</div>
-                    <div class="info-box-text text-center" style="font-size:130%">Voted</div>
-                </div>
-            </div>
-        </div>
-        <?php
+    <?php
             $convertDateStart = date('l F j, Y', strtotime($start));
             $convertDateEnd = date('l F j, Y', strtotime($end));
             $pieces = explode(" ", $start);
@@ -102,19 +69,54 @@
             $finalstartdate = "$startDate[1]/$startDate[2]/$startDate[0] $timeStart-$endDate[1]/$endDate[2]/$endDate[0] $timeEnd";
                 // $finalstarttime = "$timeStart"; 
         ?>
-        <div class="col-md-3 col-xs-6">
+    <div class="col-md-12">
+        <div class="col-lg-3 col-xs-6" id="position">
+            <div class="panel" style="border-left:8px solid #FF6384;color:#FF6384; cursor:pointer" data-toggle="modal" data-target="#viewPosition">   
+                <div class="panel-body">
+                    <div class="info-box-number text-center" style="font-size:70px;" > {{$TotalPosition}}</div>
+                    <div class="info-box-text text-center" style="font-size:130%">Positions</div>
+                </div>
+            </div>
+            <div class="panel" style="border-left:8px solid #4BC0C0;color:#4BC0C0; cursor:pointer" data-toggle="modal" data-target="#viewVoted">
+                <div class="panel-body">  
+                    <div class="info-box-number text-center" style="font-size:70px">{{$TotalVoted}}</div>
+                    <div class="info-box-text text-center" style="font-size:130%">Voted</div>
+                </div>
+            </div>
             <div class="panel panel-default">
-                <div class="panel-heading"><i class="glyphicon glyphicon-calendar"></i> Start Date and Time</div>
+                <div class="panel-heading"></i> Start Date and Time</div>
                 <div class="panel-body">{{$convertDateStart}}<br>{{$timeStart}}</div>    
-            </div>  
+            </div>
         </div>
-        <div class="col-md-3 col-xs-6">
+        <div class="col-lg-3 col-xs-6">
+            <div class="panel" style="border-left:8px solid #FFCE56;color:#FFCE56; cursor:pointer" data-toggle="modal" data-target="#viewCandidate">
+                <div class="panel-body"> 
+                    <div class="info-box-number text-center" style="font-size:70px">{{$TotalCandidate}}</div>
+                    <div class="info-box-text text-center" style="font-size:130%">Candidates</div>
+                </div>
+            </div>
+            <div class="panel" style="border-left:8px solid #36A2EB;color:#36A2EB; cursor:pointer">
+                <div class="panel-body">  
+                    <a href="{{ URL::to('/member') }}" class="info-box-number text-center" style="font-size:70px;color:#36A2EB;" >{{$TotalVoter}}</a>
+                    <div class="info-box-text text-center" style="font-size:130%">Members</div>
+                </div>
+            </div>
             <div class="panel panel-default">
-                <div class="panel-heading"><i class="glyphicon glyphicon-calendar"></i> End Date and Time</div>
+                <div class="panel-heading"> End Date and Time</div>
                 <div class="panel-body">{{$convertDateEnd}}<br>{{$timeEnd}}</div>  
-            </div>  
+            </div> 
         </div>
-    </div> 
+         <div class="col-md-6 col-xs-6">
+            <div class="panel panel-default">
+                <div class="panel-heading"></i> Candidates per Position</div>
+                <div class="panel-body">
+                    <div class="chart">
+                    <canvas id="Chart" height="270px"></canvas>
+                    </div>
+                </div>    
+            </div> 
+        </div>        
+    </div>
 
     <div class="modal fade" id="viewPosition" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
@@ -379,9 +381,70 @@
     </div>     
 @stop 
 @section('script')
+<script src="{{ URL::asset('assets/plugins/chartJS2/Chart.min.js') }}"></script>
 <script>
-
+    function getRandomColor() {
+        var letters = '0123456789ABCDEF'.split('');
+        var color = '#';
+        for (var i = 0; i < 6; i++ ) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+    $(function () {
+        var data = {
+            labels: [
+                @foreach($candno as $value)
+                "{{$value->strPosName}}",
+                @endforeach
+            ],
+            datasets: [
+                {
+                    data: [
+                        @foreach($candno as $value)
+                            {{$value->Total}},
+                        @endforeach
+                    ],
+                    backgroundColor: [
+                        @foreach($candno as $value)
+                            "{{$value->strPosColor}}",
+                        @endforeach
+                    ]
+                }]
+        };
+        
+         var options = {
+            
+             //Boolean - Whether we should show a stroke on each segment
+             segmentShowStroke: true,
+             //String - The colour of each segment stroke
+             segmentStrokeColor: "#fff",
+             //Number - The width of each segment stroke
+             segmentStrokeWidth: 2,
+             //Number - The percentage of the chart that we cut out of the middle
+             percentageInnerCutout: 50, // This is 0 for Pie charts
+             //Number - Amount of animation steps
+             animationSteps: 100,
+             //String - Animation easing effect
+             animationEasing: "easeOutBounce",
+             //Boolean - Whether we animate the rotation of the Doughnut
+             animateRotate: true,
+             //Boolean - Whether we animate scaling the Doughnut from the centre
+             animateScale: false,
+             //Boolean - whether to make the chart responsive to window resizing
+             responsive: true,
+             // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+             maintainAspectRatio: true,
+             //String - A legend template
+             /*legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"*/
+         };
+                 
+        var pieChartCanvas = $("#Chart").get(0).getContext("2d");
+        var pieChart = new Chart(pieChartCanvas, {
+            type: 'polarArea',
+            data: data,
+            options: options
+        });
+    });
 </script>
-
-
 @stop

@@ -21,12 +21,16 @@ class dashboardController extends Controller
         $TotalCandidate = DB::table('tblcandidate')->where('blCandDelete', '=', 0)->count();
         $TotalVoter = DB::table('tblmember')->where('blMemDelete', '=', 0)->count();
         $TotalVoted = DB::table('tblvoteheader')->count();
-        
+        $candno = DB::select('SELECT s.strPositionId, s.strPosName, count(c.strCandId) as Total, s.strPosColor
+                            FROM tblposition AS s LEFT JOIN tblcandidate AS c
+                                ON s.strPositionId = c.strCandPosId
+                            WHERE blPosDelete = 0 AND blCandDelete = 0
+                            GROUP by s.strPosName;');
         $Date = GenSet::find(1);
         $start = $Date->datSetStart;
         $end = $Date->datSetEnd;
         
-        return view ('Dashboard.index', ['TotalPosition' => $TotalPosition, 'TotalCandidate' => $TotalCandidate, 'TotalVoter' => $TotalVoter, 'TotalVoted' => $TotalVoted, 'start'=>$start, 'end'=>$end]);
+        return view ('Dashboard.index', ['TotalPosition' => $TotalPosition, 'TotalCandidate' => $TotalCandidate, 'TotalVoter' => $TotalVoter, 'TotalVoted' => $TotalVoted, 'start'=>$start, 'end'=>$end,'candno'=>$candno]);
 
     }
 

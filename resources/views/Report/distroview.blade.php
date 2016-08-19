@@ -1,6 +1,6 @@
 @extends('master')
 @section('title')
-    {{"Queries"}}
+    {{"Vote Distribution"}}
 @stop   
 @section('style')
     <link rel="stylesheet" href="{{ URL::asset('assets/plugins/colorpicker/bootstrap-colorpicker.min.css') }}">
@@ -16,7 +16,7 @@
 @section('content')
 <!-- START CONTENT -->
     @section('title-page')
-        {{"Queries"}}
+        {{"Vote Distribution"}}
     @stop  
     <!--start container-->
     <div class="col-md-12">
@@ -56,7 +56,7 @@
                         <select name="distro" class="form-control select2" required>
                             <option></option>
                             @foreach($posdetail as $detail)
-                            <option value="{{$detail->strDynFieldName}}">{{$detail->strDynFieldName}}</option>
+                            <option value="{{$detail->strDynFieldName}}">{{ucwords($detail->strDynFieldName)}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -69,18 +69,15 @@
                 Footer
             </div>
         </div>
-        <section class ="content-header">
-            <h1>
-        
-                <small>Vote Distribution by </small>
-        
-                {{$by}}
-            </h1>
-            <br>
-        </section>
+        <div class ="callout callout-info">
+            <h4>
+                    Vote Distribution by:
+                    <span style="font-size:24px">{{ucwords($by)}}</span>
+            </h4>
+        </div>
         
         @foreach($candidate as $cand)
-            <div class="col-lg-6">
+        <div class="col-lg-6">
             <div class="box box-success">
                 <div class="box-header with-border">
                     <h3 class="box-title">{{$cand->strMemFname}} {{$cand->strMemLname}}</h3>
