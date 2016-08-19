@@ -193,7 +193,7 @@
             <i class="fa fa-bar-chart-o"></i>
             <span>Reports</span> <i class="fa fa-angle-left pull-right"></i>
           </a>
-          <ul class="treeview-menu">]
+          <ul class="treeview-menu">
             <li><a href="{{ URL::to('/tallyvotes') }}"><i class="fa fa-circle-o"></i> Tally of Votes</a></li>
             <li><a href="{{ URL::to('/partialresult') }}"><i class="fa fa-circle-o"></i> Partial Votes Result</a></li>
             <li><a href="{{ URL::to('/partialsurveyresult') }}"><i class="fa fa-circle-o"></i> Partial Survey Result</a></li>
