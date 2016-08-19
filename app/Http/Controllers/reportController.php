@@ -76,6 +76,8 @@ order by 6 desc;');
     public function voteDistro(Request $page){
         $candidate = DB::table('tblcandidate')
                         ->join('tblmember', 'tblmember.strMemberId', '=', 'tblcandidate.strCandMemId')
+                        ->join('tblposition', 'tblposition.strPositionId', '=', 'tblcandidate.strCandPosId')
+                        ->where('blCandDelete', '=', 0)
                         ->get();
         $posdetail = DB::table('tbldynamicfield')->select('strDynFieldName')->where('blDynStatus', '=', 1)->get();
         $votedistro = DB::select('SELECT c.strCandId, CONCAT(m.strMemFname, " ", m.strMemLName) as "fullname" ,p.strPosName, md.strMemDeFieldData, count(vh.strVHCode) AS "count"
@@ -86,9 +88,10 @@ order by 6 desc;');
             join tblvoteheader AS vh on vd.strVDVHCode = vh.strVHCode
             left join tblmemberdetail AS md on vh.strVHMemID = md.strMemDeMemId
             where md.strMemDeFieldName = ? OR md.strMemDeFieldName IS NULL
+            AND c.blCandDelete = 0
             group by c.strCandId, fullname, p.strPosName,  md.strMemDeFieldData;',[$page->input('distro')]);
         
-        return view('Report.distroview', ["candidate"=>$candidate, "votedistro" =>$votedistro, 'posdetail'=>$posdetail]);
+        return view('Report.distroview', ["candidate"=>$candidate, "votedistro" =>$votedistro, 'posdetail'=>$posdetail, "by"=>$page->input('distro')]);
         
     }
 }

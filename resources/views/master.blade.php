@@ -195,7 +195,7 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="{{ URL::to('/tallyvotes') }}"><i class="fa fa-circle-o"></i> Tally of Votes</a></li>
-            <li><a href="{{ URL::to('') }}"><i class="fa fa-circle-o"></i> Tally of Survey</a></li>
+            <li><a href="{{ URL::to('/partialsurveyresult') }}" target="_blank"><i class="fa fa-circle-o"></i> Tally of Survey</a></li>
             <li><a href="{{ URL::to('/winner') }}"><i class="fa fa-circle-o"></i> Winner </a></li>
             <li><a href="{{ URL::to('/voteDistro') }}"><i class="fa fa-circle-o"></i> Vote Distribution</a></li>
           </ul>
