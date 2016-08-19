@@ -21,6 +21,7 @@ class reportController extends Controller
                             ->join('tblposition', 'strPositionId', '=', 'strCandPosId')
                             ->select('strCandPosId', 'strPosName')
                             ->where('blPosDelete', '=', '0')
+                            ->where('blCandDelete', '=', '0')
                             ->distinct()
                             ->get();
         $tally = DB::select('SELECT strCandID, strMemLName, strMemFName, strCandPosId,
@@ -47,11 +48,13 @@ class reportController extends Controller
                             ->join('tblposition', 'strPositionId', '=', 'strCandPosId')
                             ->select('strCandPosId', 'strPosName', 'intPosVoteLimit')
                             ->where('blPosDelete', '=', '0')
+                            ->where('blCandDelete', '=', '0')
                             ->distinct()
                             ->get();
         $tally = DB::select('SELECT strCandID, strMemLName, strMemFName, strCandPosId, txtCandPic, count(strVDCandId) as `votes` FROM tblcandidate 
 join tblmember on strMemberId = strCandMemId
 left join tblvotedetail on strCandId = strVDCandId
+where blCandDelete = 0
 group by strVDCandID, strMemLName, txtCandPic
 order by 6 desc;');
         $voted = DB::table('tblvoteheader')->count();
