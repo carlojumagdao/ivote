@@ -43,23 +43,33 @@
         <!-- BAR CHART -->
         <h3 class="responsive-text" style="font-style:Helvetica;color:black;text-shadow: 2px 2px 8px rgba(217, 217, 217, 0.88);margin-left:15px;"> Partial Result <h3>
         @foreach($positions as $position)
-        <div class="col-lg-6 col-xs-12">
-            <div class="box box-info">
-                <div class="box-header with-border">
-                    <h3 class="box-title">{{$position->strPosName}}</h3>
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            <!-- Set the width of the column, if no. of candidates is > 6 or not -->
+            @foreach($candno as $value)
+                @if($position->strPositionId == $value->strPositionId)
+                    @if($value->Total < 6)
+                        <div class="col-lg-6 col-xs-12">
+                    @else
+                        <div class="col-lg-12 col-xs-12">
+                    @endif
+                @endif
+            @endforeach
+            <!-- Set the width of the column, if no. of candidates is > 6 or not -->
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">{{$position->strPosName}}</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
                     </div>
-                </div>
-                <div class="box-body">
-                    <div class="chart">
-                        <canvas id="{{$position->strPosName}}" style="height:230px"></canvas>
+                    <div class="box-body">
+                        <div class="chart">
+                            <canvas id="{{$position->strPositionId}}" style="height:230px"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         @endforeach
 
         </div>
@@ -115,7 +125,7 @@
                         ]
                     }]
                 };
-                var barChartCanvas = $("#{{$position->strPosName}}").get(0).getContext("2d");
+                var barChartCanvas = $("#{{$position->strPositionId}}").get(0).getContext("2d");
                 var barChart = new Chart(barChartCanvas);
                 var barChartData = areaChartData;
                 barChartData.datasets[0].fillColor = "{{$position->strPosColor}}";

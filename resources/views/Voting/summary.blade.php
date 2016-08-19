@@ -1,54 +1,4 @@
 <?php 
-
-  use App\ui AS ui;
-
-    $ui = ui::find(1);
-    if($ui) $skin = $ui->strUISkin;
-    else $skin = 'skin-blue';
-    $bgcolor = 'lightgrey';
-    $headercolor = 'white';
-    $theme = "white";
-    $themeSub = "white";
-    $boxTheme = "white";
-    $pieces = explode("-", $skin);
-
-    if(sizeof($pieces) == 3){
-        $color = '#242424';
-        $headercolor = 'white';
-        $theme = 'white';
-        $themeSub = '#ecf0f5';
-        
-    }
-    else{
-        $color = 'white';
-        $theme = '#242424';
-        $themeSub = '#3c3f41';
-        $boxTheme = '#626262';
-    }
-
-    switch($pieces[1]){
-        case 'blue':
-            $bgcolor = "#3c8dbc";
-            break;
-        case 'yellow':
-            $bgcolor = "#f39c12";
-            break;
-        case 'green':
-            $bgcolor = "#00a65a";
-            break;
-        case 'purple':
-            $bgcolor = "#605ca8";
-            break;
-        case 'red':
-            $bgcolor = "#dd4b39";
-            break;
-        case 'black':
-            $bgcolor = "#eee";
-            $headercolor = '#242424';
-            break;
-        
-    }
-    
     
     if(Session::has('memid')){
         $memberID = session('memid');
@@ -87,7 +37,8 @@
     <style>
         .body{
             padding:0;
-            background-color: {{$theme}};
+            background-color: #fff;
+            font-family: Helvetica, Arial, Sans-Serif;
         }
         .paddify{
             padding: 10px;
@@ -100,29 +51,26 @@
             max-width: 100px;
         }
         .header2{
-            background-color: {{$bgcolor}};
-            border-bottom: 2px solid {{$bgcolor}};
-            color: {{$headercolor}}
+            background-color: #3c8dbc;
+            border-bottom: 2px solid #3c8dbc;
+            color: #fff;
         }
         .boxhead{
-            
-            color: {{$headercolor}};
+            box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.2), 0 0px 20px 0 rgba(0, 0, 0, 0.19);
+            color: #fff;
             
         }
-        
         .boxbody{
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-            background-color: {{$themeSub}};
-            color: {{$color}};
+            background-color: #ecf0f5;
+            color: #242424;
         }
-        
-        
         .boxtheme{
             border-bottom: 0px;
             border-right: 0px ;
             border-top: 0px;
-            background-color: {{$boxTheme}};
-            color: {{$color}};
+            background-color: #fff;
+            color: #242424;
         }
     </style>
 </head>
@@ -141,7 +89,7 @@
     <div class="row header2" style="border-top:1px solid white;">
         <div class="col-lg-10 col-lg-offset-1">
             <div class="pull-left" >
-                <h4>SELECT YOUR CANDIDATE</h4>
+                <h4>SUMMARY OF VOTES</h4>
             </div>
             <div class="pull-right" >
                 <h4>Member: <span style="font-weight:bold">{{$memberName}}</span> </h4>
@@ -182,17 +130,15 @@
            
         <div class="col-md-10 col-md-offset-1">
             
-            
+            <div class="box-header boxhead" style="background-color:#3c8dbc">
+                <h3 class="box-title">
+                Votes Review</h3>
+            </div>
             <div class="box-body boxbody" style="padding: 40px;">
                 <center>
                     @foreach($candidates as $candidate)
-                     
-                
-                    
-                    <div class="row col-md-offset-4">
-                        
-                            <center>
-
+                    <div class="row col-md-offset-4"> 
+                        <center>
                         <div class="tooltipped col-md-3" data-position="top" data-delay="50" data-tooltip="logo picture">
                             <img id="cand-pic" src="../assets/images/{{$candidate->txtCandPic}}" style="background-size: contain;  border: 0px; border-left: 5px solid {{$candidate->strPosColor}};" class="img-responsive"/> 
                         </div>
@@ -208,15 +154,12 @@
                         </center>
                     </div>
                     <br>
-                    <div class="col-md-6 col-md-offset-3" style="border-bottom: 1px solid {{$color}};">
-                    
+                    <div class="col-md-6 col-md-offset-3" style="border-bottom: 1px solid #3c8dbc">
                     </div>
                     <br>
                 @endforeach
                     </center>
                 <div class="col-md-6 col-md-offset-3 alert alert-warning alert-dismissible">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            
                         <h4><i class="icon fa fa-warning"></i><input type="checkbox" id="agree" name="agree"> IMPORTANT!</h4>
                         I reviewed my vote and understand that once I submit this, it cannot be changed. 
                     </div>

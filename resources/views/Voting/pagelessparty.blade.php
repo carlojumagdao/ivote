@@ -1,54 +1,5 @@
 <?php 
 
-  use App\ui AS ui;
-
-    $ui = ui::find(1);
-    if($ui) $skin = $ui->strUISkin;
-    else $skin = 'skin-blue';
-    $bgcolor = 'lightgrey';
-    $headercolor = 'white';
-    $theme = "white";
-    $themeSub = "white";
-    $boxTheme = "white";
-    $pieces = explode("-", $skin);
-
-    if(sizeof($pieces) == 3){
-        $color = '#242424';
-        $headercolor = 'white';
-        $theme = 'white';
-        $themeSub = '#ecf0f5';
-        
-    }
-    else{
-        $color = 'white';
-        $theme = '#242424';
-        $themeSub = '#3c3f41';
-        $boxTheme = '#626262';
-    }
-
-    switch($pieces[1]){
-        case 'blue':
-            $bgcolor = "#3c8dbc";
-            break;
-        case 'yellow':
-            $bgcolor = "#f39c12";
-            break;
-        case 'green':
-            $bgcolor = "#00a65a";
-            break;
-        case 'purple':
-            $bgcolor = "#605ca8";
-            break;
-        case 'red':
-            $bgcolor = "#dd4b39";
-            break;
-        case 'black':
-            $bgcolor = "#eee";
-            $headercolor = '#242424';
-            break;
-        
-    }
-
     
     if(Session::has('memid')){
         $memberID = session('memid');
@@ -84,7 +35,7 @@
     <style>
         .body{
             padding:0;
-            background-color: {{$theme}};
+            background-color: #fff;
         }
         .paddify{
             padding: 10px;
@@ -97,30 +48,27 @@
             max-width: 100px;
         }
         .header2{
-            background-color: {{$bgcolor}};
-            border-bottom: 2px solid {{$bgcolor}};
-            color: {{$headercolor}}
+            background-color: #3c8dbc;
+            border-bottom: 2px solid #3c8dbc;
+            color: #fff;
         }
         .boxhead{
             
-            color: {{$headercolor}};
+            color: #fff;
             
         }
-        
         .boxbody{
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-            background-color: {{$themeSub}};
-            color: {{$color}}
+            background-color: #ecf0f5;
+            color: #242424;
         }
-        
         .boxtheme{
             border-bottom: 0px;
             border-right: 0px ;
             border-top: 0px;
-            background-color: {{$boxTheme}};
-            color: {{$color}};
-        }
-    </style>
+            background-color: #fff;
+            color: #242424;
+        }    </style>
 </head>
 <body class="body">
     @foreach($election as $set)
@@ -158,8 +106,8 @@
                 
         <div class="col-md-10 col-md-offset-1">
             @foreach($positions as $position)
-            <div class="box-header boxhead {{$position->strPosName}}" style="background-color: @if($position->strPosColor == NULL) cornflowerblue @else {{$position->strPosColor}} @endif ">
-                <h3  style="font-family:helvetica;letter-spacing:1px;text-transform:capitalize" class="box-title">{{$position->strPosName}} | <span style="font-size: 12px">vote limit: {{$position->intPosVoteLimit}}</span></h3>
+            <div class="box-header boxhead {{$position->strPosName}}" style="background-color: @if($position->strPosColor == NULL) #3c8dbc @else {{$position->strPosColor}} @endif ">
+                <h3  style="font-family:helvetica;letter-spacing:1px;" class="box-title">{{$position->strPosName}} | <span style="font-size: 12px;">vote limit:{{$position->intPosVoteLimit}}</span></h3>
                 <input type="hidden" name='position[]' value='{{$position->strPositionId}}'>
             </div>
             <div class="box-body boxbody {{$position->strPosName}}" style="padding: 40px;">
@@ -207,7 +155,7 @@
         </div>
         <div class="row"  style="padding-right:72px;">
             <div class="col-md-2 col-md-offset-10 col-xs-4 col-xs-offset-4 col-sm-4">
-                <input  style="font-family:segoe ui;height:40px;"  type="submit" class="btn btn-primary" name="btnSubmit" value="CAST MY VOTES!">
+                <input  style="height:40px;"  type="submit" class="btn btn-primary" name="btnSubmit" value="CAST MY VOTES!">
             </div>
             
         </div>
