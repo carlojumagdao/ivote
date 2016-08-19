@@ -1,54 +1,4 @@
 <?php 
-
-  use App\ui AS ui;
-
-    $ui = ui::find(1);
-    if($ui) $skin = $ui->strUISkin;
-    else $skin = 'skin-blue';
-    $bgcolor = 'lightgrey';
-    $headercolor = 'white';
-    $theme = "white";
-    $themeSub = "white";
-    $boxTheme = "white";
-    $pieces = explode("-", $skin);
-
-    if(sizeof($pieces) == 3){
-        $color = '#242424';
-        $headercolor = 'white';
-        $theme = 'white';
-        $themeSub = '#ecf0f5';
-        
-    }
-    else{
-        $color = 'white';
-        $theme = '#242424';
-        $themeSub = '#3c3f41';
-        $boxTheme = '#626262';
-    }
-
-    switch($pieces[1]){
-        case 'blue':
-            $bgcolor = "#3c8dbc";
-            break;
-        case 'yellow':
-            $bgcolor = "#f39c12";
-            break;
-        case 'green':
-            $bgcolor = "#00a65a";
-            break;
-        case 'purple':
-            $bgcolor = "#605ca8";
-            break;
-        case 'red':
-            $bgcolor = "#dd4b39";
-            break;
-        case 'black':
-            $bgcolor = "#eee";
-            $headercolor = '#242424';
-            break;
-        
-    }
-    
     
     if(Session::has('memid')){
         $memberID = session('memid');
@@ -85,7 +35,7 @@
     <style>
         .body{
             padding:0;
-            background-color: {{$theme}};
+            background-color: #fff;
         }
         .paddify{
             padding: 10px;
@@ -98,29 +48,26 @@
             max-width: 100px;
         }
         .header2{
-            background-color: {{$bgcolor}};
-            border-bottom: 2px solid {{$bgcolor}};
-            color: {{$headercolor}}
+            background-color: #3c8dbc;
+            border-bottom: 2px solid #3c8dbc;
+            color: #fff;
         }
         .boxhead{
             
-            color: {{$headercolor}};
+            color: #fff;
             
         }
-        
         .boxbody{
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-            background-color: {{$themeSub}};
-            color: {{$color}};
+            background-color: #ecf0f5;
+            color: #242424;
         }
-        
-        
         .boxtheme{
             border-bottom: 0px;
             border-right: 0px ;
             border-top: 0px;
-            background-color: {{$boxTheme}};
-            color: {{$color}};
+            background-color: #fff;
+            color: #242424;
         }
     </style>
 </head>
@@ -177,8 +124,8 @@
                     'files' => true
                 ) ) !!}
         <div class="col-md-10 col-md-offset-1">
-        <div class="box-header boxhead" style="background-color: cornflowerblue ">
-            <h3 style="font-family:helvetica;letter-spacing:1px;" class="box-title">Vote Straight ?</h3>
+        <div class="box-header boxhead" style="background-color: #3c8dbc; ">
+            <h3 style="font-family:helvetica;letter-spacing:1px;" class="box-title">Vote Straight</h3>
         </div>
         <div class="box-body boxbody" style="padding: 40px;">
             @foreach($partylist as $party)
@@ -197,8 +144,8 @@
         <div class="col-md-10 col-md-offset-1">
             
             @foreach($positions as $position)
-            <div class="box-header boxhead {{$position->strPosName}}" style="background-color: @if($position->strPosColor == NULL) cornflowerblue @else {{$position->strPosColor}} @endif ">
-                <h3  style="font-family:helvetica;letter-spacing:1px;" class="box-title">{{$position->strPosName}} | <span style="font-size: 12px;">vote limit: {{$position->intPosVoteLimit}}</span></h3>
+            <div class="box-header boxhead {{$position->strPosName}}" style="background-color: @if($position->strPosColor == NULL) #3c8dbc @else {{$position->strPosColor}} @endif ">
+                <h3  style="font-family:helvetica;letter-spacing:1px;" class="box-title">{{$position->strPosName}} | <span style="font-size: 12px;">vote limit:{{$position->intPosVoteLimit}}</span></h3>
                 <input type="hidden" name='position[]' value='{{$position->strPositionId}}'>
             </div>
             <div class="box-body boxbody {{$position->strPosName}}" style="padding: 40px;">

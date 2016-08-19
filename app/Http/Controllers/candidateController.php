@@ -28,15 +28,16 @@ class candidateController extends Controller
             ->join('tblmember', 'tblcandidate.strCandMemId', '=', 'tblmember.strMemberId')
             ->join('tblposition', 'tblcandidate.strCandPosId', '=', 'tblposition.strPositionId')
             ->join('tblparty', 'tblcandidate.intCandParId', '=', 'tblparty.intPartyId')
-            ->where('blCandDelete', 0)
+            ->where('blCandDelete', '=', 0)
             ->select('tblcandidate.*', 'tblmember.strMemFname', 'tblmember.strMemLname', 'tblposition.strPosName', 'tblparty.strPartyName')->get();
     
             return view('Candidate.candidate', ['candidates' => $candidates, 'intCounter'=>0, 'party' => $PartyStatus]);
+
         $candidates = DB::table('tblcandidate')
         ->join('tblmember', 'tblcandidate.strCandMemId', '=', 'tblmember.strMemberId')
         ->join('tblposition', 'tblcandidate.strCandPosId', '=', 'tblposition.strPositionId')
         ->join('tblparty', 'tblcandidate.intCandParId', '=', 'tblparty.intPartyId')
-        ->where('blCandDelete', 0)
+        ->where('blCandDelete','=', 0)
         ->select('tblcandidate.*', 'tblmember.strMemFname', 'tblmember.strMemLname', 'tblposition.strPosName', 'tblparty.strPartyName')->get();
         $strCandEducBackg = "";
         $strCandInfor = "";
@@ -56,7 +57,10 @@ class candidateController extends Controller
         $PartyStatus = DB::table('tblSetting')->where('blSetParty', '=', 1)->get();
         if($PartyStatus){
             $Members = DB::table('tblmember')->select('strMemberId', 'strMemFname', 'strMemLname', 'strMemMname')->where('blMemDelete', '=', 0)->get();
-            $Positions = DB::table('tblposition')->select('strPositionId', 'strPosName')->get();
+            $Positions = DB::table('tblposition')
+            ->select('strPositionId', 'strPosName')
+            ->where('blPosDelete', '=', 0)
+            ->get();
             $Parties = DB::table('tblparty')->select('intPartyId', 'strPartyName')->get();
             return view('Candidate.add', ['Members' => $Members, 'Positions' => $Positions, 'Parties'=> $Parties]);
         }

@@ -71,7 +71,10 @@ class formController extends Controller
     } 
     public function delete(Request $request){
         $id = $request->input("id");
-        $candidate = DB::table('tblCandidate')->where('strCandMemId', '=', $id)->get();
+        $candidate = DB::table('tblCandidate')
+        ->where('strCandMemId', '=', $id)
+        ->where('blCandDelete', '=', 0)
+        ->get();
         if($candidate){
             return Redirect::back()->withErrors("Cannot delete this record, because it is used by another record.");
         } else{           
@@ -317,10 +320,8 @@ class formController extends Controller
             }
             DB::commit();
             $request->session()->flash('message', 'Successfully added.'); 
-        }catch (\Illuminate\Database\QueryException $e){
+        } catch (\Illuminate\Database\QueryException $e){
             DB::rollBack();
-            //$errMess = $e->getMessage();
-            //return Redirect::back()->withErrors($errMess);
             $strNewMemId = DB::table('tblMember')->select('strMemberId')->orderBy('strMemberId')->get();
             $strNewMemCode = "CODE000";
             foreach ($strNewMemId as $value) {
@@ -363,9 +364,12 @@ class formController extends Controller
             }
             DB::commit();
             $request->session()->flash('message', 'Successfully added. ID already taken, new ID given.');
+        } catch(\Exception $ex){
+            DB::rollBack();
+            $errMess = $ex->getMessage();
+            return Redirect::back()->withErrors($errMess);
         }
         //redirect
-           
         return Redirect::back();
     }
 

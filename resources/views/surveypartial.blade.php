@@ -30,8 +30,6 @@
         body{
             background-color: WhiteSmoke  ;
         }
-
-
     </style>
 
     <body>
