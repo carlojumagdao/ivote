@@ -12,6 +12,7 @@ use Redirect;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Member AS Member;
+use App\GenSet AS GenSet;
 
 
 class securityController extends Controller
@@ -179,9 +180,7 @@ class securityController extends Controller
             $errMess = $e->getMessage();
             return Redirect::back()->withErrors($errMess);
         }
-        
         $request->session()->flash('message', 'Security Question Successfully Set.');    
-        return Redirect::back();
-    
+        return Redirect::route('LogInUser');  
     }
 }

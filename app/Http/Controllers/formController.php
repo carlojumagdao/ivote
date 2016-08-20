@@ -98,7 +98,7 @@ class formController extends Controller
         $Member->save();
         
         //redirect
-        $request->session()->flash('message', 'Member reverted.');  
+        $request->session()->flash('message', 'Member restored.');  
         return Redirect::back();
     }
 

@@ -1,46 +1,49 @@
-@extends('master')
-@section('title')
-    {{"Positions"}}
-@stop   
-@section('style')
-    <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/datatables/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/datatables/datatables-responsive/css/dataTables.responsive.css') }}">
+<?php $__env->startSection('title'); ?>
+    <?php echo e("Positions"); ?>
+
+<?php $__env->stopSection(); ?>   
+<?php $__env->startSection('style'); ?>
+    <link rel="stylesheet" type="text/css" href="<?php echo e(URL::asset('assets/datatables/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css')); ?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo e(URL::asset('assets/datatables/datatables-responsive/css/dataTables.responsive.css')); ?>">
     <style>
         table.table.table-striped tr.highlight td{
           background-color: #ff3d3d;  
         }
     </style>
-@stop
-@section('content')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
 <!-- START CONTENT -->
-    @section('title-page')
-        {{"Positions"}}
-    @stop  
+    <?php $__env->startSection('title-page'); ?>
+        <?php echo e("Positions"); ?>
+
+    <?php $__env->stopSection(); ?>  
     <!--start container-->
     <div class="col-md-12">
-        @if ($errors->any())
+        <?php if($errors->any()): ?>
             <div class="alert alert-danger alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                 <h4><i class="icon fa fa-ban"></i> Something went wrong!</h4>
-                {!! implode('', $errors->all(
+                <?php echo implode('', $errors->all(
                     '<li>:message</li>'
-                )) !!}
+                )); ?>
+
             </div>
-        @endif
-        @if (Session::has('message'))
+        <?php endif; ?>
+        <?php if(Session::has('message')): ?>
             <div class="alert alert-success alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                 <h4><i class="icon fa fa-check"></i> Success!</h4>
-                {{ Session::get('message') }}
+                <?php echo e(Session::get('message')); ?>
+
             </div>
-        @endif
+        <?php endif; ?>
     </div>
     <div class="col-md-12">
         <div class="box">
             <div class="box-header with-border">
                 <h3 class="box-title">List of all positions</h3>
                 <div class="box-tools pull-right">
-                    <a href="{{ URL::to('/position/create') }}" class="btn btn-success btn-xs">
+                    <a href="<?php echo e(URL::to('/position/create')); ?>" class="btn btn-success btn-xs">
                     <i class="glyphicon glyphicon-plus"></i> Add New</a>
                 </div>
             </div>
@@ -69,15 +72,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                    @foreach($Positions as $value)
-                        @if($value->blPosDelete == 1)
+                    <?php foreach($Positions as $value): ?>
+                        <?php if($value->blPosDelete == 1): ?>
                             <tr class="highlight">
-                        @else
+                        <?php else: ?>
                             <tr>
-                        @endif
-                                <td class="id">{{$value->strPositionId}}</td>
-                                <td class="name">{{$value->strPosName}}</td>
-                                <td class="email">{{$value->intPosVoteLimit}}</td>
+                        <?php endif; ?>
+                                <td class="id"><?php echo e($value->strPositionId); ?></td>
+                                <td class="name"><?php echo e($value->strPosName); ?></td>
+                                <td class="email"><?php echo e($value->intPosVoteLimit); ?></td>
                                     <?php
                                         $datecreated =  $value->created_at;
                                         $converteddatecreated = date('M j, Y h:i A',strtotime($datecreated));
@@ -86,20 +89,20 @@
                                         $datedeleted = $value->deleted_at;
                                         $converteddatedeleted = date('M j, Y h:i A',strtotime($datedeleted));
                                     ?>
-                                <td class="created">{{$converteddatecreated}}</td>
-                                <td class="updated">{{$converteddateupdated}}</td>
-                                <td class="deleted">{{$converteddatedeleted}}</td>
-                                <td class="status" style="display:none">{{$value->blPosDelete}}</td> 
+                                <td class="created"><?php echo e($converteddatecreated); ?></td>
+                                <td class="updated"><?php echo e($converteddateupdated); ?></td>
+                                <td class="deleted"><?php echo e($converteddatedeleted); ?></td>
+                                <td class="status" style="display:none"><?php echo e($value->blPosDelete); ?></td> 
                                 <td>
-                                    @if($value->blPosDelete == 0)
-                                    <a href="position/edit/{{$value->strPositionId}}" class="btn btn-warning btn-sm edit" title="Edit"><i class="glyphicon glyphicon-edit"></i></a>
+                                    <?php if($value->blPosDelete == 0): ?>
+                                    <a href="position/edit/<?php echo e($value->strPositionId); ?>" class="btn btn-warning btn-sm edit" title="Edit"><i class="glyphicon glyphicon-edit"></i></a>
                                     <button class="btn btn-danger btn-sm delPosition" data-toggle="tooltip" title="Delete"><i class="glyphicon glyphicon-trash"></i></button>
-                                    @else
+                                    <?php else: ?>
                                     <button class="btn btn-info btn-sm revPosition" data-toggle="tooltip" title="Restore"><i class="glyphicon glyphicon-refresh"></i></button>
-                                    @endif
+                                    <?php endif; ?>
                                 </td>
                             </tr>
-                    @endforeach
+                    <?php endforeach; ?>
                     </tbody>
                     <tfoot>
                         <tr>
@@ -120,19 +123,19 @@
     </div> 
     <!-- Delete Form -->
     <div class="hide">
-        <form method="POST" action="{{ URL::to('/position/delete') }}" id="delform">
+        <form method="POST" action="<?php echo e(URL::to('/position/delete')); ?>" id="delform">
             <input type="hidden" name="id" id="delpos">
         </form>
     </div>
 
     <div class="hide">
-        <form method="POST" action="{{ URL::to('/position/revert') }}" id="revform">
+        <form method="POST" action="<?php echo e(URL::to('/position/revert')); ?>" id="revform">
             <input type="hidden" name="id" id="revpos">
     </div>
-@stop 
-@section('script')
-<script src="{{ URL::asset('assets/datatables/datatables/media/js/jquery.dataTables.min.js') }}"></script>
-<script src="{{ URL::asset('assets/datatables/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js') }}"></script>
+<?php $__env->stopSection(); ?> 
+<?php $__env->startSection('script'); ?>
+<script src="<?php echo e(URL::asset('assets/datatables/datatables/media/js/jquery.dataTables.min.js')); ?>"></script>
+<script src="<?php echo e(URL::asset('assets/datatables/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js')); ?>"></script>
 <script>
     $(document).ready(function(){
         $('[data-toggle="tooltip"]').tooltip(); 
@@ -196,4 +199,5 @@
       });
     });
 </script>
-@stop
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

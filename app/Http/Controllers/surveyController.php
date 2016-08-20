@@ -218,6 +218,7 @@ class surveyController extends Controller
         if(Session::has('votereference')) Session::forget('memid');
 
         //redirect to realtime voting result
-        return Redirect::route('LogInUser');
+        return Redirect::route('thanks');
+        /*return Redirect::route('thanksSurvey');*/
     }
 }

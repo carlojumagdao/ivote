@@ -63,6 +63,10 @@
   box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) -1.5em 0 0 0, rgba(0, 0, 0, 0.75) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
 }
 
+table.table.table-striped tr.highlight td{
+  background-color: #ff3d3d;  
+}
+
 /* Animation */
 
 @-webkit-keyframes spinner {
@@ -205,7 +209,11 @@
                     </thead>
                     <tbody>
                     @foreach($Members as $value)
-                        <tr>
+                        @if($value->blMemDelete == 1)
+                          <tr class="highlight">
+                        @else
+                          <tr>
+                        @endif
                             <p class="hide passcode">{{$value->strMemPasscode}}</p>
                             <td class="id">{{$value->strMemberId}}</td>
                             <td class="name">{{$value->strMemFname.' '.$value->strMemLname}}</td>
@@ -236,7 +244,7 @@
                                 <a class="btn btn-info btn-sm send" data-toggle="tooltip" title="Send Passcode"><i class="glyphicon glyphicon-send"></i></a>
                                 <button class="btn btn-danger btn-sm delMember" data-toggle="tooltip" title="Delete"><i class="glyphicon glyphicon-trash"></i></button>
                                 @else
-                                <button class="btn btn-info btn-sm revMember" data-toggle="tooltip" title="Revert"><i class="glyphicon glyphicon-refresh"></i></button>
+                                <button class="btn btn-info btn-sm revMember" data-toggle="tooltip" title="Restore"><i class="glyphicon glyphicon-refresh"></i></button>
                                 @endif
                             </td>
                             <!-- <td>
@@ -324,6 +332,7 @@
 <script>
     $(document).ready(function () {
       responsive: true
+      $('.status:contains(1)').parent().toggle();
       var table = $('#dataTables-example').DataTable({
         columnDefs: [
           {
@@ -337,7 +346,6 @@
           }
         ]
       });
-      $('.status:contains(1)').parent().toggle();
       $('#show_meta').on('change', function () {
         if ($('#show_meta:checked').length > 0) {
           table.columns([0, 1, 2, 3, 4, 5, 7]).visible(true);

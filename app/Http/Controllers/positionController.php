@@ -53,7 +53,7 @@ class positionController extends Controller
             $Position->save();
         
         //redirect
-        $request->session()->flash('message', 'Position reverted.');  
+        $request->session()->flash('message', 'Position restored.');  
         return Redirect::back();
     }
 
