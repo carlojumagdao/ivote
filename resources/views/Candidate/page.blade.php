@@ -31,8 +31,8 @@
         font-family: 'Raleway', sans-serif;
         font-weight: 300;
         font-size: 16px;
-      /*background-repeat: no-repeat;*/
-      /*background-size: cover;*/
+      background-repeat: no-repeat;
+      background-size: cover;
       /*background-attachment: fixed;*/
 
       }

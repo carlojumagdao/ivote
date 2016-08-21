@@ -78,18 +78,18 @@
             <img src="assets/images/{{$set->txtSetLogo}}" class="paddify img-responsive">
         </div>
         <div class="col-md-5 col-xs-8">
-            <h2>{{$set->strSetElecName}}</h2>
-            <h4>{{$set->strHeader}}</h4>
-            <h5>Powered by: iVOTE++</h5>
+            <h2 class="responsive-text">{{$set->strSetElecName}}</h2>
+            <h4 class="responsive-text">{{$set->strHeader}}</h4>
+            <h5 class="responsive-text">Powered by: iVOTE++</h5>
         </div>
     </div>
     <div class="row header2" style="border-top:1px solid white;">
         <div class="col-lg-10 col-lg-offset-1">
             <div class="pull-left" >
-                <h4>SELECT YOUR CANDIDATE</h4>
+                <h4 class="responsive-text">SELECT YOUR CANDIDATE</h4>
             </div>
             <div class="pull-right" >
-                <h4>Member: <span style="font-weight:bold">{{$memberName}}</span> </h4>
+                <h4 class="responsive-text">Member: <span style="font-weight:bold">{{$memberName}}</span> </h4>
             </div>  
         </div>
     </div>
@@ -124,8 +124,8 @@
                     'files' => true
                 ) ) !!}
         <div class="col-md-10 col-md-offset-1">
-        <div class="box-header boxhead" style="background-color: #3c8dbc; ">
-            <h3 style="font-family:helvetica;letter-spacing:1px;" class="box-title">Vote Straight</h3>
+        <div class="box-header boxhead" style="background-color: #3c8dbc ">
+            <h3 style="font-family:helvetica;letter-spacing:1px;" class="box-title">Vote Straight ?</h3>
         </div>
         <div class="box-body boxbody" style="padding: 40px;">
             @foreach($partylist as $party)
@@ -144,8 +144,8 @@
         <div class="col-md-10 col-md-offset-1">
             
             @foreach($positions as $position)
-            <div class="box-header boxhead {{$position->strPosName}}" style="background-color: @if($position->strPosColor == NULL) #3c8dbc @else {{$position->strPosColor}} @endif ">
-                <h3  style="font-family:helvetica;letter-spacing:1px;" class="box-title">{{$position->strPosName}} | <span style="font-size: 12px;">vote limit:{{$position->intPosVoteLimit}}</span></h3>
+            <div class="box-header boxhead {{$position->strPosName}}" style="background-color: @if($position->strPosColor == NULL) cornflowerblue @else {{$position->strPosColor}} @endif ">
+                <h3  style="font-family:helvetica;letter-spacing:1px;" class="box-title">{{$position->strPosName}} | <span style="font-size: 12px;">vote limit: {{$position->intPosVoteLimit}}</span></h3>
                 <input type="hidden" name='position[]' value='{{$position->strPositionId}}'>
             </div>
             <div class="box-body boxbody {{$position->strPosName}}" style="padding: 40px;">
@@ -153,15 +153,15 @@
                 @foreach($candidates as $candidate)
                     @if($candidate->strCandPosId == $position->strPositionId )
                         <div class="col-lg-3 col-md-5 col-xs-12">
-                            <div class="thumbnail boxtheme" style="border-left: 5px solid {{$candidate->strPartyColor}}; ">
+                            <div class="thumbnail boxtheme" style="border-left: 5px solid {{$candidate->strPartyColor}};  ">
                                 <center>
                                 <div class="checkbox">
-                                    <label>
+                                    <label style="font-family:helvetica;">
                                         <div>
-                                            <img id="cand-pic" src="../assets/images/{{$candidate->txtCandPic}}" style="background-size: contain; border: 0px;" class="img-responsive"/> 
+                                            <img id="cand-pic" src="../assets/images/{{$candidate->txtCandPic}}" style="background-size: contain; border: 0px; padding-bottom:10px;padding-right:15px;" class="img-responsive"/> 
                                         </div>
                                        
-                                        <input style="text-transform:capitalize" type="checkbox" value="{{$candidate->strCandId}}" name="vote[]"  class="pos_{{$position->strPositionId}} v_{{$candidate->intCandParId}}" onclick=" return maxCast_{{$position->strPositionId}}()"
+                                        <input style="text-transform:capitalize;padding-top:15px;" type="checkbox" value="{{$candidate->strCandId}}" name="vote[]"  class="pos_{{$position->strPositionId}} v_{{$candidate->intCandParId}} responsive-text" onclick=" return maxCast_{{$position->strPositionId}}()"
                                         <?php
                                             $cdvote = old('vote');
                                             for($x=0; $x<sizeOf(old('vote')); $x++){
@@ -175,7 +175,7 @@
                                        
                                         {{$candidate->strMemFname}} {{$candidate->strMemLname}}
                                     </label>
-                                    <p style="font-size: 10px;">{{$candidate->strPartyName}}</p>
+                                    <p class="responsive-text" style="font-size: 10px;">{{$candidate->strPartyName}}</p>
                                 </div>
                                 </center>
                             </div>
@@ -194,16 +194,16 @@
             <br>
             @endforeach
         </div>
-        <div class="row"  style="padding-right:72px;">
+        <div class="row"  style="padding-right:80px">
             <div class="col-md-2 col-md-offset-10 col-xs-4 col-xs-offset-4 col-sm-4">
-                <input style="height:40px;" type="submit" class="btn btn-primary" name="btnSubmit" value="CAST MY VOTES!">
+                <input style="height:40px;" type="submit" class="btn btn-primary responsive-text" name="btnSubmit" value="CAST MY VOTES!">
             </div>
             
         </div>
          {!! Form::close() !!}
     </div>
     <br>
-    <footer class="row header2" style="height:30px">
+    <footer class="row header2" style="height:25px">
         <div class="col-md-12">
             <div class="pull-right hidden-xs">
                 <b>Version</b> 1.2.1
@@ -226,23 +226,30 @@
 <script src="{{ URL::asset('assets/dist/js/app.min.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ URL::asset('assets/dist/js/demo.js')}}"></script>
+<script src="{{ URL::asset('assets/responsivetext/jquery.responsivetext.js') }}"></script>
+<script type="text/javascript">
+  $("p").responsiveText({
+     bottomStop : '500',
+     topStop    : '1000'
+});
+</script>
 <script>
 @foreach($positions as $position)
 
     function maxCast_{{$position->strPositionId}}(){
-		var maxcheck = {{$position->intPosVoteLimit}};
-		var position = "{{$position->strPosName}}";
-		var checkedBox = $(".pos_{{$position->strPositionId}}:checked").size();
-		var radio = document.getElementsByName('par');
+        var maxcheck = {{$position->intPosVoteLimit}};
+        var position = "{{$position->strPosName}}";
+        var checkedBox = $(".pos_{{$position->strPositionId}}:checked").size();
+        var radio = document.getElementsByName('par');
         for(var x=0; x<radio.length; x++){
             if(radio[x].checked == true) radio[x].checked=false; 
         }
-		if(checkedBox > maxcheck){
-		
-			alert('You can only vote ' + maxcheck + ' from the ' + position + ' position.');document.voteform; return false;	
-		}
-		else return true;
-	}
+        if(checkedBox > maxcheck){
+        
+            alert('You can only vote ' + maxcheck + ' from the ' + position + ' position.');document.voteform; return false;    
+        }
+        else return true;
+    }
  @endforeach
 </script>
 <script>

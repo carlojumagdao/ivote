@@ -61,7 +61,7 @@
                                 <ul>
                                  @foreach($SurveyTally as $Answer)
                                     @if($SurveyQuestion->intSQId == $Answer->intSQId)
-                                        <li>{{$Answer->strSDAnswer}}</li>
+                                        <li style="font-size:16px;">{{$Answer->strSDAnswer}}</li>
                                     @endif
                                 @endforeach
                                 </ul>
