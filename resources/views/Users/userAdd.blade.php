@@ -49,7 +49,7 @@
                     <div class="col s12">
                         <br>
                         <div class="card-panel2 tooltipped" data-position="top" data-delay="50" data-tooltip="logo picture">
-                            <img id="userEdit-pic" src="../assets/images/ivote.jpg" width="180px" style="background-size: contain;" /> 
+                            <img id="userEdit-pic" src="../assets/images/Avatar.jpg" width="180px" style="background-size: contain;" /> 
                         </div>
                     </div>
                 </center>
