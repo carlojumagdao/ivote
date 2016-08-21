@@ -51,7 +51,7 @@
       <h4>Election Content Management and Exit Poll Survey System</h4>
     </center>
     <br>
-    <form method="POST" action="/auth/register">
+    <form method="POST" action="/auth/register" enctype="multipart/form-data">
       {!! csrf_field() !!}
             <div class="col-md-12">
                 @if ($errors->any())
@@ -88,7 +88,6 @@
                         'id' => 'file',
                         'name' => 'image',
                         'class' => 'form-control btn btn-success btn-xs',
-                        'enctype' => 'multipart/form-data',
                         'style' => 'display:none',
                         'onchange' => '$("#upload-file-info").html($(this).val());readURL(this)',
                         )) 

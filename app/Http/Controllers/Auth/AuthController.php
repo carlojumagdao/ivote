@@ -14,6 +14,7 @@ use Crypt;
 use Input;
 use Redirect;
 use Session;
+use Carbon\Carbon;
 
 class AuthController extends Controller
 {
@@ -42,7 +43,7 @@ class AuthController extends Controller
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|confirmed|min:6',
-            'image' => 'required|max:255',
+            'image' => 'required|mimes:jpeg,jpg,png,bmp|max:50000',
 
         ]);
     }
@@ -56,11 +57,11 @@ class AuthController extends Controller
     protected function create(array $data)
     {
         $destinationPath =  'assets/images/'; // upload path
-        $extension = $data->file('image')->getClientOriginalExtension(); // getting image extension
+        $extension = $data['image']->getClientOriginalExtension(); // getting image extension
         $date = date("Ymdhis");
         $filename = $date.'-'.rand(111111,999999).'.'.$extension;
-        if ($data->file('image')->isValid()) {
-            $data->file('image')->move($destinationPath, $filename);
+        if ($data['image']->isValid()) {
+            $data['image']->move($destinationPath, $filename);
         }
                
         return User::create([
