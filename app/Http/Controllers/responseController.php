@@ -113,7 +113,7 @@ class responseController extends Controller
         $memid = session('memid');
         return view('thanks', ['header'=>$header, 'logo'=>$logo,'memid'=>$memid,'votereference'=>$votereference]);   
     }
-/*    public function thanksSurvey(){
+    public function thanksafsurvey(){
         $formDesign = DB::table('tblSetting')->select('strHeader','txtSetLogo')->get();
         foreach ($formDesign as $design) {
             $header = $design->strHeader;
@@ -122,5 +122,5 @@ class responseController extends Controller
         $votereference = session('votereference');
         $memid = session('memid');
         return view('thanksafsurvey', ['header'=>$header, 'logo'=>$logo,'memid'=>$memid,'votereference'=>$votereference]);
-    }*/
+    }
 }

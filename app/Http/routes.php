@@ -457,10 +457,10 @@ Route::get('/thanks', array(
 	'uses' => 'responseController@thanks',
 	'as' => 'thanks'
 ));
-/*Route::get('/thanksSurvey', array(
-	'uses' => 'responseController@thanksSurvey',
-	'as' => 'thanksSurvey'
-));*/
+Route::get('/thanksafsurvey', array(
+	'uses' => 'responseController@thanksafsurvey',
+	'as' => 'thanksafsurvey'
+));
 Route::get('/security/question/{id}', array(
 	'uses' => 'securityController@createPage',
 	'as' => 'security.createPage'
