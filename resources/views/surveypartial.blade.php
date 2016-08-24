@@ -128,6 +128,9 @@
                         }
                         return color;
                     }
+                    
+                    var colorBar = getRandomColor();
+                    
                     var areaChartData = {
                         labels: [
                         @foreach($SurveyTally as $Answer)
@@ -144,6 +147,13 @@
                             pointStrokeColor: "#c1c7d1",
                             pointHighlightFill: "#fff",
                             pointHighlightStroke: "rgba(220,220,220,1)",
+                            backgroundColor:[
+                                @foreach($SurveyTally as $Answer)
+                                    @if($SurveyQuestion->intSQId == $Answer->intSQId)
+                                        colorBar,
+                                    @endif
+                                @endforeach
+                            ],
                             data: [
                                 @foreach($SurveyTally as $Answer)
                                     @if($SurveyQuestion->intSQId == $Answer->intSQId)
