@@ -222,7 +222,12 @@
                                 $dateupdated = $value->updated_at;
                                 $converteddateupdated = date('M j, Y h:i A',strtotime($dateupdated));   
                                 $datedeleted = $value->deleted_at;
-                                $converteddatedeleted = date('M j, Y h:i A',strtotime($datedeleted));     
+                                if ($value->blMemDelete ==1)
+                                  {
+                                    $converteddatedeleted = date('M j, Y h:i A',strtotime($datedeleted));
+                                  }
+                                else 
+                                $converteddatedeleted = "null";   
                             ?>
                             
                             <td class="created">{{$converteddatecreated}}</td>
@@ -267,6 +272,14 @@
         </div>
         
     </div>
+<!-- <diva class="fixed-action-btn" style="bottom: 105px; right: 24px;" hidden="hidden">
+    <a class="btn-floating btn-large blue darken-2 small" hidden="hidden">
+        <i class="mdi-navigation-expand-less "></i>
+    </a>
+</diva>
+<?php
+// require'scrolltop.php';
+?> -->
     <!-- Delete Form -->
     <div class="hide">
         <form method="POST" action="{{ URL::to('/member/delete') }}" id="delform">
@@ -419,6 +432,32 @@
 
 
 </script>
+
+
+<!-- <script>
+    var previousScroll = 0;
+
+    $(window).scroll(function(){
+       var currentScroll = $(this).scrollTop();
+       if (currentScroll > previousScroll){
+           $('diva').show();
+       } else  {
+          $('diva').hide();
+       }
+       previousScroll = currentScroll;
+    });
+</script>
+
+
+<script>
+        $("a").click(function () {
+   //1 second of animation time
+   //html works for FFX but not Chrome
+   //body works for Chrome but not FFX
+   //This strange selector seems to work universally
+   $("html, body").animate({scrollTop: 0}, 400);
+});
+</script> -->
 
 
 @stop

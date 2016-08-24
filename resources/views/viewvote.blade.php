@@ -88,6 +88,7 @@
                             $dateofvote = $voted[0]->datVHVoted;
                             $convertedDOV = date('M j, Y h:i A',strtotime($dateofvote));
                         ?>
+                        <p>                 </p>
                         <p>{{$convertedDOV}}</p>
                     </div>
                 </div>
