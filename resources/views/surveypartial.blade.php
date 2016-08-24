@@ -99,7 +99,7 @@
         <script src="{{ URL::asset('assets/bootstrap/js/bootstrap.min.js') }}"></script>
         <!-- SlimScroll -->
         <script src="{{ URL::asset('assets/plugins/slimScroll/jquery.slimscroll.min.js')}}"></script>
-        <script src="{{ URL::asset('assets/plugins/chartJS/Chart.min.js')}}"></script>
+        <script src="{{ URL::asset('assets/plugins/chartJS2/Chart.min.js')}}"></script>
         <!-- FastClick -->
         <script src="{{ URL::asset('assets/plugins/fastclick/fastclick.js')}}"></script>
         <!-- AdminLTE App -->
@@ -137,6 +137,7 @@
                         @endforeach
                         ],
                         datasets: [{
+                            label: "",
                             fillColor: "rgba(210, 214, 222, 1)",
                             strokeColor: "rgba(210, 214, 222, 1)",
                             pointColor: "rgba(210, 214, 222, 1)",
@@ -152,10 +153,7 @@
                             ]
                         }]
                     };
-                    var barChartCanvas = $("#{{$SurveyQuestion->intSQId}}").get(0).getContext("2d");
-                    var barChart = new Chart(barChartCanvas);
-                    var barChartData = areaChartData;
-                    barChartData.datasets[0].fillColor = getRandomColor();
+                    
 
                     var barChartOptions = {
                         //Boolean - whether to make the chart responsive
@@ -170,7 +168,15 @@
                         }
                     };
                     barChartOptions.datasetFill = false;
-                    barChart.Bar(barChartData, barChartOptions);
+                  
+                    var barChartCanvas = $("#{{$SurveyQuestion->intSQId}}").get(0).getContext("2d");
+                    var barChartData = areaChartData;
+                    barChartData.datasets[0].fillColor = getRandomColor();
+                    var barChart = new Chart(barChartCanvas, {
+                        type: 'bar',
+                        data: barChartData,
+                        options: barChartOptions
+                    } );
 
                 });
             @elseif($SurveyQuestion->strSQQuesType == "element-multiple-choice")
@@ -183,19 +189,41 @@
                         }
                         return color;
                     }
-                    var pieChartCanvas = $("#{{$SurveyQuestion->intSQId}}").get(0).getContext("2d");
-                    var pieChart = new Chart(pieChartCanvas);
-                    var PieData = [
-                        @foreach($SurveyTally as $Answer)
+                    
+                    var PieData = {
+                        labels: [
+                           @foreach($SurveyTally as $Answer)
                             @if($SurveyQuestion->intSQId == $Answer->intSQId)
-                                {
-                                    value: {{$Answer->Tally}},
-                                    color: getRandomColor(),
-                                    label: "{{$Answer->strSDAnswer}}"
-                                },
+                                
+                                    "{{$Answer->strSDAnswer}}",
+                                
                             @endif
-                        @endforeach
-                    ];
+                            @endforeach 
+                        ],
+                        datasets:[
+                            {
+                                data: [
+                                    @foreach($SurveyTally as $Answer)
+                                    @if($SurveyQuestion->intSQId == $Answer->intSQId)
+                                
+                                       {{$Answer->Tally}},
+                                    
+                                    @endif
+                                    @endforeach 
+                                ],
+                                backgroundColor:[
+                                    @foreach($SurveyTally as $Answer)
+                                    @if($SurveyQuestion->intSQId == $Answer->intSQId)
+                                    
+                                       getRandomColor(),
+                                   
+                                    @endif
+                                    @endforeach 
+                                ]
+                            }
+                        ]
+                    };
+                            
                     var pieOptions = {
                       //Boolean - Whether we should show a stroke on each segment
                       segmentShowStroke: true,
@@ -217,12 +245,18 @@
                       responsive: true,
                       // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
                       maintainAspectRatio: true,
-                      //String - A legend template
-                      legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
                     };
+                    
+                    var pieChartCanvas = $("#{{$SurveyQuestion->intSQId}}").get(0).getContext("2d");
+                    var pieChart = new Chart(pieChartCanvas, {
+                        type: 'doughnut',
+                        data: PieData,
+                        options: pieOptions
+                    });
+            
+                    
                     //Create pie or douhnut chart
                     // You can switch between pie and douhnut using the method below.
-                    pieChart.Doughnut(PieData, pieOptions);
                 });
             @endif
         @endforeach
