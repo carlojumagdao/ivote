@@ -140,19 +140,28 @@
                         @endforeach
                         ],
                         datasets: [{
-                            label: "",
+                            label: "Partial Result",
                             fillColor: "rgba(210, 214, 222, 1)",
                             strokeColor: "rgba(210, 214, 222, 1)",
                             pointColor: "rgba(210, 214, 222, 1)",
                             pointStrokeColor: "#c1c7d1",
                             pointHighlightFill: "#fff",
                             pointHighlightStroke: "rgba(220,220,220,1)",
-                            backgroundColor:[
-                                @foreach($SurveyTally as $Answer)
-                                    @if($SurveyQuestion->intSQId == $Answer->intSQId)
-                                        colorBar,
-                                    @endif
-                                @endforeach
+                            backgroundColor: [
+                                '#FFCE56',
+                                '#4BC0C0',
+                                '#FF6384',
+                                '#36A2EB',
+                                '#ff7a56',
+                                '#56e5ff'
+                            ],
+                            borderColor: [
+                                'rgba(255,99,132,1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)'
                             ],
                             data: [
                                 @foreach($SurveyTally as $Answer)
@@ -175,8 +184,39 @@
                             labels: {
                                 fontColor: "black"
                             }
+                        },
+                        scales: {
+                        yAxes: [{
+                            display: true,
+                            ticks: {
+                                beginAtZero: true,
+                            }
+                        }]
+                    },
+                    animation: {
+                        onComplete: function () {
+                            // render the value of the chart above the bar
+                            var ctx = this.chart.ctx;
+                            ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontFamily, 'normal', Chart.defaults.global.defaultFontFamily);
+                            ctx.textAlign = 'center';
+                            ctx.fillStyle = 'black';
+                            ctx.textBaseline = 'bottom'; 
+                            this.chart.ctx.font="15px Verdana";     
+                            this.data.datasets.forEach(function (dataset) {
+                                for (var i = 0; i < dataset.data.length; i++) {
+                                    var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model;
+                                    var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+                                        return previousValue + currentValue;
+                                    });
+                                    var value = Math.floor(((dataset.data[i]/total)*100)+0.5)+'%';
+
+                                    ctx.fillText(value, model.x, model.y - 5);
+                                }
+                            });
                         }
-                    };
+                    }
+                    
+                };
                     barChartOptions.datasetFill = false;
                   
                     var barChartCanvas = $("#{{$SurveyQuestion->intSQId}}").get(0).getContext("2d");
@@ -204,9 +244,7 @@
                         labels: [
                            @foreach($SurveyTally as $Answer)
                             @if($SurveyQuestion->intSQId == $Answer->intSQId)
-                                
                                     "{{$Answer->strSDAnswer}}",
-                                
                             @endif
                             @endforeach 
                         ],
@@ -221,15 +259,14 @@
                                     @endif
                                     @endforeach 
                                 ],
-                                backgroundColor:[
-                                    @foreach($SurveyTally as $Answer)
-                                    @if($SurveyQuestion->intSQId == $Answer->intSQId)
-                                    
-                                       getRandomColor(),
-                                   
-                                    @endif
-                                    @endforeach 
-                                ]
+                                backgroundColor: [
+                                '#FFCE56',
+                                '#4BC0C0',
+                                '#FF6384',
+                                '#36A2EB',
+                                '#ff7a56',
+                                '#56e5ff'
+                            ],
                             }
                         ]
                     };
@@ -255,6 +292,34 @@
                       responsive: true,
                       // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
                       maintainAspectRatio: true,
+                        animation: {
+                            onComplete: function () {
+                                // render the value of the chart above the bar
+                                var ctx = this.chart.ctx;
+                                ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontFamily, 'normal', Chart.defaults.global.defaultFontFamily);
+                                ctx.textAlign = 'center';
+                                ctx.fillStyle = 'black';
+                                ctx.textBaseline = 'bottom'; 
+                                this.chart.ctx.font="15px Verdana";     
+                                this.data.datasets.forEach(function (dataset) {
+                                    for (var i = 0; i < dataset.data.length; i++) {
+                                        var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model;
+                                        var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+                                            return previousValue + currentValue;
+                                        });
+                                        mid_radius = model.innerRadius + (model.outerRadius - model.innerRadius)/2,
+                                          start_angle = model.startAngle,
+                                          end_angle = model.endAngle,
+                                          mid_angle = start_angle + (end_angle - start_angle)/2;
+
+                                      var x = mid_radius * Math.cos(mid_angle);
+                                      var y = mid_radius * Math.sin(mid_angle);
+                                      var percent = String(Math.round(dataset.data[i]/total*100)) + "%";
+                                      ctx.fillText(percent, model.x + x, model.y + y + 15);
+                                    }
+                                });
+                            }
+                        }       
                     };
                     
                     var pieChartCanvas = $("#{{$SurveyQuestion->intSQId}}").get(0).getContext("2d");

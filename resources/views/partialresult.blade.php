@@ -82,7 +82,7 @@
         <script src="{{ URL::asset('assets/bootstrap/js/bootstrap.min.js') }}"></script>
         <!-- SlimScroll -->
         <script src="{{ URL::asset('assets/plugins/slimScroll/jquery.slimscroll.min.js')}}"></script>
-        <script src="{{ URL::asset('assets/plugins/chartJS/Chart.min.js')}}"></script>
+        <script src="{{ URL::asset('assets/plugins/chartJS2/Chart.js') }}"></script>
         <!-- FastClick -->
         <script src="{{ URL::asset('assets/plugins/fastclick/fastclick.js')}}"></script>
         <!-- AdminLTE App -->
@@ -102,43 +102,106 @@
             $(function () {
                 var areaChartData = {
                     labels: [
-                    @foreach($tally as $candidate)
-                        @if($position->strCandPosId == $candidate->strCandPosId)
-                            "{{$candidate->fullname}}",
-                        @endif
-                    @endforeach
-                    ],
-                    datasets: [{
-                        label: "Electronics",
-                        fillColor: "rgba(210, 214, 222, 1)",
-                        strokeColor: "rgba(210, 214, 222, 1)",
-                        pointColor: "rgba(210, 214, 222, 1)",
-                        pointStrokeColor: "#c1c7d1",
-                        pointHighlightFill: "#fff",
-                        pointHighlightStroke: "rgba(220,220,220,1)",
-                        data: [
                         @foreach($tally as $candidate)
                             @if($position->strCandPosId == $candidate->strCandPosId)
-                                {{$candidate->votes}},
+                                "{{$candidate->fullname}}",
                             @endif
                         @endforeach
+                    ],
+                    datasets: [{
+                        label: "Partial Tally of votes",
+                        backgroundColor: [
+                            @foreach($tally as $candidate)
+                            @if($position->strCandPosId == $candidate->strCandPosId)
+                                @if($candidate->strPartyColor == "")
+                                "#000",
+                                @else
+                                "{{$candidate->strPartyColor}}",
+                                @endif
+                            @endif
+                        @endforeach
+                        ],
+                        borderWidth: 1,
+                        barPercentage: 1,
+                        data: [
+                            @foreach($tally as $candidate)
+                                @if($position->strCandPosId == $candidate->strCandPosId)
+                                    {{$candidate->votes}},
+                                @endif
+                            @endforeach
                         ]
                     }]
                 };
-                var barChartCanvas = $("#{{$position->strPositionId}}").get(0).getContext("2d");
-                var barChart = new Chart(barChartCanvas);
-                var barChartData = areaChartData;
-                barChartData.datasets[0].fillColor = "{{$position->strPosColor}}";
-                barChartData.datasets[0].strokeColor = "{{$position->strPosColor}}";
-                barChartData.datasets[0].pointColor = "{{$position->strPosColor}}";
+                var totalValue = getTotalValue(areaChartData);
+                var options = {
+                    
+                     //Boolean - Whether we should show a stroke on each segment
+                     segmentShowStroke: true,
+                     //String - The colour of each segment stroke
+                     segmentStrokeColor: "#fff",
+                     //Number - The width of each segment stroke
+                     segmentStrokeWidth: 2,
+                     //Number - The percentage of the chart that we cut out of the middle
+                     percentageInnerCutout: 50, // This is 0 for Pie charts
+                     //Number - Amount of animation steps
+                     animationSteps: 100,
+                     //String - Animation easing effect
+                     animationEasing: "easeOutBounce",
+                     //Boolean - Whether we animate the rotation of the Doughnut
+                     animateRotate: true,
+                     //Boolean - Whether we animate scaling the Doughnut from the centre
+                     animateScale: false,
+                     //Boolean - whether to make the chart responsive to window resizing
+                     responsive: true,
+                     // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+                     maintainAspectRatio: true,
+                     scales: {
+                        yAxes: [{
+                            display: true,
+                            ticks: {
+                                beginAtZero: true,
+                            }
+                        }]
+                    },
+                     
+                     //String - A legend template
+                     /*legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"*/
+                     animation: {
+                        onComplete: function () {
+                            // render the value of the chart above the bar
+                            var ctx = this.chart.ctx;
+                            ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontFamily, 'normal', Chart.defaults.global.defaultFontFamily);
+                            ctx.textAlign = 'center';
+                            ctx.fillStyle = 'black';
+                            ctx.textBaseline = 'bottom'; 
+                            this.chart.ctx.font="15px Verdana";     
+                            this.data.datasets.forEach(function (dataset) {
+                                for (var i = 0; i < dataset.data.length; i++) {
+                                    var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model;
+                                    var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+                                        return previousValue + currentValue;
+                                    });
+                                    var value = Math.floor(((dataset.data[i]/total)*100)+0.5)+'%';
 
-                var barChartOptions = {
-                    //Boolean - whether to make the chart responsive
-                    responsive: true,
-                    maintainAspectRatio: true
-                };
-                barChartOptions.datasetFill = false;
-                barChart.Bar(barChartData, barChartOptions);
+                                    ctx.fillText(value, model.x, model.y - 5);
+                                }
+                            });
+                        }
+                    }
+                 };
+                         
+                var pieChartCanvas = $("#{{$position->strPositionId}}").get(0).getContext("2d");
+                var pieChart = new Chart(pieChartCanvas, {
+                    type: 'bar',
+                    data: areaChartData,
+                    options: options
+                });
+                function getTotalValue(arr) {
+                    var total = 0;
+                    for(var i=0; i<arr.length; i++)
+                        total += arr[i].value;
+                    return total;
+                }
             });
         @endforeach
         </script>

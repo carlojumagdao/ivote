@@ -23,10 +23,11 @@ class resultController extends Controller
 				            WHERE blPosDelete = 0 AND blCandDelete = 0
 				            GROUP by s.strPosName;');
         $tally = DB::select('SELECT strCandID, CONCAT(strMemFName," ",strMemLName) AS 
-        					fullname, strCandPosId, txtCandPic, count(strVDCandId) as `votes`
+        					fullname, strCandPosId, txtCandPic, count(strVDCandId) as `votes`, strPartyColor
         					FROM tblcandidate 
                             join tblmember on strMemberId = strCandMemId
                             left join tblvotedetail on strCandId = strVDCandId
+                            left join tblparty on intCandParId = intPartyid
                             where blCandDelete = 0
                             group by strVDCandID, strMemLName, txtCandPic
                             order by 5 desc;');
