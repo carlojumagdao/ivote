@@ -108,7 +108,7 @@
                         <tr>
                             <th>Member Id</th>
                             <th>Full Name</th>
-                            <th>Email</th>
+                            <th>Date</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -116,7 +116,8 @@
                         <tr>
                             <td class="id">{{$value->strMemberId}}</td>
                             <td class="name">{{$value->strMemFname.' '.$value->strMemLname}}</td>
-                            <td class="email">{{$value->strMemEmail}}</td>
+                            <td class="date">@if($query <= 2){{date('D, M. d Y h:i a', strtotime($value->datSHAnswered))}} 
+                                @else {{date('D, M. d Y h:i a', strtotime($value->datVHVoted))}} @endif </td>
                         </tr>
                     @endforeach
                     </tbody>
@@ -124,7 +125,7 @@
                         <tr>
                             <th>Member Id</th>
                             <th>Full Name</th>
-                            <th>Email</th>
+                            <th>Date</th>
                         </tr>
                     </tfoot>
                 </table>

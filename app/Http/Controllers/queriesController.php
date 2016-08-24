@@ -62,14 +62,16 @@ class queriesController extends Controller
                 $surveyed[$ind] = $el->strSHMemCode;
             }
             $list = DB::table('tblmember')
+                            ->leftJoin('tblsurveyheader', 'strMemberId', '=', 'strSHMemCode' )
                             ->where('blMemDelete', '=', 0)
                             ->where('blMemCodeSendStat', '=', 1)
-                            ->whereNotIn('strMemberId', $surveyed)
+                            ->whereNull('tblsurveyheader.strSHMemCode')
                             ->get();
             $count = DB::table('tblmember')
+                            ->leftJoin('tblsurveyheader', 'strMemberId', '=', 'strSHMemCode' )
                             ->where('blMemDelete', '=', 0)
                             ->where('blMemCodeSendStat', '=', 1)
-                            ->whereNotIn('strMemberId', $surveyed)
+                            ->whereNull('tblsurveyheader.strSHMemCode')
                             ->count();
             $members = DB::table('tblmember')
                             ->where('blMemDelete', '=', 0)
