@@ -106,6 +106,8 @@ Route::group(['middleware' => 'auth'], function(){
 		'PDFController@getPDF');
     Route::get('/winnerPDF',
 		'PDFController@getWinner');
+    Route::get('/query/{query}',
+		'PDFController@query');
 	/*Route::get('/settings/pdfile',function(){
 		'uses' => 'PDFController@PDFunct',
 		'as' => 'settings.pdfile'

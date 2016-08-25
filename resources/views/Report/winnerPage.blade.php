@@ -74,7 +74,7 @@
                             @endif"></div>
                         </div>
                         <span class="progress-description">
-                            @if($count!=0){{($cand->votes / $count )* 100}}% of Votes
+                            @if($count!=0){{number_format(($cand->votes / $count )* 100, 2, '.', '')}}% of Votes
                             @else 0% of Votes
                             @endif
                         </span>
