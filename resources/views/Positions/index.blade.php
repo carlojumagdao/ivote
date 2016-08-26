@@ -5,6 +5,11 @@
 @section('style')
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/datatables/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/datatables/datatables-responsive/css/dataTables.responsive.css') }}">
+    <style>
+        table.table.table-striped tr.highlight td{
+          background-color: #ff3d3d;  
+        }
+    </style>
 @stop
 @section('content')
 <!-- START CONTENT -->
@@ -65,6 +70,7 @@
                     </thead>
                     <tbody>
                     @foreach($Positions as $value)
+<<<<<<< HEAD
                         <tr>
                             <td class="id">{{$value->strPositionId}}</td>
                             <td class="name">{{$value->strPosName}}</td>
@@ -95,6 +101,37 @@
                                 @endif
                             </td>
                         </tr>
+=======
+                        @if($value->blPosDelete == 1)
+                            <tr class="highlight">
+                        @else
+                            <tr>
+                        @endif
+                                <td class="id">{{$value->strPositionId}}</td>
+                                <td class="name">{{$value->strPosName}}</td>
+                                <td class="email">{{$value->intPosVoteLimit}}</td>
+                                    <?php
+                                        $datecreated =  $value->created_at;
+                                        $converteddatecreated = date('M j, Y h:i A',strtotime($datecreated));
+                                        $dateupdated = $value->updated_at;
+                                        $converteddateupdated = date('M j, Y h:i A',strtotime($dateupdated));   
+                                        $datedeleted = $value->deleted_at;
+                                        $converteddatedeleted = date('M j, Y h:i A',strtotime($datedeleted));
+                                    ?>
+                                <td class="created">{{$converteddatecreated}}</td>
+                                <td class="updated">{{$converteddateupdated}}</td>
+                                <td class="deleted">{{$converteddatedeleted}}</td>
+                                <td class="status" style="display:none">{{$value->blPosDelete}}</td> 
+                                <td>
+                                    @if($value->blPosDelete == 0)
+                                    <a href="position/edit/{{$value->strPositionId}}" class="btn btn-warning btn-sm edit" title="Edit"><i class="glyphicon glyphicon-edit"></i></a>
+                                    <button class="btn btn-danger btn-sm delPosition" data-toggle="tooltip" title="Delete"><i class="glyphicon glyphicon-trash"></i></button>
+                                    @else
+                                    <button class="btn btn-info btn-sm revPosition" data-toggle="tooltip" title="Restore"><i class="glyphicon glyphicon-refresh"></i></button>
+                                    @endif
+                                </td>
+                            </tr>
+>>>>>>> origin/master
                     @endforeach
                     </tbody>
                     <tfoot>
@@ -157,6 +194,7 @@
 <script>
     $(document).ready(function () {
       responsive: true
+      $('.status:contains(1)').parent().toggle();
       var table = $('#dataTables-example').DataTable({
         columnDefs: [
           {
@@ -170,7 +208,6 @@
           }
         ]
       });
-      $('.status:contains(1)').parent().toggle();
       $('#show_meta').on('change', function () {
         if ($('#show_meta:checked').length > 0) {
           table.columns([0, 1, 2, 3, 4]).visible(true);

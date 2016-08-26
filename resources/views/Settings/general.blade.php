@@ -202,15 +202,15 @@
                     <?php $publishedStatus = ""; $published = 0?>
                 @endif
                 <div class="form-group" style="border-bottom:1px solid rgba(130, 116, 116, 0.1);; padding-bottom:4%;">
-                    <input type="checkbox" name="chkbxSurvey" class="chkbxSurvey" {{$surveyStatus}} ><span style="margin-left:30%; font-size:15px;">Exit Poll Survey</span>
+                    <span style="margin-right:30%; font-size:15px;">Exit Poll Survey</span><input type="checkbox" name="chkbxSurvey" class="chkbxSurvey" {{$surveyStatus}} >
                     <input type="hidden" id="survey" name="txtSurveyStatus" value="{{$survey}}">
                 </div>
                 <div class="form-group" style="border-bottom:1px solid rgba(130, 116, 116, 0.1);; padding-bottom:4%;">
-                    <input type="checkbox" name="chkbxParty" class="chkbxParty" {{$partyStatus}} ><span style="margin-left:30%; font-size:15px;">Party Affiliation</span>
+                    <span style="margin-right:30%; font-size:15px;">Party Affiliation</span><input type="checkbox" name="chkbxParty" class="chkbxParty" {{$partyStatus}} >
                     <input type="hidden" id="party" name="txtPartyStatus" value="{{$party}}">
                 </div>
                 <div class="form-group">
-                    <input type="checkbox" name="chkbxPublish" class="chkbxPublish" {{$publishedStatus}} ><span style="margin-left:30%; font-size:15px;">Publish Website</span>
+                    <span style="margin-right:30%; font-size:15px;">Publish Website</span><input type="checkbox" name="chkbxPublish" class="chkbxPublish" {{$publishedStatus}} >
                     <input type="hidden" id="publish" name="txtPublishStatus" value="{{$published}}">
                 </div>
             </div>

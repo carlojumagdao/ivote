@@ -51,43 +51,31 @@
             </td>
         </tr>
     </table>
-    <center><h1>Winners</h1></center>
-     @foreach($positions as $pos)
+    <center><h1>{{$title}}</h1></center>
+    <h3>{{$percent}}% of members</h3>
+    <p><big>{{$count}}</big> out of {{$members}} members</p>
     <br>
-                <h3>{{$pos->strPosName}}</h3>
-    <br>        <?php $counter = 0;?>
     <table width="100%">
         <tr>
-            <th class="td" width="10%"></th>
-            <th class="td">Last Name</th>
-            <th class="td">Vote Count</th>
-            <th class="td">Percentage</th>
+            <th>Member Id</th>
+            <th>Full Name</th>
+             @if($query%2!=0) <th>Date</th> @endif
         </tr>
         
                 
                
-                @foreach($tally as $cand)
-                <!-- Apply any bg-* class to to the info-box to color it -->
-                @if($pos->strCandPosId == $cand->strCandPosId)
-                @if($pos->intPosVoteLimit > $counter)  
+        @foreach($list as $value)
         <tr>
-            <td class="td"><img src="assets/images/{{$cand->txtCandPic}}" height="100px" width="100px"></td>
-            <td class="td">{{$cand->strMemLName}}, {{$cand->strMemFName}}</td>
-            <td class="td">{{$cand->votes}}</td>
-            <td class="td">@if($count!=0){{($cand->votes / $count )* 100}}% of Votes
-                            @else 0% of Votes
-                            @endif</td>
-            
+            <td class="id">{{$value->strMemberId}}</td>
+            <td class="name">{{$value->strMemFname.' '.$value->strMemLname}}</td>
+            @if($query%2 != 0)
+            <td class="date">@if($query <= 2){{date('D, M. d Y h:i a', strtotime($value->datSHAnswered))}} 
+                                @else {{date('D, M. d Y h:i a', strtotime($value->datVHVoted))}} @endif </td>@endif
         </tr>
-        @endif
-            <?php $counter++;?>
-        @endif
         @endforeach
     </table>
-    @endforeach
     <br>
     <br>
-    <h3>Total Voters: {{$count}}</h3>
 	 
 	
     

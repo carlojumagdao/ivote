@@ -1,66 +1,11 @@
 <?php 
-
-  use App\ui AS ui;
-
-    $ui = ui::find(1);
-    if($ui) $skin = $ui->strUISkin;
-    else $skin = 'skin-blue';
-    $bgcolor = 'lightgrey';
-    $headercolor = 'white';
-    $theme = "white";
-    $themeSub = "white";
-    $boxTheme = "white";
-    $pieces = explode("-", $skin);
-
-    if(sizeof($pieces) == 3){
-        $color = '#242424';
-        $headercolor = 'white';
-        $theme = 'white';
-        $themeSub = '#ecf0f5';
-        
-    }
-    else{
-        $color = 'white';
-        $theme = '#242424';
-        $themeSub = '#3c3f41';
-        $boxTheme = '#626262';
-    }
-
-    switch($pieces[1]){
-        case 'blue':
-            $bgcolor = "#3c8dbc";
-            break;
-        case 'yellow':
-            $bgcolor = "#f39c12";
-            break;
-        case 'green':
-            $bgcolor = "#00a65a";
-            break;
-        case 'purple':
-            $bgcolor = "#605ca8";
-            break;
-        case 'red':
-            $bgcolor = "#dd4b39";
-            break;
-        case 'black':
-            $bgcolor = "#eee";
-            $headercolor = '#242424';
-            break;
-        
-    }
-
-    
     if(Session::has('memid')){
         $memberID = session('memid');
         $memberName = session('memfullname');
-    }
-
-    else{
+    } else{
         $memberID = "None";
         $memberName = "None";
-    }
-
-    
+    } 
 ?>
 <!DOCTYPE html>
 <html>
@@ -84,7 +29,7 @@
     <style>
         .body{
             padding:0;
-            background-color: {{$theme}};
+            background-color: #fff;
         }
         .paddify{
             padding: 10px;
@@ -97,30 +42,27 @@
             max-width: 100px;
         }
         .header2{
-            background-color: {{$bgcolor}};
-            border-bottom: 2px solid {{$bgcolor}};
-            color: {{$headercolor}}
+            background-color: #3c8dbc;
+            border-bottom: 2px solid #3c8dbc;
+            color: #fff;
         }
         .boxhead{
             
-            color: {{$headercolor}};
+            color: #fff;
             
         }
-        
         .boxbody{
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-            background-color: {{$themeSub}};
-            color: {{$color}}
+            background-color: #ecf0f5;
+            color: #242424;
         }
-        
         .boxtheme{
             border-bottom: 0px;
             border-right: 0px ;
             border-top: 0px;
-            background-color: {{$boxTheme}};
-            color: {{$color}};
-        }
-    </style>
+            background-color: #fff;
+            color: #242424;
+        }    </style>
 </head>
 <body class="body">
     @foreach($election as $set)
@@ -129,18 +71,18 @@
             <img src="assets/images/{{$set->txtSetLogo}}" class="paddify img-responsive">
         </div>
         <div class="col-md-5 col-xs-8">
-            <h2>{{$set->strSetElecName}}</h2>
-            <h4>{{$set->strHeader}}</h4>
-            <h5>Powered by: iVOTE++</h5>
+            <h2 class="responsive-text">{{$set->strSetElecName}}</h2>
+            <h4 class="responsive-text">{{$set->strHeader}}</h4>
+            <h5 class="responsive-text">Powered by: iVOTE++</h5>
         </div>
     </div>
     <div class="row header2" style="border-top:1px solid white;">
         <div class="col-lg-10 col-lg-offset-1">
             <div class="pull-left" >
-                <h4>SELECT YOUR CANDIDATE</h4>
+                <h4 class="responsive-text">SELECT YOUR CANDIDATE</h4>
             </div>
             <div class="pull-right" >
-                <h4>Member: <span style="font-weight:bold">{{$memberName}}</span> </h4>
+                <h4 class="responsive-text">Member: <span style="font-weight:bold">{{$memberName}}</span> </h4>
             </div>  
         </div>
     </div>
@@ -158,8 +100,8 @@
                 
         <div class="col-md-10 col-md-offset-1">
             @foreach($positions as $position)
-            <div class="box-header boxhead {{$position->strPosName}}" style="background-color: @if($position->strPosColor == NULL) cornflowerblue @else {{$position->strPosColor}} @endif ">
-                <h3  style="font-family:helvetica;letter-spacing:1px;text-transform:capitalize" class="box-title">{{$position->strPosName}} | <span style="font-size: 12px">vote limit: {{$position->intPosVoteLimit}}</span></h3>
+            <div class="box-header boxhead {{$position->strPosName}}" style="background-color:#3c8dbc">
+                <h3  style="font-family:helvetica;letter-spacing:1px;text-transform:capitalize" class="box-title responsive-text">{{$position->strPosName}} | <span class="responsive-text" style="font-size: 12px">vote limit: {{$position->intPosVoteLimit}}</span></h3>
                 <input type="hidden" name='position[]' value='{{$position->strPositionId}}'>
             </div>
             <div class="box-body boxbody {{$position->strPosName}}" style="padding: 40px;">
@@ -167,15 +109,15 @@
                 @foreach($candidates as $candidate)
                     @if($candidate->strCandPosId == $position->strPositionId )  
                         <div class="col-lg-3 col-md-5 col-xs-12">
-                            <div class="thumbnail boxtheme">
+                            <div class="thumbnail boxtheme" >
                                 <center>
                                 <div class="checkbox">
-                                    <label style="font-size:14px;font-family:helvetica;color:steelblue;font-weight: bold;">
+                                    <label style="font-family:helvetica">
                                         <div>
-                                            <img id="cand-pic" src="../assets/images/{{$candidate->txtCandPic}}" style="background-size: contain;padding-bottom:10px;padding-right:15px;" class="img-responsive"/>
+                                            <img id="cand-pic" src="../assets/images/{{$candidate->txtCandPic}}" style="background-size: contain;padding-bottom:13px;padding-right:15px;" class="img-responsive"/>
                                         </div>
                                         
-                                        <input style="text-transform:capitalize" type="checkbox" value="{{$candidate->strCandId}}" name="vote[]" class="pos_{{$position->strPositionId}}" onclick="return maxCast_{{$position->strPositionId}}()"
+                                        <input style="text-transform:capitalize;padding-top:15px;" type="checkbox" value="{{$candidate->strCandId}}" name="vote[]" class="pos_{{$position->strPositionId}} responsive-text" onclick="return maxCast_{{$position->strPositionId}}()"
                                            <?php
                                                 $cdvote = old('vote');
                                                 for($x=0; $x<sizeOf(old('vote')); $x++){
@@ -207,19 +149,19 @@
         </div>
         <div class="row"  style="padding-right:72px;">
             <div class="col-md-2 col-md-offset-10 col-xs-4 col-xs-offset-4 col-sm-4">
-                <input  style="font-family:segoe ui;height:40px;"  type="submit" class="btn btn-primary" name="btnSubmit" value="CAST MY VOTES!">
+                <input  style="font-family:segoe ui;height:40px;"  type="submit" class="btn btn-primary responsive-text" name="btnSubmit" value="CAST MY VOTES!">
             </div>
             
         </div>
          {!! Form::close() !!}
     </div>
     <br>
-    <footer class="row header2">
+    <footer class="row header2" style="height:25px">
         <div class="col-md-12">
             <div class="pull-right hidden-xs">
                 <b>Version</b> 1.2.1
             </div>
-            <strong style="margin-left:10px;padding-top:40px;">Copyright &copy; 2015-2016 <a href="http://ivote++.com" class="btn btn-xs btn-primary">&nbsp iVote++ &nbsp</a>&nbsp .</strong> All rights
+            <strong style="margin-left:10px;padding-top:40px;">Copyright &copy; 2015-2016 <a href="http://ivote++.com" class="btn btn-xs btn-primary">&nbsp iVote++ &nbsp </a>&nbsp .</strong> All rights
             reserved. &nbsp &nbsp 
         </div>  
     </footer>
@@ -236,6 +178,13 @@
 <script src="{{ URL::asset('assets/dist/js/app.min.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ URL::asset('assets/dist/js/demo.js')}}"></script>
+<script src="{{ URL::asset('assets/responsivetext/jquery.responsivetext.js') }}"></script>
+<script type="text/javascript">
+  $("p").responsiveText({
+     bottomStop : '500',
+     topStop    : '1000'
+});
+</script>
 <script>
   $(function () {
     //iCheck for checkbox and radio inputs
@@ -260,19 +209,19 @@
 
 function maxCast_{{$position->strPositionId}}(){
 
-		var maxcheck = {{$position->intPosVoteLimit}};
-		var position = "{{$position->strPosName}}";
-		
-		var checkedBox = $(".pos_{{$position->strPositionId}}:checked").size();
-		
-		if(checkedBox > maxcheck){
-		
-			alert('You can only vote ' + maxcheck + ' from the ' + position + ' position.');document.voteform; return false;
-			
-		}
-		
-		else return true;
-	}
+        var maxcheck = {{$position->intPosVoteLimit}};
+        var position = "{{$position->strPosName}}";
+        
+        var checkedBox = $(".pos_{{$position->strPositionId}}:checked").size();
+        
+        if(checkedBox > maxcheck){
+        
+            alert('You can only vote ' + maxcheck + ' from the ' + position + ' position.');document.voteform; return false;
+            
+        }
+        
+        else return true;
+    }
  @endforeach
 </script>
 <script>
@@ -288,4 +237,3 @@ function maxCast_{{$position->strPositionId}}(){
 @yield('script')   
 </body>
 </html>
-    

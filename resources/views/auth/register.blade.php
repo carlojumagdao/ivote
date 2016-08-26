@@ -18,7 +18,7 @@
 <style>
     body{
       background-image: url("{{ URL::asset('assets/images/7.jpg') }}");
-        background-size: cover;
+      background-size: cover;
     }
     .form-control{
       background-color: rgba(232, 232, 232, 0.28);
@@ -51,7 +51,7 @@
       <h4>Election Content Management and Exit Poll Survey System</h4>
     </center>
     <br>
-    <form method="POST" action="/auth/register">
+    <form method="POST" action="/auth/register" enctype="multipart/form-data">
       {!! csrf_field() !!}
             <div class="col-md-12">
                 @if ($errors->any())
@@ -76,7 +76,7 @@
                     <div class="col s12">
                         <br>
                         <div class="card-panel2 tooltipped" data-position="top" data-delay="50" data-tooltip="logo picture">
-                            <img id="user-pic" src="../assets/images/ivote.jpg" width="180px" style="background-size: contain;" /> 
+                            <img id="user-pic" src="../assets/images/Avatar.jpg" width="180px" height="180px" style="background-size: contain;" /> 
                         </div>
                     </div>
                 </center>
@@ -141,8 +141,8 @@
                 reader.onload = function (e) {
                     $('#user-pic')
                     .attr('src', e.target.result)
-                    .width(150)
-                    .height(150);
+                    .width(180)
+                    .height(180);
                     
                 };
             reader.readAsDataURL(input.files[0]);

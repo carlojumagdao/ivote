@@ -62,7 +62,8 @@
                 @if($pos->intPosVoteLimit > $counter)        
                 <div class="col-md-3">
                 <div class="info-box bg-blue">
-                    <span class="info-box-icon"><image class="img-circle" src ="assets/images/{{$cand->txtCandPic}}" height="80" width="80"></span>
+                    <span class="info-box-icon"><image class="img-circle" 
+                                                       src ="assets/images/{{$cand->txtCandPic}}" height="80" width="80"></span>
                     <div class="info-box-content">
                         <span class="info-box-text">{{$cand->strMemLName}}, {{$cand->strMemFName}}</span>
                         <span class="info-box-number">{{$cand->votes}}</span>
@@ -73,7 +74,7 @@
                             @endif"></div>
                         </div>
                         <span class="progress-description">
-                            @if($count!=0){{($cand->votes / $count )* 100}}% of Votes
+                            @if($count!=0){{number_format(($cand->votes / $count )* 100, 2, '.', '')}}% of Votes
                             @else 0% of Votes
                             @endif
                         </span>

@@ -1,6 +1,6 @@
 @extends('master')
 @section('title')
-    {{"Queries"}}
+    {{"Vote Distribution"}}
 @stop   
 @section('style')
     <link rel="stylesheet" href="{{ URL::asset('assets/plugins/colorpicker/bootstrap-colorpicker.min.css') }}">
@@ -16,7 +16,7 @@
 @section('content')
 <!-- START CONTENT -->
     @section('title-page')
-        {{"Queries"}}
+        {{"Vote Distribution"}}
     @stop  
     <!--start container-->
     <div class="col-md-12">
@@ -41,7 +41,7 @@
     <div class="col-md-12">
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">List of all Queries</h3>
+                <h3 class="box-title">List of all Dynamic Fields</h3>
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
                     <i class="fa fa-minus"></i></button>
@@ -56,7 +56,7 @@
                         <select name="distro" class="form-control select2" required>
                             <option></option>
                             @foreach($posdetail as $detail)
-                            <option value="{{$detail->strDynFieldName}}">{{$detail->strDynFieldName}}</option>
+                            <option value="{{$detail->strDynFieldName}}">{{ucwords($detail->strDynFieldName)}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -73,7 +73,7 @@
       
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">Query Result</h3>
+                <h3 class="box-title">Vote Distribution</h3>
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
                     <i class="fa fa-minus"></i></button>

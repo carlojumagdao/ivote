@@ -83,8 +83,8 @@
             <div class="box-header with-border">
                 <h3 class="box-title">Query Result</h3>
                 <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-                    <i class="fa fa-minus"></i></button>
+                    
+                    <a href="{{$link}}" class="btn btn-xs btn-info sendall" data-toggle="tooltip" title="Get PDF of Query" target="_blank"><i class="fa fa-file-pdf-o"></i> Get PDF</a>
                 </div>
             </div>
             <div class="box-body dataTable_wrapper">
@@ -98,9 +98,15 @@
                         <div class="progress">
                             <div class="progress-bar" style="width: {{$percent}}%"></div>
                         </div>
+                        @if($publish == 1)
                         <span class="progress-description">
-                            {{number_format($percent)}}% of total members with passcode sent
+                            {{number_format($percent, 2, '.', '')}}% of total members with passcode sent
                         </span>
+                        @else
+                        <span class="progress-description">
+                            {{number_format($percent, 2, '.', '')}}% of total members
+                        </span>
+                        @endif
                     </div><!-- /.info-box-content -->
                 </div><!-- /.info-box -->
                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
@@ -108,7 +114,7 @@
                         <tr>
                             <th>Member Id</th>
                             <th>Full Name</th>
-                            <th>Email</th>
+                            <th>Date</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -116,7 +122,8 @@
                         <tr>
                             <td class="id">{{$value->strMemberId}}</td>
                             <td class="name">{{$value->strMemFname.' '.$value->strMemLname}}</td>
-                            <td class="email">{{$value->strMemEmail}}</td>
+                            <td class="date">@if($query <= 2){{date('D, M. d Y h:i a', strtotime($value->datSHAnswered))}} 
+                                @else {{date('D, M. d Y h:i a', strtotime($value->datVHVoted))}} @endif </td>
                         </tr>
                     @endforeach
                     </tbody>
@@ -124,7 +131,7 @@
                         <tr>
                             <th>Member Id</th>
                             <th>Full Name</th>
-                            <th>Email</th>
+                            <th>Date</th>
                         </tr>
                     </tfoot>
                 </table>

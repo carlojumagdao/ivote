@@ -1,6 +1,6 @@
 @extends('master')
 @section('title')
-    {{"Queries"}}
+    {{"Vote Distribution"}}
 @stop   
 @section('style')
     <link rel="stylesheet" href="{{ URL::asset('assets/plugins/colorpicker/bootstrap-colorpicker.min.css') }}">
@@ -16,7 +16,7 @@
 @section('content')
 <!-- START CONTENT -->
     @section('title-page')
-        {{"Queries"}}
+        {{"Vote Distribution"}}
     @stop  
     <!--start container-->
     <div class="col-md-12">
@@ -56,7 +56,7 @@
                         <select name="distro" class="form-control select2" required>
                             <option></option>
                             @foreach($posdetail as $detail)
-                            <option value="{{$detail->strDynFieldName}}">{{$detail->strDynFieldName}}</option>
+                            <option value="{{$detail->strDynFieldName}}">{{ucwords($detail->strDynFieldName)}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -69,65 +69,31 @@
                 Footer
             </div>
         </div>
-        @if(isset($query))
-      
-        <div class="box">
-            <div class="box-header with-border">
-                <h3 class="box-title">Query Result</h3>
-                <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-                    <i class="fa fa-minus"></i></button>
+        <div class ="callout callout-info">
+            <h4>
+                    Vote Distribution by:
+                    <span style="font-size:24px">{{ucwords($by)}}</span>
+            </h4>
+        </div>
+        
+        @foreach($candidate as $cand)
+        <div class="col-lg-6">
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">{{$cand->strMemFname}} {{$cand->strMemLname}}</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="chart">
+                        <canvas id="{{$cand->strCandId}}" style="height:230px"></canvas>
+                    </div>
                 </div>
             </div>
-            <div class="box-body dataTable_wrapper">
-                <!-- Apply any bg-* class to to the info-box to color it -->
-                <div class="info-box bg-blue">
-                    <span class="info-box-icon"><i class="fa fa-pie-chart"></i></span>
-                    <div class="info-box-content">
-                        <span class="info-box-text">{{$title}}</span>
-                        <span class="info-box-number">{{$count}}</span>
-                        <!-- The progress section is optional -->
-                        <div class="progress">
-                            <div class="progress-bar" style="width: {{$percent}}%"></div>
-                        </div>
-                        <span class="progress-description">
-                            {{number_format($percent)}}% of total members with passcode sent
-                        </span>
-                    </div><!-- /.info-box-content -->
-                </div><!-- /.info-box -->
-                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                    <thead>
-                        <tr>
-                            <th>Member Id</th>
-                            <th>Full Name</th>
-                            <th>Email</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($list as $value)
-                        <tr>
-                            <td class="id">{{$value->strMemberId}}</td>
-                            <td class="name">{{$value->strMemFname.' '.$value->strMemLname}}</td>
-                            <td class="email">{{$value->strMemEmail}}</td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <th>Member Id</th>
-                            <th>Full Name</th>
-                            <th>Email</th>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
-            <div class="box-footer">
-                Footer
-            </div>
         </div>
-        @endif
-        @foreach($candidate as $cand)
-            <canvas id="myChart" width="400" height="400"></canvas>
         @endforeach
     </div>
                 
@@ -176,47 +142,81 @@
     $(".my-colorpicker2").colorpicker();
 
 </script>
-<script src="{{ URL::asset('assets/plugins/chartjs/Chart.min.js') }}"></script>
+<script src="{{ URL::asset('assets/plugins/chartJS2/Chart.min.js') }}"></script>
 <script>
-    $(document).ready(function(){
-var ctx = document.getElementById("myChart");
-var myChart = new Chart(ctx, {
-    type: 'doughnut',
-    data: {
-        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-        datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255,99,132,1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero:true
-                }
-            }]
+    function getRandomColor() {
+        var letters = '0123456789ABCDEF'.split('');
+        var color = '#';
+        for (var i = 0; i < 6; i++ ) {
+            color += letters[Math.floor(Math.random() * 16)];
         }
+        return color;
     }
-});
+    
+    @foreach($candidate as $cand)
+    $(function () {
+        var data = {
+            labels: [
+                @foreach($votedistro as $dis)
+                @if($cand->strCandId == $dis->strCandId)
+                    @if($dis->strMemDeFieldData == null) "unidentified",
+                    @else "{{$dis->strMemDeFieldData}}",
+                    @endif
+                @endif
+                @endforeach
+            ],
+            datasets: [
+                {
+                    data: [
+                        @foreach($votedistro as $dis)
+                        @if($cand->strCandId == $dis->strCandId)
+                            {{$dis->count}},
+                        @endif
+                        @endforeach
+                    ],
+                    backgroundColor: [
+                        @foreach($votedistro as $dis)
+                        @if($cand->strCandId == $dis->strCandId)
+                            getRandomColor(),
+                        @endif
+                        @endforeach
+                    ]
+                }]
+        };
+        
+         var options = {
+             //Boolean - Whether we should show a stroke on each segment
+             segmentShowStroke: true,
+             //String - The colour of each segment stroke
+             segmentStrokeColor: "#fff",
+             //Number - The width of each segment stroke
+             segmentStrokeWidth: 2,
+             //Number - The percentage of the chart that we cut out of the middle
+             percentageInnerCutout: 50, // This is 0 for Pie charts
+             //Number - Amount of animation steps
+             animationSteps: 100,
+             //String - Animation easing effect
+             animationEasing: "easeOutBounce",
+             //Boolean - Whether we animate the rotation of the Doughnut
+             animateRotate: true,
+             //Boolean - Whether we animate scaling the Doughnut from the centre
+             animateScale: false,
+             //Boolean - whether to make the chart responsive to window resizing
+             responsive: true,
+             // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+             maintainAspectRatio: true,
+             //String - A legend template
+             /*legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"*/
+         };
+                 
+        var pieChartCanvas = $("#{{$cand->strCandId}}").get(0).getContext("2d");
+        var pieChart = new Chart(pieChartCanvas, {
+            type: 'doughnut',
+            data: data,
+            options: options
+        });
     });
+      @endforeach
 </script>
 
 @stop

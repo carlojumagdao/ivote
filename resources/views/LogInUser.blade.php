@@ -33,6 +33,7 @@
     .login-box-body{
       background-color:transparent;
       color:black;
+      max-width: 600px;
       
     }
     h1{
@@ -42,10 +43,12 @@
       -webkit-text-stroke-color: yellow;
       -webkit-font-smoothing: antialiased;
     }
-    .custom {height: 180px; }
+    .custom {height: 170px; }
     input[type="text"]{
     	color: SteelBlue;
+      
     } 
+
      
     header {
         background:#ededed;
@@ -69,7 +72,7 @@
  
       <div class="col-md-2 col-xs-6">
             <div class="tooltipped" data-position="top" data-delay="50" data-tooltip="logo picture">
-                <img id="cand-pic" class="img-responsive" src="assets/images/systemlogo.png"  style="opacity:2px; width: 140px;margin-left: 50px " /> 
+                <img id="cand-pic" class="img-responsive" src="assets/images/systemlogo.png"  style="opacity:2px; width: 140px;margin-left: 40px " /> 
             </div>
         </div>
         <div class="col-md-10 col-xs-6 "  >
@@ -86,11 +89,11 @@
 </header>
 <body>
   <div class="container">
-      <div class="login-box" style="width:80%;padding-top:none;">
+      <div class="login-box" style="width:90%;padding-top:none;">
           
                 <h6 class="responsive-text"  style="font-family:helvetica;text-align:center;letter-spacing:1px;">Enter your Member Code to start voting</h6>
                 <div class="col-md-4 col-xs-12">
-                    <img id="cand-pic" class="img-responsive" src='{{ URL::asset("assets/images/$logo") }}' style="padding-top:30px">
+                    <center><img id="cand-pic" class="img-responsive" src='{{ URL::asset("assets/images/$logo") }}' style="padding-top:30px"></center>
                     <br>
                     <h4 class="responsive-text" style="color:white;text-align:center;color:SteelBlue;">{{$header}}</h4>
                     <h6 class="responsive-text" style="font-family:helvetica;text-align:center;">Powered by iVote++</h6>
@@ -110,8 +113,10 @@
                 <div class="login-box-body">
                      <form action='{{ URL::to("/") }}' method="post">
                       {!! csrf_field() !!}
-                        <div class="form-group has-feedback">
-                            <input style="font-size:75px; text-align:center;" type="text" name="txtPasscode" class="form-control custom responsive-text" autocomplete="off" maxlength="6">
+                        <div class="form-group has-feedback ">
+                          <div class=" responsive-text">
+                            <input style="text-align:center; font-size:450% " type="text" name="txtPasscode" class="form-control custom responsive-text" autocomplete="off" maxlength="6">
+                          </div>  
                         </div>
                         @if($published)
                         <div class="form-group has-feedback">
@@ -129,8 +134,8 @@
                         
                         <div class="row">
                            <div class="col-md-12">
-                              <center>
-                                  <button style="font-size:30px;" type="submit" class="btn btn-primary btn-block btn-flat ">Start Voting</button>
+                              <center class="responsive-text">
+                                  <button style="font-size:30px;" type="submit" class="btn btn-primary  btn-block btn-flat">Start Voting</button>
                                 </center> 
                             </div>
                         </div>
@@ -151,21 +156,14 @@
 <script src="{{ URL::asset('assets/plugins/iCheck/icheck.min.js')}}"></script>
 <script src="{{ URL::asset('assets/responsivetext/jquery.responsivetext.js') }}"></script>
 <script type="text/javascript">
-  $("header").responsiveText();
-
-</script>
-<script type="text/javascript">
   $("header").responsiveText({
-     bottomStop : '500',
+     bottomStop : '550',
      topStop    : '1500'
 });
 </script>
-<script type="text/javascript">
-  $("h6").responsiveText({
-     bottomStop : '800',
-     topStop    : '1500'
-});
-</script>
+
+
+
 <script>
   //iCheck for checkbox and radio inputs
     $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({

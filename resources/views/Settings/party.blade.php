@@ -62,7 +62,7 @@
                         <td>{{++$intCounter}}</td>
                         <td class="name">{{$value->strPartyName}}</td>
                         <td class="leader">{{$value->strPartyLeader}}</td>
-                        <td class="color">{{$value->strPartyColor}}</td>
+                        <td class="color"><i class="fa fa-circle-o " style="color:{{$value->strPartyColor}}"></td>
                         <!-- if else to make the independent party not editable/deletable -->
                         @if($value->intPartyId == 1)
                             <td><button class="btn bg-purple btn-xs">Uneditable</button></td>    

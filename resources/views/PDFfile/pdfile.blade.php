@@ -51,6 +51,7 @@
             </td>
         </tr>
     </table>
+    <center><h1>Tally of Votes</h1></center>
      @foreach($positions as $pos)
     <br>
                 <h3>{{$pos->strPosName}}</h3>

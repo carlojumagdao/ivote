@@ -19,13 +19,17 @@
 	.flip-clock-divider .flip-clock-label {
 	    font-size: 20px;
 	    color: white;
-	    font-family: helvlight;
+	    font-family: Raleway, Helvetica, Arial, Sans-Serif;
 	    text-align: center;
 }
-	button:hover {
+	a:hover {
 		border-color: black;
-		background-color: white !important;;
-		color:black !important;;
+		background-color: rgba(110, 193, 252, 0.5) !important;;
+		color: white !important;;
+	}
+	
+	.wrapper {
+		padding:20px;
 	}
 
 </style>
@@ -33,9 +37,12 @@
 <body>
 <div class="wrapper">
 <div class="container">
-	<img src="assets/images/countpic.png" style="width:80%;padding-left:220px;">
-	<div class="col-sm-offset-2 col-sm-10" style="padding-left:50px;">
-	<div class="clock flip-clock-wrapper" style="margin:2em;">
+<div class="row">
+ 
+	<center><img src="assets/images/countpic.png" style="width:70%;"></center>
+	
+	<div class="col-md-offset-2 col-md-10  col-xs-12" style="padding-left: 80px;padding-top:50px" >
+	<div class="clock flip-clock-wrapper" >
 		<span class="flip-clock-divider days" >
 			<span class="flip-clock-label" >Days</span>
 		</span>
@@ -263,29 +270,36 @@
 					</li>
 				</ul>
 			</div>
-	<div class="message"></div>
-
-	<div class=" col-sm-offset-2 col-md-9" style="padding-left:50px;">
-		<a class="btn " href="{{ URL::to('/candidates/page')}}" style="font-size: 18px;background-color:#498eeb;color:white;" >Click here for Campaign Page</a>
+	
+	<div class="row">
+	<div class="col-md-2 col-xs-2"> <br></div>
+	<div class="  col-md-3 col-xs-4" style="padding-top:20px;padding-left: 60px; ">
+		<a class="btn " href="{{ URL::to('/candidates/page')}}" style="font-size: 18px;background-color:rgba(235, 246, 255, 0.3);color:white;" >&nbsp&nbsp&nbspClick here for Campaign Page&nbsp&nbsp&nbsp&nbsp&nbsp</a>
+	</div>
+	<div class="col-md-3 col-xs-6"><br></div>
 	</div>
     <div class="row">
-        <div class="col-md-3">
-            <img src="assets/images/ivote4.png" style="max-height: 90px">
+    <div class="col-md-12 col-xs-12">
+        <div class="col-md-3 col-xs-4">
+            <img class="img-responsive" src="assets/images/ivote4.png" style="padding:53px" >
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3 col-xs-4">
             <center>
-            <p style="font-size: 12px; padding-top: 30px;color: white"> Copyright © 2015-2016 iVote++<br>All rights reserved.</p>
+            <p style="font-size: 12px; padding-top: 70px;color: white"> Copyright © 2015-2016 iVote++<br>All rights reserved.</p>
             <center>
         </div>
-        <div class="col-md-3">
-            <img src="assets/images/{{$set->txtSetLogo}}" style="max-height: 90px; padding-left: 100px">
+        <div class="col-md-3 col-xs-4">
+            <img class="img-responsive"  src="assets/images/{{$set->txtSetLogo}}" style="padding:53px" >
         </div>
+    </div>
     </div>
         
     
 	</div>
 
 	</div>
+	</div>
+
 </div>
 </div>
 	

@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -67,13 +65,12 @@
       		{!! csrf_field() !!}
             <div class="form-group has-feedback">
                 <center>
-                <label style="font-size: 14px; font-weight: bold">Thank you for your Participation on the Survey <br> In ten seconds you will be redirected to the partial unofficial vote count</label>
-                <center>
-                
+                <label style="font-size: 14px; font-weight: bold">Thank you for your Participation on the Survey.</label>
+                <center>             
             </div>
-            <div class="form-group has-feedback">
-                <input type="hidden" name="memid" class="form-control" value="{{$memid}}" autocomplete="off">
-            </div>
+            <!-- <div class="form-group has-feedback">
+                <a class="btn" href="{{ URL::to('/partialresult')}}" style="font-size: 14px;background-color:#498eeb;color:white;" >Click here to view the partial unofficial vote count.</a>  
+            </div> -->
             <br><br>
     </form>
   </div>

@@ -63,7 +63,7 @@
                 <h3>
                     <center>
                     <img src='{{ URL::asset("assets/images/$logo") }}' style="max-width: 75px;">
-                    <b>&nbsp;{{$header}}</b>
+                    <b class="responsive-text">&nbsp;{{$header}}</b>
                     </center>
                 </h3>
                 <div class="box">
@@ -91,6 +91,16 @@
 <script src="{{ URL::asset('assets/bootstrap/js/bootstrap.min.js') }}"></script>
 <!-- iCheck -->
 <script src="{{ URL::asset('assets/plugins/iCheck/icheck.min.js')}}"></script>
+<script src="{{ URL::asset('assets/bootstrap/js/bootstrap.min.js') }}"></script>
+<script src="{{ URL::asset('assets/mc-profile/js/jquery.material-cards.min.js') }}"></script>
+<script src="{{ URL::asset('assets/mc-profile/dist/mansory.js') }}"></script>
+<script src="{{ URL::asset('assets/responsivetext/jquery.responsivetext.js') }}"></script>
+<script type="text/javascript">
+  $("body").responsiveText({
+     bottomStop : '200',
+     topStop    : '1400'
+});
+</script>
 <script>
   $(function () {
     $('input').iCheck({

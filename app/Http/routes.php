@@ -106,6 +106,8 @@ Route::group(['middleware' => 'auth'], function(){
 		'PDFController@getPDF');
     Route::get('/winnerPDF',
 		'PDFController@getWinner');
+    Route::get('/query/{query}',
+		'PDFController@query');
 	/*Route::get('/settings/pdfile',function(){
 		'uses' => 'PDFController@PDFunct',
 		'as' => 'settings.pdfile'
@@ -456,6 +458,10 @@ Route::post('/survey/add', array(
 Route::get('/thanks', array(
 	'uses' => 'responseController@thanks',
 	'as' => 'thanks'
+));
+Route::get('/thanksafsurvey', array(
+	'uses' => 'responseController@thanksafsurvey',
+	'as' => 'thanksafsurvey'
 ));
 Route::get('/security/question/{id}', array(
 	'uses' => 'securityController@createPage',

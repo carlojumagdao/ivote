@@ -22,7 +22,20 @@
             console.log(msg);
         };
     </script>
+
+     <style>
+        .wrapper{
+            padding: 30px;
+        }
+        body{
+            background-color: WhiteSmoke  ;
+        }
+    </style>
+
     <body>
+        <div class="wrapper">
+
+        <h3 class="responsive-text" style="font-style:Helvetica;color:black;text-shadow: 2px 2px 8px rgba(217, 217, 217, 0.88);margin-left:15px;"> Partial Survey Result <h3>
         
         @foreach($SurveyQuestions as $SurveyQuestion)
 
@@ -33,8 +46,8 @@
         ?>
 
             @if(($SurveyQuestion->strSQQuesType == "element-single-line-text") || ($SurveyQuestion->strSQQuesType == "element-paragraph"))
-                <div class="col-lg-6">
-                    <div class="box box-success">
+                <div class="col-lg-6 col-xs-12">
+                    <div class="box box-info">
                         <div class="box-header with-border">
                             <h3 class="box-title">{{$str}}</h3>
                             <div class="box-tools pull-right">
@@ -48,7 +61,7 @@
                                 <ul>
                                  @foreach($SurveyTally as $Answer)
                                     @if($SurveyQuestion->intSQId == $Answer->intSQId)
-                                        <li>{{$Answer->strSDAnswer}}</li>
+                                        <li style="font-size:16px;">{{$Answer->strSDAnswer}}</li>
                                     @endif
                                 @endforeach
                                 </ul>
@@ -57,8 +70,8 @@
                     </div>
                 </div>
             @else
-                <div class="col-lg-6">
-                    <div class="box box-success">
+                <div class="col-lg-6 col-xs-12">
+                    <div class="box box-info">
                         <div class="box-header with-border">
                             <h3 class="box-title">{{$str}}</h3>
                             <div class="box-tools pull-right">
@@ -76,6 +89,7 @@
                 </div>
             @endif
         @endforeach
+    </div>
         <!-- BAR CHART -->
 
         <!-- jQuery 2.2.0 -->
@@ -85,7 +99,7 @@
         <script src="{{ URL::asset('assets/bootstrap/js/bootstrap.min.js') }}"></script>
         <!-- SlimScroll -->
         <script src="{{ URL::asset('assets/plugins/slimScroll/jquery.slimscroll.min.js')}}"></script>
-        <script src="{{ URL::asset('assets/plugins/chartJS/Chart.min.js')}}"></script>
+        <script src="{{ URL::asset('assets/plugins/chartJS2/Chart.min.js')}}"></script>
         <!-- FastClick -->
         <script src="{{ URL::asset('assets/plugins/fastclick/fastclick.js')}}"></script>
         <!-- AdminLTE App -->
@@ -93,6 +107,13 @@
         <!-- AdminLTE for demo purposes -->
         <script src="{{ URL::asset('assets/dist/js/demo.js')}}"></script>
         <script src="{{ URL::asset('assets/toastr/toastr.min.js') }}"></script>
+        <script src="{{ URL::asset('assets/responsivetext/jquery.responsivetext.js') }}"></script>
+        <script type="text/javascript">
+          $("body").responsiveText({
+             bottomStop : '800',
+             topStop    : '1400'
+        });
+        </script>
         <script>
         @foreach($SurveyQuestions as $SurveyQuestion)
             <?php $strQuestion = str_replace(' ', '', strtolower($SurveyQuestion->strSQQuestion)); ?>
@@ -107,6 +128,9 @@
                         }
                         return color;
                     }
+                    
+                    var colorBar = getRandomColor();
+                    
                     var areaChartData = {
                         labels: [
                         @foreach($SurveyTally as $Answer)
@@ -116,12 +140,29 @@
                         @endforeach
                         ],
                         datasets: [{
+                            label: "Partial Result",
                             fillColor: "rgba(210, 214, 222, 1)",
                             strokeColor: "rgba(210, 214, 222, 1)",
                             pointColor: "rgba(210, 214, 222, 1)",
                             pointStrokeColor: "#c1c7d1",
                             pointHighlightFill: "#fff",
                             pointHighlightStroke: "rgba(220,220,220,1)",
+                            backgroundColor: [
+                                '#FFCE56',
+                                '#4BC0C0',
+                                '#FF6384',
+                                '#36A2EB',
+                                '#ff7a56',
+                                '#56e5ff'
+                            ],
+                            borderColor: [
+                                'rgba(255,99,132,1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)'
+                            ],
                             data: [
                                 @foreach($SurveyTally as $Answer)
                                     @if($SurveyQuestion->intSQId == $Answer->intSQId)
@@ -131,10 +172,7 @@
                             ]
                         }]
                     };
-                    var barChartCanvas = $("#{{$SurveyQuestion->intSQId}}").get(0).getContext("2d");
-                    var barChart = new Chart(barChartCanvas);
-                    var barChartData = areaChartData;
-                    barChartData.datasets[0].fillColor = getRandomColor();
+                    
 
                     var barChartOptions = {
                         //Boolean - whether to make the chart responsive
@@ -146,10 +184,49 @@
                             labels: {
                                 fontColor: "black"
                             }
+                        },
+                        scales: {
+                        yAxes: [{
+                            display: true,
+                            ticks: {
+                                beginAtZero: true,
+                            }
+                        }]
+                    },
+                    animation: {
+                        onComplete: function () {
+                            // render the value of the chart above the bar
+                            var ctx = this.chart.ctx;
+                            ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontFamily, 'normal', Chart.defaults.global.defaultFontFamily);
+                            ctx.textAlign = 'center';
+                            ctx.fillStyle = 'black';
+                            ctx.textBaseline = 'bottom'; 
+                            this.chart.ctx.font="15px Verdana";     
+                            this.data.datasets.forEach(function (dataset) {
+                                for (var i = 0; i < dataset.data.length; i++) {
+                                    var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model;
+                                    var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+                                        return previousValue + currentValue;
+                                    });
+                                    var value = Math.floor(((dataset.data[i]/total)*100)+0.5)+'%';
+
+                                    ctx.fillText(value, model.x, model.y - 5);
+                                }
+                            });
                         }
-                    };
+                    }
+                    
+                };
                     barChartOptions.datasetFill = false;
-                    barChart.Bar(barChartData, barChartOptions);
+                  
+                    var barChartCanvas = $("#{{$SurveyQuestion->intSQId}}").get(0).getContext("2d");
+                    var barChartData = areaChartData;
+                    barChartData.datasets[0].fillColor = getRandomColor();
+                    var barChart = new Chart(barChartCanvas, {
+                        type: 'bar',
+                        data: barChartData,
+                        options: barChartOptions
+                    } );
 
                 });
             @elseif($SurveyQuestion->strSQQuesType == "element-multiple-choice")
@@ -162,19 +239,38 @@
                         }
                         return color;
                     }
-                    var pieChartCanvas = $("#{{$SurveyQuestion->intSQId}}").get(0).getContext("2d");
-                    var pieChart = new Chart(pieChartCanvas);
-                    var PieData = [
-                        @foreach($SurveyTally as $Answer)
+                    
+                    var PieData = {
+                        labels: [
+                           @foreach($SurveyTally as $Answer)
                             @if($SurveyQuestion->intSQId == $Answer->intSQId)
-                                {
-                                    value: {{$Answer->Tally}},
-                                    color: getRandomColor(),
-                                    label: "{{$Answer->strSDAnswer}}"
-                                },
+                                    "{{$Answer->strSDAnswer}}",
                             @endif
-                        @endforeach
-                    ];
+                            @endforeach 
+                        ],
+                        datasets:[
+                            {
+                                data: [
+                                    @foreach($SurveyTally as $Answer)
+                                    @if($SurveyQuestion->intSQId == $Answer->intSQId)
+                                
+                                       {{$Answer->Tally}},
+                                    
+                                    @endif
+                                    @endforeach 
+                                ],
+                                backgroundColor: [
+                                '#FFCE56',
+                                '#4BC0C0',
+                                '#FF6384',
+                                '#36A2EB',
+                                '#ff7a56',
+                                '#56e5ff'
+                            ],
+                            }
+                        ]
+                    };
+                            
                     var pieOptions = {
                       //Boolean - Whether we should show a stroke on each segment
                       segmentShowStroke: true,
@@ -196,12 +292,46 @@
                       responsive: true,
                       // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
                       maintainAspectRatio: true,
-                      //String - A legend template
-                      legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
+                        animation: {
+                            onComplete: function () {
+                                // render the value of the chart above the bar
+                                var ctx = this.chart.ctx;
+                                ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontFamily, 'normal', Chart.defaults.global.defaultFontFamily);
+                                ctx.textAlign = 'center';
+                                ctx.fillStyle = 'black';
+                                ctx.textBaseline = 'bottom'; 
+                                this.chart.ctx.font="15px Verdana";     
+                                this.data.datasets.forEach(function (dataset) {
+                                    for (var i = 0; i < dataset.data.length; i++) {
+                                        var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model;
+                                        var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+                                            return previousValue + currentValue;
+                                        });
+                                        mid_radius = model.innerRadius + (model.outerRadius - model.innerRadius)/2,
+                                          start_angle = model.startAngle,
+                                          end_angle = model.endAngle,
+                                          mid_angle = start_angle + (end_angle - start_angle)/2;
+
+                                      var x = mid_radius * Math.cos(mid_angle);
+                                      var y = mid_radius * Math.sin(mid_angle);
+                                      var percent = String(Math.round(dataset.data[i]/total*100)) + "%";
+                                      ctx.fillText(percent, model.x + x, model.y + y + 15);
+                                    }
+                                });
+                            }
+                        }       
                     };
+                    
+                    var pieChartCanvas = $("#{{$SurveyQuestion->intSQId}}").get(0).getContext("2d");
+                    var pieChart = new Chart(pieChartCanvas, {
+                        type: 'doughnut',
+                        data: PieData,
+                        options: pieOptions
+                    });
+            
+                    
                     //Create pie or douhnut chart
                     // You can switch between pie and douhnut using the method below.
-                    pieChart.Doughnut(PieData, pieOptions);
                 });
             @endif
         @endforeach
