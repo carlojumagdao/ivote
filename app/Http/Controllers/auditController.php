@@ -56,10 +56,10 @@ class auditController extends Controller
                 $html.= '<div class="timeline-item">
                 <span class="time"><i class="fa fa-clock-o"></i>'. date("h:i a", strtotime($aud->Date)) .' </span>
                 
-                <h3 class="timeline-header"><a href="#">'. $aud->user .'</a> '. $aud->Action .'  '. $aud->strMemberId . '</h3>';
+                <h3 class="timeline-header"><a href="#">'. $aud->user .'</a> '. $aud->Action .' '. $aud->type.' '. $aud->strMemberId .' <strong>'. $aud->fullname .'</strong>' .'</h3>';
                 
                 if($aud->Action == "UPDATED")
-                 $html.= '<div class="timeline-body">'. $aud->oldValue .' updated to <big><strong>'. $aud->newValue .'</strong></big>
+                 $html.= '<div class="timeline-body">'.'from '. $aud->oldValue .' updated to <big><strong>'. $aud->newValue .'</strong></big>
                 </div>';
             
             
