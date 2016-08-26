@@ -29,74 +29,20 @@ class dashboardController extends Controller
         $Date = GenSet::find(1);
         $start = $Date->datSetStart;
         $end = $Date->datSetEnd;
+
+        $DynFields = DB::select('SELECT intDynFieldId,strDynFieldName FROM 
+                                tblDynamicField WHERE blDynStatus = 1');
+        $FieldData = DB::select('SELECT distinct(m.strMemDeFieldData),count(m.strMemDeFieldData
+                                ) AS Count, m.strMemDeFieldName, d.intDynFieldId FROM tblmemberdetail AS m
+                                LEFT JOIN tbldynamicfield AS d
+                                    ON m.strMemDeFieldName = d.strDynFieldName
+                                LEFT JOIN tblmember as mr
+                                    ON m.strMemDeMemId = mr.strMemberId
+                                WHERE d.blDynStatus = 1 AND mr.blMemDelete = 0
+                                GROUP BY 1
+                                ORDER BY 3; ');
         
-        return view ('Dashboard.index', ['TotalPosition' => $TotalPosition, 'TotalCandidate' => $TotalCandidate, 'TotalVoter' => $TotalVoter, 'TotalVoted' => $TotalVoted, 'start'=>$start, 'end'=>$end,'candno'=>$candno]);
+        return view ('Dashboard.index', ['TotalPosition' => $TotalPosition, 'TotalCandidate' => $TotalCandidate, 'TotalVoter' => $TotalVoter, 'TotalVoted' => $TotalVoted, 'start'=>$start, 'end'=>$end,'candno'=>$candno,'DynFields'=>$DynFields,'FieldData'=>$FieldData]);
 
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

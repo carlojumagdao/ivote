@@ -84,8 +84,7 @@
                 </div>
             </div>
             <div class="panel panel-default">
-                <div class="panel-heading"></i> Start Date and Time</div>
-                <div class="panel-body">{{$convertDateStart}}<br>{{$timeStart}}</div>    
+                <div class="panel-body"><strong>Start:</strong> {{$convertDateStart}}<br>{{$timeStart}}</div>    
             </div>
         </div>
         <div class="col-lg-3 col-xs-6">
@@ -102,20 +101,29 @@
                 </div>
             </div>
             <div class="panel panel-default">
-                <div class="panel-heading"> End Date and Time</div>
-                <div class="panel-body">{{$convertDateEnd}}<br>{{$timeEnd}}</div>  
+                <div class="panel-body"><strong>End: </strong>{{$convertDateEnd}}<br>{{$timeEnd}}</div>  
             </div> 
         </div>
-         <div class="col-md-6 col-xs-6">
+        <div class="col-md-6 col-xs-6">
             <div class="panel panel-default">
-                <div class="panel-heading"></i> Candidates per Position</div>
                 <div class="panel-body">
                     <div class="chart">
-                    <canvas id="Chart" height="270px"></canvas>
+                    <canvas id="Chart" height="265px"></canvas>
                     </div>
                 </div>    
             </div> 
-        </div>        
+        </div>   
+        @foreach($DynFields as $DynField)
+        <div class="col-md-6 col-xs-6">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="chart">
+                    <canvas id="{{$DynField->intDynFieldId}}" height="200px"></canvas>
+                    </div>
+                </div>    
+            </div> 
+        </div>  
+        @endforeach     
     </div>
 
     <div class="modal fade" id="viewPosition" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -414,37 +422,163 @@
         };
         
          var options = {
-            
-             //Boolean - Whether we should show a stroke on each segment
-             segmentShowStroke: true,
-             //String - The colour of each segment stroke
-             segmentStrokeColor: "#fff",
-             //Number - The width of each segment stroke
-             segmentStrokeWidth: 2,
-             //Number - The percentage of the chart that we cut out of the middle
-             percentageInnerCutout: 50, // This is 0 for Pie charts
-             //Number - Amount of animation steps
-             animationSteps: 100,
-             //String - Animation easing effect
-             animationEasing: "easeOutBounce",
-             //Boolean - Whether we animate the rotation of the Doughnut
-             animateRotate: true,
-             //Boolean - Whether we animate scaling the Doughnut from the centre
-             animateScale: false,
-             //Boolean - whether to make the chart responsive to window resizing
-             responsive: true,
-             // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-             maintainAspectRatio: true,
-             //String - A legend template
-             /*legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"*/
+            legend:{
+                position: "bottom",
+            },
+            title: {
+                display: true,
+                text: 'Candidates per Position',
+                fontSize: 18,
+            },
+            segmentShowStroke: true,
+            segmentStrokeColor: "#fff",
+            segmentStrokeWidth: 2,
+            percentageInnerCutout: 50, // This is 0 for Pie charts
+            animationSteps: 100,
+            animationEasing: "easeOutBounce",
+            animateRotate: true,
+            animateScale: false,
+            responsive: true,
+            maintainAspectRatio: true,
+            animation: {
+                onComplete: function () {
+                    // render the value of the chart above the bar
+                    var ctx = this.chart.ctx;
+                    ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontFamily, 'normal', Chart.defaults.global.defaultFontFamily);
+                    ctx.textAlign = 'center';
+                    ctx.fillStyle = 'black';
+                    ctx.textBaseline = 'bottom'; 
+                    this.chart.ctx.font="18px Verdana";     
+                    this.data.datasets.forEach(function (dataset) {
+                        for (var i = 0; i < dataset.data.length; i++) {
+                            var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model;
+                            var total = dataset.data[i];
+                            mid_radius = model.innerRadius + (model.outerRadius - model.innerRadius)/2,
+                              start_angle = model.startAngle,
+                              end_angle = model.endAngle,
+                              mid_angle = start_angle + (end_angle - start_angle)/2;
+
+                          var x = mid_radius * Math.cos(mid_angle);
+                          var y = mid_radius * Math.sin(mid_angle);
+                          var percent = String(Math.round(dataset.data[i]/total*100)) + "%";
+                          ctx.fillText(total, model.x + x, model.y + y + 15);
+                        }
+                    });
+                }
+            } 
+           
          };
                  
         var pieChartCanvas = $("#Chart").get(0).getContext("2d");
         var pieChart = new Chart(pieChartCanvas, {
-            type: 'polarArea',
+            type: 'pie',
             data: data,
             options: options
         });
     });
+    @foreach($DynFields as $DynField)
+            $(function () {
+                var areaChartData = {
+                    labels: [
+                        @foreach($FieldData as $value)
+                            @if($DynField->intDynFieldId == $value->intDynFieldId)
+                                "{{$value->strMemDeFieldData}}",
+                            @endif
+                        @endforeach
+                    ],
+                    datasets: [{
+                        label: "Partial Tally of votes",
+                        backgroundColor: [
+                            '#FFCE56',
+                            '#4BC0C0',
+                            '#FF6384',
+                            '#36A2EB',
+                            '#ff7a56',
+                            '#56e5ff'
+                        ],
+                        borderWidth: 1, 
+                        barPercentage: 1,
+                        data: [
+                            @foreach($FieldData as $value)
+                                @if($DynField->intDynFieldId == $value->intDynFieldId)
+                                    {{$value->Count}},
+                                @endif
+                            @endforeach
+                        ]
+                    }]
+                };
+                var totalValue = getTotalValue(areaChartData);
+                var options = {
+                    legend:{
+                        position: "bottom",
+                    },
+                    title: {
+                        display: true,
+                        text: 'Member Distribution per {{ucwords($DynField->strDynFieldName)}}',
+                        fontSize: 15,
+                    },
+                     //Boolean - Whether we should show a stroke on each segment
+                     segmentShowStroke: true,
+                     //String - The colour of each segment stroke
+                     segmentStrokeColor: "#fff",
+                     //Number - The width of each segment stroke
+                     segmentStrokeWidth: 2,
+                     //Number - The percentage of the chart that we cut out of the middle
+                     percentageInnerCutout: 50, // This is 0 for Pie charts
+                     //Number - Amount of animation steps
+                     animationSteps: 100,
+                     //String - Animation easing effect
+                     animationEasing: "easeOutBounce",
+                     //Boolean - Whether we animate the rotation of the Doughnut
+                     animateRotate: true,
+                     //Boolean - Whether we animate scaling the Doughnut from the centre
+                     animateScale: false,
+                     //Boolean - whether to make the chart responsive to window resizing
+                     responsive: true,
+                     // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+                     maintainAspectRatio: true,
+                     animation: {
+                            onComplete: function () {
+                                // render the value of the chart above the bar
+                                var ctx = this.chart.ctx;
+                                ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontFamily, 'normal', Chart.defaults.global.defaultFontFamily);
+                                ctx.textAlign = 'center';
+                                ctx.fillStyle = 'black';
+                                ctx.textBaseline = 'bottom'; 
+                                this.chart.ctx.font="14px Verdana";     
+                                this.data.datasets.forEach(function (dataset) {
+                                    for (var i = 0; i < dataset.data.length; i++) {
+                                        var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model;
+                                        var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+                                            return previousValue + currentValue;
+                                        });
+                                        mid_radius = model.innerRadius + (model.outerRadius - model.innerRadius)/2,
+                                          start_angle = model.startAngle,
+                                          end_angle = model.endAngle,
+                                          mid_angle = start_angle + (end_angle - start_angle)/2;
+
+                                      var x = mid_radius * Math.cos(mid_angle);
+                                      var y = mid_radius * Math.sin(mid_angle);
+                                      var percent = String(Math.round(dataset.data[i]/total*100)) + "%";
+                                      ctx.fillText(percent, model.x + x, model.y + y + 15);
+                                    }
+                                });
+                            }
+                        }
+                 };
+                var pieChartCanvas = $("#{{$DynField->intDynFieldId}}").get(0).getContext("2d");
+                var pieChart = new Chart(pieChartCanvas, {
+                    type: 'polarArea',
+                    data: areaChartData,
+                    options: options
+                });
+                function getTotalValue(arr) {
+                    var total = 0;
+                    for(var i=0; i<arr.length; i++)
+                        total += arr[i].value;
+                    return total;
+                }
+            });
+        @endforeach
 </script>
 @stop

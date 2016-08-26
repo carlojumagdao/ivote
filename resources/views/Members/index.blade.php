@@ -64,7 +64,7 @@
 }
 
 table.table.table-striped tr.highlight td{
-  background-color: #ff3d3d;  
+  background-color: #ffe4e4;  
 }
 
 /* Animation */

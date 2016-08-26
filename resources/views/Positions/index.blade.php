@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('assets/datatables/datatables-responsive/css/dataTables.responsive.css') }}">
     <style>
         table.table.table-striped tr.highlight td{
-          background-color: #ff3d3d;  
+          background-color: #ffe4e4;  
         }
     </style>
 @stop
@@ -105,7 +105,6 @@
                                     @endif
                                 </td>
                             </tr>
-<!-- >>>>>>> origin/master -->
                     @endforeach
                     </tbody>
                     <tfoot>

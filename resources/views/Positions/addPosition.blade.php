@@ -11,7 +11,7 @@
         content: "*";
         color:red
         }
-    </style>>
+    </style>
 @stop
 @section('content')
 <!-- START CONTENT -->

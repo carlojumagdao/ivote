@@ -260,13 +260,13 @@
                                     @endforeach 
                                 ],
                                 backgroundColor: [
-                                '#FFCE56',
-                                '#4BC0C0',
-                                '#FF6384',
-                                '#36A2EB',
-                                '#ff7a56',
-                                '#56e5ff'
-                            ],
+                                    '#FFCE56',
+                                    '#4BC0C0',
+                                    '#FF6384',
+                                    '#36A2EB',
+                                    '#ff7a56',
+                                    '#56e5ff'
+                                ],
                             }
                         ]
                     };
