@@ -183,23 +183,25 @@
           </ul>
         </li>
         <li class="header">RESULTS</li>
-        <li>
-          <a href="{{ URL::to('/queries') }}">
-            <i class="fa fa-question"></i> <span>Queries</span>
-          </a>
-        </li>
+        
         <li class="treeview">
           <a href="#">
             <i class="fa fa-bar-chart-o"></i>
             <span>Reports</span> <i class="fa fa-angle-left pull-right"></i>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ URL::to('/tallyvotes') }}"><i class="fa fa-circle-o"></i> Tally of Votes</a></li>
+            
             <li><a href="{{ URL::to('/partialresult') }}"><i class="fa fa-circle-o"></i> Partial Votes Result</a></li>
             <li><a href="{{ URL::to('/partialsurveyresult') }}"><i class="fa fa-circle-o"></i> Partial Survey Result</a></li>
             <li><a href="{{ URL::to('/winner') }}"><i class="fa fa-circle-o"></i> Winner </a></li>
             <li><a href="{{ URL::to('/voteDistro') }}"><i class="fa fa-circle-o"></i> Vote Distribution</a></li>
+            <li><a href="{{ URL::to('/tallyvotes') }}"><i class="fa fa-circle-o"></i> Tally of Votes</a></li>
           </ul>
+        </li>
+        <li>
+          <a href="{{ URL::to('/queries') }}">
+            <i class="fa fa-question"></i> <span>Queries</span>
+          </a>
         </li>
         <li>
           <a href="{{ URL::to('/audit') }}">
