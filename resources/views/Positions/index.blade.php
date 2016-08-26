@@ -75,7 +75,12 @@
                                     $dateupdated = $value->updated_at;
                                     $converteddateupdated = date('M j, Y h:i A',strtotime($dateupdated));   
                                     $datedeleted = $value->deleted_at;
-                                    $converteddatedeleted = date('M j, Y h:i A',strtotime($datedeleted));
+                                    if($value->blPosDelete == 1)
+                                    {
+                                        $converteddatedeleted = date('M j, Y h:i A',strtotime($datedeleted));
+                                    }
+                                    else
+                                    $converteddatedeleted = "null";    
                                 ?>
                             <td class="created">{{$converteddatecreated}}</td>
                             <td class="updated">{{$converteddateupdated}}</td>
