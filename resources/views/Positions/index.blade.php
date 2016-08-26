@@ -70,38 +70,7 @@
                     </thead>
                     <tbody>
                     @foreach($Positions as $value)
-<!-- <<<<<<< HEAD -->
-                        <tr>
-                            <td class="id">{{$value->strPositionId}}</td>
-                            <td class="name">{{$value->strPosName}}</td>
-                            <td class="email">{{$value->intPosVoteLimit}}</td>
-                                <?php
-                                    $datecreated =  $value->created_at;
-                                    $converteddatecreated = date('M j, Y h:i A',strtotime($datecreated));
-                                    $dateupdated = $value->updated_at;
-                                    $converteddateupdated = date('M j, Y h:i A',strtotime($dateupdated));   
-                                    $datedeleted = $value->deleted_at;
-                                    if($value->blPosDelete == 1)
-                                    {
-                                        $converteddatedeleted = date('M j, Y h:i A',strtotime($datedeleted));
-                                    }
-                                    else
-                                    $converteddatedeleted = "null";    
-                                ?>
-                            <td class="created">{{$converteddatecreated}}</td>
-                            <td class="updated">{{$converteddateupdated}}</td>
-                            <td class="deleted">{{$converteddatedeleted}}</td>
-                            <td class="status" style="display:none">{{$value->blPosDelete}}</td> 
-                            <td>
-                                @if($value->blPosDelete == 0)
-                                <a href="position/edit/{{$value->strPositionId}}" class="btn btn-warning btn-sm edit" title="Edit"><i class="glyphicon glyphicon-edit"></i></a>
-                                <button class="btn btn-danger btn-sm delPosition" data-toggle="tooltip" title="Delete"><i class="glyphicon glyphicon-trash"></i></button>
-                                @else
-                                <button class="btn btn-info btn-sm revPosition" data-toggle="tooltip" title="Revert"><i class="glyphicon glyphicon-refresh"></i></button>
-                                @endif
-                            </td>
-                        </tr>
-<!-- ======= -->
+
                         @if($value->blPosDelete == 1)
                             <tr class="highlight">
                         @else
@@ -116,7 +85,12 @@
                                         $dateupdated = $value->updated_at;
                                         $converteddateupdated = date('M j, Y h:i A',strtotime($dateupdated));   
                                         $datedeleted = $value->deleted_at;
-                                        $converteddatedeleted = date('M j, Y h:i A',strtotime($datedeleted));
+                                        if($value->blPosDelete==1)
+                                        {
+                                            $converteddatedeleted = date('M j, Y h:i A',strtotime($datedeleted));
+                                        }
+                                        else
+                                            $converteddatedeleted = "null";
                                     ?>
                                 <td class="created">{{$converteddatecreated}}</td>
                                 <td class="updated">{{$converteddateupdated}}</td>
