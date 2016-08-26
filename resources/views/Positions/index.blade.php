@@ -70,7 +70,7 @@
                     </thead>
                     <tbody>
                     @foreach($Positions as $value)
-<<<<<<< HEAD
+<!-- <<<<<<< HEAD -->
                         <tr>
                             <td class="id">{{$value->strPositionId}}</td>
                             <td class="name">{{$value->strPosName}}</td>
@@ -101,7 +101,7 @@
                                 @endif
                             </td>
                         </tr>
-=======
+<!-- ======= -->
                         @if($value->blPosDelete == 1)
                             <tr class="highlight">
                         @else
@@ -131,7 +131,7 @@
                                     @endif
                                 </td>
                             </tr>
->>>>>>> origin/master
+<!-- >>>>>>> origin/master -->
                     @endforeach
                     </tbody>
                     <tfoot>
