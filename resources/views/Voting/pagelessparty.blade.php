@@ -97,7 +97,11 @@
                     'files' => true
                 ) ) !!}
                     
-                
+        <input type="hidden" name="countCand" value="<?php
+                                            if(old('countCand') != NULL) echo old('countCand');
+                                            else echo $countCand;
+                                        
+                                        ?>">
         <div class="col-md-10 col-md-offset-1">
             @foreach($positions as $position)
             <div class="box-header boxhead {{$position->strPosName}}" style="background-color:#3c8dbc">

@@ -127,12 +127,27 @@
         <div class="box-header boxhead" style="background-color: #3c8dbc ">
             <h3 style="font-family:helvetica;letter-spacing:1px;" class="box-title">Vote Straight ?</h3>
         </div>
+        <input type="hidden" name="countCand" value="<?php
+                                            if(old('countCand') != NULL ) echo old('countCand');
+                                            else echo $countCand;
+                                        
+                                        ?>">
         <div class="box-body boxbody" style="padding: 40px;">
             @foreach($partylist as $party)
             @if($party->strPartyName != 'Independent')
             <div class="radio">
                 <label >
-                    <input  type="radio" value="{{$party->intCandParId}}" name="par" class="vote_{{$party->intCandParId}}" onclick="revert(); auto_{{$party->intCandParId}}()" value='{{$party->strPartyName}}'>
+                    <input  type="radio" value="{{$party->intCandParId}}" name="par" class="vote_{{$party->intCandParId}}" onclick="revert(); auto_{{$party->intCandParId}}()" value='{{$party->strPartyName}}' <?php
+                                            if(old('par')!= NULL){
+                                                $straight = old('par');
+                                                for($x=0; $x<sizeOf(old('par')); $x++){
+                                    
+                                                    if($straight[$x] == $party->intCandParId)
+                                                        echo 'checked';
+                                                }
+                                            }
+                                        
+                                        ?>>
                     {{$party->strPartyName}}
                 </label>
             </div>

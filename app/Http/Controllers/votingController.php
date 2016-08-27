@@ -82,7 +82,16 @@ class votingController extends Controller
                             ->select('tblcandidate.*', 'tblmember.strMemFname', 'tblmember.strMemLname', 'tblparty.strPartyName', 'tblparty.strPartyColor')
                             ->get();
             $election = DB::table('tblsetting')->get();
-            return view('Voting.page', ['partylist'=>$partylist, 'positions'=>$only, 'candidates'=>$candidates, 'election' => $election, 'vote' => old('vote')]);
+            
+            $num=0;
+            foreach($only as $on){
+                $limit = DB::table('tblposition')
+                            ->select('intPosVoteLimit')
+                            ->where('strPositionId', '=', $on->strPositionId)
+                            ->get();
+                $num=$num+$limit[0]->intPosVoteLimit;
+            }
+            return view('Voting.page', ['partylist'=>$partylist, 'positions'=>$only, 'candidates'=>$candidates, 'election' => $election, 'countCand'=>$num]);
         } else {
             
             $candidates = DB::table('tblcandidate')
@@ -132,7 +141,8 @@ class votingController extends Controller
                 
             } 
             $election = DB::table('tblsetting')->get();
-            return view('Voting.pagelessparty', [ 'positions'=>$only, 'candidates'=>$candidates, 'election' => $election]);
+            $countCand = sizeof($candidates);
+            return view('Voting.pagelessparty', [ 'positions'=>$only, 'candidates'=>$candidates, 'election' => $election, 'countCand'=>$countCand]);
         }
         
     }
@@ -155,8 +165,10 @@ class votingController extends Controller
             }
             
         }
+        if(isset($_POST['par'])) $par = $_POST['par'];
+        else $par = NULL;
         $election = DB::table('tblsetting')->get();
-        return view('Voting.summary', ['candidates'=>$voted, 'election' => $election]);
+        return view('Voting.summary', ['candidates'=>$voted, 'election' => $election, 'par'=>$par, 'countCand'=>$_POST['countCand']]);
             
     }
 
@@ -178,6 +190,19 @@ class votingController extends Controller
             $counter = new SmartCounter();
             $VoteHeader->strVHCode = $counter->smartcounter($latest);
             $VoteHeader->strVHMemId = session('memid');
+            if($_POST['par'] != NULL){
+                $VoteHeader->blvotestraight = 1;
+                $par = DB::table('tblparty')->where('intPartyId', '=', $_POST['par'])->get();
+                $VoteHeader->strVHParty = $par[0]->strPartyName;
+              
+            } 
+            if(isset($_POST['vote'])){
+                if($_POST['countCand'] > sizeof($_POST['vote']))$VoteHeader->blundervote = 1;
+            }
+            else $VoteHeader->blundervote = 1;   
+            $candid = DB::table('tblcandidate')->where('strCandMemId', '=', session('memid'))
+                            ->where('blCandDelete', '=', 0)->get();
+            if($candid) $VoteHeader->blcandidate = 1;
             $id = $VoteHeader->strVHCode;
             $VoteHeader->save();
             

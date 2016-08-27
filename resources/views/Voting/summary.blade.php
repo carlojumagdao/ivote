@@ -127,7 +127,9 @@
                     'class' => 'col s12',
                     'files' => true
                 ) ) !!}
-           
+        <input style="text-transform:capitalize" type="hidden" value="{{$par}}" name="par">
+        <input style="text-transform:capitalize" type="hidden" value="{{$countCand}}" name="countCand">
+                                <br>
         <div class="col-md-10 col-md-offset-1">
             
             <div class="box-header boxhead" style="background-color:#3c8dbc">
@@ -136,6 +138,7 @@
             </div>
             <div class="box-body boxbody" style="padding: 40px;">
                 <center>
+                    @if($candidates != NULL)
                     @foreach($candidates as $candidate)
                     <div class="row col-md-offset-4"> 
                         <center>
@@ -158,6 +161,24 @@
                     </div>
                     <br>
                 @endforeach
+                    @else
+                    <div class="row col-md-offset-4"> 
+                        <center>
+                        <div class="col-md-3">
+                            <label style="font-size: 20px;">
+                                
+                                     NO VOTES
+                            </label>
+                        </div>
+                        </center>
+                    </div>
+                    <br>
+                    <div class="col-md-6 col-md-offset-3" style="border-bottom: 1px solid #3c8dbc">
+                    </div>
+                    <br>
+                    
+                    @endif
+                    
                     </center>
                 <div class="col-md-6 col-md-offset-3 alert alert-warning alert-dismissible">
                         <h4><i class="icon fa fa-warning"></i><input type="checkbox" id="agree" name="agree"> IMPORTANT!</h4>
@@ -167,7 +188,7 @@
                 <div class="row" style="padding-right:72px;">
                     <a href="#" style="height:40px;" onclick="redirect()">
                         <div class="col-md-1 col-md-offset-6 col-xs-4 col-xs-offset-3 col-sm-4" style="width:145px">
-                            change my votes |
+                            change my votes
                         </div>
                     </a>
                     <div class="col-md-1 col-xs-4 col-sm-4">
