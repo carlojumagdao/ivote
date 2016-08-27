@@ -52,7 +52,9 @@
         </tr>
     </table>
     <center><h1>{{$title}}</h1></center>
-    <h3>{{$percent}}% of members</h3>
+    <br>
+    <h5 style="text-align:right">as of {{date('D, M. d Y h:i a')}}</h5>
+    <h3>{{number_format($percent, 2, '.', '')}}% of members</h3>
     <p><big>{{$count}}</big> out of {{$members}} members</p>
     <br>
     <table width="100%">

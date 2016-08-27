@@ -52,6 +52,8 @@
         </tr>
     </table>
     <center><h1>Winners</h1></center>
+    <br>
+    <h5 style="text-align:right">as of {{date('D, M. d Y h:i a')}}</h5>
      @foreach($positions as $pos)
     <br>
                 <h3>{{$pos->strPosName}}</h3>
@@ -74,7 +76,7 @@
             <td class="td"><img src="assets/images/{{$cand->txtCandPic}}" height="100px" width="100px"></td>
             <td class="td">{{$cand->strMemLName}}, {{$cand->strMemFName}}</td>
             <td class="td">{{$cand->votes}}</td>
-            <td class="td">@if($count!=0){{($cand->votes / $count )* 100}}% of Votes
+            <td class="td">@if($count!=0){{number_format(($cand->votes / $count )* 100, 2, '.', '')}}% of Votes
                             @else 0% of Votes
                             @endif</td>
             
