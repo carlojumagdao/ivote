@@ -31,36 +31,6 @@
         </div>
         @endif
     </div>
-    <div class="col-md-8">
-        <div class="box">
-            <div class="box-header with-border">
-                <h3 class="box-title">Member Information</h3>
-                <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-                    <i class="fa fa-minus"></i></button>
-                </div>
-            </div>
-            <div class="box-body">
-                <div class = "row">
-                    <div class="col-md-6">
-                        <h4>Member ID:</h4>
-                    </div>
-                    <div class="col-md-6">
-                        <h4>{{$voted[0]->strMemberId}}</h4>
-                    </div>
-                </div>
-                <div class = "row">
-                    <div class="col-md-6">
-                        <h5>Member Name:</h5>
-                    </div>
-                    <div class="col-md-6">
-                        <h5>{{$voted[0]->strMemLname}}, {{$voted[0]->strMemFname}} {{$voted[0]->strMemMname}} </h5>
-                    </div>
-                </div>
-            </div>
-            
-        </div>
-    </div>
     <div class="col-md-4">
         <div class="box">
             <div class="box-header with-border">
@@ -94,7 +64,36 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="col-md-8">
+        <div class="box box-default collapsed-box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Member Information</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fa fa-plus"></i></button>
+                </div>
+            </div>
+            <div class="box-body">
+                <div class = "row">
+                    <div class="col-md-6">
+                        <h4>Member ID:</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <h4>{{$voted[0]->strMemberId}}</h4>
+                    </div>
+                </div>
+                <div class = "row">
+                    <div class="col-md-6">
+                        <h5>Member Name:</h5>
+                    </div>
+                    <div class="col-md-6">
+                        <h5>{{$voted[0]->strMemLname}}, {{$voted[0]->strMemFname}} {{$voted[0]->strMemMname}} </h5>
+                    </div>
+                </div>
+            </div>
             
+        </div>
     </div>
     <div class="col-md-12">
         <div class="box">
@@ -115,7 +114,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                @foreach($votes as $value)
+                    @foreach($votes as $value)
                         <tr>
                             
                             <td class="code">{{$value->strCandId}}</td>
@@ -123,7 +122,7 @@
                             <td class="name">{{$value->strPosName}}</td>
                             
                         </tr>
-                @endforeach
+                    @endforeach
                     </tbody>
                     <tfoot>
                         <tr>

@@ -42,39 +42,28 @@
                     <thead>
                         <tr>
                             <th>Vote Reference</th>
-                            <th>Member ID</th>
-                            <th>Member Name</th>
                             <th>Date Voted</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                @foreach($voted as $value)
+                    @foreach($voted as $value)
                         <tr>
-                            
                             <td class="code">{{$value->strVHCode}}</td>
-                            <td class="id">{{$value->strMemberId}}</td>
-                            <td class="name">{{$value->strMemFname.' '.$value->strMemLname}}</td>
                                 <?php
                                     $datevoted =  $value->datVHVoted;
                                     $converteddatevoted = date('M j, Y h:i A',strtotime($datevoted));
                                 ?>
                             <td class="">{{$converteddatevoted}}</td>
-                            <!-- if else to make the independent party not editable/deletable -->
-                           
                             <td>
                                 <button class="btn btn-primary btn-sm view" data- toggle="tooltip" title="View"><i class="fa fa-eye"></i></button>
                             </td>
-                            
                         </tr>
-                       
-                @endforeach
+                    @endforeach
                     </tbody>
                     <tfoot>
                         <tr>
                             <th>Vote Reference</th>
-                            <th>Member ID</th>
-                            <th>Member Name</th>
                             <th>Date Voted</th>
                             <th>Action</th>
                         </tr>
