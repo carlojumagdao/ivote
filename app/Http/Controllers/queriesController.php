@@ -112,21 +112,18 @@ class queriesController extends Controller
             return view('Queries.index', ['title'=>$title, 'query'=>$query,'list'=>$list, 'count'=>$count, 'members'=>$members, 'percent'=>$percent, 'surveystat' => $setting->blSetSurvey, 'partystat'=>$setting->blSetParty, 'publish'=>$setting->blSetPublish, 'link'=>$PDFlink]);
         }
         else if($query == 4){
-            $arr = DB::select('SELECT strVHMemId from tblvoteheader');
-            $ind = 0;
-            $voted = '';
-            foreach($arr as $el){
-                $voted[$ind] = $el->strVHMemId;
-            }
+            
             $list = DB::table('tblmember')
-                            ->whereNotIn('strMemberId', $voted)
-                            ->where('blMemDelete', '=', 0)
+                            ->leftJoin('tblvoteheader', 'strMemberId', '=', 'strVHMemId' )
                             ->where('blMemCodeSendStat', '=', $send)
+                            ->where('blMemDelete', '=', 0)
+                            ->whereNULL('tblvoteheader.strVHMemId')
                             ->get();
             $count = DB::table('tblmember')
-                            ->whereNotIn('strMemberId', $voted)
+                            ->leftJoin('tblvoteheader', 'strMemberId', '=', 'strVHMemId' )
                             ->where('blMemCodeSendStat', '=', $send)
                             ->where('blMemDelete', '=', 0)
+                            ->whereNULL('tblvoteheader.strVHMemId')
                             ->count();
             $members = DB::table('tblmember')
                             ->where('blMemDelete', '=', 0)
@@ -141,18 +138,16 @@ class queriesController extends Controller
         }
         else if($query == 5){
             $list = DB::table('tblmember')
-                            ->join('tblcandidate', 'strCandMemId', '=', 'strMemberId')
                             ->join('tblvoteheader', 'strMemberId', '=', 'strVHMemId' )
                             ->where('blMemCodeSendStat', '=', $send)
                             ->where('blMemDelete', '=', 0)
-                            ->where('blCandDelete', '=', 0)
+                            ->where('blcandidate', '=', 1)
                             ->get();
             $count = DB::table('tblmember')
-                            ->join('tblcandidate', 'strCandMemId', '=', 'strMemberId')
                             ->join('tblvoteheader', 'strMemberId', '=', 'strVHMemId' )
                             ->where('blMemCodeSendStat', '=', $send)
                             ->where('blMemDelete', '=', 0)
-                            ->where('blCandDelete', '=', 0)
+                            ->where('blcandidate', '=', 1)
                             ->count();
             $members = DB::table('tblmember')
                             ->where('blMemDelete', '=', 0)
@@ -166,22 +161,18 @@ class queriesController extends Controller
             return view('Queries.index', ['title'=>$title, 'query'=>$query,'list'=>$list, 'count'=>$count, 'members'=>$members, 'percent'=>$percent, 'surveystat' => $setting->blSetSurvey, 'partystat'=>$setting->blSetParty, 'publish'=>$setting->blSetPublish, 'link'=>$PDFlink]);
         }
         else if($query == 6){
-            $arr = DB::select('SELECT strVHMemId from tblvoteheader');
-            $ind = 0;
-            $voted = '';
-            foreach($arr as $el){
-                $voted[$ind] = $el->strVHMemId;
-            }
             $list = DB::table('tblmember')
+                            ->leftJoin('tblvoteheader', 'strMemberId', '=', 'strVHMemId' )
                             ->join('tblcandidate', 'strCandMemId', '=', 'strMemberId')
-                            ->whereNotIn('strMemberId', $voted)
+                            ->whereNULL('tblvoteheader.strVHMemId')
                             ->where('blMemCodeSendStat', '=', $send)
                             ->where('blMemDelete', '=', 0)
                             ->where('blCandDelete', '=', 0)
                             ->get();
             $count = DB::table('tblmember')
+                            ->leftJoin('tblvoteheader', 'strMemberId', '=', 'strVHMemId' )
                             ->join('tblcandidate', 'strCandMemId', '=', 'strMemberId')
-                            ->whereNotIn('strMemberId', $voted)
+                            ->whereNULL('tblvoteheader.strVHMemId')
                             ->where('blMemCodeSendStat', '=', $send)
                             ->where('blMemDelete', '=', 0)
                             ->where('blCandDelete', '=', 0)
@@ -205,7 +196,7 @@ class queriesController extends Controller
                             ->where('blundervote', '=', 1)
                             ->where('blMemDelete', '=', 0)
                             ->get();
-            $count = DB::table('tblmember')
+            $count = DB::table('tblmember') 
                             ->join('tblvoteheader', 'strMemberId', '=', 'strVHMemId' )
                             ->where('blMemCodeSendStat', '=', $send)
                             ->where('blMemDelete', '=', 0)

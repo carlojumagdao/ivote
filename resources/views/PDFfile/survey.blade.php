@@ -7,22 +7,7 @@
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <meta name="csrf_token" content="{{ csrf_token() }}" />
         <title>@yield('title', 'iVote++ | Survey Result')</title>
-        <link rel="stylesheet" href="{{ URL::asset('assets/bootstrap/css/bootstrap.min.css') }}">
-        <link rel="stylesheet" href="{{ URL::asset('assets/bootstrap/css/font-awesome.css') }}">
-        <link rel="stylesheet" href="{{ URL::asset('assets/bootstrap/css/ionicons.css') }}">
-        <link rel="stylesheet" href="{{ URL::asset('assets/plugins/iCheck/all.css') }}">
-        <link rel="stylesheet" href="{{ URL::asset('assets/dist/css/AdminLTE.min.css') }}">
-        <link rel="stylesheet" href="{{ URL::asset('assets/dist/css/skins/_all-skins.min.css') }}">
-        <link rel="stylesheet" href="{{ URL::asset('assets/toastr/toastr.min.css') }}">
-        <script src="//js.pusher.com/3.0/pusher.min.js"></script> <!-- download this -->
     </head>
-    <script>
-        // Added Pusher logging
-        Pusher.log = function(msg) {
-            console.log(msg);
-        };
-    </script>
-
      <style>
         .wrapper{
             padding: 30px;
@@ -46,17 +31,8 @@
         ?>
 
             @if(($SurveyQuestion->strSQQuesType == "element-single-line-text") || ($SurveyQuestion->strSQQuesType == "element-paragraph"))
-                <div class="col-lg-6 col-xs-12">
-                    <div class="box box-info">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">{{$str}}</h3>
-                            <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                                </button>
-                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                            </div>
-                        </div>
-                        <div class="box-body">
+                
+                            <h3>{{$str}}</h3>
                             <div class="chart">
                                 <ul>
                                  @foreach($SurveyTally as $Answer)
@@ -66,49 +42,17 @@
                                 @endforeach
                                 </ul>
                             </div>
-                        </div>
-                    </div>
-                </div>
             @else
-                <div class="col-lg-6 col-xs-12">
-                    <div class="box box-info">
-                        <div class="box-header with-border">
                             <h3 class="box-title">{{$str}}</h3>
-                            <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                                </button>
-                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                            </div>
-                        </div>
-                        <div class="box-body">
                             <br>
                             <div class="chart">
                                 <canvas id="{{$SurveyQuestion->intSQId}}" style="height:230px"></canvas>
                             </div>
-                        </div>
-                    </div>
-                </div>
             @endif
         @endforeach
     </div>
         <!-- BAR CHART -->
-
-        <!-- jQuery 2.2.0 -->
-        <script src="{{ URL::asset('assets/jquery/jquery.min.js') }}"></script>
-        <script src="{{ URL::asset('assets/jquery/jquery-ui.min.js') }}"></script>
-        <!-- Bootstrap 3.3.6 -->
-        <script src="{{ URL::asset('assets/bootstrap/js/bootstrap.min.js') }}"></script>
-        <!-- SlimScroll -->
-        <script src="{{ URL::asset('assets/plugins/slimScroll/jquery.slimscroll.min.js')}}"></script>
         <script src="{{ URL::asset('assets/plugins/chartJS2/Chart.min.js')}}"></script>
-        <!-- FastClick -->
-        <script src="{{ URL::asset('assets/plugins/fastclick/fastclick.js')}}"></script>
-        <!-- AdminLTE App -->
-        <script src="{{ URL::asset('assets/dist/js/app.min.js')}}"></script>
-        <!-- AdminLTE for demo purposes -->
-        <script src="{{ URL::asset('assets/dist/js/demo.js')}}"></script>
-        <script src="{{ URL::asset('assets/toastr/toastr.min.js') }}"></script>
-        <script src="{{ URL::asset('assets/responsivetext/jquery.responsivetext.js') }}"></script>
         <script type="text/javascript">
           $("body").responsiveText({
              bottomStop : '800',
@@ -321,7 +265,7 @@
                                     }
                                 });
                             }
-                        }       
+                        } 
                     };
                     
                     var pieChartCanvas = $("#{{$SurveyQuestion->intSQId}}").get(0).getContext("2d");

@@ -449,6 +449,10 @@ Route::get('/partialsurveyresult', array(
 	'uses' => 'resultController@surveyindex',
 	'as' => 'surveyresult'
 ));
+Route::get('/surveyPDF', array(
+	'uses' => 'PDFController@surveyPDF',
+	'as' => 'surveyPDF'
+));
 // Partial Result //
 
 Route::post('/survey/add', array(
