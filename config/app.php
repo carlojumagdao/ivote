@@ -138,7 +138,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Vinkla\Pusher\PusherServiceProvider::class,
-
+        hisorange\BrowserDetect\Provider\BrowserDetectService::class,
         /*
          * Application Service Providers...
          */
@@ -198,6 +198,7 @@ return [
         'Form'      => Collective\Html\FormFacade::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
+        'BrowserDetect' => hisorange\BrowserDetect\Facade\Parser::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
 
     ],

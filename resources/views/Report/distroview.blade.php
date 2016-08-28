@@ -144,14 +144,6 @@
 </script>
 <script src="{{ URL::asset('assets/plugins/chartJS2/Chart.min.js') }}"></script>
 <script>
-    function getRandomColor() {
-        var letters = '0123456789ABCDEF'.split('');
-        var color = '#';
-        for (var i = 0; i < 6; i++ ) {
-            color += letters[Math.floor(Math.random() * 16)];
-        }
-        return color;
-    }
     
     @foreach($candidate as $cand)
     $(function () {
@@ -175,12 +167,13 @@
                         @endforeach
                     ],
                     backgroundColor: [
-                        @foreach($votedistro as $dis)
-                        @if($cand->strCandId == $dis->strCandId)
-                            getRandomColor(),
-                        @endif
-                        @endforeach
-                    ]
+                        '#FFCE56',
+                        '#4BC0C0',
+                        '#FF6384',
+                        '#36A2EB',
+                        '#ff7a56',
+                        '#56e5ff'
+                    ],
                 }]
         };
         

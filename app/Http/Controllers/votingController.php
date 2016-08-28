@@ -11,6 +11,7 @@ use App\SmartCounter AS SmartCounter;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Redirect;
+use BrowserDetect;
 use Session;
 use App\SurveyHeader AS SurveyHeader;
 use Illuminate\Support\Facades\App;
@@ -146,7 +147,6 @@ class votingController extends Controller
         }
         
     }
-
     public function summary(Request $request){
         $request->flash();
         $voted = "";
@@ -171,9 +171,24 @@ class votingController extends Controller
         return view('Voting.summary', ['candidates'=>$voted, 'election' => $election, 'par'=>$par, 'countCand'=>$_POST['countCand']]);
             
     }
-
     public function cast(Request $request)
     {
+        // Detect User's Device // 
+        $device = '';
+        $browser = '';
+        $opSys = '';
+        $model = '';
+        if (BrowserDetect::isDesktop())
+            $device = 1;
+        else if(BrowserDetect::isTablet())
+            $device = 2;
+        else if(BrowserDetect::isMobile())
+            $device = 3;
+        $browser = BrowserDetect::browserName();
+        $opSys = BrowserDetect::osFamily();
+        $model = BrowserDetect::deviceModel();
+        // Detect User's Device // 
+
         if($_POST['redirect'] == 1)
             return Redirect::route('voting.page')->withInput();
         try{
@@ -190,6 +205,10 @@ class votingController extends Controller
             $counter = new SmartCounter();
             $VoteHeader->strVHCode = $counter->smartcounter($latest);
             $VoteHeader->strVHMemId = session('memid');
+            $VoteHeader->intDevice = $device;
+            $VoteHeader->strBrowser = $browser;
+            $VoteHeader->strOpSys = $opSys;
+            $VoteHeader->strDevModel = $model;
             if($_POST['par'] != NULL){
                 $VoteHeader->blvotestraight = 1;
                 $par = DB::table('tblparty')->where('intPartyId', '=', $_POST['par'])->get();
@@ -210,13 +229,13 @@ class votingController extends Controller
             $VDID = $VHID->strVHCode;
             
             if(isset($_POST['vote'])){
-            foreach ($_POST['vote'] as $candID) {
-                $VoteDetail = new VoteDetail();
-                $VoteDetail->strVDVHCode = $VDID;
-                $VoteDetail->strVDCandId = $candID;
-                $VoteDetail->save();
-                
-            }
+                foreach ($_POST['vote'] as $candID) {
+                    $VoteDetail = new VoteDetail();
+                    $VoteDetail->strVDVHCode = $VDID;
+                    $VoteDetail->strVDCandId = $candID;
+                    $VoteDetail->save();
+                    
+                }
             }
             DB::commit();
             
@@ -245,17 +264,11 @@ class votingController extends Controller
                 //redirect to realtime voting result
                 return Redirect::route('LogInUser');
             }
-            
         }catch (\Illuminate\Database\QueryException $e){
             DB::rollBack();
             $errMess = $e->getMessage();
             return Redirect::back()->withErrors($errMess);
         }
-        
-        
-        
-
     }
-
 }
 
