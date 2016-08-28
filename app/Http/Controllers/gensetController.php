@@ -180,4 +180,33 @@ class gensetController extends Controller
         $request->session()->flash('message', 'Successfully updated.');    
         return Redirect::back();
     }
+    
+    public function recaptcha(){
+        
+
+    	$Settings = DB::table('tblSetting')->select('*')->get();
+    	foreach ($Settings as $value) {
+            $txtSiteKey = $value->txtSiteKey;
+            $txtSecret = $value->txtSecret;
+            /*$strSetLogo = $value->txtSetLogo;*/
+    	}
+         return view('Settings.captcha', ['txtSiteKey' => $txtSiteKey,'txtSecret' => $txtSecret]);
+    }
+    
+    public function recaptchaSave(Request $request){
+        
+        $GenSet = GenSet::find(1);
+        $GenSet->txtSiteKey = $request->input('txtSiteKey');
+        $GenSet->txtSecret = $request->input('txtSecret');
+        $GenSet->save();
+        
+    	$Settings = DB::table('tblSetting')->select('*')->get();
+    	foreach ($Settings as $value) {
+            $txtSiteKey = $value->txtSiteKey;
+            $txtSecret = $value->txtSecret;
+            /*$strSetLogo = $value->txtSetLogo;*/
+    	}
+        $request->session()->flash('message', 'Successfully updated.');    
+        return Redirect::back();
+    }
 }

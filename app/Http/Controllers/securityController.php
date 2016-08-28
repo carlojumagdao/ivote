@@ -100,7 +100,9 @@ class securityController extends Controller
         			->select('intSecQuesId','strSecQuestion')
         			->where('blSecQuesDelete', '=', 0)
         			->get();
-        return view('secquestion', ['header'=>$header, 'logo'=>$logo,'SecQues'=>$SecQues, 'id'=>$id]);
+        $GenSet = GenSet::find(1);
+        $sitekey = $GenSet->txtSiteKey;
+        return view('secquestion', ['header'=>$header, 'logo'=>$logo,'SecQues'=>$SecQues, 'id'=>$id, 'sitekey'=>$sitekey]);
     }
     
     public function setSecurity(Request $request, $id){
@@ -121,6 +123,9 @@ class securityController extends Controller
         $validator->setAttributeNames($niceNames); 
         
         try{
+            $GenSet = GenSet::find(1);
+            $txtSiteKey = $GenSet->txtSiteKey;
+            $txtSecret = $GenSet->txtSecret;
             
             $SecQues = $request->input('secques');
             $Answer = $request->input('txtAnswer');
@@ -128,8 +133,8 @@ class securityController extends Controller
             
             $member = DB::select('select CONCAT(strMemFname," ",strMemLname) as FullName from tblMember where strMemPasscode = ?', [$passcode]);
             if($member){
-                $siteKey = "6LdjQSATAAAAAKsAL4HXzNBosK2T3UfvoQUCCaxc";
-                $secret = "6LdjQSATAAAAAKo7ekylaCRsGttV6DhzIr1MgihE";
+                $siteKey = $txtSiteKey;
+                $secret = $txtSecret;
                 // reCAPTCHA supported 40+ languages listed here: https://developers.google.com/recaptcha/docs/language
                 $lang = "en";
 

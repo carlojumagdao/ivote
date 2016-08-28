@@ -170,6 +170,7 @@
             <li><a href="{{ URL::to('/settings/UI') }}"><i class="fa fa-circle-o"></i> UI Element</a></li>
             <li><a href="{{ URL::to('/settings/security') }}"><i class="fa fa-circle-o"></i> Security Questions</a></li>
             <li><a href="{{ URL::to('/settings/party') }}"><i class="fa fa-circle-o"></i> Party Affiliation</a></li>
+            <li><a href="{{ URL::to('/setCaptcha') }}"><i class="fa fa-circle-o"></i> reCaptcha Settings</a></li>
           </ul>
         </li>
         <li class="treeview">

@@ -358,6 +358,18 @@ Route::group(['middleware' => 'auth'], function(){
 		'as' => 'audit.view'
 	));
     //audit//
+    
+    //captcha//
+    Route::get('/setCaptcha', array(
+		'uses' => 'gensetController@recaptcha',
+		'as' => 'genset.captcha'
+	));
+    Route::post('/saveCaptcha', array(
+		'uses' => 'gensetController@recaptchaSave',
+		'as' => 'genset.captchaSave'
+	));
+    //captcha//
+    
 });
 
 // Candidate Page//
