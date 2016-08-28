@@ -49,19 +49,33 @@ class auditController extends Controller
             }
             
                 $html.= "<li>";
-                if($aud->Action == 'INSERTED') $html.= '<i class="fa fa-plus-square bg-yellow"></i>';
-                else if($aud->Action == 'DELETED') $html.= '<i class="fa fa-trash bg-red"></i>';
-                else $html.= '<i class="fa fa-edit bg-blue"></i>';
+                if($aud->Action == 'INSERTED') 
+                    $html.= '<i class="fa fa-plus-square bg-yellow"></i>';
+                else if($aud->Action == 'DELETED') 
+                    $html.= '<i class="fa fa-trash bg-red"></i>';
+                else if($aud->Action == "SENT PASSCODE") 
+                    $html.='<i class ="fa fa-envelope-o bg-green"></i>';
+                else 
+                    $html.= '<i class="fa fa-edit bg-blue"></i>';
             
-                $html.= '<div class="timeline-item">
-                <span class="time"><i class="fa fa-clock-o"></i>'. date("h:i a", strtotime($aud->Date)) .' </span>
-                
-                <h3 class="timeline-header"><a href="#">'. $aud->user .'</a> '. $aud->Action .' '. $aud->type.' '. $aud->strMemberId .' <strong>'. $aud->fullname .'</strong>' .'</h3>';
-                
-                if($aud->Action == "UPDATED")
-                 $html.= '<div class="timeline-body">'.'from '. $aud->oldValue .' updated to <big><strong>'. $aud->newValue .'</strong></big>
-                </div>';
-            
+                if($aud->Action == 'INSERTED' || $aud->Action == 'UPDATED' || $aud->Action == 'DELETED' )
+                {
+                    $html.= '<div class="timeline-item">
+                    <span class="time"><i class="fa fa-clock-o"></i>'. date("h:i a", strtotime($aud->Date)) .' </span>
+
+                    <h3 class="timeline-header"><a href="#">'. $aud->user .'</a> <label style="color:red">'. $aud->Action .'</label> '. $aud->type.' '. $aud->strMemberId .' <strong>'. $aud->fullname .'</strong>' .'</h3>';
+                        
+                    if($aud->Action == "UPDATED")
+                        $html.= '<div class="timeline-body">'.'from '. $aud->oldValue .' updated to <big><strong>'. $aud->newValue .'</strong></big>
+                    </div>';
+                }
+                else if($aud->Action == 'SENT PASSCODE')
+                {
+                     $html.= '<div class="timeline-item">
+                    <span class="time"><i class="fa fa-clock-o"></i>'. date("h:i a", strtotime($aud->Date)) .' </span>
+
+                    <h3 class="timeline-header"><a href="#">'. $aud->user .'</a> has <label style="color:red">'. $aud->Action .'</label> to '. $aud->type.' '. $aud->strMemberId .' <strong>'. $aud->fullname .'</strong>' .'</h3>';
+                }
             
                 $html.= '</li>';
         }
