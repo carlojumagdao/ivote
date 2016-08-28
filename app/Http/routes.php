@@ -482,3 +482,8 @@ Route::get('/endelection', function () {
 });
 //Log In User//
 
+
+Route::get('/tae', function (){
+	return view('test');
+});
+

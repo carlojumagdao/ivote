@@ -108,7 +108,7 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="chart">
-                    <canvas id="Chart" height="265px"></canvas>
+                    <canvas id="Chart" height="269px"></canvas>
                     </div>
                 </div>    
             </div> 

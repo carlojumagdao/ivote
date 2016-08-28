@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use BrowserDetect;
 use App\GenSet As GenSet;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
