@@ -46,4 +46,5 @@ class resultController extends Controller
 								    ORDER BY sq.strSQQuestion;');
     	return view("surveypartial", ['SurveyTally'=>$SurveyTally, 'SurveyQuestions'=>$SurveyQuestions]);
     }
+
 }

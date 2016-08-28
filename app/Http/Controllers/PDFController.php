@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use PDF;
@@ -189,21 +188,17 @@ order by 6 desc;');
             return $pdf->stream('pdfile.pdf');
         }
         else if($query == 4){
-            $arr = DB::select('SELECT strVHMemId from tblvoteheader');
-            $ind = 0;
-            $voted = '';
-            foreach($arr as $el){
-                $voted[$ind] = $el->strVHMemId;
-            }
             $list = DB::table('tblmember')
-                            ->whereNotIn('strMemberId', $voted)
-                            ->where('blMemDelete', '=', 0)
+                            ->leftJoin('tblvoteheader', 'strMemberId', '=', 'strVHMemId' )
                             ->where('blMemCodeSendStat', '=', $send)
+                            ->where('blMemDelete', '=', 0)
+                            ->whereNULL('tblvoteheader.strVHMemId')
                             ->get();
             $count = DB::table('tblmember')
-                            ->whereNotIn('strMemberId', $voted)
+                            ->leftJoin('tblvoteheader', 'strMemberId', '=', 'strVHMemId' )
                             ->where('blMemCodeSendStat', '=', $send)
                             ->where('blMemDelete', '=', 0)
+                            ->whereNULL('tblvoteheader.strVHMemId')
                             ->count();
             $members = DB::table('tblmember')
                             ->where('blMemDelete', '=', 0)
@@ -219,18 +214,16 @@ order by 6 desc;');
         }
         else if($query == 5){
             $list = DB::table('tblmember')
-                            ->join('tblcandidate', 'strCandMemId', '=', 'strMemberId')
                             ->join('tblvoteheader', 'strMemberId', '=', 'strVHMemId' )
                             ->where('blMemCodeSendStat', '=', $send)
                             ->where('blMemDelete', '=', 0)
-                            ->where('blCandDelete', '=', 0)
+                            ->where('blcandidate', '=', 1)
                             ->get();
             $count = DB::table('tblmember')
-                            ->join('tblcandidate', 'strCandMemId', '=', 'strMemberId')
                             ->join('tblvoteheader', 'strMemberId', '=', 'strVHMemId' )
                             ->where('blMemCodeSendStat', '=', $send)
                             ->where('blMemDelete', '=', 0)
-                            ->where('blCandDelete', '=', 0)
+                            ->where('blcandidate', '=', 1)
                             ->count();
             $members = DB::table('tblmember')
                             ->where('blMemDelete', '=', 0)
@@ -245,22 +238,18 @@ order by 6 desc;');
             return $pdf->stream('pdfile.pdf');
         }
         else if($query == 6){
-            $arr = DB::select('SELECT strVHMemId from tblvoteheader');
-            $ind = 0;
-            $voted = '';
-            foreach($arr as $el){
-                $voted[$ind] = $el->strVHMemId;
-            }
             $list = DB::table('tblmember')
+                            ->leftJoin('tblvoteheader', 'strMemberId', '=', 'strVHMemId' )
                             ->join('tblcandidate', 'strCandMemId', '=', 'strMemberId')
-                            ->whereNotIn('strMemberId', $voted)
+                            ->whereNULL('tblvoteheader.strVHMemId')
                             ->where('blMemCodeSendStat', '=', $send)
                             ->where('blMemDelete', '=', 0)
                             ->where('blCandDelete', '=', 0)
                             ->get();
             $count = DB::table('tblmember')
+                            ->leftJoin('tblvoteheader', 'strMemberId', '=', 'strVHMemId' )
                             ->join('tblcandidate', 'strCandMemId', '=', 'strMemberId')
-                            ->whereNotIn('strMemberId', $voted)
+                            ->whereNULL('tblvoteheader.strVHMemId')
                             ->where('blMemCodeSendStat', '=', $send)
                             ->where('blMemDelete', '=', 0)
                             ->where('blCandDelete', '=', 0)
@@ -382,5 +371,20 @@ order by 6 desc;');
             return $pdf->stream('pdfile.pdf');
         }
         
+    }
+    
+    public function surveyPDF(){
+    	$SurveyQuestions = DB::select('SELECT intSQId,strSQQuestion, strSQQuesType FROM 
+    							tblsurveyquestion WHERE blSQStatus = 1;');
+    	$SurveyTally = DB::select('SELECT sd.strSDAnswer, count(sd.strSDAnswer) AS Tally,
+    								sq.intSQId, sd.intSDId
+									FROM tblsurveyquestion AS sq
+									LEFT JOIN tblsurveydetail AS sd
+										ON sq.intSQId = sd.intSDSQId
+									WHERE sq.blSQStatus = 1
+								    GROUP BY 1
+								    ORDER BY sq.strSQQuestion;');
+    	$pdf=PDF::loadview("PDFFile.survey", ['SurveyTally'=>$SurveyTally, 'SurveyQuestions'=>$SurveyQuestions]);
+        return $pdf->stream('pdfile.pdf');
     }
 }
