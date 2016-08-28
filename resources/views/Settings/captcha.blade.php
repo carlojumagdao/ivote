@@ -121,7 +121,7 @@
                    <div class="col-md-12">
                     <img src="assets/images/captcha2.jpg" class="img-responsive">
                    </div>
-               <p>5) After registering, You'll able to see the site key and secret key. Copy and paste it to the this form on the left to get your reCaptcha working</p>
+               <p>5) After registering, You'll able to see the site key and secret key. Copy and paste it to this form on the left to get your reCaptcha working</p>
                    <div class="col-md-12">
                     <img src="assets/images/captcha3.jpg" class="img-responsive">
                    </div>
