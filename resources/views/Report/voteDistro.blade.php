@@ -41,7 +41,7 @@
     <div class="col-md-12">
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">List of all Dynamic Fields</h3>
+                <h3 class="box-title">Choose Reference</h3>
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
                     <i class="fa fa-minus"></i></button>
@@ -50,7 +50,7 @@
             <div class="box-body table-responsive">
                 <form action="{{ URL::to('/viewDistro') }}" method="post">
                     <div class="col-md-2 ">
-                        {!! Form::label( 'distro', 'Vote Distribution By:' ) !!}
+                        {!! Form::label( 'distro', 'References:' ) !!}
                     </div>
                     <div class="col-md-8">
                         <select name="distro" class="form-control select2" required>

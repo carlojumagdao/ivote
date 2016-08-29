@@ -81,8 +81,10 @@ order by 6 desc;');
                         ->join('tblmember', 'tblmember.strMemberId', '=', 'tblcandidate.strCandMemId')
                         ->join('tblposition', 'tblposition.strPositionId', '=', 'tblcandidate.strCandPosId')
                         ->where('blCandDelete', '=', 0)
+                        ->orderBy('strMemFname', 'asc')
                         ->get();
         $posdetail = DB::table('tbldynamicfield')->select('strDynFieldName')->where('blDynStatus', '=', 1)->get();
+        $posData = DB::select('SELECT distinct(strMemDeFieldData) FROM tblmemberdetail WHERE strMemDeFieldName = ? OR strMemDeFieldName IS NULL',[$page->input('distro')]);
         $votedistro = DB::select('SELECT c.strCandId, CONCAT(m.strMemFname, " ", m.strMemLName) as "fullname" ,p.strPosName, md.strMemDeFieldData, count(vh.strVHCode) AS "count"
             FROM tblcandidate AS c  
             join tblmember as m on c.strCandMemId = m.strMemberID
@@ -92,9 +94,10 @@ order by 6 desc;');
             left join tblmemberdetail AS md on vh.strVHMemID = md.strMemDeMemId
             where md.strMemDeFieldName = ? OR md.strMemDeFieldName IS NULL
             AND c.blCandDelete = 0
-            group by c.strCandId, fullname, p.strPosName,  md.strMemDeFieldData;',[$page->input('distro')]);
+            group by c.strCandId, fullname, p.strPosName,  md.strMemDeFieldData
+            ORDER BY fullname;',[$page->input('distro')]);
         
-        return view('Report.distroview', ["candidate"=>$candidate, "votedistro" =>$votedistro, 'posdetail'=>$posdetail, "by"=>$page->input('distro')]);
+        return view('Report.distroview', ["candidate"=>$candidate,"posData"=>$posData, "votedistro" =>$votedistro, 'posdetail'=>$posdetail, "by"=>$page->input('distro')]);
         
     }
 }

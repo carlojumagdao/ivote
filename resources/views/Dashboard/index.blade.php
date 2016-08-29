@@ -538,33 +538,33 @@
                      // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
                      maintainAspectRatio: true,
                      animation: {
-                            onComplete: function () {
-                                // render the value of the chart above the bar
-                                var ctx = this.chart.ctx;
-                                ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontFamily, 'normal', Chart.defaults.global.defaultFontFamily);
-                                ctx.textAlign = 'center';
-                                ctx.fillStyle = 'black';
-                                ctx.textBaseline = 'bottom'; 
-                                this.chart.ctx.font="14px Verdana";     
-                                this.data.datasets.forEach(function (dataset) {
-                                    for (var i = 0; i < dataset.data.length; i++) {
-                                        var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model;
-                                        var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
-                                            return previousValue + currentValue;
-                                        });
-                                        mid_radius = model.innerRadius + (model.outerRadius - model.innerRadius)/2,
-                                          start_angle = model.startAngle,
-                                          end_angle = model.endAngle,
-                                          mid_angle = start_angle + (end_angle - start_angle)/2;
+                        onComplete: function () {
+                            // render the value of the chart above the bar
+                            var ctx = this.chart.ctx;
+                            ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontFamily, 'normal', Chart.defaults.global.defaultFontFamily);
+                            ctx.textAlign = 'center';
+                            ctx.fillStyle = 'black';
+                            ctx.textBaseline = 'bottom'; 
+                            this.chart.ctx.font="14px Verdana";     
+                            this.data.datasets.forEach(function (dataset) {
+                                for (var i = 0; i < dataset.data.length; i++) {
+                                    var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model;
+                                    var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+                                        return previousValue + currentValue;
+                                    });
+                                    mid_radius = model.innerRadius + (model.outerRadius - model.innerRadius)/2,
+                                      start_angle = model.startAngle,
+                                      end_angle = model.endAngle,
+                                      mid_angle = start_angle + (end_angle - start_angle)/2;
 
-                                      var x = mid_radius * Math.cos(mid_angle);
-                                      var y = mid_radius * Math.sin(mid_angle);
-                                      var percent = String(Math.round(dataset.data[i]/total*100)) + "%";
-                                      ctx.fillText(percent, model.x + x, model.y + y + 15);
-                                    }
-                                });
-                            }
+                                  var x = mid_radius * Math.cos(mid_angle);
+                                  var y = mid_radius * Math.sin(mid_angle);
+                                  var percent = String(Math.round(dataset.data[i]/total*100)) + "%";
+                                  ctx.fillText(percent, model.x + x, model.y + y + 15);
+                                }
+                            });
                         }
+                    }
                  };
                 var pieChartCanvas = $("#{{$DynField->intDynFieldId}}").get(0).getContext("2d");
                 var pieChart = new Chart(pieChartCanvas, {
