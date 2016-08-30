@@ -327,7 +327,6 @@ order by 6 desc;');
                             ->where('blMemDelete', '=', 0)
                             ->get();
             $count = DB::table('tblmember')
-                            ->join('tblcandidate', 'strCandMemId', '=', 'strMemberId')
                             ->join('tblvoteheader', 'strMemberId', '=', 'strVHMemId' )
                             ->where('blMemCodeSendStat', '=', $send)
                             ->where('blMemDelete', '=', 0)
