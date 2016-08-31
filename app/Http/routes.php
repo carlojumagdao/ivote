@@ -358,6 +358,16 @@ Route::group(['middleware' => 'auth'], function(){
 		'uses' => 'auditController@view',
 		'as' => 'audit.view'
 	));
+    
+    Route::get('/audit/survey', array(
+		'uses' => 'auditController@survey',
+		'as' => 'audit.survey'
+	));
+    
+    Route::post('/audit/viewsurvey', array(
+		'uses' => 'auditController@viewsurvey',
+		'as' => 'audit.viewsurvey'
+	));
     //audit//
     
     //captcha//

@@ -155,6 +155,28 @@ from tblaudit order by date desc, time desc LIMIT ?;", [$length]);
         
         return view('viewvote', ['votes' => $votes, 'voted'=>$voted]);
     }
+    
+    public function survey(){
+        $survey = DB::table('tblsurveyheader')
+                ->join('tblmember', 'tblsurveyheader.strSHMemCode', '=', 'tblmember.strMemberId')
+                ->get();
+        
+        return view('auditsurvey', ['survey' => $survey]);
+    }
+    
+    public function viewsurvey(Request $request){
+        $answers = DB::table('tblsurveydetail')
+                ->join('tblsurveyquestion', 'tblsurveyquestion.intSQId', '=', 'tblsurveydetail.intSDSQId')
+                ->join('tblsurveyheader', 'tblsurveyheader.intSHId', '=', 'tblsurveydetail.intSDSHId')
+                ->where('intSDSHId', '=', $request->input('id'))
+                ->get();
+        $surveyed = DB::table('tblsurveyheader')
+                ->join('tblmember', 'tblsurveyheader.strSHMemCode', '=', 'tblmember.strMemberId')
+                ->where('intSHId', '=', $request->input('id'))
+                ->get();
+        
+        return view('viewsurvey', ['answers' => $answers, 'surveyed'=>$surveyed]);
+    }
 
 }
 

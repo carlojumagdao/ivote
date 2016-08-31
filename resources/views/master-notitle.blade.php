@@ -213,7 +213,12 @@
           <a href="{{ URL::to('/audit/vote') }}">
             <i class="fa fa-check-square-o"></i> <span>Voting Audit</span>
           </a>
-        </li>  
+        </li>
+        <li>
+          <a href="{{ URL::to('/audit/survey') }}">
+            <i class="fa fa-check-square-o"></i> <span>Survey Audit</span>
+          </a>
+        </li>
       </ul>
     </section>
     <!-- /.sidebar -->
