@@ -42,10 +42,12 @@
         <div class="box">
             <div class="box-header with-border">
                 <h3 class="box-title">List of all Parties</h3>
-                <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#add">
-                    <i class="glyphicon glyphicon-plus"></i> Add New</button>
-                </div>
+                @if($electionStatus ==  0)
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#add">
+                        <i class="glyphicon glyphicon-plus"></i> Add New</button>
+                    </div>
+                @endif
             </div>
             <div class="box-body table-responsive no-padding">
                 <table class="table table-hover">
@@ -54,7 +56,7 @@
                     <th>Party Name</th>
                     <th>Party Leader</th>
                     <th>Party Color</th>
-                    <th>Action</th>
+                    @if($electionStatus ==  0)<th>Action</th>@endif
                 </tr>
                 @foreach($Party as $value)
                     <tr>
@@ -64,16 +66,25 @@
                         <td class="leader">{{$value->strPartyLeader}}</td>
                         <td class="color"><i class="fa fa-circle-o " style="color:{{$value->strPartyColor}}"></td>
                         <!-- if else to make the independent party not editable/deletable -->
-                        @if($value->intPartyId == 1)
-                            <td><button class="btn bg-purple btn-xs">Uneditable</button></td>    
-                        @else
-                            <td>
-                                <button class="btn btn-warning btn-sm editParty" data-toggle="modal" title="Edit"><i class="glyphicon glyphicon-edit"></i></button>
-                                <button class="btn btn-danger btn-sm delParty" data-toggle="tooltip" title="Delete"><i class="glyphicon glyphicon-trash"></i></button>
-                            </td>
+                        @if($electionStatus ==  0)
+                            @if($value->intPartyId == 1)
+                                <td><button class="btn bg-purple btn-xs">Uneditable</button></td>    
+                            @else
+                                <td>
+                                    <button class="btn btn-warning btn-sm editParty" data-toggle="modal" title="Edit"><i class="glyphicon glyphicon-edit"></i></button>
+                                    <button class="btn btn-danger btn-sm delParty" data-toggle="tooltip" title="Delete"><i class="glyphicon glyphicon-trash"></i></button>
+                                </td>
+                            @endif
                         @endif
                     </tr>
                 @endforeach
+                <tr>
+                    <th>#</th>
+                    <th>Party Name</th>
+                    <th>Party Leader</th>
+                    <th>Party Color</th>
+                    @if($electionStatus ==  0)<th>Action</th>@endif
+                </tr>
                 </table>
             </div>
             

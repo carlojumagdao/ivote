@@ -7,6 +7,7 @@ use App\Party AS Party;
 use Validator;
 use Input;
 use DB;
+use App\GenSet AS GenSet;
 use Redirect;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -16,10 +17,22 @@ use Illuminate\Support\Facades\File;
 class partyController extends Controller
 {
     public function index(){
+        $GenSet = GenSet::find(1);
+        $start = date_create($GenSet->datSetStart);
+        $end = date_create($GenSet->datSetEnd);
+        $nowNoTime = date_create(date("Y-m-d"));
+        $now = date_create(date("Y-m-d H:i:s"));
+        if(($now >= $start) & ($now <= $end)){
+            $ongoing = 1;
+        }
+        else{
+            $ongoing = 0;
+        }
+
     	$PartyStatus = DB::table('tblSetting')->where('blSetParty', '=', 1)->get();
     	if($PartyStatus){
     		$Party = DB::table('tblParty')->where('blPartyDelete', '=', 0)->get();
-        	return view('Settings.party', ['Party' => $Party, 'intCounter'=>0]);
+        	return view('Settings.party', ['Party' => $Party, 'intCounter'=>0, 'electionStatus' => $ongoing]);
     	} else{
     		return view('page-disabled');
     	}

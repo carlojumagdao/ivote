@@ -7,6 +7,7 @@ use App\formLoader AS formLoader;
 use App\formEncoder AS formEncoder;
 use Validator;
 use DB;
+use App\GenSet AS GenSet;
 use Redirect;
 use File;
 use App\Http\Requests;
@@ -18,11 +19,22 @@ use Session;
 class surveyController extends Controller
 {
    	public function index(){
+        $GenSet = GenSet::find(1);
+        $start = date_create($GenSet->datSetStart);
+        $end = date_create($GenSet->datSetEnd);
+        $nowNoTime = date_create(date("Y-m-d"));
+        $now = date_create(date("Y-m-d H:i:s"));
+
         $SurveyStatus = DB::table('tblSetting')->where('blSetSurvey', '=', 1)->get();
-        if($SurveyStatus){
-            return view('Survey.index');
-        } else{
-            return view('page-disabled');
+        if(($now >= $start) & ($now <= $end)){
+            return view('election-page-disabled');
+        }
+        else{
+            if($SurveyStatus){
+                return view('Survey.index');
+            } else{
+                return view('page-disabled');
+            }
         }
    		
    	}

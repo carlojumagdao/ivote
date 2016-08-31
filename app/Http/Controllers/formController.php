@@ -13,6 +13,7 @@ use App\MemberDetail AS MemberDetail;
 use App\SmartCounter AS SmartCounter;
 use Validator;
 use DB;
+use App\GenSet AS GenSet;
 use Redirect;
 use File;
 use App\Http\Requests;
@@ -22,9 +23,34 @@ class formController extends Controller
 {
     
     public function index(){
+        $GenSet = GenSet::find(1);
+        $start = date_create($GenSet->datSetStart);
+        $end = date_create($GenSet->datSetEnd);
+        $nowNoTime = date_create(date("Y-m-d"));
+        $now = date_create(date("Y-m-d H:i:s"));
+        if(($now >= $start) & ($now <= $end)){
+            $ongoing = 1;
+        }
+        else{
+            $ongoing = 0;
+        }
         $Members = DB::table('tblMember')->get();
-        return view('Members.index', ['Members' => $Members, 'intCounter'=>0]);
+        return view('Members.index', ['Members' => $Members, 'intCounter'=>0,'electionStatus'=>$ongoing]);
     } 
+    public function memberformview(){
+        $GenSet = GenSet::find(1);
+        $start = date_create($GenSet->datSetStart);
+        $end = date_create($GenSet->datSetEnd);
+        $nowNoTime = date_create(date("Y-m-d"));
+        $now = date_create(date("Y-m-d H:i:s"));
+        if(($now >= $start) & ($now <= $end)){
+            return view('election-page-disabled');
+        }
+        else{
+            return view('Members.form');
+        }
+    } 
+
     public function view($id){
         $arrFieldName= array (' ');
         $arrFieldData= array (' ');
@@ -248,6 +274,12 @@ class formController extends Controller
 
 
     public function create(){
+        $GenSet = GenSet::find(1);
+        $start = date_create($GenSet->datSetStart);
+        $end = date_create($GenSet->datSetEnd);
+        $nowNoTime = date_create(date("Y-m-d"));
+        $now = date_create(date("Y-m-d H:i:s"));
+
         $formData = DB::table('tblMemberForm')->select('strMemForm','strMemFormTitle')->get();
         $strMemId = DB::table('tblMember')->select('strMemberId')->orderBy('strMemberId')->get();
         $strMemCode = "CODE000";
@@ -260,7 +292,12 @@ class formController extends Controller
         }
         $loader = new formEncoder($data, 'add');
         $form = $loader->render_form($strMemCode);
-        return view('Members.addMember', ['form' => $form,'formTitle' => $formTitle]);
+        if(($now >= $start) & ($now <= $end)){ 
+            return view('election-page-disabled');
+        }
+        else{
+            return view('Members.addMember', ['form' => $form,'formTitle' => $formTitle]);
+        }
     }
     public function add(Request $request){
         $rules = array(

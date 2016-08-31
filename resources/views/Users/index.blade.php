@@ -170,7 +170,7 @@
                             <th>Email</th>
                             <th>Date Created</th>
                             <th>Date Updated</th>
-                            <th>Action</th>
+                            @if($electionStatus ==  0)<th>Action</th>@endif
                         </tr>
                     </thead>
                     <tbody>
@@ -179,13 +179,22 @@
                             <td class="id">{{$value->id}}</td>
                             <td class="name">{{$value->name}}</td>
                             <td class="email">{{$value->email}}</td> 
-                            <td class="created">{{$value->created_at}}</td>
-                            <td class="updated">{{$value->updated_at}}</td>
+                            <?php
+                                $datecreated =  $value->created_at;
+                                $converteddatecreated = date('M j, Y h:i A',strtotime($datecreated));
+                                $dateupdated = $value->updated_at;
+                                $converteddateupdated = date('M j, Y h:i A',strtotime($dateupdated));
+                            ?>
+
+                            <td class="created">{{$converteddatecreated}}</td>
+                            <td class="updated">{{$converteddateupdated}}</td>
+                            @if($electionStatus ==  0)
                             <td>
                                 <a href="user/view/{{$value->id}}" class="btn btn-primary btn-sm view" data-toggle="tooltip" title="View"><i class="fa fa-eye"></i></a>
                                 <a href="user/editUser/{{$value->id}}" class="btn btn-warning btn-sm edit" data-toggle="tooltip" title="Edit"><i class="glyphicon glyphicon-edit"></i></a>
                                 <button class="btn btn-danger btn-sm delUser" data-toggle="tooltip" title="Delete"><i class="glyphicon glyphicon-trash"></i></button>
                             </td>
+                            @endif
                         </tr>
                     @endforeach
                     </tbody>
@@ -196,7 +205,7 @@
                             <th>Email</th>
                             <th>Date Created</th>
                             <th>Date Updated</th>
-                            <th>Action</th>
+                            @if($electionStatus ==  0)<th>Action</th>@endif
                         </tr>
                     </tfoot>
                 </table>

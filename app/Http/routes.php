@@ -25,9 +25,10 @@ Route::group(['middleware' => 'auth'], function(){
 	));
 	// Dashboard //
 
-	Route::get('/memberform', function () {
-	    return view('Members.form');
-	});
+	Route::get('/memberform', array(
+		'uses' => 'formController@memberformview',
+		'as' => 'Members.form'
+	));
 
 	Route::post('memberform/save', array(
 		'uses' => 'formController@save',

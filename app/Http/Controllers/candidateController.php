@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use App\GenSet AS GenSet;
 use App\Candidate AS Candidate;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -23,6 +24,18 @@ class candidateController extends Controller
      */
     public function index()
     {
+        $GenSet = GenSet::find(1);
+        $start = date_create($GenSet->datSetStart);
+        $end = date_create($GenSet->datSetEnd);
+        $nowNoTime = date_create(date("Y-m-d"));
+        $now = date_create(date("Y-m-d H:i:s"));
+        if(($now >= $start) & ($now <= $end)){
+            $ongoing = 1;
+        }
+        else{
+            $ongoing = 0;
+        }
+
         $PartyStatus = DB::table('tblSetting')->where('blSetParty', '=', 1)->get();
              $candidates = DB::table('tblcandidate')
             ->join('tblmember', 'tblcandidate.strCandMemId', '=', 'tblmember.strMemberId')
@@ -31,8 +44,8 @@ class candidateController extends Controller
             ->where('blCandDelete', '=', 0)
             ->select('tblcandidate.*', 'tblmember.strMemFname', 'tblmember.strMemLname', 'tblposition.strPosName', 'tblparty.strPartyName')->get();
     
-            return view('Candidate.candidate', ['candidates' => $candidates, 'intCounter'=>0, 'party' => $PartyStatus]);
-
+        return view('Candidate.candidate', ['candidates' => $candidates, 'intCounter'=>0, 'party' => $PartyStatus, 'electionStatus'=>$ongoing]);
+        
         $candidates = DB::table('tblcandidate')
         ->join('tblmember', 'tblcandidate.strCandMemId', '=', 'tblmember.strMemberId')
         ->join('tblposition', 'tblcandidate.strCandPosId', '=', 'tblposition.strPositionId')
@@ -45,15 +58,19 @@ class candidateController extends Controller
             {
                 $strCandEducBackg = $value->strCandEducBack;
                 $strCandInfor = $value->strCandInfo;
-            }
+            }        
         return view('Candidate.candidate', ['candidates' => $candidates, 'intCounter'=>0, 'party' => $PartyStatus, 'strCandEducBackg' => 
-            $strCandEducBackg , 
-              'strCandInfor' => 
-            $strCandInfor]);
+                $strCandEducBackg , 'strCandInfor' => $strCandInfor,'electionStatus'=>$ongoing]);
     }
 
     public function add()
     {
+        $GenSet = GenSet::find(1);
+        $start = date_create($GenSet->datSetStart);
+        $end = date_create($GenSet->datSetEnd);
+        $nowNoTime = date_create(date("Y-m-d"));
+        $now = date_create(date("Y-m-d H:i:s"));
+        
         $PartyStatus = DB::table('tblSetting')->where('blSetParty', '=', 1)->get();
         if($PartyStatus){
             $Members = DB::table('tblmember')->select('strMemberId', 'strMemFname', 'strMemLname', 'strMemMname')->where('blMemDelete', '=', 0)->get();
@@ -62,13 +79,23 @@ class candidateController extends Controller
             ->where('blPosDelete', '=', 0)
             ->get();
             $Parties = DB::table('tblparty')->select('intPartyId', 'strPartyName')->get();
-            return view('Candidate.add', ['Members' => $Members, 'Positions' => $Positions, 'Parties'=> $Parties]);
+            if(($now >= $start) & ($now <= $end)){ 
+                return view('election-page-disabled');
+            }
+            else{
+                return view('Candidate.add', ['Members' => $Members, 'Positions' => $Positions, 'Parties'=> $Parties]);
+            }
         }
         else{
             
             $Members = DB::table('tblmember')->select('strMemberId', 'strMemFname', 'strMemLname', 'strMemMname')->where('blMemDelete', '=', 0)->get();
             $Positions = DB::table('tblposition')->select('strPositionId', 'strPosName')->where('blPosDelete', '=', 0)->get();
-            return view('Candidate.addlessparty', ['Members' => $Members, 'Positions' => $Positions]);
+            if(($now >= $start) & ($now <= $end)){ 
+                return view('election-page-disabled');
+            }
+            else{
+                return view('Candidate.addlessparty', ['Members' => $Members, 'Positions' => $Positions]);
+            }
         }
     }
     

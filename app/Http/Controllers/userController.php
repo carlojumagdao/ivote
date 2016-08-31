@@ -7,6 +7,7 @@ use App\DynamicField AS DynamicField;
 use App\User AS User;
 use Validator;
 use DB;
+use App\GenSet AS GenSet;
 use Hash;
 use Redirect;
 use File;
@@ -21,8 +22,20 @@ class userController extends Controller
 {
   
     public function index(){
+        $GenSet = GenSet::find(1);
+        $start = date_create($GenSet->datSetStart);
+        $end = date_create($GenSet->datSetEnd);
+        $nowNoTime = date_create(date("Y-m-d"));
+        $now = date_create(date("Y-m-d H:i:s"));
+        if(($now >= $start) & ($now <= $end)){
+            $ongoing = 1;
+        }
+        else{
+            $ongoing = 0;
+        }
+
         $Users = DB::table('users')->where('blDelete', '=', 0)->get();
-        return view('Users.index', ['Users' => $Users, 'intCounter'=>0]);
+        return view('Users.index', ['Users' => $Users, 'intCounter'=>0, 'electionStatus' =>$ongoing]);
     } 
     public function profile(Request $request){
         $id = $request->input('id');
@@ -56,8 +69,19 @@ class userController extends Controller
         
     }
     public function create(){
+        $GenSet = GenSet::find(1);
+        $start = date_create($GenSet->datSetStart);
+        $end = date_create($GenSet->datSetEnd);
+        $nowNoTime = date_create(date("Y-m-d"));
+        $now = date_create(date("Y-m-d H:i:s"));
         $user = DB::table('users')->get();
-        return view('Users.userAdd', ['user' => $user]);
+        
+        if(($now >= $start) & ($now <= $end)){
+            return view('election-page-disabled');
+        }
+        else{
+            return view('Users.userAdd', ['user' => $user]);
+        }
         
     }
     public function add(Request $request){

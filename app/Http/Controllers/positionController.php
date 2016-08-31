@@ -10,6 +10,7 @@ use App\editPosFormEncoder AS editPosFormEncoder;
 use App\SmartCounter AS SmartCounter;
 use Validator;
 use DB;
+use App\GenSet AS GenSet;
 use Redirect;
 use File;
 use App\Http\Requests;
@@ -18,10 +19,27 @@ use App\Http\Controllers\Controller;
 class positionController extends Controller
 {
     public function index(){
+        $GenSet = GenSet::find(1);
+        $start = date_create($GenSet->datSetStart);
+        $end = date_create($GenSet->datSetEnd);
+        $nowNoTime = date_create(date("Y-m-d"));
+        $now = date_create(date("Y-m-d H:i:s"));
+        if(($now >= $start) & ($now <= $end)){
+            $ongoing = 1;
+        }
+        else{
+            $ongoing = 0;
+        }
         $Positions = DB::table('tblPosition')->get();
-        return view('Positions.index', ['Positions' => $Positions, 'intCounter'=>0]);
+        return view('Positions.index', ['Positions' => $Positions, 'intCounter'=>0, 'electionStatus'=>$ongoing]);
     } 
     public function create(){
+        $GenSet = GenSet::find(1);
+        $start = date_create($GenSet->datSetStart);
+        $end = date_create($GenSet->datSetEnd);
+        $nowNoTime = date_create(date("Y-m-d"));
+        $now = date_create(date("Y-m-d H:i:s"));
+
     	$MemberForm = DB::table('tblMemberForm')->get();
         foreach ($MemberForm as $value) {
             $form = $value->strMemForm;
@@ -39,8 +57,12 @@ class positionController extends Controller
         }
         $counter = new SmartCounter();
         $code = $counter->smartcounter($id);
-
-        return view('Positions.addPosition', ['posForm' => $posForm, 'code' => $code]);
+        if(($now >= $start) & ($now <= $end)){ 
+            return view('election-page-disabled');
+        }
+        else{
+            return view('Positions.addPosition', ['posForm' => $posForm, 'code' => $code]);
+        }
     }
 
     public function revert(Request $request){
