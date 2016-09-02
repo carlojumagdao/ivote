@@ -1,6 +1,6 @@
 @extends('master')
 @section('title')
-    {{"View Votes"}}
+    {{"View Survey"}}
 @stop   
 @section('style')
 <link href="{{ URL::asset('assets/css/style.css') }}" type="text/css" rel="stylesheet">

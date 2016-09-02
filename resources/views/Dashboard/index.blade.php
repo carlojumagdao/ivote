@@ -514,7 +514,7 @@
                     },
                     title: {
                         display: true,
-                        text: 'Member Distribution per {{ucwords($DynField->strDynFieldName)}}',
+                        text: 'Member Distribution per {{ucwords(str_replace("_", " ", $DynField->strDynFieldName))}}',
                         fontSize: 15,
                     },
                      //Boolean - Whether we should show a stroke on each segment
