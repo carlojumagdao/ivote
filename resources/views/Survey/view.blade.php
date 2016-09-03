@@ -30,13 +30,14 @@
           .login-box,
           .register-box {
             width: 90%;
-            margin-top: 20px;
+            margin-top: 20px
           }
         }
+        
         .login-box-body,
         .register-box-body {
           background: #000000;
-          padding: 20px;
+          padding: 10px;
           border-top: 0;
           color: #666;
         }
@@ -51,9 +52,7 @@
             -moz-box-shadow: 0px 1px 5px 3px rgba(158,158,158,0.69);
             box-shadow: 0px 1px 5px 3px rgba(158,158,158,0.69);
         }
-        h4{
-            font-size: 28px;
-        }
+        
         button{
             visibility: hidden;
         }
@@ -63,21 +62,21 @@
     <div class="login-box">
         <div>
             <div class="col-md-12" style="margin-top:-40%">
-                <h3>
+               <h3 class="responsive-text">
                     <center>
-                    <img src='{{ URL::asset("assets/images/$logo") }}' style="max-width: 75px;">
-                    <b>&nbsp;{{$header}}</b>
+                    <img class="img-responsive" src='{{ URL::asset("assets/images/$logo") }}' style="max-width: 75px;">
+                    <b  style="color:white;text-shadow: 2px 2px 8px rgba(5, 5, 5, 0.62);" >&nbsp;{{$header}} </b>
                     </center>
                 </h3>
                 <div class="box">
                     <div class="box-header">
-                        <h1>{{$formTitle}}</h1> 
-                        <p style="font-size:16px">{{$formDesc}}</p> 
+                        <h2 class="responsive-text">{{$formTitle}}</h2> 
+                        <p style="font-size:8px">{{$formDesc}}</p> 
                     </div>
-                    <div class="box-body">
+                    <div class="box-body ">
                         <?php echo "$form"; ?>
                     </div>
-                    <div class="box-footer">
+                    <div class="box-footer responsive-text">
                         Never submit passwords through iVote++.
                     </div>
                 </div>
@@ -94,6 +93,13 @@
 <script src="{{ URL::asset('assets/bootstrap/js/bootstrap.min.js') }}"></script>
 <!-- iCheck -->
 <script src="{{ URL::asset('assets/plugins/iCheck/icheck.min.js')}}"></script>
+<script src="{{ URL::asset('assets/responsivetext/jquery.responsivetext.js') }}"></script>
+<script type="text/javascript">
+  $("body").responsiveText({
+     bottomStop : '300',
+     topStop    : '1400'
+});
+</script>
 <script>
   $(function () {
     $('input').iCheck({
