@@ -28,17 +28,23 @@ class auditController extends Controller
         $first = $first->format('Y-m-d');
         
         
+        
+        if($audit->currentPage() == 1){
+            session(['first'=>$first]);
+        
         $html='<li class="time-label">
             <span class="bg-red">
                 '.date("D, M. d Y", strtotime($first)) .'
                 </span>
             </li>';
+        }
+        else $html = "";
         
         foreach ($audit as $aud) {
             $date = date_create($aud->Date);
             $date = $date->format('Y-m-d');
             
-            if($first != $date){
+            if(session()->get('first') != $date){
                 $html.='<li class="time-label">
                     <span class="bg-red">
                     '.date("D, M. d Y", strtotime($aud->Date)) .'
@@ -46,6 +52,8 @@ class auditController extends Controller
                 </li>';
                 $first = date_create($aud->Date);
                 $first = $first->format('Y-m-d');
+                session()->forget('first');
+                session(['first'=>$first]);
             }
             
                 $html.= "<li>";
