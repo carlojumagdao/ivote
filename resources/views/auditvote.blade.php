@@ -56,7 +56,7 @@
                                 ?>
                             <td class="">{{$converteddatevoted}}</td>
                             <td>
-                                <button class="btn btn-primary btn-sm view" data- toggle="tooltip" title="View"><i class="fa fa-eye"></i></button>
+                                <button class="btn btn-primary btn-sm view" data- toggle="tooltip" title="View Details"><i class="fa fa-eye"></i></button>
                             </td>
                         </tr>
                     @endforeach

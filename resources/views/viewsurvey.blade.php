@@ -94,7 +94,7 @@
                 </div>
                 <div class = "row">
                     <div class="col-md-6">
-                        <p>Date of Vote:</p>
+                        <p>Date Answered:</p>
                     </div>
                     <div class="col-md-6">
                         <?php

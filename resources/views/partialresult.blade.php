@@ -24,6 +24,9 @@
     </script>
 
     <style>
+        .box{
+            box-shadow: 0 5px 5px rgba(0,0,0,0.1);
+        }
         .wrapper{
             padding: 30px;
         }
@@ -33,45 +36,84 @@
 
 
     </style>
-
-
     <body>
         <div class="wrapper">
-
-        
-
-        <!-- BAR CHART -->
-        <h3 class="responsive-text" style="font-style:Helvetica;color:black;text-shadow: 2px 2px 8px rgba(217, 217, 217, 0.88);margin-left:15px;"> Partial Result <h3>
-        @foreach($positions as $position)
-            <!-- Set the width of the column, if no. of candidates is > 6 or not -->
-            @foreach($candno as $value)
-                @if($position->strPositionId == $value->strPositionId)
-                    @if($value->Total < 6)
-                        <div class="col-lg-6 col-xs-12">
-                    @else
-                        <div class="col-lg-12 col-xs-12">
-                    @endif
-                @endif
-            @endforeach
-            <!-- Set the width of the column, if no. of candidates is > 6 or not -->
-                <div class="box box-info">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">{{$position->strPosName}}</h3>
-                        <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                            </button>
-                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li class="pull-left header"><i class="fa fa-th"></i> Partial Result</li>
+                    <li><a href="#tab_1" data-toggle="tab">Graphical</a></li>
+                    <li class="active"><a href="#tab_2" data-toggle="tab">Tabular</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane" id="tab_1">
+                        <div class="row">
+                        @foreach($positions as $position)
+                            <!-- Set the width of the column, if no. of candidates is > 6 or not -->
+                            @foreach($candno as $value)
+                                @if($position->strPositionId == $value->strPositionId)
+                                    @if($value->Total < 6)
+                                        <div class="col-lg-6 col-xs-12">
+                                    @else
+                                        <div class="col-lg-12 col-xs-12">
+                                    @endif
+                                @endif
+                            @endforeach
+                                <!-- Set the width of the column, if no. of candidates is > 6 or not -->
+                                    <div class="box">
+                                        <div class="box-header with-border">
+                                            <h3 class="box-title">{{$position->strPosName}}</h3>
+                                            <div class="box-tools pull-right">
+                                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="box-body">
+                                            <div class="chart">
+                                                <canvas id="{{$position->strPositionId}}" style="height:230px"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
-                    <div class="box-body">
-                        <div class="chart">
-                            <canvas id="{{$position->strPositionId}}" style="height:230px"></canvas>
+                    <!-- /.tab-pane -->
+                    <div class="tab-pane active" id="tab_2">
+                        <div class="row">
+                        @foreach($positions as $position)
+                        <div class="col-md-4">
+                            <div class="box">
+                                <div class="box-header with-border">
+                                    <p class="box-title" style="color:#36A2EB;font-size:20px;font-weight:bold;">{{$position->strPosName}}</p>
+                                    <div class="box-tools pull-right">
+                                        <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                                        <i class="fa fa-minus"></i></button>
+                                    </div>
+                                </div>
+                                <div class="box-body table-responsive no-padding">
+                                    <table class="table table-hover">
+                                    <tr>
+                                        <th>Candidate Name</th>
+                                        <th>No. of Votes</th>
+                                    </tr>
+                                    @foreach($tally as $candidate)
+                                        <tr>
+                                            @if($position->strCandPosId == $candidate->strCandPosId)
+                                                <td><img src='{{ URL::asset("assets/images/$candidate->txtCandPic") }}' img class="img-circle" height="65" width="65" id="user-pic"> {{$candidate->fullname}}</td>
+                                                <td style="padding:26px;">{{$candidate->votes}}</td>
+                                            @endif
+                                        </tr>
+                                    @endforeach
+                                    </table>
+                                </div>
+                            </div>
+                        </div> 
+                        @endforeach
                         </div>
                     </div>
                 </div>
             </div>
-        @endforeach
-
         </div>
         <!-- BAR CHART -->
 

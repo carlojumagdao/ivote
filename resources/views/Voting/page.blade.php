@@ -33,6 +33,11 @@
     <script src="{{ URL::asset('assets/jquery/jquery.min.js') }}"></script>
 
     <style>
+        @media print {
+            html, body {
+               display: none;  /* hide whole page */
+            }
+        }
         .body{
             padding:0;
             background-color: #fff;

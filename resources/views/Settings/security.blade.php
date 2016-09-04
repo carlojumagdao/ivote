@@ -19,7 +19,7 @@
                 {!! implode('', $errors->all(
                     '<li>:message</li>'
                 )) !!}
-            </div>
+            </div> 
         @endif
         @if (Session::has('message'))
             <div class="alert alert-success alert-dismissible">
@@ -58,7 +58,6 @@
                 @endforeach
                 </table>
             </div>
-            
         </div>
     </div> 
     <div class="col-md-4">

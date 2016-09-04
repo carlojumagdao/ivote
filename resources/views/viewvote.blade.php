@@ -34,7 +34,7 @@
     <div class="col-md-8">
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">Voting Details</h3>
+                <h3 class="box-title">Vote Details</h3>
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
                     <i class="fa fa-minus"></i></button>
@@ -77,7 +77,7 @@
     <div class="col-md-4">
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">Voting Information</h3>
+                <h3 class="box-title">Vote Information</h3>
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
                     <i class="fa fa-minus"></i></button>
@@ -103,72 +103,12 @@
                         ?>
                         <p>{{$convertedDOV}}</p>
                     </div>
-                    <div class="col-md-6">
-                        <p>Device Used: </p>
-                    </div>
-                    <div class="col-md-6">
-                        <p>
-                        @if($voted[0]->intDevice == 1)
-                            {{"Desktop"}}
-                        @elseif($voted[0]->intDevice == 2)
-                            {{"Tablet"}}
-                        @elseif($voted[0]->intDevice == 3)
-                            {{"Mobile"}}
-                        @endif
-                        </p>
-                    </div>
-                    <div class="col-md-6">
-                        <p>Browser: </p>
-                    </div>
-                    <div class="col-md-6">
-                        <p>{{$voted[0]->strBrowser}}</p>
-                    </div>
-                    <div class="col-md-6">
-                        <p>Operating System: </p>
-                    </div>
-                    <div class="col-md-6">
-                        <p>{{$voted[0]->strOpSys}}</p>
-                    </div>
-                    <div class="col-md-6">
-                        <p>Device Model: </p>
-                    </div>
-                    <div class="col-md-6">
-                        <p>{{$voted[0]->strDevModel}}</p>
-                    </div>
+                    
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="box box-default collapsed-box">
-            <div class="box-header with-border">
-                <h3 class="box-title">Member Information</h3>
-                <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-                    <i class="fa fa-plus"></i></button>
-                </div>
-            </div>
-            <div class="box-body">
-                <div class = "row">
-                    <div class="col-md-6">
-                        <h4>Member ID:</h4>
-                    </div>
-                    <div class="col-md-6">
-                        <h4>{{$voted[0]->strMemberId}}</h4>
-                    </div>
-                </div>
-                <div class = "row">
-                    <div class="col-md-6">
-                        <h5>Member Name:</h5>
-                    </div>
-                    <div class="col-md-6">
-                        <h5>{{$voted[0]->strMemLname}}, {{$voted[0]->strMemFname}} {{$voted[0]->strMemMname}} </h5>
-                    </div>
-                </div>
-            </div>
-            
-        </div>
-    </div>
+    
     
 
 @stop 
