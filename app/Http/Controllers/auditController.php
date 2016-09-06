@@ -24,12 +24,14 @@ class auditController extends Controller
     public function index(Request $request){
         $audit=Audit::orderBy('Date', 'desc')->paginate(4);
         
-        $first =  date_create($audit[0]->Date);
-        $first = $first->format('Y-m-d');
+        $first = "";
+        if($audit->total() != 0){
+            $first =  date_create($audit[0]->Date);
+            $first = $first->format('Y-m-d');
+        }
         
         
-        
-        if($audit->currentPage() == 1){
+        if($audit->currentPage() == 1 && $audit->total() != 0){
             session(['first'=>$first]);
         
         $html='<li class="time-label">
