@@ -1,3 +1,6 @@
+<?php
+        $image = "https://s3.amazonaws.com/ndap-ivote-2017/settings/".$logo."";
+    ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,7 +9,7 @@
 	
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>iVote++ | User Login Page</title>
+  <title>iVote++ | Survey</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -46,7 +49,7 @@
 	<div class="login-box">
   <div class="login-box-body">
     <center>
-      <img src='{{ URL::asset("assets/images/$logo") }}' style="max-width: 130px;">
+      <img src='{{ $image}}' style="max-width: 130px;">
       <br>
       <h3>{{$header}}</h3>
     </center>
@@ -66,6 +69,7 @@
             <div class="form-group has-feedback">
                 <center>
                 <label style="font-size: 14px; font-weight: bold">Thank you for your Participation on the Survey.</label>
+                <a href="ibits-ivote.herokuapp.com" style="text-decoration:none">Back to Main Page</a>
                 <center>             
             </div>
             <!-- <div class="form-group has-feedback">

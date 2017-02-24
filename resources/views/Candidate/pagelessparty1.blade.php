@@ -17,6 +17,7 @@
         }
 
         body {
+            background-image: url("{{ URL::asset('../assets/images/bgGlass.jpg') }}");
             background-color: #ECEFF1;
             color: #37474F;
             font-family: 'Raleway', sans-serif;

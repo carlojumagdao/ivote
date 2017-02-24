@@ -31,6 +31,7 @@
         padding-right: 15px;
     }
     body{
+        background-image: url("{{ URL::asset('../assets/images/bgGlass.jpg') }}");
         background-color: white;
         color: #37474F;
         font-family: 'Raleway', sans-serif;

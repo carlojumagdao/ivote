@@ -1,4 +1,6 @@
-
+<?php
+  $image = "https://s3.amazonaws.com/ndap-ivote-2017/settings/".$logo."";
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -93,7 +95,8 @@
           
                 <h6 class="responsive-text"  style="font-family:helvetica;text-align:center;letter-spacing:1px;">Enter your Member Code to start voting</h6>
                 <div class="col-md-4 col-xs-12">
-                    <center><img id="cand-pic" class="img-responsive" src='{{ URL::asset("assets/images/$logo") }}' style="padding-top:30px"></center>
+
+                    <center><img id="cand-pic" class="img-responsive" src='{{$image}}' style="padding-top:30px"></center>
                     <br>
                     <h4 class="responsive-text" style="color:white;text-align:center;color:SteelBlue;">{{$header}}</h4>
                     <h6 class="responsive-text" style="font-family:helvetica;text-align:center;">Powered by iVote++</h6>

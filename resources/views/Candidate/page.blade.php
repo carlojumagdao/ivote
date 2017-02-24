@@ -1,7 +1,3 @@
-<?php
-$BackgroundImage = "https://s3.amazonaws.com/ndap-ivote-2017/settings/bgGlass";
-?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,7 +25,7 @@ $BackgroundImage = "https://s3.amazonaws.com/ndap-ivote-2017/settings/bgGlass";
         padding: 15px;
     }
     body{
-        background-image: url("{{ $BackgroundImage }}");
+        background-image: url("{{ URL::asset('../assets/images/bgGlass.jpg') }}");
         background-color: #ECEFF1;
         color: #37474F;
         font-family: 'Raleway', sans-serif;

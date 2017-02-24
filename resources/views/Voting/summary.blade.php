@@ -76,9 +76,12 @@
 </head>
 <body class="body">
     @foreach($election as $set)
+    <?php
+        $image = "https://s3.amazonaws.com/ndap-ivote-2017/settings/".$set->txtSetLogo."";
+    ?>
     <div class="row header2">
         <div class="col-md-2 col-xs-4 col-md-offset-1">
-            <img src="assets/images/{{$set->txtSetLogo}}" class="paddify img-responsive">
+            <img src="{{$image}}" class="paddify img-responsive">
         </div>
         <div class="col-md-5 col-xs-8">
             <h2>{{$set->strSetElecName}}</h2>
@@ -143,7 +146,10 @@
                     <div class="row col-md-offset-4"> 
                         <center>
                         <div class="tooltipped col-md-3" data-position="top" data-delay="50" data-tooltip="logo picture">
-                            <img id="cand-pic" src="../assets/images/{{$candidate->txtCandPic}}" style="background-size: contain;  border: 0px; border-left: 5px solid {{$candidate->strPosColor}};" class="img-responsive"/> 
+                            <?php
+                                $candImage = "https://s3.amazonaws.com/ndap-ivote-2017/candidates/".$candidate->txtCandPic."";
+                            ?>
+                            <img id="cand-pic" src="{{$candImage}}" style="background-size: contain;  border: 0px; border-left: 5px solid {{$candidate->strPosColor}};" class="img-responsive"/> 
                         </div>
                         <div class="col-md-3">
                             <label style="font-size: 20px;">

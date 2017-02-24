@@ -1,3 +1,6 @@
+<?php
+    $image = "https://s3.amazonaws.com/ndap-ivote-2017/settings/".$logo."";
+?>
 
 <!DOCTYPE html>
 <html>
@@ -64,7 +67,7 @@
             <div class="col-md-12" style="margin-top:-40%">
                <h3 class="responsive-text">
                     <center>
-                    <img class="img-responsive" src='{{ URL::asset("assets/images/$logo") }}' style="max-width: 75px;">
+                    <img class="img-responsive" src='{{$image}}' style="max-width: 75px;">
                     <b  style="color:white;text-shadow: 2px 2px 8px rgba(5, 5, 5, 0.62);" >&nbsp;{{$header}} </b>
                     </center>
                 </h3>

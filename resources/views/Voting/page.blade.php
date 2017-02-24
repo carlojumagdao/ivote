@@ -78,9 +78,12 @@
 </head>
 <body class="body">
     @foreach($election as $set)
+    <?php
+        $image = "https://s3.amazonaws.com/ndap-ivote-2017/settings/".$set->txtSetLogo."";
+    ?>
     <div class="row header2">
         <div class="col-md-2 col-xs-4 col-md-offset-1">
-            <img src="assets/images/{{$set->txtSetLogo}}" class="paddify img-responsive">
+            <img src="{{$image}}" class="paddify img-responsive">
         </div>
         <div class="col-md-5 col-xs-8">
             <h2 class="responsive-text">{{$set->strSetElecName}}</h2>
@@ -178,7 +181,10 @@
                                 <div class="checkbox">
                                     <label style="font-family:helvetica;">
                                         <div>
-                                            <img id="cand-pic" src="../assets/images/{{$candidate->txtCandPic}}" style="background-size: contain; border: 0px; padding-bottom:10px;padding-right:15px;" class="img-responsive"/> 
+                                            <?php
+                                                $candImage = "https://s3.amazonaws.com/ndap-ivote-2017/candidates/".$candidate->txtCandPic."";
+                                            ?>
+                                            <img id="cand-pic" src="{{$candImage}}" style="background-size: contain; border: 0px; padding-bottom:10px;padding-right:15px;" class="img-responsive"/> 
                                         </div>
                                        
                                         <input style="text-transform:capitalize;padding-top:15px;" type="checkbox" value="{{$candidate->strCandId}}" name="vote[]"  class="pos_{{$position->strPositionId}} v_{{$candidate->intCandParId}} responsive-text" onclick=" return maxCast_{{$position->strPositionId}}()"
