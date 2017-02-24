@@ -4,3 +4,10 @@ DB_HOST=127.0.0.1
 DB_DATABASE=dbVote++
 DB_USERNAME=root
 DB_PASSWORD=
+
+
+DB_CONNECTION=mysql
+DB_HOST=us-cdbr-iron-east-04.cleardb.net
+DB_DATABASE=heroku_a012cbd6ad1939d
+DB_USERNAME=b9e20282e28fd5
+DB_PASSWORD=a19c0749

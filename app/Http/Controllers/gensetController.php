@@ -10,6 +10,7 @@ use Redirect;
 use File;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use AWS;
 
 class gensetController extends Controller
 {
@@ -27,10 +28,11 @@ class gensetController extends Controller
             $strHeaders = $value->strHeader;
             $strAddress = $value->strSetAddress;
             $blSetPublish = $value->blSetPublish;
-            $LogoPic = $value->txtSetLogo;
+            // $LogoPic = $value->txtSetLogo;
+            $image = "https://s3.amazonaws.com/ndap-ivote-2017/settings/".$value->txtSetLogo."";
             /*$strSetLogo = $value->txtSetLogo;*/
     	}
-         return view('Settings.general', ['strElecName' => $strElecName,'strElecDesc' => $strElecDesc,'datStart' => $datStart,'datEnd' => $datEnd, 'blSurvey' => $blSurvey,'blParty' => $blParty, 'strHeaders' => $strHeaders , 'LogoPic'=>$LogoPic, 'strSetAddress' => $strAddress, 'blSetPublish'=>$blSetPublish]);
+         return view('Settings.general', ['strElecName' => $strElecName,'strElecDesc' => $strElecDesc,'datStart' => $datStart,'datEnd' => $datEnd, 'blSurvey' => $blSurvey,'blParty' => $blParty, 'strHeaders' => $strHeaders , 'image'=>$image, 'strSetAddress' => $strAddress, 'blSetPublish'=>$blSetPublish]);
     }
     public function save(Request $request){
 
@@ -160,6 +162,15 @@ class gensetController extends Controller
                 $filename = $date.'-'.rand(111111,999999).'.'.$extension;
                 $GenSet = GenSet::find(1);
                 $request->file('logo')->move($destinationPath, $filename);
+                $s3 = AWS::createClient('s3');
+                $s3->putObject(array(
+                    'Bucket'     => 'ndap-ivote-2017',
+                    'Key'        => 'settings/'.$filename,
+                    'SourceFile' => 'assets/images/'.$filename,
+                    'ACL'        => 'public-read'
+                ));
+                $file = $destinationPath.'/'.$filename;
+                unlink($file);
                 $GenSet->txtSetLogo = $filename;
                 $GenSet->strSetElecName = $request->input('txtElectionTitle');
                 $GenSet->strSetElecDesc = $request->input('txtElectionDesc');

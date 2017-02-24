@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -62,10 +63,12 @@
 <header style="background-color:rgba(248, 248, 248, 0.71);border-bottom: 2px solid  DodgerBlue ">
  @foreach($election as $setting)
  <div class="row">
- 
+      <?php
+      $image = "https://s3.amazonaws.com/ndap-ivote-2017/settings/".$setting->txtSetLogo."";
+      ?>
       <div class="col-md-2 col-xs-6">
             <div class="tooltipped" data-position="top" data-delay="50" data-tooltip="logo picture">
-                <img id="cand-pic" class="img-responsive" src="../assets/images/{{$setting->txtSetLogo}}"  style="opacity:2px; width: 180px;background-size: contain;margin-top: 10px; " /> 
+                <img id="cand-pic" class="img-responsive" src="{{$image}}"  style="opacity:2px; width: 180px;background-size: contain;margin-top: 10px; " /> 
             </div>
         </div>
         <div class="col-md-7 col-xs-6 "  >

@@ -1,3 +1,7 @@
+<?php
+$BackgroundImage = "https://s3.amazonaws.com/ndap-ivote-2017/settings/bgGlass";
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,7 +29,7 @@
         padding: 15px;
     }
     body{
-        background-image: url("{{ URL::asset('../assets/images/bgGlass.jpg') }}");
+        background-image: url("{{ $BackgroundImage }}");
         background-color: #ECEFF1;
         color: #37474F;
         font-family: 'Raleway', sans-serif;
@@ -61,13 +65,15 @@
  
       <div class="col-md-2 col-xs-6">
             <div class="tooltipped" data-position="top" data-delay="50" data-tooltip="logo picture">
-                <img id="cand-pic" class="img-responsive" src="../assets/images/{{$setting->txtSetLogo}}"  style="opacity:2px; width: 180px;background-size: contain;margin-top: 10px; " /> 
+                <img id="cand-pic" class="img-responsive" src="{{$image}}"  style="opacity:2px; width: 180px;background-size: contain;margin-top: 10px; " /> 
             </div>
         </div>
         <div class="col-md-7 col-xs-6 "  >
             
-               
-                <h2 class="responsive-text" style="font-family:helvetica;text-align:left;text-transform: capitalize;letter-spacing:1px">{{$setting->strHeader}}</h2>
+               <?php
+                $image = "https://s3.amazonaws.com/ndap-ivote-2017/settings/".$setting->txtSetLogo."";
+                ?>
+                <h2 class="responsive-text" style="font-family:helvetica;text-align:left;text-transform: capitalize;letter-spacing:1px">{{$image}}</h2>
                 
                 <h4 class="responsive-text" style="font-family:segoe ui;text-align:left;margin-top:10px;">{{$setting->strSetElecName}}</h4>
                 <h6 class="responsive-text" style="font-family:segoe ui;text-align:left;letter-spacing:1px;text-transform: capitalize;">{{$setting->strSetElecDesc}}</h6>

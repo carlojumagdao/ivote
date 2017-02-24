@@ -1,3 +1,7 @@
+<?php
+$image = "https://s3.amazonaws.com/ndap-ivote-2017/settings/".$set->txtSetLogo."";
+?>
+
 <!DOCTYPE html>
 <html>
 	<link rel="stylesheet" href="{{ URL::asset('assets/bootstrap/css/bootstrap.min.css') }}">
@@ -289,7 +293,7 @@
             <center>
         </div>
         <div class="col-md-3 col-xs-4">
-            <img class="img-responsive"  src="assets/images/{{$set->txtSetLogo}}" style="padding:53px" >
+            <img class="img-responsive"  src="{{$image}}" style="padding:53px" >
         </div>
     </div>
     </div>

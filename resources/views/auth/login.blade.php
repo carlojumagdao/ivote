@@ -47,7 +47,7 @@
 <div class="login-box">
   <div class="login-box-body">
     <center>
-      <img src="assets/images/i.png" style="width:100%;">
+      <img src='{{ URL::asset("assets/images/i.png") }}' style="width:100%;">
       <h4>Election Content Management and Exit Poll Survey System</h4>
     </center>
     <br>

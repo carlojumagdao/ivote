@@ -53,7 +53,7 @@
                     <center> <h4>Logo Picture</h4> 
                     <div class="col s4">
                         <div class="card-panel2 tooltipped" data-position="top" data-delay="50" data-tooltip="logo picture">
-                            <img id="cand-pic1" src="../assets/images/@if ($LogoPic == NULL)ivote.jpg @else{{$LogoPic}} @endif" width="180px" style="background-size: contain" width="180px" /> 
+                            <img id="cand-pic1" src="{{$image}}" width="180px" style="background-size: contain" width="180px" /> 
                         </div>
                     </div>
                     </center>
