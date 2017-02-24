@@ -16,6 +16,7 @@
   $userName = session('name');
   $userEmail = session('email');
   $imgPath = session('picname');
+  $image = "https://s3.amazonaws.com/ndap-ivote-2017/users/".$imgPath."";
 ?>
 
 <!-- START CONTENT -->
@@ -60,7 +61,7 @@
                         <div class="tab-content">
                             <div class="active tab-pane" id="profile">
                                 <center>
-                                    <img class="img-circle" src="{{ URL::asset('assets/images/'.$imgPath.'') }}" width="300" alt="User profile picture">
+                                    <img class="img-circle" src="{{ $image }}" width="300" alt="User profile picture">
                                     </center>
                                     <h3 class="profile-username text-center"><?php echo $userName; ?></h3>
                                     <p class="text-muted text-center">Administrator</p>
@@ -112,7 +113,7 @@
                                     <center>
                                         <div class="col s12">
                                             <div class="card-panel2 tooltipped" data-position="top" data-delay="50" data-tooltip="logo picture">
-                                                <img class="img-circle" id="userProfile-pic" src="{{ URL::asset('assets/images/'.$imgPath.'') }}" width="300px" style="background-size: contain" /> 
+                                                <img class="img-circle" id="userProfile-pic" src="{{ $image }}" width="300px" style="background-size: contain" /> 
                                             </div>
                                         </div>
                                         <div class="form-group col-md-8 ">

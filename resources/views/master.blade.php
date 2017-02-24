@@ -5,6 +5,7 @@
   $userName = session('name');
   $userEmail = session('email');
   $imgPath = session('picname');
+  $image = "https://s3.amazonaws.com/ndap-ivote-2017/users/".$imgPath."";
 
     $ui = ui::find(1);
     if($ui) $skin = $ui->strUISkin;
@@ -57,13 +58,13 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="{{ URL::asset('assets/images/'.$imgPath.'') }}" class="user-image" alt="User Image">
+              <img src="{{ $image }}" class="user-image" alt="User Image">
               <span class="hidden-xs"><?php echo $userName; ?></span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="{{ URL::asset('assets/images/'.$imgPath.'') }}" class="img-circle" alt="User Image" height="60" width="60">
+                <img src="{{$image}}" class="img-circle" alt="User Image" height="60" width="60">
 
                 <p>
                   <?php echo $userName; ?>
@@ -94,7 +95,7 @@
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="{{ URL::asset('assets/images/'.$imgPath.'') }}" img class="img-circle" height="65" width="65" id="user-pic" >
+          <img src="{{$image}}" img class="img-circle" height="65" width="65" id="user-pic" >
         </div>
         <div class="pull-left info">
           <p><?php echo $userName; ?></p>

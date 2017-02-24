@@ -55,7 +55,7 @@
             </div>
             <div class="box-body box-profile">
                 <center>
-                    <img class="img-circle" src="{{ URL::asset('assets/images/'.$img.'') }}" width="300" alt="User profile picture">
+                    <img class="img-circle" src="{{$img}}" width="300" alt="User profile picture">
                 </center>
                 <ul class="list-group list-group-unbordered" style=" padding:40px">
                     <li class="list-group-item">

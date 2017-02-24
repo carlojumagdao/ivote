@@ -229,7 +229,9 @@
                                                      <div class="col-md-4">
                                                         <li>
                                                             <center>
-                                                                <img class="img-circle" height="100" width="100" id="cand-pic" src="../assets/images/{{$candidate->txtCandPic}}">
+                                                                <?php $image = "https://s3.amazonaws.com/ndap-ivote-2017/candidates/".$candidate->txtCandPic."";
+                                                                ?>
+                                                                <img class="img-circle" height="100" width="100" id="cand-pic" src="{{$image}}">
                                                                 <a class="users-list-name">{{$candidate->strMemFname}} {{$candidate->strMemLname}}</a>
                                                                 <span class="users-list-position">{{$position->strPosName}}</span>
                                                             </center>
@@ -270,7 +272,9 @@
                                                         <div class="col-md-4">
                                                             <li>
                                                                 <center>
-                                                                    <img class="img-circle" height="100" width="100" id="cand-pic" src="../assets/images/{{$candidate->txtCandPic}}">
+                                                                    <?php $image = "https://s3.amazonaws.com/ndap-ivote-2017/candidates/".$candidate->txtCandPic."";
+                                                                    ?>
+                                                                    <img class="img-circle" height="100" width="100" id="cand-pic" src="{{$image}}">
                                                                     <a class="users-list-name">{{$candidate->strMemFname}} {{$candidate->strMemLname}}</a>
                                                                     <span class="users-list-position">{{$position->strPosName}}</span>
                                                                 </center>

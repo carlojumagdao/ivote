@@ -14,6 +14,7 @@ use Redirect;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use AWS;
 
 class candidateController extends Controller
 {
@@ -167,7 +168,6 @@ class candidateController extends Controller
             $extension = $request->file('image')->getClientOriginalExtension(); // getting image extension
             $date = date("Ymdhis");
             $filename = $date.'-'.rand(111111,999999).'.'.$extension;
-            
             $ids = DB::table('tblcandidate')->select('strCandId')->get();
             $latest = 'CAND000';
             foreach($ids as $id){
@@ -184,6 +184,15 @@ class candidateController extends Controller
             else $Candidate->intCandParId = 1;
             if ($request->file('image')->isValid()) {
                 $request->file('image')->move($destinationPath, $filename);
+                $s3 = AWS::createClient('s3');
+                $s3->putObject(array(
+                    'Bucket'     => 'ndap-ivote-2017',
+                    'Key'        => 'candidates/'.$filename,
+                    'SourceFile' => 'assets/images/'.$filename,
+                    'ACL'        => 'public-read'
+                ));
+                $file = $destinationPath.'/'.$filename;
+                unlink($file);
                 $Candidate->txtCandPic = $filename;
             }  
             $Candidate->save();
@@ -314,6 +323,15 @@ class candidateController extends Controller
                  
                 if ($request->file('image')->isValid()) {
                     $request->file('image')->move($destinationPath, $filename);
+                    $s3 = AWS::createClient('s3');
+                    $s3->putObject(array(
+                        'Bucket'     => 'ndap-ivote-2017',
+                        'Key'        => 'candidates/'.$filename,
+                        'SourceFile' => 'assets/images/'.$filename,
+                        'ACL'        => 'public-read'
+                    ));
+                    $file = $destinationPath.'/'.$filename;
+                    unlink($file);
                     $Candidate->txtCandPic = $filename;
                 }
                 

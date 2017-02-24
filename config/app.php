@@ -139,6 +139,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Vinkla\Pusher\PusherServiceProvider::class,
         hisorange\BrowserDetect\Provider\BrowserDetectService::class,
+        Aws\Laravel\AwsServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -200,6 +201,7 @@ return [
         'View'      => Illuminate\Support\Facades\View::class,
         'BrowserDetect' => hisorange\BrowserDetect\Facade\Parser::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
+        'AWS' => Aws\Laravel\AwsFacade::class,
 
     ],
 

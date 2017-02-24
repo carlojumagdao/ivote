@@ -1,3 +1,8 @@
+<?php
+//Cloud Image
+$image = "https://s3.amazonaws.com/ndap-ivote-2017/candidates/".$Candidate->txtCandPic."";
+
+?>
 @extends('master')
 @section('title')
     {{"Candidate"}}
@@ -56,7 +61,7 @@
                 <center>
                 <div class="col s4">
                     <div class="card-panel2 tooltipped" data-position="top" data-delay="50" data-tooltip="logo picture">
-                        <img id="cand-pic" src="../assets/images/{{$Candidate->txtCandPic}}" style="max-width:180px;background-size: contain" /> 
+                        <img id="cand-pic" src="{{$image}}" style="max-width:180px;background-size: contain" /> 
                     </div>
                 </div>
                 </center>

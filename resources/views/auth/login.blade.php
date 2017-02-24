@@ -89,12 +89,12 @@
                 </div>
             </div>
               <!-- /.col -->
-               <div class="col-xs-6">
+               <div class="col-xs-12">
                   <button type="submit" class="btn btn-primary btn-block btn-flat">Login</button>
                 </div>
-                <div class="col-xs-6">
+                <!-- <div class="col-xs-6">
                  <a href="{{ URL::to('/auth/register') }}" class="text-center">Register a new account</a>
-                </div><!-- /.col -->
+                </div> --><!-- /.col -->
             </div>
     </form>
 

@@ -405,8 +405,8 @@ Route::get('auth/logout', 'Auth\AuthController@getLogout');
 // Authentication Admin//
 
 // Registration Admin//
-Route::get('auth/register', 'Auth\AuthController@getRegister');
-Route::post('auth/register', 'Auth\AuthController@postRegister');
+// Route::get('auth/register', 'Auth\AuthController@getRegister');
+// Route::post('auth/register', 'Auth\AuthController@postRegister');
 // Registration Admin//
 
 //Log In User//
@@ -510,7 +510,4 @@ Route::get('/endelection', function () {
 //Log In User//
 
 
-Route::get('/tae', function (){
-	return view('test');
-});
 

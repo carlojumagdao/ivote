@@ -57,8 +57,11 @@
                         </h2>
                         <div class="mc-content">
                             <div class="img-container">
-                                <img class="img-responsive" src="../assets/images/{{$candidate->txtCandPic}}">
-                            </div>
+                                    <?php $image = "https://s3.amazonaws.com/ndap-ivote-2017/candidates/".$candidate->txtCandPic."";
+                                    ?>
+                                    <img class="img-responsive" src="{{$image}}">
+                                </div>
+                            
                             <div class="mc-description">
                                 Education Background: &nbsp {{ $candidate->strCandEducBack}}
                                 Platform: &nbsp {{ $candidate->strCandInfo}}

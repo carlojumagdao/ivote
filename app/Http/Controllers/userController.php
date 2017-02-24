@@ -11,6 +11,7 @@ use App\GenSet AS GenSet;
 use Hash;
 use Redirect;
 use File;
+use AWS;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Session;
@@ -47,7 +48,7 @@ class userController extends Controller
         $users = DB::table('users')->where('id', $id)->get();
         foreach ($users as $user) {
             $name = $user->name;
-            $img = $user->txtPath;
+            $img = "https://s3.amazonaws.com/ndap-ivote-2017/users/".$user->txtPath."";
             $email = $user->email;
         }
         return view('Users.userView', ['users' => $users,'name'=>$name,'img'=>$img,'email'=>$email]);
@@ -56,7 +57,7 @@ class userController extends Controller
         $users = DB::table('users')->where('id', $id)->get();
         foreach ($users as $user) {
             $name = $user->name;
-            $img = $user->txtPath;
+            $img = "https://s3.amazonaws.com/ndap-ivote-2017/users/".$user->txtPath."";
             $email = $user->email;
         }
         return view('Users.EditUser', ['users' => $users,'name'=>$name,'img'=>$img,'email'=>$email,'id'=>$id]);
@@ -64,9 +65,7 @@ class userController extends Controller
     public function edit(Request $request){
         $id = $request->input('id');
         $user = DB::table('users')->where('id', $id)->get();
-        
         return view('Users.userEdit', ['user' => $user]);
-        
     }
     public function create(){
         $GenSet = GenSet::find(1);
@@ -82,7 +81,6 @@ class userController extends Controller
         else{
             return view('Users.userAdd', ['user' => $user]);
         }
-        
     }
     public function add(Request $request){
         $user = DB::table('users')->get();
@@ -110,21 +108,27 @@ class userController extends Controller
             return Redirect::back()->withErrors($validator);
         }
         try{
-            
-            $destinationPath =  'assets/images/'; // upload path
+            $destinationPath =  'assets/images'; // upload path
             $extension = $request->file('image')->getClientOriginalExtension(); // getting image extension
             $date = date("Ymdhis");
             $filename = $date.'-'.rand(111111,999999).'.'.$extension;
             
             if ($request->file('image')->isValid()) {
                 $request->file('image')->move($destinationPath, $filename);
-                $imgPath = $filename;
+                $s3 = AWS::createClient('s3');
+                $s3->putObject(array(
+                    'Bucket'     => 'ndap-ivote-2017',
+                    'Key'        => 'users/'.$filename,
+                    'SourceFile' => 'assets/images/'.$filename,
+                    'ACL'        => 'public-read'
+                ));
+                $file = $destinationPath.'/'.$filename;
+                unlink($file);
             }
-            
             User::create([
             'name' => $request['name'],
             'email' => $request['email'],
-            'txtPath' => $imgPath,
+            'txtPath' => $filename,
             'password' => bcrypt($request['password']),
             ]);
            
@@ -135,7 +139,8 @@ class userController extends Controller
         //redirect
         $request->session()->flash('message', 'Successfully added.');
         $Users = DB::table('users')->where('blDelete', '=', 0)->get();
-        return view('Users.index', ['Users' => $Users, 'intCounter'=>0]);
+        // return view('Users.index', ['Users' => $Users, 'intCounter'=>0]);
+        return redirect('user');
     }
 
     public function delete(Request $request){
@@ -212,6 +217,15 @@ class userController extends Controller
                 $filename = $date.'-'.rand(111111,999999).'.'.$extension;
                     if ($request->file('image')->isValid()) {
                     $request->file('image')->move($destinationPath, $filename);
+                    $s3 = AWS::createClient('s3');
+                    $s3->putObject(array(
+                        'Bucket'     => 'ndap-ivote-2017',
+                        'Key'        => 'users/'.$filename,
+                        'SourceFile' => 'assets/images/'.$filename,
+                        'ACL'        => 'public-read'
+                    ));
+                    $file = $destinationPath.'/'.$filename;
+                    unlink($file);
                     $User->txtPath = $filename;
                 }
             }          
@@ -254,6 +268,16 @@ class userController extends Controller
                 $filename = $date.'-'.rand(111111,999999).'.'.$extension;
                     if ($request->file('image')->isValid()) {
                     $request->file('image')->move($destinationPath, $filename);
+
+                    $s3 = AWS::createClient('s3');
+                    $s3->putObject(array(
+                        'Bucket'     => 'ndap-ivote-2017',
+                        'Key'        => 'users/'.$filename,
+                        'SourceFile' => 'assets/images/'.$filename,
+                        'ACL'        => 'public-read'
+                    ));
+                    $file = $destinationPath.'/'.$filename;
+                    unlink($file);
                     $User->txtPath = $filename;
                 }
             }          

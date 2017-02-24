@@ -57,7 +57,7 @@
                 <br>
                     <div class="col s12">
                         <div class="card-panel2 tooltipped" data-position="top" data-delay="50" data-tooltip="logo picture">
-                            <img class="img-circle" id="usr-pic" src="{{ URL::asset('assets/images/'.$img.'') }}" width="300px" style="background-size: contain" /> 
+                            <img class="img-circle" id="usr-pic" src="{{$img}}" width="300px" style="background-size: contain" /> 
                         </div>
                     </div>
                 </center>
