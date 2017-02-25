@@ -69,7 +69,7 @@
             <div class="form-group has-feedback">
                 <center>
                 <label style="font-size: 14px; font-weight: bold">Thank you for your Participation on the Survey.</label>
-                <a href='{{ URL::to("ibits-ivote.herokuapp.com") }}' style="text-decoration:none">Back to Main Page</a>
+                <b><a href='{{ URL::to("/") }}' style="text-decoration:none">Back to Main Page</a></b>
                 <center>             
             </div>
             <!-- <div class="form-group has-feedback">
