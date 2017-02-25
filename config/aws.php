@@ -17,10 +17,10 @@ return [
     |
     */
     'credentials' => [
-        'key'    => env('AWS_KEY'),
-        'secret' => env('AWS_SEC_KEY'),
+        'key'    => getenv('AWS_KEY'),
+        'secret' => getenv('AWS_SEC_KEY'),
     ],
-    'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
+    'region' => getenv('AWS_DEFAULT_REGION', 'us-east-1'),
     'version' => 'latest',
     'ua_append' => [
         'L5MOD/' . AwsServiceProvider::VERSION,
