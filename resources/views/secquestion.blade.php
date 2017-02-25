@@ -1,4 +1,6 @@
-
+<?php
+  $image = "https://s3.amazonaws.com/ndap-ivote-2017/settings/".$logo."";
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -58,7 +60,7 @@
 	<div class="login-box">
   <div class="login-box-body">
     <center>
-      <img src='{{ URL::asset("assets/images/$logo") }}' style="max-width: 130px;">
+      <img src='{{ $image }}' style="max-width: 130px;">
       <br>
       <h3>{{$header}}</h3>
     </center>
