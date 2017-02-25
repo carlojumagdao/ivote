@@ -86,7 +86,7 @@
                             'class' => 'required') ) !!}
                      </div>
                      <div class="col-md-10">
-                     <select name="member" class="form-control select2" id="memberId" onchange="getPosition()" required>
+                     <select name="member" class="form-control select2" id="memberId"  required>
                          <option></option>
                          @foreach($Members as $Member)
                          <option value='{{$Member->strMemberId}}'>{{$Member->strMemFname}} {{$Member->strMemLname}}</option>
