@@ -22,7 +22,7 @@ class MailController extends Controller
                 $Passcode = $result->Passcode;
                 $Tpasscode = $result->strMemPasscode;
             }
-            Mail::send('members.email', ['name'=>$Fname, 'Enpass'=> $Passcode , 'Tpass'=> $Tpasscode], function($message) use ($results){
+            Mail::send('Members.email', ['name'=>$Fname, 'Enpass'=> $Passcode , 'Tpass'=> $Tpasscode], function($message) use ($results){
                     foreach($results as $value){
                         $email = $value->strMemEmail;
                         break;
