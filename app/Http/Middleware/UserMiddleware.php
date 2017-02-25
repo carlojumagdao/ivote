@@ -92,7 +92,7 @@ class UserMiddleware
                     }
                     else return $next($request);
                 }else{
-                    $errMess = "Authentication Failed1";
+                    $errMess = "Authentication Failed!";
                     return Redirect::back()->withErrors($errMess);
                 }
             }
