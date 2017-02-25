@@ -13,6 +13,7 @@ use App\Http\Controllers\Controller;
 use Redirect;
 use BrowserDetect;
 use Session;
+use App\Dummy AS Dummy;
 use App\SurveyHeader AS SurveyHeader;
 use Illuminate\Support\Facades\App;
 
@@ -104,7 +105,8 @@ class votingController extends Controller
                             ->select('strMemDeFieldName', 'strMemDeFieldData')
                             ->where('strMemDeMemId', '=', session('memid'))
                             ->get();
-            $only = "";
+            // $only = "";
+            // $only = new Dummy();
             $index = 0;
             $positions = DB::select('SELECT distinct tblposition.* FROM tblposition
                                     left join tblcandidate on strPositionId = strCandPosId
