@@ -38,7 +38,7 @@ class votingController extends Controller
                             ->select('strMemDeFieldName', 'strMemDeFieldData')
                             ->where('strMemDeMemId', '=', session('memid'))
                             ->get();
-            $only = "";
+            // $only = "";
             $index = 0;
             $positions = DB::select('SELECT distinct tblposition.* FROM tblposition
                                     left join tblcandidate on strPositionId = strCandPosId
@@ -151,7 +151,7 @@ class votingController extends Controller
     }
     public function summary(Request $request){
         $request->flash();
-        $voted = "";
+        // $voted = "";
         if(isset($_POST['vote'])){
             $count = 0;
             foreach ($_POST['vote'] as $candID) {
