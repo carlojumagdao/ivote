@@ -100,7 +100,10 @@
                                     @foreach($tally as $candidate)
                                         <tr>
                                             @if($position->strCandPosId == $candidate->strCandPosId)
-                                                <td><img src='{{ URL::asset("assets/images/$candidate->txtCandPic") }}' img class="img-circle" height="65" width="65" id="user-pic"> {{$candidate->fullname}}</td>
+                                            <?php
+                                              $image = "https://s3.amazonaws.com/ndap-ivote-2017/candidates/".$candidate->txtCandPic."";
+                                            ?>
+                                                <td><img src='{{$image}}' img class="img-circle" height="65" width="65" id="user-pic"> {{$candidate->fullname}}</td>
                                                 <td style="padding:26px;">{{$candidate->votes}}</td>
                                             @endif
                                         </tr>
