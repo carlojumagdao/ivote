@@ -35,29 +35,27 @@ class UserMiddleware
                        if($request->has('vote')) return view('votednotsurveyed');
                         else return $next($request);
                     } 
-            
                 } 
                 else{
                     return view('voted');
-                }
-                    
-                    
+                }  
             }
             else return $next($request);
-            
         }
         else{
-            
             $settings = GenSet::find(1);
-            $SecQues = "";
-            $Answer = "";
-            $retSecQues = "";
-            $retAnswer = "";
-            $retMemId = "";
-            $retFullName = "";
-            $member = "";
+            foreach ($settings as $value) {
+                $Published = $settings->blSetPublish;
+            }
+            // $SecQues = "";
+            // $Answer = "";
+            // $retSecQues = "";
+            // $retAnswer = "";
+            // $retMemId = "";
+            // $retFullName = "";
+            // $member = "";
             $err = $request->input('txtPasscode');
-            if($settings->blSetPublished){
+            if($Published){
                 $SecQues = $request->input('secques');
                 $Answer = $request->input('txtAnswer');
             }
@@ -69,12 +67,11 @@ class UserMiddleware
                     $retMemId = $value->strMemberId;
                     $retFullName = $value->FullName;
                 }
-            
             } else{
                 $errMess = 'Authentication Failed';
                 return Redirect::back()->withErrors($errMess);
             }
-            if($settings->blSetPublished){
+            if($Published){
                 if(($SecQues == $retSecQues) && ($Answer == $retAnswer)){
                     session(['memid' => $retMemId, 'memfullname' => $retFullName]);
                     $voted = DB::table('tblvoteheader')->where('strVHMemId', '=', $retMemId)->select('strVHCode')->get();
@@ -96,7 +93,6 @@ class UserMiddleware
                     return Redirect::back()->withErrors($errMess);
                 }
             }
-            
             else{
                 $voted = DB::table('tblvoteheader')->where('strVHMemId', '=', $retMemId)->select('strVHCode')->get();
                 session(['memid' => $retMemId, 'memfullname' => $retFullName]);
@@ -115,6 +111,5 @@ class UserMiddleware
                 else return $next($request);
             }
         }
-         
     }
 }
