@@ -39,7 +39,7 @@ class reportController extends Controller
         $now = date_create(date("Y-m-d H:i:s"));
         
         if($now < $start) return view('Report.startpage');
-        else if($now > $end) return view('Report.tallyvotes', ['tally'=>$tally, 'count'=>$voted, 'positions'=>$positions] );
+        else if($now > $end) return view('Report.tallyVotes', ['tally'=>$tally, 'count'=>$voted, 'positions'=>$positions] );
     	else return view('Report.endpage');
     }
     

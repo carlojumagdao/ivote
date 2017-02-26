@@ -24,18 +24,16 @@
     <table width="100%">
         <tr height="10%">
             <td width="15%">
-            <?php $winnerImage = "https://s3.amazonaws.com/ndap-ivote-2017/settings/".$txtSetLogo."";
-                                                                    ?>
-            <img class="img-left" src="{{$winnerImage}}" style="max-width: 90px;">
+            <!-- <img class="img-left" src="assets/images/{{$txtSetLogo}}" style="max-width: 90px;"> -->
             </td>
             <td width="70%">
                 <br>
                 <p>
-                    <span style="font-size:20px;font-family:helvetica;"><center>{{$strHeader}} <br><span style="font-size: 12px">{{$strAddress}}</span></center></span>
+                    <span><center>{{$strHeader}} <br><span>{{$strAddress}}</span></center></span>
                 </p>
             </td>
             <td width="15%">
-                <img src="assets/images/systemlogo.png" style="max-width: 90px;">
+                <!-- <img src="assets/images/systemlogo.png" style="max-width: 90px;"> -->
             </td>
         </tr>
     </table>
@@ -48,7 +46,7 @@
     <br>        <?php $counter = 0;?>
     <table width="100%" id="contentTable">
         <tr>
-            <th class="ted" width="10%"></th>
+            <!-- <th class="ted" width="10%"></th> -->
             <th class="ted">Last Name</th>
             <th class="ted">Vote Count</th>
             <th class="ted">Percentage</th>
@@ -61,9 +59,7 @@
                 @if($pos->strCandPosId == $cand->strCandPosId)
                 @if($pos->intPosVoteLimit > $counter)  
         <tr>
-            <?php $candImage = "https://s3.amazonaws.com/ndap-ivote-2017/candidates/".$cand->txtCandPic."";
-                                                                    ?>
-            <td class="ted"><img src="{{$candImage}}" height="100px" width="100px"></td>
+            <!-- <td class="ted"><img src="assets/images/{{$cand->txtCandPic}}" height="100px" width="100px"></td> -->
             <td class="ted">{{$cand->strMemLName}}, {{$cand->strMemFName}}</td>
             <td class="ted">{{$cand->votes}}</td>
             <td class="ted">@if($count!=0){{number_format(($cand->votes / $count )* 100, 2, '.', '')}}% of Votes
