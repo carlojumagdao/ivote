@@ -1,3 +1,6 @@
+<?php
+    $image = "https://s3.amazonaws.com/ndap-ivote-2017/users/".$logo."";
+?>
 @extends('master')
 @section('title')
     {{"Dashboard"}}
@@ -145,7 +148,7 @@
                         $Positions = DB::table('tblposition')->where('blPosDelete', '=', 0)->get();
                     ?>
                     <center>
-                        <img src='{{ URL::asset("assets/images/$logo") }}' style="max-width: 200px;">
+                        <img src='{{ $image }}' style="max-width: 200px;">
                         <br>
                         <h3>{{$election}}</h3>
                         <h4>{{$org}}</h4>
@@ -182,7 +185,7 @@
                     </div>
                 <div class="modal-body" style="padding:40px">
                     <center>
-                        <img src='{{ URL::asset("assets/images/$logo") }}' style="max-width: 200px;">
+                        <img src='{{ $image }}' style="max-width: 200px;">
                         <br>
                         <h3>{{$election}}</h3>
                         <h4>{{$org}}</h4>
@@ -316,7 +319,7 @@
                         }
                     ?>
                     <center>
-                        <img src='{{ URL::asset("assets/images/$logo") }}' style="max-width: 200px;">
+                        <img src='{{ $image }}' style="max-width: 200px;">
                         <br>
                         <h3>{{$election}}</h3>
                         <h4>{{$org}}</h4>
@@ -365,7 +368,7 @@
                                             ->get();
                     ?>
                     <center>
-                        <img src='{{ URL::asset("assets/images/$logo") }}' style="max-width: 200px;">
+                        <img src='{{ $image }}' style="max-width: 200px;">
                         <br>
                         <h3>{{$election}}</h3>
                         <h4>{{$org}}</h4>
