@@ -8,19 +8,16 @@
 <body>
 
 <style type="text/css">
-    body{
-        font-family: helvetica;
-    }
-	#contentTable {
-        border-collapse: collapse;
-        border: 1px solid #000;
-        padding: 1%;
-    }
-    .ted {
-        border: 1px solid #000;
-    }
+	table {
+            border-collapse: collapse;
+            border: 1px solid #000;
+            padding: 1%;
+        }
+        table th, table td {
+            border: 1px solid #000;
+
+        }
 </style>
-    
             <center>
                 <p>
                     <span><center>{{$strHeader}} <br><span>{{$strAddress}}</span></center></span>
@@ -33,28 +30,24 @@
     <br>
                 <h3>{{$pos->strPosName}}</h3>
     <br>        <?php $counter = 0;?>
-    <table width="100%" id="contentTable">
+    <table width="100%">
         <tr>
             <!-- <th class="ted" width="10%"></th> -->
-            <th class="ted">Last Name</th>
-            <th class="ted">Vote Count</th>
-            <th class="ted">Percentage</th>
+            <th class="td">Last Name</th>
+            <th class="td">Vote Count</th>
+            <th class="td">Percentage</th>
         </tr>
-        
-                
-               
                 @foreach($tally as $cand)
                 <!-- Apply any bg-* class to to the info-box to color it -->
                 @if($pos->strCandPosId == $cand->strCandPosId)
                 @if($pos->intPosVoteLimit > $counter)  
         <tr>
             <!-- <td class="ted"><img src="assets/images/{{$cand->txtCandPic}}" height="100px" width="100px"></td> -->
-            <td class="ted">{{$cand->strMemLName}}, {{$cand->strMemFName}}</td>
-            <td class="ted">{{$cand->votes}}</td>
-            <td class="ted">@if($count!=0){{number_format(($cand->votes / $count )* 100, 2, '.', '')}}% of Votes
+            <td class="td">{{$cand->strMemLName}}, {{$cand->strMemFName}}</td>
+            <td class="td">{{$cand->votes}}</td>
+            <td class="td">@if($count!=0){{number_format(($cand->votes / $count )* 100, 2, '.', '')}}% of Votes
                             @else 0% of Votes
                             @endif</td>
-            
         </tr>
         @endif
             <?php $counter++;?>
@@ -65,12 +58,5 @@
     <br>
     <br>
     <h3>Total Voters: {{$count}}</h3>
-	 
-	
-    
-        
-
-
-
 </body>
 </html>
