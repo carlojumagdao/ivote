@@ -19,9 +19,9 @@
         }
 </style>
             <center>
-                <p>
+                <!-- <p> -->
                     <span><center>{{$strHeader}} <br><span>{{$strAddress}}</span></center></span>
-                </p>
+                <!-- </p> -->
             </center>
     <center><h1>Winners</h1></center>
     <br>
