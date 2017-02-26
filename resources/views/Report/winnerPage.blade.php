@@ -59,11 +59,14 @@
                 <!-- Apply any bg-* class to to the info-box to color it -->
                 @if($pos->strCandPosId == $cand->strCandPosId)
                         
-                @if($pos->intPosVoteLimit > $counter)        
+                @if($pos->intPosVoteLimit > $counter)  
+                <?php
+                    $image = "https://s3.amazonaws.com/ndap-ivote-2017/candidates/".$cand->txtCandPic."";
+                ?>      
                 <div class="col-md-3">
                 <div class="info-box bg-blue">
                     <span class="info-box-icon"><image class="img-circle" 
-                                                       src ="assets/images/{{$cand->txtCandPic}}" height="80" width="80"></span>
+                                                       src ="{{$image}}" height="80" width="80"></span>
                     <div class="info-box-content">
                         <span class="info-box-text">{{$cand->strMemLName}}, {{$cand->strMemFName}}</span>
                         <span class="info-box-number">{{$cand->votes}}</span>

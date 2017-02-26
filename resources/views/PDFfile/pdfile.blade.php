@@ -38,7 +38,9 @@
     
     <table width="100%">
         <tr height="10%">
-            <td width="15%"><img class="img-left" src="assets/images/{{$txtSetLogo}}" style="max-width: 90px;"></td>
+            <td width="15%">
+            <!-- <img class="img-left" src="assets/images/{{$txtSetLogo}}" style="max-width: 90px;"> -->
+            </td>
             <td width="70%">
                 <br>
                 <p>
@@ -47,7 +49,7 @@
                 </p>
             </td>
             <td width="15%">
-                <img src="assets/images/systemlogo.png" style="max-width: 90px;">
+                <!-- <img src="assets/images/systemlogo.png" style="max-width: 90px;"> -->
             </td>
         </tr>
     </table>
@@ -61,7 +63,7 @@
     <br>
     <table width="100%">
         <tr>
-            <th class="td" width="10%"></th>
+            <!-- <th class="td" width="10%"></th> -->
             <th class="td">Last Name</th>
             <th class="td">Vote Count</th>
             <th class="td">Percentage</th>
@@ -74,7 +76,7 @@
                 @if($pos->strCandPosId == $cand->strCandPosId)
                 
         <tr>
-            <td class="td"><img src="assets/images/{{$cand->txtCandPic}}" height="100px" width="100px"></td>
+            <!-- <td class="td"><img src="assets/images/{{$cand->txtCandPic}}" height="100px" width="100px"></td> -->
             <td class="td">{{$cand->strMemLName}}, {{$cand->strMemFName}}</td>
             <td class="td">{{$cand->votes}}</td>
             <td class="td">@if($count!=0){{number_format(($cand->votes / $count )* 100, 2, '.', '')}}% of Votes

@@ -38,7 +38,8 @@
     
     <table width="100%">
         <tr height="10%">
-            <td width="15%"><img class="img-left" src="assets/images/{{$txtSetLogo}}" style="max-width: 90px;"></td>
+            <td width="15%">
+            <!-- <img class="img-left" src="assets/images/{{$txtSetLogo}}" style="max-width: 90px;"></td> -->
             <td width="70%">
                 <br>
                 <p>
@@ -47,7 +48,7 @@
                 </p>
             </td>
             <td width="15%">
-                <img src="assets/images/systemlogo.png" style="max-width: 90px;">
+                <!-- <img src="assets/images/systemlogo.png" style="max-width: 90px;"> -->
             </td>
         </tr>
     </table>
