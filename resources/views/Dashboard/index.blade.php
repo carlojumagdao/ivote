@@ -143,7 +143,7 @@
                             $election = $design->strSetElecName;
                             $address = $design->strSetAddress;
                         }
-                        $imageLogo = "https://s3.amazonaws.com/ndap-ivote-2017/users/".$logo."";
+                        $imageLogo = "https://s3.amazonaws.com/ndap-ivote-2017/settings/".$logo."";
                         $Positions = DB::table('tblposition')->where('blPosDelete', '=', 0)->get();
                     ?>
                     <center>
@@ -316,7 +316,7 @@
                             $election = $design->strSetElecName;
                             $address = $design->strSetAddress;
                         }
-                        $imageLogo = "https://s3.amazonaws.com/ndap-ivote-2017/users/".$logo."";
+                        $imageLogo = "https://s3.amazonaws.com/ndap-ivote-2017/settings/".$logo."";
                     ?>
                     <center>
                         <img src='{{ $imageLogo }}' style="max-width: 200px;">
@@ -362,7 +362,7 @@
                             $election = $design->strSetElecName;
                             $address = $design->strSetAddress;
                         }
-                        $imageLogo = "https://s3.amazonaws.com/ndap-ivote-2017/users/".$logo."";
+                        $imageLogo = "https://s3.amazonaws.com/ndap-ivote-2017/settings/".$logo."";
                         $members = DB::table('tblvoteheader')
                                             ->join('tblmember', 'tblvoteheader.strVHMemId', '=', 'tblmember.strMemberId')
                                             ->select('tblvoteheader.*', 'tblmember.strMemFname', 'tblmember.strMemLname')
