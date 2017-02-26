@@ -13,7 +13,8 @@
         "vinkla/pusher": "^2.4",
         "hisorange/browser-detect": "2.*",
         "ext-gd": "*",
-        "aws/aws-sdk-php-laravel": "~3.0"
+        "aws/aws-sdk-php-laravel": "~3.0",
+        "ext-mbstring": "*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
