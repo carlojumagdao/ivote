@@ -21,22 +21,11 @@
     }
 </style>
     
-    <table width="100%">
-        <tr height="10%">
-            <td width="15%">
-            <!-- <img class="img-left" src="assets/images/{{$txtSetLogo}}" style="max-width: 90px;"> -->
-            </td>
-            <td width="70%">
-                <br>
+            <center>
                 <p>
                     <span><center>{{$strHeader}} <br><span>{{$strAddress}}</span></center></span>
                 </p>
-            </td>
-            <td width="15%">
-                <!-- <img src="assets/images/systemlogo.png" style="max-width: 90px;"> -->
-            </td>
-        </tr>
-    </table>
+            </center>
     <center><h1>Winners</h1></center>
     <br>
     <h5 style="text-align:right">as of {{date('D, M. d Y h:i a')}}</h5>
