@@ -11,45 +11,31 @@
     body{
         font-family: helvetica;
     }
-	.img-left {
-
-		float: left;
-	}
-    .img-right {
-
-		float: right;
-	}
-
-	h4 {
-
-		float: right;
-		margin-left: 200px;
-	}
-    
-    .td {
-         border-bottom: 1px solid #ddd;
+	#contentTable {
+        border-collapse: collapse;
+        border: 1px solid #000;
+        padding: 1%;
     }
-    tr:nth-child(even) {background-color: #f2f2f2}
-    th {
-    background-color: #4CAF50;
-    color: white;
+    .ted {
+        border: 1px solid #000;
     }
 </style>
     
     <table width="100%">
         <tr height="10%">
             <td width="15%">
-            <!-- <img class="img-left" src="assets/images/{{$txtSetLogo}}" style="max-width: 90px;"> -->
+            <?php $winnerImage = "https://s3.amazonaws.com/ndap-ivote-2017/settings/".$txtSetLogo."";
+                                                                    ?>
+            <img class="img-left" src="{{$winnerImage}}" style="max-width: 90px;">
             </td>
             <td width="70%">
                 <br>
                 <p>
-        
                     <span style="font-size:20px;font-family:helvetica;"><center>{{$strHeader}} <br><span style="font-size: 12px">{{$strAddress}}</span></center></span>
                 </p>
             </td>
             <td width="15%">
-                <!-- <img src="assets/images/systemlogo.png" style="max-width: 90px;"> -->
+                <img src="assets/images/systemlogo.png" style="max-width: 90px;">
             </td>
         </tr>
     </table>
@@ -60,12 +46,12 @@
     <br>
                 <h3>{{$pos->strPosName}}</h3>
     <br>        <?php $counter = 0;?>
-    <table width="100%">
+    <table width="100%" id="contentTable">
         <tr>
-            <!-- <th class="td" width="10%"></th> -->
-            <th class="td">Last Name</th>
-            <th class="td">Vote Count</th>
-            <th class="td">Percentage</th>
+            <th class="ted" width="10%"></th>
+            <th class="ted">Last Name</th>
+            <th class="ted">Vote Count</th>
+            <th class="ted">Percentage</th>
         </tr>
         
                 
@@ -75,10 +61,12 @@
                 @if($pos->strCandPosId == $cand->strCandPosId)
                 @if($pos->intPosVoteLimit > $counter)  
         <tr>
-            <!-- <td class="td"><img src="assets/images/{{$cand->txtCandPic}}" height="100px" width="100px"></td> -->
-            <td class="td">{{$cand->strMemLName}}, {{$cand->strMemFName}}</td>
-            <td class="td">{{$cand->votes}}</td>
-            <td class="td">@if($count!=0){{number_format(($cand->votes / $count )* 100, 2, '.', '')}}% of Votes
+            <?php $candImage = "https://s3.amazonaws.com/ndap-ivote-2017/candidates/".$cand->txtCandPic."";
+                                                                    ?>
+            <td class="ted"><img src="{{$candImage}}" height="100px" width="100px"></td>
+            <td class="ted">{{$cand->strMemLName}}, {{$cand->strMemFName}}</td>
+            <td class="ted">{{$cand->votes}}</td>
+            <td class="ted">@if($count!=0){{number_format(($cand->votes / $count )* 100, 2, '.', '')}}% of Votes
                             @else 0% of Votes
                             @endif</td>
             
