@@ -82,7 +82,7 @@
         @endif
     </div>
     <br><br>
-         <form action='{{ URL::to("/security/question/$id") }}' method="post">
+         <form action='{{ URL::to("/security/question/$id") }}' method="post" onsubmit="check_if_capcha_is_filled">
       		{!! csrf_field() !!}
              <div class="form-group has-feedback">
                 <input style="font-size:25px; text-align:center;" type="text" name="txtPasscode" class="form-control custom" placeholder="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6-digit Passcode" autocomplete="off" maxlength="6">
@@ -102,7 +102,8 @@
                <div class="col-md-6">
                		<center>
                   		<div class="col s12 offset-s1">
-                            <div class="g-recaptcha" data-sitekey="{{$sitekey}}" required></div>
+                            <div class="g-recaptcha" data-sitekey="{{$sitekey}}"  data-callback="capcha_filled"
+   data-expired-callback="capcha_expired"></div>
                         </div>
                   	</center>	
                 </div>
@@ -151,6 +152,22 @@
       checkboxClass: 'icheckbox_flat-green',
       radioClass: 'iradio_flat-green'
     });
+</script>
+<script>
+	var allowSubmit = false;
+	function capcha_filled () {
+		allowSubmit = true;
+	}
+	function capcha_expired () {
+    allowSubmit = false;
+	}
+	
+	function check_if_capcha_is_filled (e) {
+		if(allowSubmit) return true;
+		e.preventDefault();
+		alert('Fill in the capcha!');
+	}
+	
 </script>
 </body>
 </html>
