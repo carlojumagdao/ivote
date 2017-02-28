@@ -102,7 +102,7 @@
                <div class="col-md-6">
                		<center>
                   		<div class="col s12 offset-s1">
-                            <div class="g-recaptcha" data-sitekey="{{$sitekey}}"></div>
+                            <div class="g-recaptcha" data-sitekey="{{$sitekey}}" required></div>
                         </div>
                   	</center>	
                 </div>
