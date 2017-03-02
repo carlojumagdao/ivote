@@ -145,8 +145,6 @@ class securityController extends Controller
 
                 $recaptcha = new \ReCaptcha\ReCaptcha($secret);
 				
-				var_dump($_POST);
-
                 // Was there a reCAPTCHA response?  
                 if(isset($_POST["g-recaptcha-response"])){
                     if ($_POST["g-recaptcha-response"] != null) {
@@ -156,7 +154,7 @@ class securityController extends Controller
                         );  
                     }
 					else{
-						$errMess = "No Recaptcha Response";
+						$errMess = "No ReCAPTCHA Response";
 						return Redirect::back()->withErrors($errMess);
 					}
                 }
