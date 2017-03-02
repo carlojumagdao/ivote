@@ -153,7 +153,12 @@ class securityController extends Controller
                             $_SERVER["REMOTE_ADDR"]
                         );  
                     }
-                
+                }
+				
+				else{
+					$errMess = "No Recaptcha Response";
+                    return Redirect::back()->withErrors($errMess);
+				}
                 
                 if ($resp->isSuccess()) {
                     
