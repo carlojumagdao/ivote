@@ -145,7 +145,7 @@ class securityController extends Controller
 
                 $recaptcha = new \ReCaptcha\ReCaptcha($secret);
 				
-				print_r($_POST);
+				var_dump($_POST);
 
                 // Was there a reCAPTCHA response?  
                 if(isset($_POST["g-recaptcha-response"])){
