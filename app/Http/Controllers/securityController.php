@@ -149,18 +149,19 @@ class securityController extends Controller
 
                 // Was there a reCAPTCHA response?  
                 if(isset($_POST["g-recaptcha-response"])){
-                    if ($_POST["g-recaptcha-response"]) {
+                    if ($_POST["g-recaptcha-response"] != null) {
                         $resp = $recaptcha->verify(
                             $_POST["g-recaptcha-response"],
                             $_SERVER["REMOTE_ADDR"]
                         );  
                     }
+					else{
+						$errMess = "No Recaptcha Response";
+						return Redirect::back()->withErrors($errMess);
+					}
                 }
 				
-				else{
-					$errMess = "No Recaptcha Response";
-                    return Redirect::back()->withErrors($errMess);
-				}
+				
                 
                 if ($resp->isSuccess()) {
                     
