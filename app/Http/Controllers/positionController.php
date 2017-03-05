@@ -57,12 +57,7 @@ class positionController extends Controller
         }
         $counter = new SmartCounter();
         $code = $counter->smartcounter($id);
-        if(($now >= $start) & ($now <= $end)){ 
-            return view('election-page-disabled');
-        }
-        else{
-            return view('Positions.addPosition', ['posForm' => $posForm, 'code' => $code]);
-        }
+        return view('Positions.addPosition', ['posForm' => $posForm, 'code' => $code]);
     }
 
     public function revert(Request $request){

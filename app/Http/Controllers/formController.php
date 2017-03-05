@@ -292,12 +292,7 @@ class formController extends Controller
         }
         $loader = new formEncoder($data, 'add');
         $form = $loader->render_form($strMemCode);
-        if(($now >= $start) & ($now <= $end)){ 
-            return view('election-page-disabled');
-        }
-        else{
-            return view('Members.addMember', ['form' => $form,'formTitle' => $formTitle]);
-        }
+        return view('Members.addMember', ['form' => $form,'formTitle' => $formTitle]);
     }
     public function add(Request $request){
         $rules = array(

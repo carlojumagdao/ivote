@@ -80,23 +80,12 @@ class candidateController extends Controller
             ->where('blPosDelete', '=', 0)
             ->get();
             $Parties = DB::table('tblparty')->select('intPartyId', 'strPartyName')->get();
-            if(($now >= $start) & ($now <= $end)){ 
-                return view('election-page-disabled');
-            }
-            else{
-                return view('Candidate.add', ['Members' => $Members, 'Positions' => $Positions, 'Parties'=> $Parties]);
-            }
+            return view('Candidate.add', ['Members' => $Members, 'Positions' => $Positions, 'Parties'=> $Parties]);
         }
         else{
-            
             $Members = DB::table('tblmember')->select('strMemberId', 'strMemFname', 'strMemLname', 'strMemMname')->where('blMemDelete', '=', 0)->get();
             $Positions = DB::table('tblposition')->select('strPositionId', 'strPosName')->where('blPosDelete', '=', 0)->get();
-            if(($now >= $start) & ($now <= $end)){ 
-                return view('election-page-disabled');
-            }
-            else{
-                return view('Candidate.addlessparty', ['Members' => $Members, 'Positions' => $Positions]);
-            }
+            return view('Candidate.addlessparty', ['Members' => $Members, 'Positions' => $Positions]);
         }
     }
     
