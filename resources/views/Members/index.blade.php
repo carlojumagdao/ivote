@@ -243,7 +243,6 @@ table.table.table-striped tr.highlight td{
                             <td class="deleted">{{$converteddatedeleted}}</td>
                             <td class="status" style="display:none">{{$value->blMemDelete}}</td>
                             <td>
-                              @if($electionStatus ==  0)
                                 @if($value->blMemDelete == 0)
                                 <a href="member/view/{{$value->strMemberId}}" class="btn btn-primary btn-sm view" data-toggle="tooltip" title="View"><i class="fa fa-eye"></i></a>
                                 <a href="member/edit/{{$value->strMemberId}}" class="btn btn-warning btn-sm edit" data-toggle="tooltip" title="Edit"><i class="glyphicon glyphicon-edit"></i></a>
@@ -252,9 +251,6 @@ table.table.table-striped tr.highlight td{
                                 @else
                                 <button class="btn btn-info btn-sm revMember" data-toggle="tooltip" title="Restore"><i class="glyphicon glyphicon-refresh"></i></button>
                                 @endif
-                              @else
-                                <a class="btn btn-info btn-sm send" data-toggle="tooltip" title="Send Passcode"><i class="glyphicon glyphicon-send"></i></a>
-                              @endif
                             </td>
                           </tr>
                     @endforeach

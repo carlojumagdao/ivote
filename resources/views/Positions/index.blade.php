@@ -65,7 +65,7 @@
                             <th>Date Updated</th>
                             <th>Date Deleted</th>
                             <th style="display:none">Status</th>
-                            @if($electionStatus == 0)<th>Action</th>@endif
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -96,7 +96,6 @@
                                 <td class="updated">{{$converteddateupdated}}</td>
                                 <td class="deleted">{{$converteddatedeleted}}</td>
                                 <td class="status" style="display:none">{{$value->blPosDelete}}</td> 
-                                @if($electionStatus == 0)
                                 <td>
                                     @if($value->blPosDelete == 0)
                                     <a href="position/edit/{{$value->strPositionId}}" class="btn btn-warning btn-sm edit" title="Edit"><i class="glyphicon glyphicon-edit"></i></a>
@@ -105,7 +104,6 @@
                                     <button class="btn btn-info btn-sm revPosition" data-toggle="tooltip" title="Restore"><i class="glyphicon glyphicon-refresh"></i></button>
                                     @endif
                                 </td>
-                                @endif
                             </tr>
                     @endforeach
                     </tbody>
@@ -118,7 +116,7 @@
                             <th>Date Updated</th>
                             <th>Date Deleted</th>
                             <th style="display:none">Status</th>
-                            @if($electionStatus == 0)<th>Action</th>@endif
+                            <th>Action</th>
                         </tr>
                     </tfoot>
                 </table>

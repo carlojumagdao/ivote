@@ -54,7 +54,7 @@
                             <th>Candidate Name</th>
                             <th>Position</th>
                             @if($party)<th>Party</th>@endif
-                            @if($electionStatus ==  0)<th>Action</th>@endif
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -66,12 +66,12 @@
                             <td class="leader">{{$candidate->strPosName}}</td>
                             @if($party)<td class="color">{{$candidate->strPartyName or 'disabled'}}</td>@endif
                             <!-- if else to make the independent party not editable/deletable -->
-                            @if($electionStatus == 0)
+                            
                             <td>
                                 <button class="btn btn-warning btn-sm editCandidate" data-toggle="modal" title="Edit"><i class="glyphicon glyphicon-edit"></i></button>
                                 <button class="btn btn-danger btn-sm delCandidate" data-toggle="tooltip" title="Delete"><i class="glyphicon glyphicon-trash"></i></button>
                             </td>
-                            @endif
+                            
                        
                         </tr>
                         @endforeach
@@ -84,7 +84,7 @@
                             <th>Candidate Name</th>
                             <th>Position</th>
                             @if($party)<th>Party</th>@endif
-                            @if($electionStatus == 0)<th>Action</th>@endif
+                            <th>Action</th>
                         </tr>
                     </tfoot>
                 </table>
