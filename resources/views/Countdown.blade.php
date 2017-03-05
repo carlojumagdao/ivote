@@ -43,7 +43,7 @@ $image = "https://s3.amazonaws.com/ndap-ivote-2017/settings/".$set->txtSetLogo."
 <div class="container">
 <div class="row">
  
-	<center><img src="assets/images/countpic.png" style="width:70%;"></center>
+	<center><img src="assets/images/countpic.png" style="width:60%;"></center>
 	
 	<div class="col-md-offset-2 col-md-10  col-xs-12" style="padding-left: 80px;padding-top:50px" >
 	<div class="clock flip-clock-wrapper" >
@@ -285,7 +285,7 @@ $image = "https://s3.amazonaws.com/ndap-ivote-2017/settings/".$set->txtSetLogo."
     <div class="row">
     <div class="col-md-12 col-xs-12">
         <div class="col-md-3 col-xs-4">
-            <img class="img-responsive" src="assets/images/ivote4.png" style="padding:53px" >
+            <img class="img-responsive" src="assets/images/ivote4.png" style="padding:23px;" >
         </div>
         <div class="col-md-3 col-xs-4">
             <center>
@@ -293,7 +293,7 @@ $image = "https://s3.amazonaws.com/ndap-ivote-2017/settings/".$set->txtSetLogo."
             <center>
         </div>
         <div class="col-md-3 col-xs-4">
-            <img class="img-responsive"  src="{{$image}}" style="padding:53px" >
+            <img class="img-responsive"  src="{{$image}}" style="padding:23px;">
         </div>
     </div>
     </div>
