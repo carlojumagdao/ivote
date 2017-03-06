@@ -31,7 +31,7 @@
         padding-right: 15px;
     }
     body{
-        background-image: url("{{ URL::asset('../assets/images/bgGlass.jpg') }}");
+        background-image: url("https://s3.amazonaws.com/ndap-ivote-2017/candidates/bgGlass.jpg");
         background-color: white;
         color: #37474F;
         font-family: 'Raleway', sans-serif;
@@ -75,12 +75,12 @@
         <div class="col-md-7 col-xs-6 "  >
             
                
-                <h2 class="responsive-text" style="font-family:helvetica;text-align:left;text-transform: capitalize;letter-spacing:1px">{{$setting->strHeader}}</h2>
+                <h2 class="responsive-text" style="text-align:left;text-transform: capitalize;letter-spacing:1px">{{$setting->strHeader}}</h2>
                 
-                <h4 class="responsive-text" style="font-family:segoe ui;text-align:left;margin-top:10px;">{{$setting->strSetElecName}}</h4>
-                <h6 class="responsive-text" style="font-family:segoe ui;text-align:left;letter-spacing:1px;text-transform: capitalize;">{{$setting->strSetElecDesc}}</h6>
+                <h4 class="responsive-text" style="text-align:left;margin-top:10px;">{{$setting->strSetElecName}}</h4>
+                <h6 class="responsive-text" style="text-align:left;letter-spacing:1px;text-transform: capitalize;">{{$setting->strSetElecDesc}}</h6>
                 @endforeach
-                <h6 class="responsive-text" style="style=font-family:segoe ui;text-align:left;letter-spacing:1px;color:Tomato ">"Election Not Open Yet"</h6>
+                <h6 class="responsive-text" style="style=text-align:left;letter-spacing:1px;color:#FF4500 ">"Election Not Open Yet"</h6>
                 
             
         </div>
@@ -121,10 +121,10 @@
                                     <img class="img-responsive" src="{{$image}}">
                                 </div>
                                 <div class="mc-description " style="font-size:14px;">
-                                    Field of Specialization: &nbsp {{ $candidate->strCandEducBack}}
-
+                                    <b>Field of Specialization:</b><br>{{ $candidate->strCandEducBack}}
                                     <br>
-                                    Programs/Projects/Activities: &nbsp {{ $candidate->strCandInfo}}
+                                    <br>
+                                    <b>Programs/Projects/Activities:</b><br>{{ $candidate->strCandInfo}}
                                 </div>
                             </div>
                             <a class="mc-btn-action">
