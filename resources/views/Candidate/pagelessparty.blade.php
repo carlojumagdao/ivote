@@ -121,10 +121,10 @@
                                     <img class="img-responsive" src="{{$image}}">
                                 </div>
                                 <div class="mc-description " style="font-size:14px;">
-                                    Education Background: &nbsp {{ $candidate->strCandEducBack}}
+                                    Field of Specialization: &nbsp {{ $candidate->strCandEducBack}}
 
                                     <br>
-                                    Platform: &nbsp {{ $candidate->strCandInfo}}
+                                    Programs/Projects/Activities: &nbsp {{ $candidate->strCandInfo}}
                                 </div>
                             </div>
                             <a class="mc-btn-action">

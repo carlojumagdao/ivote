@@ -1,1 +1,1 @@
-{"title":"NDAP Survey","description":"","fields":[{"title":"Brief description about your experience in using iVote++","type":"element-paragraph-text","required":false,"position":1}]}
+{"title":"NDAP Survey","description":"","fields":[{"title":"llalala","type":"element-multiple-choice","required":false,"position":1,"choices":[{"title":"First Choice","value":"First Choice","checked":true},{"title":"Second Choice","value":"Second Choice","checked":false},{"title":"Third Choice","value":"Third Choice","checked":false}]}]}
