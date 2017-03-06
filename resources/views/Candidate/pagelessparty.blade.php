@@ -31,7 +31,7 @@
         padding-right: 15px;
     }
     body{
-        background-image: url("https://s3.amazonaws.com/ndap-ivote-2017/candidates/bgGlass.jpg");
+        background-image: url("https://s3.amazonaws.com/ndap-ivote-2017/candidates/candidatepagebackground.jpg");
         background-color: white;
         color: #37474F;
         font-family: 'Raleway', sans-serif;
