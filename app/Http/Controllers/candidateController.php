@@ -369,6 +369,7 @@ class candidateController extends Controller
                             ->join('tblmember', 'tblcandidate.strCandMemId', '=', 'tblmember.strMemberId')
                             ->where('blCandDelete', '=', 0)
                             ->select('tblcandidate.*', 'tblmember.strMemFname', 'tblmember.strMemLname')
+                            ->orderBy('tblmember.strMemLname')
                             ->get();
             $election = DB::table('tblsetting')->get();
             return view('Candidate.pagelessparty', [ 'positions'=>$positions, 'candidates'=>$candidates, 'election' => $election]);

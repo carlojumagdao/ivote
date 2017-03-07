@@ -100,6 +100,7 @@ class votingController extends Controller
                             ->join('tblmember', 'tblcandidate.strCandMemId', '=', 'tblmember.strMemberId')
                             ->where('blCandDelete', '=', 0)
                             ->select('tblcandidate.*', 'tblmember.strMemFname', 'tblmember.strMemLname')
+                            ->orderBy('tblmember.strMemLname')
                             ->get();
             $memdetail = DB::table('tblmemberdetail')
                             ->select('strMemDeFieldName', 'strMemDeFieldData')

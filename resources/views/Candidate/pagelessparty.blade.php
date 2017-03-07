@@ -111,7 +111,11 @@
                                 <span style="font-size:16px">{{$candidate->strMemFname}} {{$candidate->strMemLname}}</span>
                                 <strong style="font-size:14px">
                                     <i  class="fa fa-fw fa-star"></i>
-                                    Candidate
+                                     @if(empty($candidate->strSector))
+                                        Candidate
+                                     @else
+                                        {{$candidate->strSector}}
+                                     @endif
                                 </strong>
                             </h2>
                             <div class="mc-content">
