@@ -96,7 +96,7 @@ $image = "https://s3.amazonaws.com/ndap-ivote-2017/candidates/".$Candidate->txtC
                      'class' => 'required') ) !!}
                      </div>
                      <div class="col-md-10">
-                     <select name="member" class="form-control select2" onchange="getPosition()" id="memberId" required>
+                     <select name="member" class="form-control select2" id="memberId" required>
                          @foreach($Members as $Member)
                             @if($Member->strMemberId == $Candidate->strCandMemId)
                          <option value='{{$Member->strMemberId}}' selected>{{$Member->strMemFname}} {{$Member->strMemLname}}</option>
